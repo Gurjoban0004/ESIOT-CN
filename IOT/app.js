@@ -1,4 +1,4 @@
-// Prep Hub Application Logic — Supports ES & IoT, Computer Networks, and Linux
+// prep — Supports ES & IoT, Computer Networks, and Linux
 
 // ============================================================
 //  CONFIGURATION
@@ -157,7 +157,52 @@ function init() {
   updateTimer();
   setInterval(updateTimer, 60000);
 
+  // Security Measures
+  setupSecurity();
+
   renderLandingPage();
+}
+
+function setupSecurity() {
+  // Disable right click
+  document.addEventListener('contextmenu', e => e.preventDefault());
+
+  // Disable specific key combos
+  document.addEventListener('keydown', e => {
+    // F12
+    if (e.keyCode === 123) {
+      e.preventDefault();
+      return false;
+    }
+    // Ctrl+Shift+I, Ctrl+Shift+J, Ctrl+U, Ctrl+S, Ctrl+H
+    if (e.ctrlKey && (e.shiftKey && (e.keyCode === 73 || e.keyCode === 74) || e.keyCode === 85 || e.keyCode === 83 || e.keyCode === 72)) {
+      e.preventDefault();
+      return false;
+    }
+    // Command+Option+I (Mac)
+    if (e.metaKey && e.altKey && e.keyCode === 73) {
+      e.preventDefault();
+      return false;
+    }
+  });
+
+  // Simple "Anti-Tamper" check
+  const check = () => {
+    const start = Date.now();
+    debugger;
+    if (Date.now() - start > 100) {
+      document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;font-family:sans-serif;"><h2>Security Alert</h2><p>Developer tools are not allowed in this environment.</p><button onclick="location.reload()">Reload</button></div>';
+    }
+  };
+  setInterval(check, 1000);
+}
+
+function decodeData(str) {
+  if (!str || typeof str !== 'string') return str;
+  // Simple rotation cipher for obfuscation
+  return str.replace(/[a-zA-Z]/g, c => {
+    return String.fromCharCode((c <= 'Z' ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);
+  });
 }
 
 // ============================================================
@@ -412,7 +457,7 @@ function setupEventListeners() {
 
 function renderLandingPage() {
   document.body.classList.add('landing-mode');
-  document.title = 'Prep Hub';
+  document.title = 'prep';
   elements.welcomeScreen.style.display = 'flex';
   elements.readingPane.style.display = 'none';
   elements.topNavBar.innerHTML = '';
@@ -420,18 +465,18 @@ function renderLandingPage() {
   elements.topicList.innerHTML = '';
   elements.progressPercent.textContent = 'Choose a desk';
   elements.progressBar.style.width = '0%';
-  if (elements.mobileBrandTitle) elements.mobileBrandTitle.textContent = 'Prep Hub';
+  if (elements.mobileBrandTitle) elements.mobileBrandTitle.textContent = 'prep';
 
   elements.subjectBtns.forEach(btn => btn.classList.remove('active'));
   document.documentElement.style.setProperty('--active-accent', '#2F6F5E');
 
   elements.welcomeScreen.innerHTML = `
-    <section class="landing-page" aria-label="Prep Hub landing page">
+    <section class="landing-page" aria-label="prep landing page">
       <div class="landing-hero">
         <div class="landing-copy">
-          <p class="landing-console-line">student@prephub:~$ choose-your-battle</p>
+          <p class="landing-console-line">student@prep:~$ choose-your-battle</p>
           <h2>One study room. Three exam desks. Zero wandering.</h2>
-          <p>Prep Hub keeps your notes, MCQs, progress, and Linux terminal drills in one quiet workspace built for the last stretch before the paper.</p>
+          <p>prep keeps your notes, MCQs, progress, and Linux terminal drills in one quiet workspace built for the last stretch before the paper.</p>
           <div class="landing-actions">
             <button class="landing-subject-card primary" data-subject="linux">
               <span class="landing-card-icon">&gt;_</span>
@@ -484,7 +529,7 @@ function setActiveSubject(subjectId) {
   const subjectConfig = CONFIG.subjects[subjectId];
 
   // Update document title
-  document.title = `${subjectConfig.label} Prep`;
+  document.title = `${subjectConfig.label} — prep`;
 
   // Update subject buttons
   elements.subjectBtns.forEach(btn => {
@@ -796,7 +841,7 @@ function selectTopic(index) {
   const sectionName = CONFIG.subjects[state.activeSubject].sectionNames[state.activeSection] || state.activeSection;
   elements.sectionBadge.textContent = sectionName;
   elements.mainTitle.textContent = topic.title;
-  elements.contentArea.innerHTML = topic.html;
+  elements.contentArea.innerHTML = decodeData(topic.html);
 
   // Re-run KaTeX auto-render on the content area
   if (typeof renderMathInElement === 'function') {
@@ -1021,7 +1066,11 @@ function simulateBash(script, input) {
     });
     if (!/^[0-9+\-*/%<>=!&| ().]+$/.test(safeExpr)) return '';
     try {
-      return String(Function(`"use strict"; return (${safeExpr});`)());
+      const value = Function(`"use strict"; return (${safeExpr});`)();
+      if (typeof value === 'number' && Number.isFinite(value)) {
+        return String(Math.trunc(value));
+      }
+      return String(value);
     } catch (e) {
       return '';
     }
@@ -1031,9 +1080,12 @@ function simulateBash(script, input) {
     return stripOuterQuotes(String(text || '')
       .replace(/\$\(\(([^)]+)\)\)/g, (_, expr) => expandArithmeticExpression(expr))
       .replace(/\$\{#([a-zA-Z_][a-zA-Z0-9_]*)\}/g, (_, name) => String(vars[name] || '').length)
-      .replace(/\$\{([a-zA-Z_][a-zA-Z0-9_]*):([0-9]+):([0-9]+)\}/g, (_, name, start, length) => {
-        return String(vars[name] || '').slice(Number(start), Number(start) + Number(length));
+      .replace(/\$\{([a-zA-Z_][a-zA-Z0-9_]*):([^}:]+):([^}]+)\}/g, (_, name, start, length) => {
+        const startIndex = resolveNumericParam(start);
+        const lengthValue = resolveNumericParam(length);
+        return String(vars[name] || '').slice(startIndex, startIndex + lengthValue);
       })
+      .replace(/\$\{([a-zA-Z_][a-zA-Z0-9_]*)\}/g, (_, name) => vars[name] || '')
       .replace(/\$\?/g, String(lastStatus))
       .replace(/\$#/g, String(inputLines.filter(Boolean).length))
       .replace(/\$[@*]/g, inputLines.filter(Boolean).join(' '))
@@ -1042,6 +1094,14 @@ function simulateBash(script, input) {
 
   function valueToNumber(value) {
     return Number(expandValue(value));
+  }
+
+  function resolveNumericParam(value) {
+    const expanded = stripOuterQuotes(expandValue(value));
+    if (Object.prototype.hasOwnProperty.call(vars, expanded)) {
+      return Number(vars[expanded]);
+    }
+    return Number(expanded);
   }
 
   function splitCommandWords(command) {
@@ -1366,16 +1426,122 @@ function simulateBash(script, input) {
     return false;
   }
 
+  function normalizeConditionPart(part) {
+    return part.trim().replace(/^\{\s*/, '').replace(/\s*\};?$/, '').replace(/;\s*$/, '').trim();
+  }
+
   function evalCondition(condition) {
     const normalized = condition
       .replace(/^if\s+/, '')
       .replace(/^elif\s+/, '')
+      .replace(/^while\s+/, '')
+      .replace(/^until\s+/, '')
       .replace(/\bthen\b/g, '')
+      .replace(/;\s*do\s*$/, '')
       .trim();
 
     return normalized.split(/\s+\|\|\s+/).some(orPart => {
-      return orPart.split(/\s+&&\s+/).every(andPart => evalSingleTest(andPart.trim()));
+      return orPart.split(/\s+&&\s+/).every(andPart => evalSingleTest(normalizeConditionPart(andPart)));
     });
+  }
+
+  function evalArithmeticCondition(expr) {
+    const clean = expr.trim();
+    if (!clean) return false;
+    const result = expandArithmeticExpression(clean);
+    if (result === '' || result === 'false') return false;
+    if (result === 'true') return true;
+    const numeric = Number(result);
+    return !Number.isNaN(numeric) && numeric !== 0;
+  }
+
+  function applyAssignment(name, valueExpr) {
+    vars[name] = expandValue(valueExpr);
+  }
+
+  function runAssignmentStatement(statement) {
+    const compact = statement.replace(/;$/, '').trim();
+    const arithAssign = compact.match(/^\(\(\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*(.+?)\s*\)\)$/);
+    if (arithAssign) {
+      applyAssignment(arithAssign[1], arithAssign[2]);
+      return;
+    }
+    const assignMatch = compact.match(/^([a-zA-Z_][a-zA-Z0-9_]*)=(.+)$/);
+    if (assignMatch) {
+      applyAssignment(assignMatch[1], assignMatch[2]);
+    }
+  }
+
+  function runForStep(stepExpr) {
+    const step = stepExpr.trim();
+    const postfix = step.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\+\+$/);
+    if (postfix) {
+      vars[postfix[1]] = String(Number(vars[postfix[1]] || 0) + 1);
+      return;
+    }
+    const prefix = step.match(/^\+\+\s*([a-zA-Z_][a-zA-Z0-9_]*)$/);
+    if (prefix) {
+      vars[prefix[1]] = String(Number(vars[prefix[1]] || 0) + 1);
+      return;
+    }
+    const plusEq = step.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*\+=\s*(.+)$/);
+    if (plusEq) {
+      vars[plusEq[1]] = String(Number(vars[plusEq[1]] || 0) + Number(expandValue(plusEq[2])));
+      return;
+    }
+    const minusEq = step.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*-=\s*(.+)$/);
+    if (minusEq) {
+      vars[minusEq[1]] = String(Number(vars[minusEq[1]] || 0) - Number(expandValue(minusEq[2])));
+      return;
+    }
+    const arithStep = step.match(/^\(\(\s*(.+?)\s*\)\)$/);
+    if (arithStep) {
+      runAssignmentStatement(step);
+      return;
+    }
+    runAssignmentStatement(step);
+  }
+
+  function expandBraceWord(word) {
+    const braceMatch = word.match(/^\{(\d+)\.\.(\d+)\}$/);
+    if (!braceMatch) return [expandValue(word)];
+    const start = Number(braceMatch[1]);
+    const end = Number(braceMatch[2]);
+    const values = [];
+    if (start <= end) {
+      for (let n = start; n <= end; n++) values.push(String(n));
+    } else {
+      for (let n = start; n >= end; n--) values.push(String(n));
+    }
+    return values;
+  }
+
+  function expandForInWords(listExpr) {
+    return splitCommandWords(expandValue(listExpr))
+      .flatMap(word => expandBraceWord(word))
+      .filter(word => word !== '');
+  }
+
+  function isLoopStartLine(line) {
+    return /^for\s/.test(line) || /^while\s/.test(line) || /^until\s/.test(line);
+  }
+
+  function findLoopDoneIndex(allLines, loopStartIndex) {
+    let depth = 1;
+    for (let i = loopStartIndex + 1; i < allLines.length; i++) {
+      if (isLoopStartLine(allLines[i])) depth += 1;
+      if (allLines[i] === 'done') {
+        depth -= 1;
+        if (depth === 0) return i;
+      }
+    }
+    return allLines.length - 1;
+  }
+
+  function loopBodyStartIndex(allLines, loopLineIndex, loopLine) {
+    if (/\bdo\s*$/.test(loopLine) || loopLine.endsWith('; do')) return loopLineIndex + 1;
+    if (allLines[loopLineIndex + 1] === 'do') return loopLineIndex + 2;
+    return loopLineIndex + 1;
   }
 
   function runPipeline(commandString, initialStdin = '') {
@@ -1415,15 +1581,23 @@ function simulateBash(script, input) {
 
   function runSimpleLine(line) {
     const compact = line.replace(/;$/, '').trim();
+    if (!compact || compact === 'do' || compact === 'done') return;
+
     const readMatch = compact.match(/^read\s+(.+)$/);
     if (readMatch) {
       readVars(readMatch[1].split(/\s+/));
       return;
     }
 
+    const arithAssign = compact.match(/^\(\(\s*([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*(.+?)\s*\)\)$/);
+    if (arithAssign) {
+      applyAssignment(arithAssign[1], arithAssign[2]);
+      return;
+    }
+
     const assignMatch = compact.match(/^([a-zA-Z_][a-zA-Z0-9_]*)=(.+)$/);
     if (assignMatch) {
-      vars[assignMatch[1]] = expandValue(assignMatch[2]);
+      applyAssignment(assignMatch[1], assignMatch[2]);
       return;
     }
 
@@ -1431,50 +1605,111 @@ function simulateBash(script, input) {
     if (result) output.push(result);
   }
 
-  function collectIfBranches(startIndex) {
-    const branches = [];
-    let current = { condition: lines[startIndex], body: [] };
-    branches.push(current);
-    let i = startIndex + 1;
+  function stripInlineCommand(command) {
+    return command.replace(/;\s*fi\s*$/i, '').replace(/;;?\s*$/, '').trim();
+  }
 
-    while (i < lines.length) {
-      const line = lines[i];
+  function splitSemicolonCommands(command) {
+    const parts = [];
+    let current = '';
+    let quote = null;
+    for (let i = 0; i < command.length; i++) {
+      const char = command[i];
+      if ((char === '"' || char === "'") && quote === null) {
+        quote = char;
+        current += char;
+      } else if (char === quote) {
+        quote = null;
+        current += char;
+      } else if (char === ';' && quote === null) {
+        if (current.trim()) parts.push(current.trim());
+        current = '';
+      } else {
+        current += char;
+      }
+    }
+    if (current.trim()) parts.push(current.trim());
+    return parts;
+  }
+
+  function runInlineCommands(command) {
+    splitSemicolonCommands(stripInlineCommand(command)).forEach(runSimpleLine);
+  }
+
+  function splitConditionAndInlineBody(line, prefix) {
+    const trimmed = line.trim();
+    const thenMatch = trimmed.match(new RegExp(`^${prefix}\\s+(.+?)\\s*;?\\s*then\\s+(.+)$`));
+    if (thenMatch) {
+      return { condition: `${prefix} ${thenMatch[1]}`, inlineBody: [stripInlineCommand(thenMatch[2])] };
+    }
+    const elseThenMatch = trimmed.match(/^else\s+(.+)$/);
+    if (prefix === 'else' && elseThenMatch) {
+      return { condition: null, inlineBody: [stripInlineCommand(elseThenMatch[1])] };
+    }
+    return { condition: line, inlineBody: [] };
+  }
+
+  function lineEndsWithFi(line) {
+    return /\bfi\s*$/.test(line.trim());
+  }
+
+  function collectIfBranches(allLines, startIndex) {
+    const branches = [];
+    const firstBranch = splitConditionAndInlineBody(allLines[startIndex], 'if');
+    let current = { condition: firstBranch.condition, inlineBody: firstBranch.inlineBody, body: [] };
+    branches.push(current);
+    if (lineEndsWithFi(allLines[startIndex])) {
+      return { branches, endIndex: startIndex };
+    }
+    let i = startIndex + 1;
+    let ifDepth = 1;
+
+    while (i < allLines.length) {
+      const line = allLines[i];
+      if (line.startsWith('if ')) ifDepth += 1;
       if (line === 'then') {
         i += 1;
         continue;
       }
-      if (line.startsWith('elif ')) {
-        current = { condition: line, body: [] };
+      if (line.startsWith('elif ') && ifDepth === 1) {
+        const elifBranch = splitConditionAndInlineBody(line, 'elif');
+        current = { condition: elifBranch.condition, inlineBody: elifBranch.inlineBody, body: [] };
         branches.push(current);
+        if (lineEndsWithFi(line)) return { branches, endIndex: i };
         i += 1;
         continue;
       }
-      if (line === 'else') {
-        current = { condition: null, body: [] };
+      if (line.startsWith('else') && ifDepth === 1) {
+        const elseBranch = splitConditionAndInlineBody(line, 'else');
+        current = { condition: null, inlineBody: elseBranch.inlineBody, body: [] };
         branches.push(current);
         i += 1;
         continue;
       }
       if (line === 'fi') {
-        return { branches, endIndex: i };
+        ifDepth -= 1;
+        if (ifDepth === 0) return { branches, endIndex: i };
+        i += 1;
+        continue;
       }
-      current.body.push(line);
+      if (ifDepth === 1) current.body.push(line);
+      else if (ifDepth > 1) current.body.push(line);
       i += 1;
     }
 
     return { branches, endIndex: i };
   }
 
-  function runCase(startIndex) {
-    const caseLine = lines[startIndex];
+  function runCase(allLines, startIndex) {
+    const caseLine = allLines[startIndex];
     const valueMatch = caseLine.match(/^case\s+(.+)\s+in$/);
     if (!valueMatch) return startIndex;
     const switchValue = expandValue(valueMatch[1]);
     let matched = false;
     let i = startIndex + 1;
 
-    while (i < lines.length && lines[i] !== 'esac') {
-      const patternLine = lines[i];
+    while (i < allLines.length && allLines[i] !== 'esac') {
+      const patternLine = allLines[i];
       const patternMatch = patternLine.match(/^(.+?)\)\s*(.*?)(?:\s*;;)?$/);
       if (patternMatch) {
         const pattern = stripOuterQuotes(patternMatch[1].trim());
@@ -1490,20 +1725,99 @@ function simulateBash(script, input) {
     return i;
   }
 
-  try {
-    for (let i = 0; i < lines.length; i++) {
-      const line = lines[i];
-      if (line.startsWith('if ')) {
-        const { branches, endIndex } = collectIfBranches(i);
-        const branch = branches.find(item => item.condition === null || evalCondition(item.condition));
-        if (branch) branch.body.forEach(runSimpleLine);
-        i = endIndex;
-      } else if (line.startsWith('case ')) {
-        i = runCase(i);
-      } else {
-        runSimpleLine(line);
+  function runLines(allLines, start, end) {
+    let i = start;
+    while (i < end) {
+      const line = allLines[i];
+
+      if (line === 'do' || line === 'done') {
+        i += 1;
+        continue;
       }
+
+      if (line.startsWith('if ')) {
+        const { branches, endIndex } = collectIfBranches(allLines, i);
+        const branch = branches.find(item => item.condition === null || evalCondition(item.condition));
+        if (branch) {
+          branch.inlineBody.forEach(command => runInlineCommands(command));
+          runLines(branch.body, 0, branch.body.length);
+        }
+        i = endIndex + 1;
+        continue;
+      }
+
+      if (line.startsWith('case ')) {
+        i = runCase(allLines, i) + 1;
+        continue;
+      }
+
+      const forArithMatch = line.match(/^for\s+\(\(\s*(.*?)\s*;\s*(.*?)\s*;\s*(.*?)\s*\)\)/);
+      if (forArithMatch) {
+        const doneIndex = findLoopDoneIndex(allLines, i);
+        const bodyStart = loopBodyStartIndex(allLines, i, line);
+        const initExpr = forArithMatch[1];
+        const condExpr = forArithMatch[2];
+        const stepExpr = forArithMatch[3];
+        if (initExpr.trim()) runAssignmentStatement(initExpr);
+        let guard = 0;
+        while (evalArithmeticCondition(condExpr)) {
+          runLines(allLines, bodyStart, doneIndex);
+          runForStep(stepExpr);
+          guard += 1;
+          if (guard > 10000) break;
+        }
+        i = doneIndex + 1;
+        continue;
+      }
+
+      const forInMatch = line.match(/^for\s+([a-zA-Z_][a-zA-Z0-9_]*)\s+in\s+(.+?)(?:;\s*do)?$/);
+      if (forInMatch) {
+        const doneIndex = findLoopDoneIndex(allLines, i);
+        const bodyStart = loopBodyStartIndex(allLines, i, line);
+        const values = expandForInWords(forInMatch[2]);
+        values.forEach(value => {
+          vars[forInMatch[1]] = value;
+          runLines(allLines, bodyStart, doneIndex);
+        });
+        i = doneIndex + 1;
+        continue;
+      }
+
+      const whileMatch = line.match(/^while\s+(.+)$/);
+      if (whileMatch) {
+        const doneIndex = findLoopDoneIndex(allLines, i);
+        const bodyStart = loopBodyStartIndex(allLines, i, line);
+        let guard = 0;
+        while (evalCondition(whileMatch[1])) {
+          runLines(allLines, bodyStart, doneIndex);
+          guard += 1;
+          if (guard > 10000) break;
+        }
+        i = doneIndex + 1;
+        continue;
+      }
+
+      const untilMatch = line.match(/^until\s+(.+)$/);
+      if (untilMatch) {
+        const doneIndex = findLoopDoneIndex(allLines, i);
+        const bodyStart = loopBodyStartIndex(allLines, i, line);
+        let guard = 0;
+        while (!evalCondition(untilMatch[1])) {
+          runLines(allLines, bodyStart, doneIndex);
+          guard += 1;
+          if (guard > 10000) break;
+        }
+        i = doneIndex + 1;
+        continue;
+      }
+
+      runSimpleLine(line);
+      i += 1;
     }
+  }
+
+  try {
+    runLines(lines, 0, lines.length);
   } catch (e) {
     return { output: output.join(''), error: e.message || 'Unable to simulate this script.' };
   }
@@ -1619,7 +1933,7 @@ function renderBashProblem(index) {
   const problemVersion = problem.version || 2;
   const currentCode = progress.codeVersion === problemVersion
     ? progress.code
-    : (problem.starterCode || '#!/usr/bin/env bash\n\n');
+    : (decodeData(problem.starterCode) || '#!/usr/bin/env bash\n\n');
   const lastResults = progress.lastResults || [];
   const passedCount = lastResults.filter(result => result.passed).length;
   const resultSummary = lastResults.length
@@ -1670,10 +1984,16 @@ function renderBashProblem(index) {
       </div>
     </div>
   ` : '';
+  const scriptSupportedHtml = problem.kind === 'terminal' ? '' : `
+    <div class="bash-section-block bash-supported-syntax">
+      <h4>Supported in this editor</h4>
+      <p style="font-size: 0.9rem; margin: 0;">This runs in a browser bash simulator (not a real shell). You can use <code>read</code>, <code>if/elif/else</code>, <code>case</code>, <code>for</code>/<code>while</code>/<code>until</code>, <code>$((arithmetic))</code>, <code>\${var:pos:len}</code>, pipes, and <code>&gt;</code> redirection.</p>
+    </div>
+  `;
 
   elements.contentArea.innerHTML = `
-    <div class="bash-workspace">
-      <section class="bash-description-pane">
+    <div class="bash-workspace" id="bash-workspace">
+      <section class="bash-description-pane" id="bash-desc-pane">
         <div class="bash-problem-header">
           <div class="bash-header-top-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
              <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--active-accent); letter-spacing: 0.05em;">${CONFIG.subjects[state.activeSubject].sectionNames[state.activeSection]}</span>
@@ -1691,7 +2011,7 @@ function renderBashProblem(index) {
         </div>
         <div class="bash-section-block">
           <h4>Problem</h4>
-          <p style="font-size: 0.95rem;">${escapeHtml(problem.prompt)}</p>
+          <p style="font-size: 0.95rem;">${escapeHtml(decodeData(problem.prompt))}</p>
         </div>
         <div class="bash-section-block">
           <h4>Examples</h4>
@@ -1701,12 +2021,18 @@ function renderBashProblem(index) {
           <h4>Constraints</h4>
           <ul style="font-size: 0.9rem;">${constraintsHtml}</ul>
         </div>
+        ${scriptSupportedHtml}
         ${labReferenceHtml}
         <div class="bash-section-block bash-solution-block">
           <button class="bash-solution-toggle" id="bash-solution-toggle">Show Answer</button>
-          <pre class="bash-solution-code" id="bash-solution-code" hidden>${escapeHtml(problem.solutionCode || '')}</pre>
+          <pre class="bash-solution-code" id="bash-solution-code" hidden>${escapeHtml(decodeData(problem.solutionCode || ''))}</pre>
         </div>
       </section>
+
+      <div class="resizer-h" id="resizer-bash-h">
+        <div class="resizer-notch"></div>
+      </div>
+
       <section class="bash-editor-pane">
         <div class="bash-editor-toolbar">
           <span style="font-size: 0.85rem;">${problem.kind === 'terminal' ? 'Linux Lab Editor' : 'Bash Script Editor'}</span>
@@ -1717,7 +2043,12 @@ function renderBashProblem(index) {
           </div>
         </div>
         <textarea class="bash-code-editor" id="bash-code-editor" spellcheck="false">${escapeHtml(currentCode)}</textarea>
-        <div class="bash-results-panel">
+        
+        <div class="resizer-v" id="resizer-bash-v">
+          <div class="resizer-notch"></div>
+        </div>
+
+        <div class="bash-results-panel" id="bash-results-pane">
           <div class="bash-results-header">
             <strong style="font-size: 0.85rem;">Test Results</strong>
             <span id="bash-results-summary" style="font-size: 0.8rem;">${resultSummary}</span>
@@ -1727,6 +2058,10 @@ function renderBashProblem(index) {
       </section>
     </div>
   `;
+
+  // Initialize resizers
+  initResizer('resizer-bash-h', 'bash-desc-pane', 'horizontal');
+  initResizer('resizer-bash-v', 'bash-results-pane', 'vertical', true);
 
   const editor = document.getElementById('bash-code-editor');
   editor.addEventListener('input', event => {
@@ -1962,11 +2297,13 @@ function renderPracticeUnit(unitIndex) {
     let unitExplanation = '';
 
     const optionsListHtml = Object.keys(q.options).map(optLetter => {
-      const rawText = q.options[optLetter];
+      const rawText = decodeData(q.options[optLetter]);
       const parsed = parseOption(rawText);
       
       if (optLetter === q.correct && parsed.explanation) {
         unitExplanation = parsed.explanation;
+      } else if (optLetter === q.correct && q.explanation) {
+        unitExplanation = decodeData(q.explanation);
       }
 
       let optionClasses = 'mcq-option';
@@ -1996,7 +2333,7 @@ function renderPracticeUnit(unitIndex) {
 
     return `
       <div class="mcq-card" data-question-id="${q.id}" data-correct-answer="${q.correct}">
-        <div class="mcq-question"><strong>Q${qNum}.</strong> ${q.question}</div>
+        <div class="mcq-question"><strong>Q${qNum}.</strong> ${decodeData(q.question)}</div>
         <div class="mcq-options${answeredClass}" data-correct="${q.correct}">
           ${optionsListHtml}
         </div>
@@ -2102,6 +2439,55 @@ function updateTimer() {
 
   elements.timerText.textContent = timerString;
   if (elements.mobileTimerText) elements.mobileTimerText.textContent = timerString;
+}
+
+// ============================================================
+//  RESIZABLE PANELS LOGIC
+// ============================================================
+function initResizer(resizerId, targetPaneId, direction, invert = false) {
+  const resizer = document.getElementById(resizerId);
+  const targetPane = document.getElementById(targetPaneId);
+  if (!resizer || !targetPane) return;
+
+  let startX, startY, startWidth, startHeight;
+
+  resizer.addEventListener('mousedown', function(e) {
+    startX = e.clientX;
+    startY = e.clientY;
+    startWidth = targetPane.offsetWidth;
+    startHeight = targetPane.offsetHeight;
+    
+    resizer.classList.add('resizing');
+    document.body.style.cursor = direction === 'horizontal' ? 'col-resize' : 'row-resize';
+    document.body.style.userSelect = 'none';
+
+    document.addEventListener('mousemove', onMouseMove);
+    document.addEventListener('mouseup', onMouseUp);
+  });
+
+  function onMouseMove(e) {
+    if (direction === 'horizontal') {
+      const dx = invert ? startX - e.clientX : e.clientX - startX;
+      const newWidth = startWidth + dx;
+      if (newWidth > 150 && newWidth < window.innerWidth * 0.8) {
+        targetPane.style.width = newWidth + 'px';
+      }
+    } else {
+      const dy = invert ? startY - e.clientY : e.clientY - startY;
+      const newHeight = startHeight + dy;
+      if (newHeight > 80 && newHeight < window.innerHeight * 0.7) {
+        targetPane.style.height = newHeight + 'px';
+      }
+    }
+  }
+
+  function onMouseUp() {
+    resizer.classList.remove('resizing');
+    document.body.style.cursor = '';
+    document.body.style.userSelect = '';
+    document.removeEventListener('mousemove', onMouseMove);
+    document.removeEventListener('mouseup', onMouseUp);
+  }
 }
 
 // ============================================================

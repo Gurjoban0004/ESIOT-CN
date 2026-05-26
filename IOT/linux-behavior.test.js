@@ -178,4 +178,100 @@ const distribution = correctLetters.reduce((acc, letter) => {
 }, {});
 assert(Object.keys(distribution).length >= 4, 'Linux MCQ answers should be distributed across A, B, C, and D.');
 
+const canonicalStudentScripts = {
+  'bash-004': `#!/usr/bin/env bash
+read year
+if [ $((year % 400)) -eq 0 ] || { [ $((year % 4)) -eq 0 ] && [ $((year % 100)) -ne 0 ]; }; then
+  echo "Leap year"
+else
+  echo "Not a leap year"
+fi
+`,
+  'bash-013': `#!/usr/bin/env bash
+read n
+for ((i=1; i<=10; i++)); do
+  echo "$n x $i = $((n * i))"
+done
+`,
+  'bash-023': `#!/usr/bin/env bash
+read n
+for ((i=1; i<=n; i++)); do
+  if [ $((i % 15)) -eq 0 ]; then echo FizzBuzz
+  elif [ $((i % 3)) -eq 0 ]; then echo Fizz
+  elif [ $((i % 5)) -eq 0 ]; then echo Buzz
+  else echo $i
+  fi
+done
+`,
+  'bash-024': `#!/usr/bin/env bash
+read n
+for ((row=1; row<=n; row++)); do
+  stars=""
+  for ((col=1; col<=row; col++)); do
+    stars="\${stars}*"
+  done
+  echo "$stars"
+done
+`,
+  'bash-025': `#!/usr/bin/env bash
+read n
+sum=0
+temp=$n
+while [ $temp -gt 0 ]; do
+  sum=$((sum + temp % 10))
+  temp=$((temp / 10))
+done
+rev=0
+temp=$n
+while [ $temp -gt 0 ]; do
+  rev=$((rev * 10 + temp % 10))
+  temp=$((temp / 10))
+done
+fact=1
+i=1
+while [ $i -le $n ]; do
+  fact=$((fact * i))
+  i=$((i + 1))
+done
+echo "Sum = $sum"
+echo "Reverse = $rev"
+echo "Factorial = $fact"
+`,
+  'bash-026': `#!/usr/bin/env bash
+read n
+a=0
+b=1
+series="0"
+if [ $n -ge 2 ]; then series="$series 1"; fi
+for ((i=3; i<=n; i++)); do
+  c=$((a + b))
+  a=$b
+  b=$c
+  series="$series $b"
+done
+echo "$series"
+`,
+  'bash-028': `#!/usr/bin/env bash
+read a b c
+if [ "$a" -gt "$b" ]; then t=$a; a=$b; b=$t; fi
+if [ "$a" -gt "$c" ]; then t=$a; a=$c; c=$t; fi
+if [ "$b" -gt "$c" ]; then t=$b; b=$c; c=$t; fi
+echo "$a $b $c"
+`,
+  'bash-029': `#!/usr/bin/env bash
+read str pos len
+echo "\${str:pos:len}"
+`
+};
+
+for (const [problemId, script] of Object.entries(canonicalStudentScripts)) {
+  const problem = problems.find(item => item.id === problemId);
+  assert(problem, `Missing canonical script target problem: ${problemId}`);
+  const results = sandbox.evaluateBashProblem(problem, script, 'submit');
+  assert(
+    results.every(result => result.passed),
+    `${problemId} canonical student script must pass every submit test.`
+  );
+}
+
 console.log('linux behavior checks passed');
