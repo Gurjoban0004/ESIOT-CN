@@ -1,0 +1,1132 @@
+[
+  {
+    "unit": "unit1",
+    "unitName": "Unit 1: Introduction to Embedded Systems",
+    "questions": [
+      {
+        "id": 1,
+        "question": "Which of the following is the defining characteristic of an embedded system?",
+        "options": {
+          "a": "It can run any general-purpose desktop operating system",
+          "b": "It is programmed exclusively in high-level Python script at runtime",
+          "c": "**It is a combination of hardware and software designed for a specific, dedicated task ✓**",
+          "d": "It lacks any form of microprocessors or control logic"
+        },
+        "correct": "c"
+      },
+      {
+        "id": 2,
+        "question": "What is the primary economic driver for resource sharing in enterprise networks?",
+        "options": {
+          "a": "To increase transmission latency",
+          "b": "**To reduce hardware duplication and lower capital expenditure ✓**",
+          "c": "To eliminate the need for firewalls",
+          "d": "To bypass local network access levels"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 3,
+        "question": "Why is the software in an embedded system referred to as 'firmware'?",
+        "options": {
+          "a": "It is physically rigid and cannot be upgraded",
+          "b": "**It is embedded directly into non-volatile hardware memory like ROM or Flash ✓**",
+          "c": "It only runs when the hardware is kept at cold temperatures",
+          "d": "It is supplied by the computer chassis manufacturer"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 4,
+        "question": "Which processor type is hardwired to execute a single specific task and cannot be reprogrammed?",
+        "options": {
+          "a": "General Purpose Processor (GPP)",
+          "b": "Digital Signal Processor (DSP)",
+          "c": "**Single-Purpose Embedded Processor ✓**",
+          "d": "Microcontroller"
+        },
+        "correct": "c"
+      },
+      {
+        "id": 5,
+        "question": "In a Microprocessor, which components are external to the main CPU chip?",
+        "options": {
+          "a": "Only the Arithmetic Logic Unit (ALU)",
+          "b": "**RAM, ROM, and I/O peripheral controllers ✓**",
+          "c": "The CPU registers and the Instruction Decoder",
+          "d": "The Program Counter and Control Unit"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 6,
+        "question": "Which architecture utilizes a single shared memory and bus for both instructions and data?",
+        "options": {
+          "a": "Harvard Architecture",
+          "b": "**Von Neumann Architecture ✓**",
+          "c": "Harvard-Princeton Hybrid Architecture",
+          "d": "Dual-Bus RISC Architecture"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 7,
+        "question": "What is the 'Von Neumann Bottleneck'?",
+        "options": {
+          "a": "The CPU running out of register space during a multiply-accumulate instruction",
+          "b": "The inability of the CPU to compile assembly code directly",
+          "c": "**The CPU cannot read data and fetch instructions at the same time because they share the same bus ✓**",
+          "d": "Data corrupting when travelling through a fiber optic cable"
+        },
+        "correct": "c"
+      },
+      {
+        "id": 8,
+        "question": "Which architecture is preferred for microcontrollers due to its ability to fetch instructions and read data in parallel?",
+        "options": {
+          "a": "Von Neumann Architecture",
+          "b": "Princeton Architecture",
+          "c": "**Harvard Architecture ✓**",
+          "d": "Mainframe-Bus Architecture"
+        },
+        "correct": "c"
+      },
+      {
+        "id": 9,
+        "question": "A System-on-Chip (SoC) is best described as:",
+        "options": {
+          "a": "A microprocessor connected to external RAM on a motherboard",
+          "b": "**An integrated circuit that incorporates a CPU, memory, I/O ports, and radio modules on a single silicon die ✓**",
+          "c": "A cloud server cluster running virtual machine controllers",
+          "d": "A physical star topology network using passive hubs"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 10,
+        "question": "Which of the following is a key characteristic of General Purpose Processors (GPPs)?",
+        "options": {
+          "a": "Highly optimized for low-power battery operations",
+          "b": "Strictly limited to single-function industrial applications",
+          "c": "**High computational power with general instruction sets, but high cost and power draw ✓**",
+          "d": "Must be stored in a write-once read-many ROM chip"
+        },
+        "correct": "c"
+      },
+      {
+        "id": 11,
+        "question": "Which of the following is an application of an Application Specific Instruction Set Processor (ASIP)?",
+        "options": {
+          "a": "Running standard office productivity suites on a desktop",
+          "b": "**Digital signal processing and video encoding inside a camera ✓**",
+          "c": "Hosting public websites on a virtual private server",
+          "d": "Allocating IP addresses on a DHCP server"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 12,
+        "question": "Which design metric is typically a major constraint in battery-operated consumer IoT devices?",
+        "options": {
+          "a": "Mainframe compatibility",
+          "b": "Maximum database size capacity",
+          "c": "**Low power consumption and small physical footprint ✓**",
+          "d": "EBCDIC decoding speeds"
+        },
+        "correct": "c"
+      },
+      {
+        "id": 13,
+        "question": "What does 'autonomous' mean in the definition of a computer network?",
+        "options": {
+          "a": "The network runs entirely without human administrators",
+          "b": "**Each connected computer is capable of running independently and possesses its own CPU ✓**",
+          "c": "The cabling must route itself automatically using smart protocols",
+          "d": "All devices must be assigned the same IP prefix"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 14,
+        "question": "The CPU instruction cycle consists of which sequential phases?",
+        "options": {
+          "a": "Decode, Encapsulate, Route, Terminate",
+          "b": "Check, Amplifies, Modulate, Transmit",
+          "c": "**Fetch, Decode, Execute ✓**",
+          "d": "Segment, Package, Deliver, Check"
+        },
+        "correct": "c"
+      },
+      {
+        "id": 15,
+        "question": "Which CPU register holds the memory address of the next instruction to be fetched?",
+        "options": {
+          "a": "Instruction Register (IR)",
+          "b": "Accumulator (ACC)",
+          "c": "**Program Counter (PC) ✓**",
+          "d": "Memory Data Register (MDR)"
+        },
+        "correct": "c"
+      },
+      {
+        "id": 16,
+        "question": "In which architecture can program instructions and data have different word widths (e.g. 14-bit instructions and 8-bit data)?",
+        "options": {
+          "a": "Von Neumann Architecture",
+          "b": "**Harvard Architecture ✓**",
+          "c": "Princeton Architecture",
+          "d": "CISC Architecture"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 17,
+        "question": "Which of the following is a classic example of a Microcontroller?",
+        "options": {
+          "a": "Intel Core i7-13700K",
+          "b": "**ATmega328P (used in Arduino Uno) ✓**",
+          "c": "NVIDIA RTX 4090 GPU",
+          "d": "AMD Ryzen 5 5600X"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 18,
+        "question": "What type of memory is typically used to store the bootloader and firmware in a microcontroller?",
+        "options": {
+          "a": "SRAM",
+          "b": "DRAM",
+          "c": "**ROM or Flash memory ✓**",
+          "d": "Virtual Swap Memory"
+        },
+        "correct": "c"
+      },
+      {
+        "id": 19,
+        "question": "What is the primary function of a Digital Signal Processor (DSP)?",
+        "options": {
+          "a": "To route IP packets across WAN boundaries",
+          "b": "**To perform rapid mathematical operations like multiply-accumulate on digitized signals ✓**",
+          "c": "To convert analog phone lines to digital Ethernet ports",
+          "d": "To act as a central controller in Star topologies"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 20,
+        "question": "Which design aspect is a disadvantage of Harvard Architecture compared to Von Neumann?",
+        "options": {
+          "a": "Slower execution speeds due to shared buses",
+          "b": "Inability to support high-performance applications",
+          "c": "**Increased hardware complexity and cost due to dual bus routing ✓**",
+          "d": "Susceptibility to the count-to-infinity problem"
+        },
+        "correct": "c"
+      }
+    ]
+  },
+  {
+    "unit": "unit2",
+    "unitName": "Unit 2: Hardware, Sensors & Actuators",
+    "questions": [
+      {
+        "id": 21,
+        "question": "What is the relationship between power supply voltage and gate switching speed in digital logic circuits?",
+        "options": {
+          "a": "Lower voltage increases switching speed",
+          "b": "**Higher voltage increases switching speed, reducing propagation delay ✓**",
+          "c": "Voltage does not affect switching speed",
+          "d": "Switching speed is determined only by the crystal length"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 22,
+        "question": "Which logic level voltage range is commonly used for modern low-power mobile SoCs?",
+        "options": {
+          "a": "5.0V ± 0.25V",
+          "b": "**1.5V ± 0.2V or lower ✓**",
+          "c": "12.0V ± 1.0V",
+          "d": "3.3V ± 0.3V"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 23,
+        "question": "What is the purpose of a Quartz Crystal in an oscillator circuit?",
+        "options": {
+          "a": "To act as a voltage filter",
+          "b": "**To generate a highly stable, precise clock frequency using piezoelectric properties ✓**",
+          "c": "To detect temperature variations in the silicon die",
+          "d": "To protect the CPU against power surges"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 24,
+        "question": "What type of reset circuit uses a capacitor and a resistor to hold the reset pin low for a short duration after power-on?",
+        "options": {
+          "a": "Active high software reset",
+          "b": "**RC Power-on Reset circuit ✓**",
+          "c": "Watchdog overflow reset",
+          "d": "Brown-out detection interrupt"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 25,
+        "question": "A Watchdog Timer (WDT) is primarily designed to:",
+        "options": {
+          "a": "Count external input pulses from sensors",
+          "b": "**Recover the microcontroller from software hangs by triggering a reset if not cleared regularly ✓**",
+          "c": "Measure the execution speed of the main loop",
+          "d": "Perform encryption calculations on data packets"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 26,
+        "question": "Brown-out Detection (BOD) circuits monitor which parameter?",
+        "options": {
+          "a": "CPU operating temperature",
+          "b": "**Power supply voltage levels, resetting the CPU if voltage drops below a threshold ✓**",
+          "c": "The amount of ambient light surrounding the device",
+          "d": "Unicast packet collisions on Ethernet ports"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 27,
+        "question": "Which type of memory is volatile and loses its data when power is disconnected?",
+        "options": {
+          "a": "EEPROM",
+          "b": "Flash Memory",
+          "c": "**SRAM / DRAM ✓**",
+          "d": "Masked ROM"
+        },
+        "correct": "c"
+      },
+      {
+        "id": 28,
+        "question": "What is the difference between EEPROM and Flash memory?",
+        "options": {
+          "a": "EEPROM is volatile while Flash is non-volatile",
+          "b": "**EEPROM allows byte-level erasing, while Flash is erased in large blocks ✓**",
+          "c": "Flash memory requires constant refreshing while EEPROM does not",
+          "d": "EEPROM is much faster than Flash memory"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 29,
+        "question": "Which of the following is classified as an active sensor?",
+        "options": {
+          "a": "**LIDAR (requires sending a light pulse to measure reflection) ✓**",
+          "b": "LDR (Light Dependent Resistor)",
+          "c": "Thermistor (changes resistance with temperature)",
+          "d": "Photodiode"
+        },
+        "correct": "a"
+      },
+      {
+        "id": 30,
+        "question": "An LDR (Light Dependent Resistor) exhibits which electrical behavior when light intensity increases?",
+        "options": {
+          "a": "Its resistance increases significantly",
+          "b": "**Its resistance decreases significantly ✓**",
+          "c": "It generates an electrical current directly",
+          "d": "Its capacitance changes"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 31,
+        "question": "How does an LM35 temperature sensor represent temperature values?",
+        "options": {
+          "a": "By outputting a 10-bit SPI digital word",
+          "b": "**By outputting a linear analog voltage (10mV per degree Celsius) ✓**",
+          "c": "By altering its capacitance by 1nF per degree",
+          "d": "By generating high-frequency digital pulses"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 32,
+        "question": "Which sensor would be most appropriate to measure pressure changes in a pneumatic system?",
+        "options": {
+          "a": "LM35 sensor",
+          "b": "**Piezoelectric or Capacitive pressure sensor ✓**",
+          "c": "Ultrasonic HC-SR04 sensor",
+          "d": "Light Dependent Resistor"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 33,
+        "question": "An Actuator is best defined as a device that:",
+        "options": {
+          "a": "Converts physical quantities into electrical signals",
+          "b": "**Converts electrical energy or control signals into physical action/motion ✓**",
+          "c": "Filters noise from analog inputs",
+          "d": "Generates high frequency clock signals"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 34,
+        "question": "Which motor allows precise control of angular position, velocity, and acceleration without feedback sensors?",
+        "options": {
+          "a": "Brushed DC Motor",
+          "b": "**Stepper Motor ✓**",
+          "c": "AC Induction Motor",
+          "d": "Solenoid"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 35,
+        "question": "How does a Solenoid valve convert electrical energy into mechanical movement?",
+        "options": {
+          "a": "By using a piezoelectric crystal array",
+          "b": "**By passing current through a coil to generate an electromagnetic field that pulls a plunger ✓**",
+          "c": "By using a gear train and brushes",
+          "d": "By varying its internal resistance"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 36,
+        "question": "A servo motor differs from a standard DC motor because:",
+        "options": {
+          "a": "It lacks internal copper coils",
+          "b": "**It includes a feedback sensor (potentiometer) and control circuit to maintain a precise angle ✓**",
+          "c": "It runs directly on AC power",
+          "d": "It cannot be controlled by a microcontroller"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 37,
+        "question": "Which type of reset occurs when the input supply voltage drops below the safe limit for CPU operations?",
+        "options": {
+          "a": "Software Reset",
+          "b": "**Brown-out Reset ✓**",
+          "c": "Watchdog Timeout Reset",
+          "d": "Manual Pushbutton Reset"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 38,
+        "question": "What is the advantage of using a crystal oscillator over an RC oscillator?",
+        "options": {
+          "a": "Crystal oscillators are cheaper to integrate on a silicon die",
+          "b": "**Crystal oscillators provide a much higher frequency stability and precision ✓**",
+          "c": "RC oscillators require external quartz inputs",
+          "d": "Crystal oscillators do not require power supply lines"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 39,
+        "question": "Which component acts as an electrical barrier or switch to control high-voltage/high-current devices using low-voltage microcontroller pins?",
+        "options": {
+          "a": "Capacitor",
+          "b": "**Relay or Optocoupler ✓**",
+          "c": "Thermistor",
+          "d": "Resistor Network"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 40,
+        "question": "What will happen if software fails to 'kick' or clear the Watchdog Timer before its counter overflows?",
+        "options": {
+          "a": "The CPU halts instruction execution indefinitely",
+          "b": "**The Watchdog circuit triggers a hardware reset of the microcontroller ✓**",
+          "c": "The CPU automatically enters sleep mode",
+          "d": "The system switches to secondary flash memory"
+        },
+        "correct": "b"
+      }
+    ]
+  },
+  {
+    "unit": "unit3",
+    "unitName": "Unit 3: Introduction to IoT",
+    "questions": [
+      {
+        "id": 41,
+        "question": "Which of the following represents the basic physical design of an IoT system?",
+        "options": {
+          "a": "Only high-performance computing databases",
+          "b": "**Things (IoT devices) and communication protocols ✓**",
+          "c": "A centralized mainframe with dumb terminals",
+          "d": "Wired coaxial cables only"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 42,
+        "question": "In the logical design of an IoT system, what is the role of the 'Communication' functional block?",
+        "options": {
+          "a": "Authenticating users and passwords",
+          "b": "**Handling the communication protocols and data exchange between devices and servers ✓**",
+          "c": "Managing local sensor databases",
+          "d": "Running machine learning algorithms on the device"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 43,
+        "question": "Which IoT communication model is characterized by the client sending a request and the server responding immediately, in a synchronous, stateless manner?",
+        "options": {
+          "a": "Push-Pull Model",
+          "b": "**Request-Response Model ✓**",
+          "c": "Publish-Subscribe Model",
+          "d": "Exclusive Pair Model"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 44,
+        "question": "In a Publish-Subscribe communication model, which entity is responsible for routing messages from publishers to subscribers based on topics?",
+        "options": {
+          "a": "Gateway",
+          "b": "**Broker ✓**",
+          "c": "Client Router",
+          "d": "Access Point"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 45,
+        "question": "Which IoT communication model uses a persistent, bidirectional, full-duplex connection over a single TCP socket?",
+        "options": {
+          "a": "Request-Response Model",
+          "b": "Push-Pull Model",
+          "c": "**Exclusive Pair Model ✓**",
+          "d": "Publish-Subscribe Model"
+        },
+        "correct": "c"
+      },
+      {
+        "id": 46,
+        "question": "What is a key difference between M2M (Machine-to-Machine) and IoT (Internet of Things)?",
+        "options": {
+          "a": "M2M utilizes cloud databases, whereas IoT relies on direct point-to-point links",
+          "b": "**M2M typically uses isolated point-to-point links; IoT uses global internet networks and cloud architectures ✓**",
+          "c": "M2M is highly scalable compared to IoT",
+          "d": "IoT does not support wireless communication"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 47,
+        "question": "An IoT system is designed with a single device that collects data, stores it in a local database, and displays it via a local web interface without any cloud dependency. This matches which IoT Level?",
+        "options": {
+          "a": "**IoT Level-1 ✓**",
+          "b": "IoT Level-2",
+          "c": "IoT Level-3",
+          "d": "IoT Level-4"
+        },
+        "correct": "a"
+      },
+      {
+        "id": 48,
+        "question": "In IoT Level-3, what is the primary role of the Cloud?",
+        "options": {
+          "a": "The cloud only performs local sensor reading",
+          "b": "**Data is stored and analyzed in the cloud, while the local device only senses and sends data ✓**",
+          "c": "No cloud exists in Level-3",
+          "d": "The cloud manages the local mesh topology"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 49,
+        "question": "Which IoT level is characterized by multiple independent nodes, a centralized cloud database, and observer nodes running analytical applications?",
+        "options": {
+          "a": "IoT Level-3",
+          "b": "IoT Level-4",
+          "c": "**IoT Level-5 ✓**",
+          "d": "IoT Level-1"
+        },
+        "correct": "c"
+      },
+      {
+        "id": 50,
+        "question": "In the Publish-Subscribe model, publishers and subscribers do not need to know about each other. This is known as:",
+        "options": {
+          "a": "Symmetric encryption",
+          "b": "**Decoupling in space and time ✓**",
+          "c": "Dynamic routing",
+          "d": "Logical grouping"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 51,
+        "question": "Which functional block of an IoT system handles device authentication, authorization, and data encryption?",
+        "options": {
+          "a": "Application block",
+          "b": "**Security block ✓**",
+          "c": "Device block",
+          "d": "Services block"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 52,
+        "question": "What is the primary function of the 'Device' block in the physical design of IoT?",
+        "options": {
+          "a": "Routing packets across different subnets",
+          "b": "**Sensing, actuation, data processing, and local control functions ✓**",
+          "c": "Managing cloud databases",
+          "d": "Translating protocol stacks"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 53,
+        "question": "Which IoT level is best suited for complex, wide-area applications with high volumes of data, requiring multiple end-nodes and cloud-based big data analytics?",
+        "options": {
+          "a": "IoT Level-1",
+          "b": "IoT Level-2",
+          "c": "**IoT Level-6 ✓**",
+          "d": "IoT Level-3"
+        },
+        "correct": "c"
+      },
+      {
+        "id": 54,
+        "question": "The Push-Pull communication model is best described as:",
+        "options": {
+          "a": "A synchronous model where the client pulls data from the server",
+          "b": "**An asynchronous model where queues decouple publishers and consumers, pushing data from producer to queue and pulling from queue to consumer ✓**",
+          "c": "A connection-oriented exclusive pair model",
+          "d": "A multicast radio broadcast"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 55,
+        "question": "In which M2M component is the communication logic typically embedded?",
+        "options": {
+          "a": "General purpose web browser",
+          "b": "**M2M Area Network Node/Module ✓**",
+          "c": "Cloud Database cluster",
+          "d": "DNS server"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 56,
+        "question": "Which protocol is commonly used to establish the Exclusive Pair communication model over the web?",
+        "options": {
+          "a": "HTTP 1.1",
+          "b": "**WebSockets ✓**",
+          "c": "TFTP",
+          "d": "SMTP"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 57,
+        "question": "What type of communication model does MQTT utilize?",
+        "options": {
+          "a": "Request-Response",
+          "b": "**Publish-Subscribe ✓**",
+          "c": "Exclusive Pair",
+          "d": "Simple Polling"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 58,
+        "question": "In IoT logical design, which block provides services like device discovery, device registry, and status monitoring?",
+        "options": {
+          "a": "Device block",
+          "b": "**Management block ✓**",
+          "c": "Application block",
+          "d": "Security block"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 59,
+        "question": "Which of the following is a primary domain application for IoT?",
+        "options": {
+          "a": "Standard mainframe batch compiling",
+          "b": "**Smart Cities, Smart Grid, and Industrial Automation ✓**",
+          "c": "Offline magnetic tape storage",
+          "d": "Unshielded copper bus topologies"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 60,
+        "question": "M2M systems generally emphasize which aspect of network communication?",
+        "options": {
+          "a": "End-user interactive graphics interfaces",
+          "b": "**Direct machine-to-machine telemetry and device integration ✓**",
+          "c": "Social media data mining",
+          "d": "Open-access public internet systems"
+        },
+        "correct": "b"
+      }
+    ]
+  },
+  {
+    "unit": "unit4",
+    "unitName": "Unit 4: Arduino Interfacing & Programming",
+    "questions": [
+      {
+        "id": 61,
+        "question": "Which microcontroller chip serves as the main processor on a standard Arduino Uno board?",
+        "options": {
+          "a": "ATmega8",
+          "b": "**ATmega328P ✓**",
+          "c": "ARM Cortex-M4",
+          "d": "Intel 8051"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 62,
+        "question": "How many digital input/output pins are available on the Arduino Uno board?",
+        "options": {
+          "a": "8",
+          "b": "**14 ✓**",
+          "c": "20",
+          "d": "6"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 63,
+        "question": "How many pins on the Arduino Uno support Pulse Width Modulation (PWM) output?",
+        "options": {
+          "a": "14",
+          "b": "**6 ✓** *(Pins 3, 5, 6, 9, 10, 11)*\n",
+          "c": "8",
+          "d": "2"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 64,
+        "question": "How many analog input pins are available on the Arduino Uno board?",
+        "options": {
+          "a": "14",
+          "b": "**6 ✓** *(A0 through A5)*\n",
+          "c": "12",
+          "d": "4"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 65,
+        "question": "The built-in Analog-to-Digital Converter (ADC) on the Arduino Uno has what resolution?",
+        "options": {
+          "a": "8-bit",
+          "b": "**10-bit ✓** *(values 0 to 1023)*\n",
+          "c": "12-bit",
+          "d": "16-bit"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 66,
+        "question": "What are the two mandatory functions in every Arduino sketch?",
+        "options": {
+          "a": "`start()` and `loop()`",
+          "b": "**`setup()` and `loop()` ✓**",
+          "c": "`setup()` and `run()`",
+          "d": "`init()` and `main()`"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 67,
+        "question": "What is the function of the `setup()` block in Arduino programming?",
+        "options": {
+          "a": "It runs continuously to process calculations",
+          "b": "**It runs once at startup to initialize pin modes, serial communication, and variables ✓**",
+          "c": "It compiles the binary code to flash memory",
+          "d": "It monitors the watchdog timer reset state"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 68,
+        "question": "Which function is used to configure a specific pin as an INPUT or OUTPUT?",
+        "options": {
+          "a": "`digitalWrite()`",
+          "b": "**`pinMode()` ✓**",
+          "c": "`analogWrite()`",
+          "d": "`pinModeSelect()`"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 69,
+        "question": "Which function is used to output a HIGH or LOW digital voltage state to a pin?",
+        "options": {
+          "a": "`digitalRead()`",
+          "b": "**`digitalWrite()` ✓**",
+          "c": "`analogWrite()`",
+          "d": "`pinWrite()`"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 70,
+        "question": "What will `analogRead(A0)` return when the voltage on pin A0 is exactly 2.5V (assuming a 5.0V reference)?",
+        "options": {
+          "a": "250",
+          "b": "512",
+          "c": "**511 or 512 ✓** *(2.5 / 5.0 * 1023 = 511.5)*\n",
+          "d": "1023"
+        },
+        "correct": "c"
+      },
+      {
+        "id": 71,
+        "question": "Which function is used to generate a Pulse Width Modulation (PWM) signal on a PWM-enabled pin?",
+        "options": {
+          "a": "`digitalWrite()`",
+          "b": "**`analogWrite()` ✓**",
+          "c": "`analogRead()`",
+          "d": "`pwmWrite()`"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 72,
+        "question": "What is the range of values that can be passed to the `analogWrite()` function?",
+        "options": {
+          "a": "0 to 1023",
+          "b": "**0 to 255 ✓** *(8-bit resolution)*\n",
+          "c": "0 to 100",
+          "d": "-127 to 128"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 73,
+        "question": "To establish serial communication between the Arduino Uno and a PC at 9600 baud, what command is used in `setup()`?",
+        "options": {
+          "a": "`Serial.start(9600);`",
+          "b": "**`Serial.begin(9600);` ✓**",
+          "c": "`Serial.baud(9600);`",
+          "d": "`Serial.open(9600);`"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 74,
+        "question": "How is the built-in LED on the Arduino Uno board mapped to digital pins?",
+        "options": {
+          "a": "Pin 9",
+          "b": "**Pin 13 ✓**",
+          "c": "Pin 3",
+          "d": "Pin A0"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 75,
+        "question": "When connecting an LED to a digital output pin on the Arduino, why is a resistor placed in series with the LED?",
+        "options": {
+          "a": "To increase the voltage level to the LED",
+          "b": "**To limit the current and prevent burning out the LED and microcontroller pin ✓**",
+          "c": "To filter high-frequency oscillator noise",
+          "d": "To act as a pull-up resistor"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 76,
+        "question": "What function is used to create a non-blocking delay or check elapsed time in milliseconds since the Arduino board began running?",
+        "options": {
+          "a": "`delay()`",
+          "b": "**`millis()` ✓**",
+          "c": "`delayMicroseconds()`",
+          "d": "`sleep()`"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 77,
+        "question": "What is the problem with using the `delay(1000)` function in an interactive sensor control system?",
+        "options": {
+          "a": "It draws high power from the supply",
+          "b": "**It blocks instruction execution, preventing the microcontroller from reading sensor inputs during the delay ✓**",
+          "c": "It forces a brown-out reset",
+          "d": "It overwrites the bootloader flash sectors"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 78,
+        "question": "Which of the following lines correctly configures an analog pin A0 as digital input with an internal pull-up resistor?",
+        "options": {
+          "a": "`pinMode(A0, INPUT);`",
+          "b": "**`pinMode(A0, INPUT_PULLUP);` ✓**",
+          "c": "`digitalWrite(A0, HIGH);`",
+          "d": "`analogWrite(A0, 255);`"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 79,
+        "question": "Which protocol is natively used by the ATmega328P to load programs through the USB port without needing an external hardware programmer?",
+        "options": {
+          "a": "SPI",
+          "b": "**Serial Bootloader over UART ✓**",
+          "c": "JTAG",
+          "d": "6LoWPAN"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 80,
+        "question": "If you connect an LM35 temperature sensor output to Arduino pin A1, what code formula converts the raw analog reading `val` to temperature in Celsius (assuming 5V reference)?",
+        "options": {
+          "a": "`temp = val * 5.0;`",
+          "b": "**`temp = (val * 5.0 * 100.0) / 1024.0;` ✓** *(10mV/C, so V = val*5/1024; C = V/0.01 = V*100)*\n",
+          "c": "`temp = val / 1023.0;`",
+          "d": "`temp = val * 10.0;`"
+        },
+        "correct": "b"
+      }
+    ]
+  },
+  {
+    "unit": "unit5",
+    "unitName": "Unit 5: IoT Communication Protocols",
+    "questions": [
+      {
+        "id": 81,
+        "question": "Which protocol is the standard physical and MAC layer specification for low-power wireless personal area networks (LR-WPANs) like ZigBee?",
+        "options": {
+          "a": "IEEE 802.11 (Wi-Fi)",
+          "b": "**IEEE 802.15.4 ✓**",
+          "c": "IEEE 802.3 (Ethernet)",
+          "d": "Bluetooth 5.0"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 82,
+        "question": "What is the primary frequency band used globally by IEEE 802.15.4?",
+        "options": {
+          "a": "5.0 GHz",
+          "b": "**2.4 GHz ✓**",
+          "c": "915 MHz",
+          "d": "433 MHz"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 83,
+        "question": "Which wireless protocol is designed specifically for short-range low-power consumption in battery-powered devices like beacons and fitness trackers?",
+        "options": {
+          "a": "Standard Classic Bluetooth",
+          "b": "**BLE (Bluetooth Low Energy) ✓**",
+          "c": "IEEE 802.11a",
+          "d": "100BaseFX"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 84,
+        "question": "What is the main function of the 6LoWPAN protocol layer?",
+        "options": {
+          "a": "Providing application interfaces like HTTP requests",
+          "b": "**Header compression and fragmentation to transmit IPv6 packets over low-power IEEE 802.15.4 links ✓**",
+          "c": "Encrypting local databases",
+          "d": "Managing physical connections over UTP"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 85,
+        "question": "Which layer of the OSI model does 6LoWPAN operate between?",
+        "options": {
+          "a": "Transport and Session Layers",
+          "b": "**Network (IP) and Data Link (MAC) Layers ✓**",
+          "c": "Physical and Data Link Layers",
+          "d": "Application and Transport Layers"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 86,
+        "question": "MQTT (Message Queuing Telemetry Transport) is built on top of which transport layer protocol?",
+        "options": {
+          "a": "UDP",
+          "b": "**TCP ✓** *(uses port 1883 or 8883 for secure)*\n",
+          "c": "ICMP",
+          "d": "TFTP"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 87,
+        "question": "CoAP (Constrained Application Protocol) is designed as a lightweight alternative to HTTP. It runs over which transport layer protocol?",
+        "options": {
+          "a": "TCP",
+          "b": "**UDP ✓** *(uses port 5683)*\n",
+          "c": "SCTP",
+          "d": "IPsec"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 88,
+        "question": "Which of the following best contrasts MQTT and CoAP?",
+        "options": {
+          "a": "MQTT is connectionless over UDP, while CoAP is connection-oriented over TCP",
+          "b": "**MQTT is many-to-many publish-subscribe over TCP, while CoAP is one-to-one RESTful request-response over UDP ✓**",
+          "c": "MQTT uses more bandwidth than HTTP",
+          "d": "CoAP does not support GET and POST methods"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 89,
+        "question": "In MQTT, what is a 'topic'?",
+        "options": {
+          "a": "A physical address of the broker",
+          "b": "**A hierarchical string key (e.g. 'home/livingroom/temp') used to categorize and route messages ✓**",
+          "c": "The payload size in bytes",
+          "d": "The unique client identifier"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 90,
+        "question": "What are the three Quality of Service (QoS) levels supported by MQTT?",
+        "options": {
+          "a": "High, Medium, Low",
+          "b": "**0 (At most once), 1 (At least once), 2 (Exactly once) ✓**",
+          "c": "TCP, UDP, IP",
+          "d": "Best-effort, Guaranteed, Real-time"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 91,
+        "question": "Which IEEE standard family defines Wi-Fi networking?",
+        "options": {
+          "a": "IEEE 802.15.4",
+          "b": "**IEEE 802.11 ✓**",
+          "c": "IEEE 802.3",
+          "d": "IEEE 802.15.1"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 92,
+        "question": "What CoAP message type requires an explicit acknowledgment from the receiver?",
+        "options": {
+          "a": "Non-confirmable (NON)",
+          "b": "**Confirmable (CON) ✓**",
+          "c": "Acknowledgment (ACK)",
+          "d": "Reset (RST)"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 93,
+        "question": "Which application layer protocol uses the URI scheme 'coap://'?",
+        "options": {
+          "a": "MQTT",
+          "b": "**CoAP ✓**",
+          "c": "HTTP",
+          "d": "XMPP"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 94,
+        "question": "What is the role of an MQTT Broker?",
+        "options": {
+          "a": "It generates sensor data",
+          "b": "**It acts as a central server that receives publications and forwards them to subscribers based on topic filters ✓**",
+          "c": "It translates physical signals to optical pulses",
+          "d": "It compresses IPv6 headers"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 95,
+        "question": "Which protocol is a RESTful, request-response, web-transfer protocol built specifically for constrained nodes and networks?",
+        "options": {
+          "a": "MQTT",
+          "b": "**CoAP ✓**",
+          "c": "6LoWPAN",
+          "d": "TCP"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 96,
+        "question": "In BLE, how are data services organized and exposed?",
+        "options": {
+          "a": "Using cumulative sliding windows",
+          "b": "**Using GATT (Generic Attribute Profile) services and characteristics ✓**",
+          "c": "Using UDP port numbers",
+          "d": "Using MAC address tables"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 97,
+        "question": "What is the maximum payload size of an IEEE 802.15.4 frame before fragmentation at the 6LoWPAN layer?",
+        "options": {
+          "a": "1500 bytes",
+          "b": "**127 bytes ✓**",
+          "c": "64 bytes",
+          "d": "1518 bytes"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 98,
+        "question": "Which MQTT QoS level guarantees that a message is delivered exactly once to the subscriber, using a 4-step handshake?",
+        "options": {
+          "a": "QoS 0",
+          "b": "QoS 1",
+          "c": "**QoS 2 ✓**",
+          "d": "QoS 3"
+        },
+        "correct": "c"
+      },
+      {
+        "id": 99,
+        "question": "What is the standard IPv6 packet size that 6LoWPAN must compress and fragment to fit into 802.15.4 frames?",
+        "options": {
+          "a": "64 bytes",
+          "b": "**1280 bytes (IPv6 MTU requirement) ✓**",
+          "c": "1500 bytes",
+          "d": "65535 bytes"
+        },
+        "correct": "b"
+      },
+      {
+        "id": 100,
+        "question": "Which protocol offers the highest data rate and range but consumes the most power, making it unsuitable for tiny coin-cell battery sensors?",
+        "options": {
+          "a": "BLE",
+          "b": "IEEE 802.15.4",
+          "c": "**Standard Wi-Fi (IEEE 802.11) ✓**",
+          "d": "LoRaWAN"
+        },
+        "correct": "c"
+      }
+    ]
+  }
+]

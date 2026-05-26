@@ -731,6 +731,9 @@ function selectTopic(index) {
     });
   }
 
+  // Shuffle MCQs if any are embedded in the HTML
+  shuffleMcqOptions(elements.contentArea);
+
   // Update sidebar active state
   const sidebarButtons = elements.topicList.querySelectorAll('.topic-item');
   sidebarButtons.forEach(btn => {
@@ -1305,6 +1308,35 @@ function renderBashProblem(index) {
 // ============================================================
 //  PRACTICE MODE RENDERING & HELPERS
 // ============================================================
+function shuffleMcqOptions(container) {
+  const mcqGroups = container.querySelectorAll('.mcq-options');
+  mcqGroups.forEach(group => {
+    // Only shuffle if not already answered
+    if (group.classList.contains('answered')) return;
+
+    const options = Array.from(group.querySelectorAll('.mcq-option'));
+    if (options.length <= 1) return;
+
+    // Fisher-Yates shuffle
+    for (let i = options.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [options[i], options[j]] = [options[j], options[i]];
+    }
+
+    // Clear and re-append in new order
+    // We preserve the group's structure and just re-order children
+    options.forEach((opt, index) => {
+      // Update display letter (A, B, C, D...)
+      const letterSpan = opt.querySelector('.option-letter');
+      if (letterSpan) {
+        const displayLetter = String.fromCharCode(65 + index); // 65 is 'A'
+        letterSpan.textContent = displayLetter + ')';
+      }
+      group.appendChild(opt);
+    });
+  });
+}
+
 function parseOption(text) {
   const isCorrect = text.includes('✓');
   let cleanText = text;
@@ -1496,6 +1528,9 @@ function renderPracticeUnit(unitIndex) {
       throwOnError: false
     });
   }
+
+  // Shuffle the options
+  shuffleMcqOptions(elements.contentArea);
 
   const sidebarButtons = elements.topicList.querySelectorAll('.topic-item');
   sidebarButtons.forEach(btn => {

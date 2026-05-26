@@ -1,13 +1,16 @@
 # Ignore study materials and source documents
-Computer Networks/
-IOT/*.pptx
-IOT/*.pdf
-IOT/*.txt
-IOT/*.md
-IOT/*.json
+*.pptx
+*.ppt
+*.pdf
+*.txt
+*.md
 IOT/*.png
 IOT/*.jpeg
 IOT/*.jpg
+
+# Ignore specific directories
+Linux/
+Computer Networks/
 
 # Ignore system files
 .DS_Store
