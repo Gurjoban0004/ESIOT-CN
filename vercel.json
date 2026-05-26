@@ -1,0 +1,7 @@
+{
+  "cleanUrls": true,
+  "rewrites": [
+    { "source": "/", "destination": "/IOT/index.html" },
+    { "source": "/(.*)", "destination": "/IOT/$1" }
+  ]
+}
