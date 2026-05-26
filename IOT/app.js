@@ -157,8 +157,7 @@ function init() {
   updateTimer();
   setInterval(updateTimer, 60000);
 
-  // Boot to IoT subject, first section
-  setActiveSubject('iot');
+  renderLandingPage();
 }
 
 // ============================================================
@@ -402,12 +401,85 @@ function setupEventListeners() {
       }
     }
   });
+
+  elements.welcomeScreen.addEventListener('click', (e) => {
+    const subjectCard = e.target.closest('.landing-subject-card');
+    if (!subjectCard) return;
+    const subject = subjectCard.getAttribute('data-subject');
+    if (subject) setActiveSubject(subject);
+  });
+}
+
+function renderLandingPage() {
+  document.body.classList.add('landing-mode');
+  document.title = 'Prep Hub';
+  elements.welcomeScreen.style.display = 'flex';
+  elements.readingPane.style.display = 'none';
+  elements.topNavBar.innerHTML = '';
+  if (elements.mobileSectionNav) elements.mobileSectionNav.innerHTML = '';
+  elements.topicList.innerHTML = '';
+  elements.progressPercent.textContent = 'Choose a desk';
+  elements.progressBar.style.width = '0%';
+  if (elements.mobileBrandTitle) elements.mobileBrandTitle.textContent = 'Prep Hub';
+
+  elements.subjectBtns.forEach(btn => btn.classList.remove('active'));
+  document.documentElement.style.setProperty('--active-accent', '#2F6F5E');
+
+  elements.welcomeScreen.innerHTML = `
+    <section class="landing-page" aria-label="Prep Hub landing page">
+      <div class="landing-hero">
+        <div class="landing-copy">
+          <p class="landing-console-line">student@prephub:~$ choose-your-battle</p>
+          <h2>One study room. Three exam desks. Zero wandering.</h2>
+          <p>Prep Hub keeps your notes, MCQs, progress, and Linux terminal drills in one quiet workspace built for the last stretch before the paper.</p>
+          <div class="landing-actions">
+            <button class="landing-subject-card primary" data-subject="linux">
+              <span class="landing-card-icon">&gt;_</span>
+              <span>
+                <strong>Linux Lab</strong>
+                <small>MCQs plus a virtual Bash terminal</small>
+              </span>
+            </button>
+            <button class="landing-subject-card" data-subject="iot">
+              <span class="landing-card-icon">◎</span>
+              <span>
+                <strong>ES & IoT</strong>
+                <small>Exam notes, cheat sheet, practice</small>
+              </span>
+            </button>
+            <button class="landing-subject-card" data-subject="cn">
+              <span class="landing-card-icon">▦</span>
+              <span>
+                <strong>Computer Networks</strong>
+                <small>Layered units and quiz practice</small>
+              </span>
+            </button>
+          </div>
+        </div>
+        <div class="landing-desk" aria-hidden="true">
+          <div class="landing-window top">
+            <div class="landing-window-bar"><span></span><span></span><span></span></div>
+            <pre>mcq --mode exam
+linux --lab bash
+notes --focus st2</pre>
+          </div>
+          <div class="landing-window bottom">
+            <div class="landing-meter"><span style="width: 65%;"></span></div>
+            <div class="landing-check-row"><b></b><span>progress saved locally</span></div>
+            <div class="landing-check-row"><b></b><span>answers hidden until asked</span></div>
+            <div class="landing-check-row"><b></b><span>practice built from your syllabus</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+  `;
 }
 
 // ============================================================
 //  SUBJECT SWITCHING
 // ============================================================
 function setActiveSubject(subjectId) {
+  document.body.classList.remove('landing-mode');
   state.activeSubject = subjectId;
   const subjectConfig = CONFIG.subjects[subjectId];
 
@@ -1639,6 +1711,7 @@ function renderBashProblem(index) {
         <div class="bash-editor-toolbar">
           <span style="font-size: 0.85rem;">${problem.kind === 'terminal' ? 'Linux Lab Editor' : 'Bash Script Editor'}</span>
           <div>
+            <button class="bash-reset-btn" id="bash-reset-btn">Reset</button>
             <button class="bash-run-btn" id="bash-run-btn">Run</button>
             <button class="bash-submit-btn" id="bash-submit-btn">Submit</button>
           </div>
@@ -1667,6 +1740,23 @@ function renderBashProblem(index) {
 
   document.getElementById('bash-run-btn').addEventListener('click', () => runBashProblem(problem, 'run'));
   document.getElementById('bash-submit-btn').addEventListener('click', () => runBashProblem(problem, 'submit'));
+  document.getElementById('bash-reset-btn').addEventListener('click', () => {
+    const starter = problem.starterCode || '#!/usr/bin/env bash\n\n';
+    editor.value = starter;
+    state.bashProgress[state.activeSubject][problem.id] = {
+      ...state.bashProgress[state.activeSubject][problem.id],
+      code: starter,
+      codeVersion: problemVersion,
+      lastResults: [],
+      lastMode: null
+    };
+    saveBashProgress();
+    const body = document.getElementById('bash-results-body');
+    if (body) body.innerHTML = renderBashResults([]);
+    const summary = document.getElementById('bash-results-summary');
+    if (summary) summary.textContent = 'No run yet';
+    editor.focus();
+  });
 
   const solutionToggle = document.getElementById('bash-solution-toggle');
   const solutionCode = document.getElementById('bash-solution-code');

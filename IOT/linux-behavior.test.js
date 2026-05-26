@@ -45,6 +45,13 @@ function loadSandbox() {
 
 const sandbox = loadSandbox();
 const problems = sandbox.LINUX_BASH_PROBLEMS;
+const appSource = fs.readFileSync('IOT/app.js', 'utf8');
+const styleSource = fs.readFileSync('IOT/style.css', 'utf8');
+
+assert(appSource.includes('renderLandingPage'), 'App should render a distinctive landing page before subject study.');
+assert(appSource.includes('bash-reset-btn'), 'Bash practice should include a reset editor button.');
+assert(styleSource.includes('resize: horizontal'), 'Bash question panel should be horizontally resizable to expand editor space.');
+assert(styleSource.includes('.landing-page'), 'Landing page styles should be present.');
 
 const mcqCount = sandbox.LINUX_MCQ_BANK.flatMap(unit => unit.questions).length;
 assert.strictEqual(mcqCount, 65, 'Linux MCQs should include all 65 organized prep questions.');
