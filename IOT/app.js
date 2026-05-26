@@ -199,6 +199,19 @@ function loadAllProgress() {
       state.practiceAnswers.cn = JSON.parse(cnPracticeSaved) || {};
     } catch (e) { console.error("Error loading CN practice progress", e); }
   }
+  const linuxPracticeSaved = localStorage.getItem(CONFIG.subjects.linux.storageKeyPractice);
+  if (linuxPracticeSaved) {
+    try {
+      state.practiceAnswers.linux = JSON.parse(linuxPracticeSaved) || {};
+    } catch (e) { console.error("Error loading Linux MCQ progress", e); }
+  }
+
+  const linuxBashSaved = localStorage.getItem(CONFIG.subjects.linux.storageKeyBash);
+  if (linuxBashSaved) {
+    try {
+      state.bashProgress.linux = JSON.parse(linuxBashSaved) || {};
+    } catch (e) { console.error("Error loading Linux Bash progress", e); }
+  }
 }
 
 function saveProgress() {
@@ -209,6 +222,12 @@ function saveProgress() {
 function savePracticeProgress() {
   const subjectKeyPractice = CONFIG.subjects[state.activeSubject].storageKeyPractice;
   localStorage.setItem(subjectKeyPractice, JSON.stringify(state.practiceAnswers[state.activeSubject]));
+}
+
+function saveBashProgress() {
+  const subjectConfig = CONFIG.subjects[state.activeSubject];
+  if (!subjectConfig.storageKeyBash) return;
+  localStorage.setItem(subjectConfig.storageKeyBash, JSON.stringify(state.bashProgress[state.activeSubject] || {}));
 }
 
 function resetPracticeProgress() {
@@ -262,8 +281,8 @@ function setupEventListeners() {
 
   // Next navigation — also marks current topic as mastered (in study sections)
   elements.nextBtn.addEventListener('click', () => {
-    if (state.activeSection === 'practice') {
-      const mcqBank = CONFIG.subjects[state.activeSubject].mcqs || [];
+    if (isMcqSection()) {
+      const mcqBank = getActiveMcqBank();
       const totalUnits = mcqBank.length;
       if (state.activeTopicIndex < totalUnits - 1) {
         selectTopic(state.activeTopicIndex + 1);
@@ -295,8 +314,8 @@ function setupEventListeners() {
     if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
       if (state.activeTopicIndex > 0) selectTopic(state.activeTopicIndex - 1);
     } else if (e.key === 'ArrowDown' || e.key === 'ArrowRight') {
-      if (state.activeSection === 'practice') {
-        const mcqBank = CONFIG.subjects[state.activeSubject].mcqs || [];
+      if (isMcqSection()) {
+        const mcqBank = getActiveMcqBank();
         const totalUnits = mcqBank.length;
         if (state.activeTopicIndex < totalUnits - 1) selectTopic(state.activeTopicIndex + 1);
       } else {
@@ -305,7 +324,7 @@ function setupEventListeners() {
         if (state.activeTopicIndex < totalTopics - 1) selectTopic(state.activeTopicIndex + 1);
       }
     } else if (e.key === ' ' || e.key.toLowerCase() === 'm') {
-      if (state.activeSection !== 'practice') {
+      if (!isMcqSection() && !isBashSection()) {
         toggleTopicMastery(state.activeSection, state.activeTopicIndex);
         e.preventDefault();
       }
@@ -360,7 +379,7 @@ function setupEventListeners() {
     }
 
     // Special practice mode handling
-    if (state.activeSection === 'practice') {
+    if (isMcqSection()) {
       const card = option.closest('.mcq-card');
       if (card) {
         const qId = parseInt(card.getAttribute('data-question-id'));
@@ -444,6 +463,22 @@ function renderTopNav(subjectId) {
 // ============================================================
 //  SECTION SWITCHING
 // ============================================================
+function isMcqSection(sectionId = state.activeSection) {
+  return sectionId === 'practice' || sectionId === 'linuxMcq';
+}
+
+function isBashSection(sectionId = state.activeSection) {
+  return sectionId === 'bashPractice';
+}
+
+function getActiveMcqBank() {
+  return CONFIG.subjects[state.activeSubject].mcqs || [];
+}
+
+function getActiveBashProblems() {
+  return CONFIG.subjects[state.activeSubject].bashProblems || [];
+}
+
 function setActiveSection(sectionId) {
   state.activeSection = sectionId;
   state.activeTopicIndex = 0;
@@ -479,9 +514,20 @@ function setActiveSection(sectionId) {
   updateProgressBar();
   renderSidebar();
 
-  if (state.activeSection === 'practice') {
-    const mcqBank = CONFIG.subjects[state.activeSubject].mcqs || [];
+  if (isMcqSection()) {
+    const mcqBank = getActiveMcqBank();
     if (mcqBank.length > 0) {
+      selectTopic(0);
+    } else {
+      elements.welcomeScreen.style.display = 'flex';
+      elements.readingPane.style.display = 'none';
+    }
+    return;
+  }
+
+  if (isBashSection()) {
+    const bashProblems = getActiveBashProblems();
+    if (bashProblems.length > 0) {
       selectTopic(0);
     } else {
       elements.welcomeScreen.style.display = 'flex';
@@ -505,8 +551,8 @@ function setActiveSection(sectionId) {
 function renderSidebar() {
   elements.topicList.innerHTML = '';
 
-  if (state.activeSection === 'practice') {
-    const mcqBank = CONFIG.subjects[state.activeSubject].mcqs || [];
+  if (isMcqSection()) {
+    const mcqBank = getActiveMcqBank();
     mcqBank.forEach((unitObj, index) => {
       const titleLower = unitObj.unitName.toLowerCase();
       const matchesSearch = titleLower.includes(state.searchQuery);
@@ -599,7 +645,7 @@ function renderSidebar() {
 function selectTopic(index) {
   state.activeTopicIndex = index;
 
-  if (state.activeSection === 'practice') {
+  if (isMcqSection()) {
     renderPracticeUnit(index);
     return;
   }
@@ -721,8 +767,8 @@ function updateNextButtonState() {
 }
 
 function updateProgressBar() {
-  if (state.activeSection === 'practice') {
-    const mcqBank = CONFIG.subjects[state.activeSubject].mcqs || [];
+  if (isMcqSection()) {
+    const mcqBank = getActiveMcqBank();
     const allQuestions = mcqBank.flatMap(u => u.questions || []);
     const total = allQuestions.length || 100;
     
@@ -786,7 +832,7 @@ function parseOption(text) {
 }
 
 function updateQuizDashboardStats() {
-  const mcqBank = CONFIG.subjects[state.activeSubject].mcqs || [];
+  const mcqBank = getActiveMcqBank();
   const allQuestions = mcqBank.flatMap(u => u.questions || []);
   const totalQuestions = allQuestions.length || 100;
   
@@ -814,7 +860,7 @@ function updateQuizDashboardStats() {
 }
 
 function renderPracticeUnit(unitIndex) {
-  const mcqBank = CONFIG.subjects[state.activeSubject].mcqs || [];
+  const mcqBank = getActiveMcqBank();
   const unitObj = mcqBank[unitIndex];
   if (!unitObj) return;
 
