@@ -46,7 +46,40 @@ function loadSandbox() {
 const sandbox = loadSandbox();
 const problems = sandbox.LINUX_BASH_PROBLEMS;
 
-assert(problems.length >= 12, 'Linux Bash Practice should include the organized prep problem set.');
+const mcqCount = sandbox.LINUX_MCQ_BANK.flatMap(unit => unit.questions).length;
+assert.strictEqual(mcqCount, 65, 'Linux MCQs should include all 65 organized prep questions.');
+assert(problems.length >= 26, 'Linux Bash Practice should include all 26 organized prep problems.');
+
+const questionText = sandbox.LINUX_MCQ_BANK
+  .flatMap(unit => unit.questions)
+  .map(question => question.question);
+[
+  'Which command mounts a file system at a specified mount point?',
+  'Which sysctl parameter controls the maximum number of open file descriptors system-wide?',
+  'Which command enables a service to start automatically at boot time?'
+].forEach(requiredQuestion => {
+  assert(questionText.includes(requiredQuestion), `Missing organized prep MCQ: ${requiredQuestion}`);
+});
+
+const problemTitles = problems.map(problem => problem.title);
+[
+  'Multiplication Table',
+  'Multi-User Setup',
+  'Directory Structure',
+  'Rectangle Perimeter',
+  'FizzBuzz Logic',
+  'Star Patterns',
+  'Substring Extraction',
+  'LVM Management',
+  'Network Traffic Monitor',
+  'Secure Backup',
+  'Remote Network Safety',
+  'SSH Security Setup',
+  'System Troubleshooting',
+  'Log Analysis'
+].forEach(requiredTitle => {
+  assert(problemTitles.includes(requiredTitle), `Missing organized prep bash problem: ${requiredTitle}`);
+});
 
 for (const problem of problems) {
   assert(problem.solutionCode && problem.solutionCode.includes('read'), `${problem.id} needs a reveal-only solutionCode.`);

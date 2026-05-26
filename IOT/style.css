@@ -1054,8 +1054,8 @@ nav.top-nav button.active[data-section="bashPractice"] {
   border-radius: 6px;
   padding: 0.7rem;
   font-family: var(--font-mono);
-  white-space: pre-wrap;
-  overflow: auto;
+  white-space: pre;
+  overflow-x: auto;
 }
 
 .bash-editor-pane {
@@ -1112,13 +1112,17 @@ nav.top-nav button.active[data-section="bashPractice"] {
 }
 
 .bash-results-panel {
-  max-height: 340px;
-  overflow: auto;
+  max-height: 350px;
+  overflow-y: auto;
   border-top: 1px solid rgba(255, 255, 255, 0.1);
   background: #FFFDFB;
 }
 
 .bash-results-header {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: #FFFDFB;
   display: flex;
   justify-content: space-between;
   align-items: center;
