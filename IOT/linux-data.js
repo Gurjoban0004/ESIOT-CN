@@ -14,7 +14,7 @@ const LINUX_MCQ_BANK = [
         id: 3001,
         source: "organized-prep",
         topic: "Linux distributions",
-        question: "Which option best describes a Linux distribution?",
+        question: "Juvpu bcgvba orfg qrfpevorf n Yvahk qvfgevohgvba?",
         options: {
           a: "A shell script used only for installing packages",
           b: "Only the Linux kernel without user tools",
@@ -22,13 +22,13 @@ const LINUX_MCQ_BANK = [
           d: "A hardware device used to boot Ubuntu"
         },
         correct: "c",
-        explanation: "A distribution packages the Linux kernel with tools, repositories, defaults, and a package manager."
+        explanation: "N qvfgevohgvba cnpxntrf gur Yvahk xreary jvgu gbbyf, ercbfvgbevrf, qrsnhygf, naq n cnpxntr znantre."
       },
       {
         id: 3002,
         source: "organized-prep",
         topic: "Basic commands",
-        question: "Which command is used to print the current working directory?",
+        question: "Juvpu pbzznaq vf hfrq gb cevag gur pheerag jbexvat qverpgbel?",
         options: {
           a: "pwd",
           b: "whoami",
@@ -36,13 +36,13 @@ const LINUX_MCQ_BANK = [
           d: "hostname"
         },
         correct: "a",
-        explanation: "`pwd` prints the present working directory."
+        explanation: "`cjq` cevagf gur cerfrag jbexvat qverpgbel."
       },
       {
         id: 3003,
         source: "organized-prep",
         topic: "File manipulation",
-        question: "Which command is used to create an empty file or update its timestamp?",
+        question: "Juvpu pbzznaq vf hfrq gb perngr na rzcgl svyr be hcqngr vgf gvzrfgnzc?",
         options: {
           a: "mkdir",
           b: "rmdir",
@@ -50,13 +50,13 @@ const LINUX_MCQ_BANK = [
           d: "touch"
         },
         correct: "d",
-        explanation: "`touch` updates timestamps and creates an empty file if it is missing."
+        explanation: "`gbhpu` hcqngrf gvzrfgnzcf naq perngrf na rzcgl svyr vs vg vf zvffvat."
       },
       {
         id: 3004,
         source: "organized-prep",
         topic: "Permissions",
-        question: "Which command is used to change file permissions?",
+        question: "Juvpu pbzznaq vf hfrq gb punatr svyr crezvffvbaf?",
         options: {
           a: "chown",
           b: "chmod",
@@ -64,13 +64,13 @@ const LINUX_MCQ_BANK = [
           d: "groupadd"
         },
         correct: "b",
-        explanation: "`chmod` changes read, write, and execute permissions."
+        explanation: "`puzbq` punatrf ernq, jevgr, naq rkrphgr crezvffvbaf."
       },
       {
         id: 3005,
         source: "organized-prep",
         topic: "Ownership",
-        question: "Which command is used to change the owner of a specific file?",
+        question: "Juvpu pbzznaq vf hfrq gb punatr gur bjare bs n fcrpvsvp svyr?",
         options: {
           a: "chown",
           b: "chmod",
@@ -78,13 +78,13 @@ const LINUX_MCQ_BANK = [
           d: "usermod"
         },
         correct: "a",
-        explanation: "`chown` changes file ownership."
+        explanation: "`pubja` punatrf svyr bjarefuvc."
       },
       {
         id: 3006,
         source: "organized-prep",
         topic: "Disk partitions",
-        question: "Which command displays the partition table of a disk such as `/dev/sda`?",
+        question: "Juvpu pbzznaq qvfcynlf gur cnegvgvba gnoyr bs n qvfx fhpu nf `/qri/fqn`?",
         options: {
           a: "df -h /dev/sda",
           b: "mount /dev/sda",
@@ -92,13 +92,13 @@ const LINUX_MCQ_BANK = [
           d: "du -sh /dev/sda"
         },
         correct: "c",
-        explanation: "`fdisk -l /dev/sda` lists partition information for that disk."
+        explanation: "`sqvfx -y /qri/fqn` yvfgf cnegvgvba vasbezngvba sbe gung qvfx."
       },
       {
         id: 3007,
         source: "organized-prep",
         topic: "File management",
-        question: "Which command is used to remove a directory along with all its contents?",
+        question: "Juvpu pbzznaq vf hfrq gb erzbir n qverpgbel nybat jvgu nyy vgf pbagragf?",
         options: {
           a: "rmdir",
           b: "rm -r",
@@ -106,13 +106,13 @@ const LINUX_MCQ_BANK = [
           d: "remove -a"
         },
         correct: "b",
-        explanation: "`rm -r` recursively removes a directory tree."
+        explanation: "`ez -e` erphefviryl erzbirf n qverpgbel gerr."
       },
       {
         id: 3008,
         source: "organized-prep",
         topic: "System information",
-        question: "Which command displays free and used memory in the system?",
+        question: "Juvpu pbzznaq qvfcynlf serr naq hfrq zrzbel va gur flfgrz?",
         options: {
           a: "vmstat",
           b: "iostat",
@@ -120,13 +120,13 @@ const LINUX_MCQ_BANK = [
           d: "free"
         },
         correct: "d",
-        explanation: "`free` reports memory usage."
+        explanation: "`serr` ercbegf zrzbel hfntr."
       },
       {
         id: 3009,
         source: "organized-prep",
         topic: "File viewing",
-        question: "Which command shows the first 10 lines of a file?",
+        question: "Juvpu pbzznaq fubjf gur svefg 10 yvarf bs n svyr?",
         options: {
           a: "head",
           b: "tail",
@@ -134,13 +134,13 @@ const LINUX_MCQ_BANK = [
           d: "less"
         },
         correct: "a",
-        explanation: "`head` shows the beginning of a file."
+        explanation: "`urnq` fubjf gur ortvaavat bs n svyr."
       },
       {
         id: 3010,
         source: "organized-prep",
         topic: "File viewing",
-        question: "Which command shows the last 20 lines of a file named `system.log`?",
+        question: "Juvpu pbzznaq fubjf gur ynfg 20 yvarf bs n svyr anzrq `flfgrz.ybt`?",
         options: {
           a: "head -20 system.log",
           b: "cat -20 system.log",
@@ -148,13 +148,13 @@ const LINUX_MCQ_BANK = [
           d: "less -20 system.log"
         },
         correct: "c",
-        explanation: "`tail -20 system.log` displays the final 20 lines."
+        explanation: "`gnvy -20 flfgrz.ybt` qvfcynlf gur svany 20 yvarf."
       },
       {
         id: 3011,
         source: "organized-prep",
         topic: "Filesystems",
-        question: "Which file system type is the default used by Ubuntu for primary partitions?",
+        question: "Juvpu svyr flfgrz glcr vf gur qrsnhyg hfrq ol Hohagh sbe cevznel cnegvgvbaf?",
         options: {
           a: "NTFS",
           b: "ext4",
@@ -162,13 +162,13 @@ const LINUX_MCQ_BANK = [
           d: "xfs"
         },
         correct: "b",
-        explanation: "Ubuntu commonly uses `ext4` as the default primary filesystem."
+        explanation: "Hohagh pbzzbayl hfrf `rkg4` nf gur qrsnhyg cevznel svyrflfgrz."
       },
       {
         id: 3012,
         source: "organized-prep",
         topic: "Standard streams",
-        question: "What does the `stdin` standard stream represent?",
+        question: "Jung qbrf gur `fgqva` fgnaqneq fgernz ercerfrag?",
         options: {
           a: "Standard output to the terminal",
           b: "Standard error messages",
@@ -176,13 +176,13 @@ const LINUX_MCQ_BANK = [
           d: "Standard input from the keyboard"
         },
         correct: "d",
-        explanation: "`stdin` is standard input and uses file descriptor 0."
+        explanation: "`fgqva` vf fgnaqneq vachg naq hfrf svyr qrfpevcgbe 0."
       },
       {
         id: 3013,
         source: "organized-prep",
         topic: "Standard streams",
-        question: "Which file descriptor number is associated with `stderr`?",
+        question: "Juvpu svyr qrfpevcgbe ahzore vf nffbpvngrq jvgu `fgqree`?",
         options: {
           a: "0",
           b: "1",
@@ -190,13 +190,13 @@ const LINUX_MCQ_BANK = [
           d: "3"
         },
         correct: "c",
-        explanation: "`stderr` uses file descriptor 2."
+        explanation: "`fgqree` hfrf svyr qrfpevcgbe 2."
       },
       {
         id: 3014,
         source: "organized-prep",
         topic: "User identity",
-        question: "Which command displays the username of the logged-in user?",
+        question: "Juvpu pbzznaq qvfcynlf gur hfreanzr bs gur ybttrq-va hfre?",
         options: {
           a: "whoami",
           b: "hostname",
@@ -204,13 +204,13 @@ const LINUX_MCQ_BANK = [
           d: "tty"
         },
         correct: "a",
-        explanation: "`whoami` displays the current username."
+        explanation: "`jubnzv` qvfcynlf gur pheerag hfreanzr."
       },
       {
         id: 3015,
         source: "organized-prep",
         topic: "Disk usage",
-        question: "Which utility reports total used and available space on mounted filesystems in human-readable form?",
+        question: "Juvpu hgvyvgl ercbegf gbgny hfrq naq ninvynoyr fcnpr ba zbhagrq svyrflfgrzf va uhzna-ernqnoyr sbez?",
         options: {
           a: "du -sh",
           b: "fdisk -l",
@@ -218,13 +218,13 @@ const LINUX_MCQ_BANK = [
           d: "df -h"
         },
         correct: "d",
-        explanation: "`df -h` reports mounted filesystem usage in human-readable units."
+        explanation: "`qs -u` ercbegf zbhagrq svyrflfgrz hfntr va uhzna-ernqnoyr havgf."
       },
       {
         id: 3016,
         source: "organized-prep",
         topic: "Mounting",
-        question: "Which command mounts a file system at a specified mount point?",
+        question: "Juvpu pbzznaq zbhagf n svyr flfgrz ng n fcrpvsvrq zbhag cbvag?",
         options: {
           a: "fsck",
           b: "mount",
@@ -232,13 +232,13 @@ const LINUX_MCQ_BANK = [
           d: "parted"
         },
         correct: "b",
-        explanation: "`mount` attaches a filesystem to a directory mount point."
+        explanation: "`zbhag` nggnpurf n svyrflfgrz gb n qverpgbel zbhag cbvag."
       },
       {
         id: 3017,
         source: "organized-prep",
         topic: "Filesystem repair",
-        question: "Which command should you run on an unmounted device to check and repair its consistency?",
+        question: "Juvpu pbzznaq fubhyq lbh eha ba na hazbhagrq qrivpr gb purpx naq ercnve vgf pbafvfgrapl?",
         options: {
           a: "df -h",
           b: "du -h",
@@ -246,13 +246,13 @@ const LINUX_MCQ_BANK = [
           d: "free"
         },
         correct: "c",
-        explanation: "`fsck` checks and repairs filesystem consistency on an unmounted device."
+        explanation: "`sfpx` purpxf naq ercnvef svyrflfgrz pbafvfgrapl ba na hazbhagrq qrivpr."
       },
       {
         id: 3018,
         source: "organized-prep",
         topic: "Disk usage",
-        question: "Which command displays disk usage of files and directories in human-readable form?",
+        question: "Juvpu pbzznaq qvfcynlf qvfx hfntr bs svyrf naq qverpgbevrf va uhzna-ernqnoyr sbez?",
         options: {
           a: "du -h",
           b: "df -i",
@@ -260,13 +260,13 @@ const LINUX_MCQ_BANK = [
           d: "free -h"
         },
         correct: "a",
-        explanation: "`du -h` reports file and directory disk usage in human-readable units."
+        explanation: "`qh -u` ercbegf svyr naq qverpgbel qvfx hfntr va uhzna-ernqnoyr havgf."
       },
       {
         id: 3019,
         source: "organized-prep",
         topic: "Partitioning",
-        question: "Which tool is most appropriate for creating a new partition on a large disk using GPT?",
+        question: "Juvpu gbby vf zbfg nccebcevngr sbe perngvat n arj cnegvgvba ba n ynetr qvfx hfvat TCG?",
         options: {
           a: "fdformat",
           b: "mkfs",
@@ -274,13 +274,13 @@ const LINUX_MCQ_BANK = [
           d: "parted"
         },
         correct: "d",
-        explanation: "`parted` supports GPT partition tables and large disks."
+        explanation: "`cnegrq` fhccbegf TCG cnegvgvba gnoyrf naq ynetr qvfxf."
       },
       {
         id: 3020,
         source: "organized-prep",
         topic: "Processes",
-        question: "Which command can be used to terminate a process by its PID such as PID 1234?",
+        question: "Juvpu pbzznaq pna or hfrq gb grezvangr n cebprff ol vgf CVQ fhpu nf CVQ 1234?",
         options: {
           a: "ps -9 1234",
           b: "kill -9 1234",
@@ -288,13 +288,13 @@ const LINUX_MCQ_BANK = [
           d: "end 1234"
         },
         correct: "b",
-        explanation: "`kill -9 1234` sends SIGKILL to process 1234."
+        explanation: "`xvyy -9 1234` fraqf FVTXVYY gb cebprff 1234."
       },
       {
         id: 3021,
         source: "organized-prep",
         topic: "Text processing",
-        question: "Which command extracts only the third column from a colon-delimited `/etc/passwd` file?",
+        question: "Juvpu pbzznaq rkgenpgf bayl gur guveq pbyhza sebz n pbyba-qryvzvgrq `/rgp/cnffjq` svyr?",
         options: {
           a: "cut -d: -f3 /etc/passwd",
           b: "awk -d: 3 /etc/passwd",
@@ -302,13 +302,13 @@ const LINUX_MCQ_BANK = [
           d: "paste -d: -f3 /etc/passwd"
         },
         correct: "a",
-        explanation: "`cut -d: -f3 /etc/passwd` selects field 3 using colon as the delimiter."
+        explanation: "`phg -q: -s3 /rgp/cnffjq` fryrpgf svryq 3 hfvat pbyba nf gur qryvzvgre."
       },
       {
         id: 3022,
         source: "organized-prep",
         topic: "Unmounting",
-        question: "Which command is used to safely detach a mounted file system?",
+        question: "Juvpu pbzznaq vf hfrq gb fnsryl qrgnpu n zbhagrq svyr flfgrz?",
         options: {
           a: "mount",
           b: "detachfs",
@@ -316,13 +316,13 @@ const LINUX_MCQ_BANK = [
           d: "ejectfs"
         },
         correct: "c",
-        explanation: "`umount` detaches a mounted filesystem."
+        explanation: "`hzbhag` qrgnpurf n zbhagrq svyrflfgrz."
       },
       {
         id: 3023,
         source: "organized-prep",
         topic: "Text processing",
-        question: "Which command in Linux sorts lines of a text file in alphabetical order?",
+        question: "Juvpu pbzznaq va Yvahk fbegf yvarf bs n grkg svyr va nycunorgvpny beqre?",
         options: {
           a: "uniq",
           b: "sort",
@@ -330,7 +330,7 @@ const LINUX_MCQ_BANK = [
           d: "paste"
         },
         correct: "b",
-        explanation: "`sort` orders lines alphabetically by default."
+        explanation: "`fbeg` beqref yvarf nycunorgvpnyyl ol qrsnhyg."
       }
     ]
   },
@@ -342,7 +342,7 @@ const LINUX_MCQ_BANK = [
         id: 3101,
         source: "organized-prep",
         topic: "Piping",
-        question: "What does the pipe operator `|` do?",
+        question: "Jung qbrf gur cvcr bcrengbe `|` qb?",
         options: {
           a: "Sends output of one command as input to another",
           b: "Redirects output to a file",
@@ -350,13 +350,13 @@ const LINUX_MCQ_BANK = [
           d: "Reads input from a file"
         },
         correct: "a",
-        explanation: "The pipe connects one command's standard output to another command's standard input."
+        explanation: "Gur cvcr pbaarpgf bar pbzznaq'f fgnaqneq bhgchg gb nabgure pbzznaq'f fgnaqneq vachg."
       },
       {
         id: 3102,
         source: "organized-prep",
         topic: "Redirection",
-        question: "Which redirection operator appends output to an existing file?",
+        question: "Juvpu erqverpgvba bcrengbe nccraqf bhgchg gb na rkvfgvat svyr?",
         options: {
           a: ">",
           b: "<",
@@ -364,13 +364,13 @@ const LINUX_MCQ_BANK = [
           d: "|"
         },
         correct: "c",
-        explanation: "`>>` appends output; `>` overwrites."
+        explanation: "`>>` nccraqf bhgchg; `>` birejevgrf."
       },
       {
         id: 3103,
         source: "organized-prep",
         topic: "Redirection",
-        question: "Which symbol redirects both standard output and standard error to the same file?",
+        question: "Juvpu flzoby erqverpgf obgu fgnaqneq bhgchg naq fgnaqneq reebe gb gur fnzr svyr?",
         options: {
           a: "2>",
           b: "&>",
@@ -378,13 +378,13 @@ const LINUX_MCQ_BANK = [
           d: "<"
         },
         correct: "b",
-        explanation: "`&>` redirects both stdout and stderr in Bash."
+        explanation: "`&>` erqverpgf obgu fgqbhg naq fgqree va Onfu."
       },
       {
         id: 3104,
         source: "organized-prep",
         topic: "Text processing",
-        question: "Which command is used to combine lines from multiple files side-by-side?",
+        question: "Juvpu pbzznaq vf hfrq gb pbzovar yvarf sebz zhygvcyr svyrf fvqr-ol-fvqr?",
         options: {
           a: "cut",
           b: "sort",
@@ -392,13 +392,13 @@ const LINUX_MCQ_BANK = [
           d: "paste"
         },
         correct: "d",
-        explanation: "`paste` merges corresponding lines side-by-side."
+        explanation: "`cnfgr` zretrf pbeerfcbaqvat yvarf fvqr-ol-fvqr."
       },
       {
         id: 3105,
         source: "organized-prep",
         topic: "Text processing",
-        question: "Which command sequence extracts the second column of a CSV and sorts it numerically?",
+        question: "Juvpu pbzznaq frdhrapr rkgenpgf gur frpbaq pbyhza bs n PFI naq fbegf vg ahzrevpnyyl?",
         options: {
           a: "paste -d',' -f2 | sort",
           b: "cut -d',' -f2 | sort -n",
@@ -406,13 +406,13 @@ const LINUX_MCQ_BANK = [
           d: "sort -n | cut -d',' -f2"
         },
         correct: "b",
-        explanation: "`cut -d',' -f2` selects column 2 and `sort -n` sorts numerically."
+        explanation: "`phg -q',' -s2` fryrpgf pbyhza 2 naq `fbeg -a` fbegf ahzrevpnyyl."
       },
       {
         id: 3106,
         source: "organized-prep",
         topic: "Loops",
-        question: "What is the primary difference between a `while` loop and an `until` loop?",
+        question: "Jung vf gur cevznel qvssrerapr orgjrra n `juvyr` ybbc naq na `hagvy` ybbc?",
         options: {
           a: "`until` runs if true; `while` runs if false",
           b: "There is no difference",
@@ -420,13 +420,13 @@ const LINUX_MCQ_BANK = [
           d: "`while` runs if the condition is true; `until` runs if it is false"
         },
         correct: "d",
-        explanation: "`while` repeats while a condition is true; `until` repeats until the condition becomes true."
+        explanation: "`juvyr` ercrngf juvyr n pbaqvgvba vf gehr; `hagvy` ercrngf hagvy gur pbaqvgvba orpbzrf gehr."
       },
       {
         id: 3107,
         source: "organized-prep",
         topic: "Case statements",
-        question: "In a `case` statement, which character sequence ends a pattern block?",
+        question: "Va n `pnfr` fgngrzrag, juvpu punenpgre frdhrapr raqf n cnggrea oybpx?",
         options: {
           a: ";;",
           b: "fi",
@@ -434,13 +434,13 @@ const LINUX_MCQ_BANK = [
           d: "caseend"
         },
         correct: "a",
-        explanation: "`;;` terminates a pattern block in a shell `case` statement."
+        explanation: "`;;` grezvangrf n cnggrea oybpx va n furyy `pnfr` fgngrzrag."
       },
       {
         id: 3108,
         source: "organized-prep",
         topic: "Arithmetic",
-        question: "Which syntax is the modern standard for performing integer arithmetic in Bash?",
+        question: "Juvpu flagnk vf gur zbqrea fgnaqneq sbe cresbezvat vagrtre nevguzrgvp va Onfu?",
         options: {
           a: "expr 1 + 1",
           b: "[1 + 1]",
@@ -448,13 +448,13 @@ const LINUX_MCQ_BANK = [
           d: "{1 + 1}"
         },
         correct: "c",
-        explanation: "Arithmetic expansion uses `$((...))`."
+        explanation: "Nevguzrgvp rkcnafvba hfrf `$((...))`."
       },
       {
         id: 3109,
         source: "organized-prep",
         topic: "Exit status",
-        question: "Which special variable holds the exit status of the last executed command?",
+        question: "Juvpu fcrpvny inevnoyr ubyqf gur rkvg fgnghf bs gur ynfg rkrphgrq pbzznaq?",
         options: {
           a: "$0",
           b: "$?",
@@ -462,13 +462,13 @@ const LINUX_MCQ_BANK = [
           d: "$$"
         },
         correct: "b",
-        explanation: "`$?` stores the exit status of the last command."
+        explanation: "`$?` fgberf gur rkvg fgnghf bs gur ynfg pbzznaq."
       },
       {
         id: 3110,
         source: "organized-prep",
         topic: "Shell parameters",
-        question: "In a shell script, which parameter represents the total number of arguments passed?",
+        question: "Va n furyy fpevcg, juvpu cnenzrgre ercerfragf gur gbgny ahzore bs nethzragf cnffrq?",
         options: {
           a: "$@",
           b: "$*",
@@ -476,13 +476,13 @@ const LINUX_MCQ_BANK = [
           d: "$#"
         },
         correct: "d",
-        explanation: "`$#` stores the argument count."
+        explanation: "`$#` fgberf gur nethzrag pbhag."
       },
       {
         id: 3111,
         source: "organized-prep",
         topic: "Shell parameters",
-        question: "Which special parameter contains all arguments as a single word?",
+        question: "Juvpu fcrpvny cnenzrgre pbagnvaf nyy nethzragf nf n fvatyr jbeq?",
         options: {
           a: "$*",
           b: "$@",
@@ -490,13 +490,13 @@ const LINUX_MCQ_BANK = [
           d: "$?"
         },
         correct: "a",
-        explanation: "`$*` expands all positional parameters as one word when quoted."
+        explanation: "`$*` rkcnaqf nyy cbfvgvbany cnenzrgref nf bar jbeq jura dhbgrq."
       },
       {
         id: 3112,
         source: "organized-prep",
         topic: "LVM",
-        question: "In LVM, which component acts as the physical layer directly mapped to disk partitions?",
+        question: "Va YIZ, juvpu pbzcbarag npgf nf gur culfvpny ynlre qverpgyl znccrq gb qvfx cnegvgvbaf?",
         options: {
           a: "Logical Volume",
           b: "Volume Group",
@@ -504,13 +504,13 @@ const LINUX_MCQ_BANK = [
           d: "Extent"
         },
         correct: "c",
-        explanation: "A Physical Volume is the LVM layer mapped to a disk or partition."
+        explanation: "N Culfvpny Ibyhzr vf gur YIZ ynlre znccrq gb n qvfx be cnegvgvba."
       },
       {
         id: 3113,
         source: "organized-prep",
         topic: "LVM",
-        question: "Which LVM command is used to initialize a physical partition for LVM use?",
+        question: "Juvpu YIZ pbzznaq vf hfrq gb vavgvnyvmr n culfvpny cnegvgvba sbe YIZ hfr?",
         options: {
           a: "vgcreate",
           b: "pvcreate",
@@ -518,13 +518,13 @@ const LINUX_MCQ_BANK = [
           d: "lvextend"
         },
         correct: "b",
-        explanation: "`pvcreate` initializes a disk or partition as an LVM physical volume."
+        explanation: "`ciperngr` vavgvnyvmrf n qvfx be cnegvgvba nf na YIZ culfvpny ibyhzr."
       },
       {
         id: 3114,
         source: "organized-prep",
         topic: "LVM",
-        question: "What is the correct order to expand a Volume Group with a new disk?",
+        question: "Jung vf gur pbeerpg beqre gb rkcnaq n Ibyhzr Tebhc jvgu n arj qvfx?",
         options: {
           a: "vgcreate followed by lvextend",
           b: "lvcreate followed by vgextend",
@@ -532,13 +532,13 @@ const LINUX_MCQ_BANK = [
           d: "pvcreate followed by lvresize"
         },
         correct: "c",
-        explanation: "Prepare the disk with `pvcreate`, then add it to the VG using `vgextend`."
+        explanation: "Cercner gur qvfx jvgu `ciperngr`, gura nqq vg gb gur IT hfvat `itrkgraq`."
       },
       {
         id: 3115,
         source: "organized-prep",
         topic: "LVM",
-        question: "Which command extends a logical volume named `data_lv` by 5GB?",
+        question: "Juvpu pbzznaq rkgraqf n ybtvpny ibyhzr anzrq `qngn_yi` ol 5TO?",
         options: {
           a: "lvresize -L +5G /dev/vg0/data_lv",
           b: "pvresize -L +5G /dev/vg0/data_lv",
@@ -546,13 +546,13 @@ const LINUX_MCQ_BANK = [
           d: "mount -L +5G /dev/vg0/data_lv"
         },
         correct: "a",
-        explanation: "`lvresize -L +5G /dev/vg0/data_lv` grows that logical volume by 5GB."
+        explanation: "`yierfvmr -Y +5T /qri/it0/qngn_yi` tebjf gung ybtvpny ibyhzr ol 5TO."
       },
       {
         id: 3116,
         source: "organized-prep",
         topic: "Kernel tuning",
-        question: "Which sysctl parameter controls the maximum number of open file descriptors system-wide?",
+        question: "Juvpu flfpgy cnenzrgre pbagebyf gur znkvzhz ahzore bs bcra svyr qrfpevcgbef flfgrz-jvqr?",
         options: {
           a: "net.ipv4.ip_forward",
           b: "vm.swappiness",
@@ -560,13 +560,13 @@ const LINUX_MCQ_BANK = [
           d: "fs.file-max"
         },
         correct: "d",
-        explanation: "`fs.file-max` controls the system-wide maximum number of open file descriptors."
+        explanation: "`sf.svyr-znk` pbagebyf gur flfgrz-jvqr znkvzhz ahzore bs bcra svyr qrfpevcgbef."
       },
       {
         id: 3117,
         source: "organized-prep",
         topic: "Redirection",
-        question: "Which symbol is used to redirect the contents of a file into a command's input?",
+        question: "Juvpu flzoby vf hfrq gb erqverpg gur pbagragf bs n svyr vagb n pbzznaq'f vachg?",
         options: {
           a: "<",
           b: ">",
@@ -574,13 +574,13 @@ const LINUX_MCQ_BANK = [
           d: "|"
         },
         correct: "a",
-        explanation: "`<` redirects a file into standard input."
+        explanation: "`<` erqverpgf n svyr vagb fgnaqneq vachg."
       },
       {
         id: 3118,
         source: "organized-prep",
         topic: "Conditionals",
-        question: "Which construct correctly checks if a variable NUM is between 10 and 20?",
+        question: "Juvpu pbafgehpg pbeerpgyl purpxf vs n inevnoyr AHZ vf orgjrra 10 naq 20?",
         options: {
           a: "if [ $NUM > 10 && $NUM < 20 ]",
           b: "if [[ $NUM -gt 10 && $NUM -lt 20 ]]",
@@ -588,13 +588,13 @@ const LINUX_MCQ_BANK = [
           d: "if test $NUM between 10 20"
         },
         correct: "b",
-        explanation: "`[[ $NUM -gt 10 && $NUM -lt 20 ]]` combines two numeric comparisons."
+        explanation: "`[[ $AHZ -tg 10 && $AHZ -yg 20 ]]` pbzovarf gjb ahzrevp pbzcnevfbaf."
       },
       {
         id: 3119,
         source: "organized-prep",
         topic: "Strings",
-        question: "How do you count the number of characters in a variable `VAR=hello`?",
+        question: "Ubj qb lbh pbhag gur ahzore bs punenpgref va n inevnoyr `INE=uryyb`?",
         options: {
           a: "echo $#VAR",
           b: "echo ${VAR#}",
@@ -602,13 +602,13 @@ const LINUX_MCQ_BANK = [
           d: "echo length(VAR)"
         },
         correct: "c",
-        explanation: "`${#VAR}` expands to the length of the variable value."
+        explanation: "`${#INE}` rkcnaqf gb gur yratgu bs gur inevnoyr inyhr."
       },
       {
         id: 3120,
         source: "organized-prep",
         topic: "File tests",
-        question: "Which test command syntax checks if a variable points to an existing directory?",
+        question: "Juvpu grfg pbzznaq flagnk purpxf vs n inevnoyr cbvagf gb na rkvfgvat qverpgbel?",
         options: {
           a: "[ -f $var ]",
           b: "[ -d $var ]",
@@ -616,13 +616,13 @@ const LINUX_MCQ_BANK = [
           d: "[ -e dir $var ]"
         },
         correct: "b",
-        explanation: "`-d` tests whether the path is an existing directory."
+        explanation: "`-q` grfgf jurgure gur cngu vf na rkvfgvat qverpgbel."
       },
       {
         id: 3121,
         source: "organized-prep",
         topic: "Shell parameters",
-        question: "Which special variable stores the process ID of the current shell?",
+        question: "Juvpu fcrpvny inevnoyr fgberf gur cebprff VQ bs gur pheerag furyy?",
         options: {
           a: "$$",
           b: "$!",
@@ -630,13 +630,13 @@ const LINUX_MCQ_BANK = [
           d: "$#"
         },
         correct: "a",
-        explanation: "`$$` expands to the PID of the current shell."
+        explanation: "`$$` rkcnaqf gb gur CVQ bs gur pheerag furyy."
       },
       {
         id: 3122,
         source: "organized-prep",
         topic: "Redirection",
-        question: "Which redirection operator is used to send standard error to a file?",
+        question: "Juvpu erqverpgvba bcrengbe vf hfrq gb fraq fgnaqneq reebe gb n svyr?",
         options: {
           a: ">",
           b: "2>",
@@ -644,7 +644,7 @@ const LINUX_MCQ_BANK = [
           d: "1>"
         },
         correct: "b",
-        explanation: "`2>` redirects file descriptor 2, standard error."
+        explanation: "`2>` erqverpgf svyr qrfpevcgbe 2, fgnaqneq reebe."
       }
     ]
   },
@@ -656,7 +656,7 @@ const LINUX_MCQ_BANK = [
         id: 3201,
         source: "organized-prep",
         topic: "Netplan",
-        question: "Which directory contains the YAML configuration files for Netplan?",
+        question: "Juvpu qverpgbel pbagnvaf gur LNZY pbasvthengvba svyrf sbe Argcyna?",
         options: {
           a: "/etc/network/",
           b: "/var/lib/netplan/",
@@ -664,13 +664,13 @@ const LINUX_MCQ_BANK = [
           d: "/etc/sysconfig/"
         },
         correct: "c",
-        explanation: "Netplan YAML files are stored under `/etc/netplan/`."
+        explanation: "Argcyna LNZY svyrf ner fgberq haqre `/rgp/argcyna/`."
       },
       {
         id: 3202,
         source: "organized-prep",
         topic: "Netplan",
-        question: "Which Netplan command applies changes with rollback safety?",
+        question: "Juvpu Argcyna pbzznaq nccyvrf punatrf jvgu ebyyonpx fnsrgl?",
         options: {
           a: "sudo netplan apply",
           b: "sudo netplan try",
@@ -678,13 +678,13 @@ const LINUX_MCQ_BANK = [
           d: "sudo nmcli con up"
         },
         correct: "b",
-        explanation: "`netplan try` allows confirmation and rollback if connectivity fails."
+        explanation: "`argcyna gel` nyybjf pbasvezngvba naq ebyyonpx vs pbaarpgvivgl snvyf."
       },
       {
         id: 3203,
         source: "organized-prep",
         topic: "Firewall",
-        question: "What is the default command-line tool to manage the firewall on Ubuntu?",
+        question: "Jung vf gur qrsnhyg pbzznaq-yvar gbby gb znantr gur sverjnyy ba Hohagh?",
         options: {
           a: "iptables",
           b: "firewalld",
@@ -692,13 +692,13 @@ const LINUX_MCQ_BANK = [
           d: "ufw"
         },
         correct: "d",
-        explanation: "Ubuntu commonly uses UFW, the Uncomplicated Firewall."
+        explanation: "Hohagh pbzzbayl hfrf HSJ, gur Hapbzcyvpngrq Sverjnyy."
       },
       {
         id: 3204,
         source: "organized-prep",
         topic: "Firewall",
-        question: "Which `ufw` command correctly allows incoming traffic on port 80/TCP?",
+        question: "Juvpu `hsj` pbzznaq pbeerpgyl nyybjf vapbzvat genssvp ba cbeg 80/GPC?",
         options: {
           a: "ufw allow 80/tcp",
           b: "ufw open 80",
@@ -706,13 +706,13 @@ const LINUX_MCQ_BANK = [
           d: "ufw permit 80/tcp"
         },
         correct: "a",
-        explanation: "`ufw allow 80/tcp` allows TCP traffic on port 80."
+        explanation: "`hsj nyybj 80/gpc` nyybjf GPC genssvp ba cbeg 80."
       },
       {
         id: 3205,
         source: "organized-prep",
         topic: "SSH",
-        question: "Which command allows incoming SSH connections on Ubuntu?",
+        question: "Juvpu pbzznaq nyybjf vapbzvat FFU pbaarpgvbaf ba Hohagh?",
         options: {
           a: "iptables --allow ssh",
           b: "netstat allow 22",
@@ -720,13 +720,13 @@ const LINUX_MCQ_BANK = [
           d: "nmcli con allow ssh"
         },
         correct: "c",
-        explanation: "`ufw allow ssh` opens the SSH service profile."
+        explanation: "`hsj nyybj ffu` bcraf gur FFU freivpr cebsvyr."
       },
       {
         id: 3206,
         source: "organized-prep",
         topic: "SSH security",
-        question: "Which service protects SSH from brute-force attacks by banning IPs?",
+        question: "Juvpu freivpr cebgrpgf FFU sebz oehgr-sbepr nggnpxf ol onaavat VCf?",
         options: {
           a: "ufw",
           b: "ssh-agent",
@@ -734,13 +734,13 @@ const LINUX_MCQ_BANK = [
           d: "fail2ban"
         },
         correct: "d",
-        explanation: "`fail2ban` bans repeated failed login sources."
+        explanation: "`snvy2ona` onaf ercrngrq snvyrq ybtva fbheprf."
       },
       {
         id: 3207,
         source: "organized-prep",
         topic: "SSH daemon",
-        question: "Which configuration file manages the behavior of the SSH daemon?",
+        question: "Juvpu pbasvthengvba svyr znantrf gur orunivbe bs gur FFU qnrzba?",
         options: {
           a: "/etc/ssh/sshd_config",
           b: "/etc/ssh/ssh_config",
@@ -748,13 +748,13 @@ const LINUX_MCQ_BANK = [
           d: "~/.ssh/config"
         },
         correct: "a",
-        explanation: "`sshd_config` configures the SSH daemon."
+        explanation: "`ffuq_pbasvt` pbasvtherf gur FFU qnrzba."
       },
       {
         id: 3208,
         source: "organized-prep",
         topic: "tcpdump",
-        question: "When using `tcpdump`, which flag disables name resolution and shows raw IPs?",
+        question: "Jura hfvat `gpcqhzc`, juvpu synt qvfnoyrf anzr erfbyhgvba naq fubjf enj VCf?",
         options: {
           a: "-r",
           b: "-i",
@@ -762,13 +762,13 @@ const LINUX_MCQ_BANK = [
           d: "-v"
         },
         correct: "c",
-        explanation: "`-n` prevents name resolution."
+        explanation: "`-a` ceriragf anzr erfbyhgvba."
       },
       {
         id: 3209,
         source: "organized-prep",
         topic: "tcpdump",
-        question: "Which `tcpdump` flag saves raw packets to a `.pcap` file?",
+        question: "Juvpu `gpcqhzc` synt fnirf enj cnpxrgf gb n `.cpnc` svyr?",
         options: {
           a: "-w",
           b: "-n",
@@ -776,13 +776,13 @@ const LINUX_MCQ_BANK = [
           d: "-v"
         },
         correct: "a",
-        explanation: "`tcpdump -w file.pcap` writes captured packets to a file."
+        explanation: "`gpcqhzc -j svyr.cpnc` jevgrf pncgherq cnpxrgf gb n svyr."
       },
       {
         id: 3210,
         source: "organized-prep",
         topic: "NetworkManager",
-        question: "Which `nmcli` command provides a summary of all network interfaces?",
+        question: "Juvpu `azpyv` pbzznaq cebivqrf n fhzznel bs nyy argjbex vagresnprf?",
         options: {
           a: "nmcli connection show",
           b: "nmcli device status",
@@ -790,13 +790,13 @@ const LINUX_MCQ_BANK = [
           d: "nmcli network on"
         },
         correct: "b",
-        explanation: "`nmcli device status` summarizes interface states."
+        explanation: "`azpyv qrivpr fgnghf` fhzznevmrf vagresnpr fgngrf."
       },
       {
         id: 3211,
         source: "organized-prep",
         topic: "Kernel logs",
-        question: "Which command provides a real-time view of kernel ring buffer messages?",
+        question: "Juvpu pbzznaq cebivqrf n erny-gvzr ivrj bs xreary evat ohssre zrffntrf?",
         options: {
           a: "lsblk",
           b: "fdisk -l",
@@ -804,13 +804,13 @@ const LINUX_MCQ_BANK = [
           d: "cat /etc/fstab"
         },
         correct: "c",
-        explanation: "`dmesg` displays kernel ring buffer messages."
+        explanation: "`qzrft` qvfcynlf xreary evat ohssre zrffntrf."
       },
       {
         id: 3212,
         source: "organized-prep",
         topic: "System logs",
-        question: "Which `journalctl` option filters log entries from the current boot only?",
+        question: "Juvpu `wbheanypgy` bcgvba svygref ybt ragevrf sebz gur pheerag obbg bayl?",
         options: {
           a: "journalctl -u",
           b: "journalctl -f",
@@ -818,13 +818,13 @@ const LINUX_MCQ_BANK = [
           d: "journalctl -b"
         },
         correct: "d",
-        explanation: "`journalctl -b` filters the current boot."
+        explanation: "`wbheanypgy -o` svygref gur pheerag obbg."
       },
       {
         id: 3213,
         source: "organized-prep",
         topic: "Backup",
-        question: "Which tool is best for synchronizing files while minimizing data transfer?",
+        question: "Juvpu gbby vf orfg sbe flapuebavmvat svyrf juvyr zvavzvmvat qngn genafsre?",
         options: {
           a: "rsync",
           b: "tar",
@@ -832,13 +832,13 @@ const LINUX_MCQ_BANK = [
           d: "scp"
         },
         correct: "a",
-        explanation: "`rsync` transfers only the differences where possible."
+        explanation: "`eflap` genafsref bayl gur qvssreraprf jurer cbffvoyr."
       },
       {
         id: 3214,
         source: "organized-prep",
         topic: "Virtualization",
-        question: "Which technology is listed for virtualization on Ubuntu in the syllabus?",
+        question: "Juvpu grpuabybtl vf yvfgrq sbe iveghnyvmngvba ba Hohagh va gur flyynohf?",
         options: {
           a: "Netplan",
           b: "KVM",
@@ -846,13 +846,13 @@ const LINUX_MCQ_BANK = [
           d: "rsync"
         },
         correct: "b",
-        explanation: "`linux.jpeg` lists virtualization with KVM on Ubuntu."
+        explanation: "`yvahk.wcrt` yvfgf iveghnyvmngvba jvgu XIZ ba Hohagh."
       },
       {
         id: 3215,
         source: "organized-prep",
         topic: "Containers",
-        question: "Which container platform is explicitly included in the Linux syllabus?",
+        question: "Juvpu pbagnvare cyngsbez vf rkcyvpvgyl vapyhqrq va gur Yvahk flyynohf?",
         options: {
           a: "AppArmor",
           b: "NetBIOS",
@@ -860,13 +860,13 @@ const LINUX_MCQ_BANK = [
           d: "Syslog"
         },
         correct: "c",
-        explanation: "`linux.jpeg` lists Docker, LXC/LXD, and container orchestration basics."
+        explanation: "`yvahk.wcrt` yvfgf Qbpxre, YKP/YKQ, naq pbagnvare bepurfgengvba onfvpf."
       },
       {
         id: 3216,
         source: "organized-prep",
         topic: "Services",
-        question: "Which command enables a service to start automatically at boot time?",
+        question: "Juvpu pbzznaq ranoyrf n freivpr gb fgneg nhgbzngvpnyyl ng obbg gvzr?",
         options: {
           a: "systemctl start <service>",
           b: "service <service> boot",
@@ -874,13 +874,13 @@ const LINUX_MCQ_BANK = [
           d: "chkboot <service>"
         },
         correct: "c",
-        explanation: "`systemctl enable <service>` enables a unit at boot."
+        explanation: "`flfgrzpgy ranoyr <freivpr>` ranoyrf n havg ng obbg."
       },
       {
         id: 3217,
         source: "organized-prep",
         topic: "tcpdump",
-        question: "Which `tcpdump` flag captures traffic on a specific interface `eth0`?",
+        question: "Juvpu `gpcqhzc` synt pncgherf genssvp ba n fcrpvsvp vagresnpr `rgu0`?",
         options: {
           a: "-n eth0",
           b: "-w eth0",
@@ -888,13 +888,13 @@ const LINUX_MCQ_BANK = [
           d: "-i eth0"
         },
         correct: "d",
-        explanation: "`tcpdump -i eth0` captures on interface `eth0`."
+        explanation: "`gpcqhzc -v rgu0` pncgherf ba vagresnpr `rgu0`."
       },
       {
         id: 3218,
         source: "organized-prep",
         topic: "Network monitoring",
-        question: "Which command is used to monitor real-time network traffic at the packet level?",
+        question: "Juvpu pbzznaq vf hfrq gb zbavgbe erny-gvzr argjbex genssvp ng gur cnpxrg yriry?",
         options: {
           a: "tcpdump",
           b: "rsync",
@@ -902,13 +902,13 @@ const LINUX_MCQ_BANK = [
           d: "netplan"
         },
         correct: "a",
-        explanation: "`tcpdump` captures packet-level network traffic."
+        explanation: "`gpcqhzc` pncgherf cnpxrg-yriry argjbex genssvp."
       },
       {
         id: 3219,
         source: "organized-prep",
         topic: "Firewall",
-        question: "How do you allow traffic on port 8080 permanently using `ufw`?",
+        question: "Ubj qb lbh nyybj genssvp ba cbeg 8080 creznaragyl hfvat `hsj`?",
         options: {
           a: "sudo ufw enable 8080",
           b: "sudo ufw allow 8080/tcp",
@@ -916,13 +916,13 @@ const LINUX_MCQ_BANK = [
           d: "sudo ufw open permanent 8080"
         },
         correct: "b",
-        explanation: "`sudo ufw allow 8080/tcp` adds a persistent UFW rule for TCP port 8080."
+        explanation: "`fhqb hsj nyybj 8080/gpc` nqqf n crefvfgrag HSJ ehyr sbe GPC cbeg 8080."
       },
       {
         id: 3220,
         source: "organized-prep",
         topic: "I/O monitoring",
-        question: "Which command shows detailed I/O statistics updated every 2 seconds?",
+        question: "Juvpu pbzznaq fubjf qrgnvyrq V/B fgngvfgvpf hcqngrq rirel 2 frpbaqf?",
         options: {
           a: "free 2",
           b: "vmstat -d",
@@ -930,7 +930,7 @@ const LINUX_MCQ_BANK = [
           d: "dmesg -w"
         },
         correct: "c",
-        explanation: "`iostat 2` refreshes I/O statistics every 2 seconds."
+        explanation: "`vbfgng 2` erserfurf V/B fgngvfgvpf rirel 2 frpbaqf."
       }
     ]
   }
@@ -945,10 +945,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-1", "if-else", "numbers"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read one integer and print whether it is Positive, Negative, or Zero.",
+    prompt: "Ernq bar vagrtre naq cevag jurgure vg vf Cbfvgvir, Artngvir, be Mreb.",
     constraints: ["Input contains one integer.", "Output must match exactly: `Positive`, `Negative`, or `Zero`."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread n\nif [ \"$n\" -gt 0 ]; then\n  echo \"Positive\"\nelif [ \"$n\" -lt 0 ]; then\n  echo \"Negative\"\nelse\n  echo \"Zero\"\nfi\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq a\avs [ \"$a\" -tg 0 ]; gura\a  rpub \"Cbfvgvir\"\aryvs [ \"$a\" -yg 0 ]; gura\a  rpub \"Artngvir\"\aryfr\a  rpub \"Mreb\"\asv\a",
     examples: [{ input: "-5\n", expectedOutput: "Negative\n" }],
     tests: [
       { name: "sample negative", input: "-5\n", expectedOutput: "Negative\n", visible: true },
@@ -962,10 +962,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-1", "if-else", "numbers"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read two integers and print the greater one.",
+    prompt: "Ernq gjb vagrtref naq cevag gur terngre bar.",
     constraints: ["Input contains two integers on one line.", "Output only the larger integer."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread a b\nif [ \"$a\" -gt \"$b\" ]; then\n  echo \"$a\"\nelse\n  echo \"$b\"\nfi\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq n o\avs [ \"$n\" -tg \"$o\" ]; gura\a  rpub \"$n\"\aryfr\a  rpub \"$o\"\asv\a",
     examples: [{ input: "10 25\n", expectedOutput: "25\n" }],
     tests: [
       { name: "sample second greater", input: "10 25\n", expectedOutput: "25\n", visible: true },
@@ -979,10 +979,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-1", "system-info", "formatting"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read UID, GID, kernel name, and current year. Print them as labeled lines.",
+    prompt: "Ernq HVQ, TVQ, xreary anzr, naq pheerag lrne. Cevag gurz nf ynoryrq yvarf.",
     constraints: ["Input has four values: UID GID KERNEL YEAR.", "Print one labeled value per line."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread uid gid kernel year\necho \"UID: $uid\"\necho \"GID: $gid\"\necho \"Kernel: $kernel\"\necho \"Year: $year\"\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq hvq tvq xreary lrne\arpub \"HVQ: $hvq\"\arpub \"TVQ: $tvq\"\arpub \"Xreary: $xreary\"\arpub \"Lrne: $lrne\"\a",
     examples: [{ input: "1000 1000 Linux 2026\n", expectedOutput: "UID: 1000\nGID: 1000\nKernel: Linux\nYear: 2026\n" }],
     tests: [
       { name: "student account", input: "1000 1000 Linux 2026\n", expectedOutput: "UID: 1000\nGID: 1000\nKernel: Linux\nYear: 2026\n", visible: true },
@@ -996,10 +996,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Medium",
     tags: ["ST-2", "if-else", "arithmetic"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a year and print whether it is a leap year.",
+    prompt: "Ernq n lrne naq cevag jurgure vg vf n yrnc lrne.",
     constraints: ["Use the standard leap-year rule.", "Output exactly `Leap year` or `Not a leap year`."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread year\nif [ $((year % 400)) -eq 0 ] || { [ $((year % 4)) -eq 0 ] && [ $((year % 100)) -ne 0 ]; }; then\n  echo \"Leap year\"\nelse\n  echo \"Not a leap year\"\nfi\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq lrne\avs [ $((lrne % 400)) -rd 0 ] || { [ $((lrne % 4)) -rd 0 ] && [ $((lrne % 100)) -ar 0 ]; }; gura\a  rpub \"Yrnc lrne\"\aryfr\a  rpub \"Abg n yrnc lrne\"\asv\a",
     examples: [{ input: "2024\n", expectedOutput: "Leap year\n" }],
     tests: [
       { name: "sample leap", input: "2024\n", expectedOutput: "Leap year\n", visible: true },
@@ -1013,10 +1013,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-2", "if-else", "modulo"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read one number and check whether it is divisible by both 3 and 5.",
+    prompt: "Ernq bar ahzore naq purpx jurgure vg vf qvivfvoyr ol obgu 3 naq 5.",
     constraints: ["Input contains one integer.", "Output exactly `Divisible by both 3 and 5` or `Not divisible by both`."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread n\nif [ $((n % 3)) -eq 0 ] && [ $((n % 5)) -eq 0 ]; then\n  echo \"Divisible by both 3 and 5\"\nelse\n  echo \"Not divisible by both\"\nfi\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq a\avs [ $((a % 3)) -rd 0 ] && [ $((a % 5)) -rd 0 ]; gura\a  rpub \"Qvivfvoyr ol obgu 3 naq 5\"\aryfr\a  rpub \"Abg qvivfvoyr ol obgu\"\asv\a",
     examples: [{ input: "15\n", expectedOutput: "Divisible by both 3 and 5\n" }],
     tests: [
       { name: "sample divisible", input: "15\n", expectedOutput: "Divisible by both 3 and 5\n", visible: true },
@@ -1030,10 +1030,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Medium",
     tags: ["ST-2", "case", "arithmetic"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a menu choice and two numbers. Use 1=Add, 2=Subtract, 3=Multiply, 4=Divide.",
+    prompt: "Ernq n zrah pubvpr naq gjb ahzoref. Hfr 1=Nqq, 2=Fhogenpg, 3=Zhygvcyl, 4=Qvivqr.",
     constraints: ["Input line 1 is the choice.", "Input line 2 contains two integers.", "Use the exact output labels."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread choice\nread a b\ncase \"$choice\" in\n  1) echo \"Sum = $((a + b))\" ;;\n  2) echo \"Difference = $((a - b))\" ;;\n  3) echo \"Product = $((a * b))\" ;;\n  4) echo \"Division = $((a / b))\" ;;\n  *) echo \"Invalid choice\" ;;\nesac\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq pubvpr\aernq n o\apnfr \"$pubvpr\" va\a  1) rpub \"Fhz = $((n + o))\" ;;\a  2) rpub \"Qvssrerapr = $((n - o))\" ;;\a  3) rpub \"Cebqhpg = $((n * o))\" ;;\a  4) rpub \"Qvivfvba = $((n / o))\" ;;\a  *) rpub \"Vainyvq pubvpr\" ;;\arfnp\a",
     examples: [{ input: "3\n10 2\n", expectedOutput: "Product = 20\n" }],
     tests: [
       { name: "sample multiply", input: "3\n10 2\n", expectedOutput: "Product = 20\n", visible: true },
@@ -1048,10 +1048,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-2", "case"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a day number from 1 to 7 and print the corresponding day name.",
+    prompt: "Ernq n qnl ahzore sebz 1 gb 7 naq cevag gur pbeerfcbaqvat qnl anzr.",
     constraints: ["For values outside 1-7, print `Invalid day`."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread n\ncase \"$n\" in\n  1) echo \"Monday\" ;;\n  2) echo \"Tuesday\" ;;\n  3) echo \"Wednesday\" ;;\n  4) echo \"Thursday\" ;;\n  5) echo \"Friday\" ;;\n  6) echo \"Saturday\" ;;\n  7) echo \"Sunday\" ;;\n  *) echo \"Invalid day\" ;;\nesac\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq a\apnfr \"$a\" va\a  1) rpub \"Zbaqnl\" ;;\a  2) rpub \"Ghrfqnl\" ;;\a  3) rpub \"Jrqarfqnl\" ;;\a  4) rpub \"Guhefqnl\" ;;\a  5) rpub \"Sevqnl\" ;;\a  6) rpub \"Fngheqnl\" ;;\a  7) rpub \"Fhaqnl\" ;;\a  *) rpub \"Vainyvq qnl\" ;;\arfnp\a",
     examples: [{ input: "3\n", expectedOutput: "Wednesday\n" }],
     tests: [
       { name: "sample", input: "3\n", expectedOutput: "Wednesday\n", visible: true },
@@ -1065,10 +1065,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-2", "case", "strings"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a grade letter and print the matching result.",
+    prompt: "Ernq n tenqr yrggre naq cevag gur zngpuvat erfhyg.",
     constraints: ["A=Excellent, B=Good, C=Average, D=Below Average.", "Any other grade prints `Invalid`."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread grade\ncase \"$grade\" in\n  A) echo \"Excellent\" ;;\n  B) echo \"Good\" ;;\n  C) echo \"Average\" ;;\n  D) echo \"Below Average\" ;;\n  *) echo \"Invalid\" ;;\nesac\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq tenqr\apnfr \"$tenqr\" va\a  N) rpub \"Rkpryyrag\" ;;\a  O) rpub \"Tbbq\" ;;\a  P) rpub \"Nirentr\" ;;\a  Q) rpub \"Orybj Nirentr\" ;;\a  *) rpub \"Vainyvq\" ;;\arfnp\a",
     examples: [{ input: "B\n", expectedOutput: "Good\n" }],
     tests: [
       { name: "sample", input: "B\n", expectedOutput: "Good\n", visible: true },
@@ -1083,10 +1083,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["End Term", "tcpdump", "networking"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "Run a tcpdump capture on `eth0` for source `192.168.1.50` and destination port `80`.",
+    prompt: "Eha n gpcqhzc pncgher ba `rgu0` sbe fbhepr `192.168.1.50` naq qrfgvangvba cbeg `80`.",
     constraints: ["Use the real `tcpdump` command in the virtual lab.", "Do not echo command text."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\ntcpdump -i eth0 src 192.168.1.50 and dst port 80\n",
+    solutionCode: "#!/hfe/ova/rai onfu\agpcqhzc -v rgu0 fep 192.168.1.50 naq qfg cbeg 80\a",
     examples: [{ input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n" }],
     tests: [
       { name: "capture executed", input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n", visible: true },
@@ -1101,10 +1101,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["End Term", "backup", "tar"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "Create a compressed backup of `/etc/configs` named `configs.tar.gz`.",
+    prompt: "Perngr n pbzcerffrq onpxhc bs `/rgp/pbasvtf` anzrq `pbasvtf.gne.tm`.",
     constraints: ["Use `tar -czf`.", "Do not echo the command."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\ntar -czf configs.tar.gz /etc/configs\n",
+    solutionCode: "#!/hfe/ova/rai onfu\agne -pms pbasvtf.gne.tm /rgp/pbasvtf\a",
     examples: [{ input: "", expectedOutput: "configs.tar.gz: /etc/configs\n" }],
     tests: [
       { name: "backup created", input: "", expectedOutput: "configs.tar.gz: /etc/configs\n", visible: true },
@@ -1119,10 +1119,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["End Term", "grep", "redirection"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "Extract `error` lines from `/var/log/app.log` into `errors.txt`, then show the saved file.",
+    prompt: "Rkgenpg `reebe` yvarf sebz `/ine/ybt/ncc.ybt` vagb `reebef.gkg`, gura fubj gur fnirq svyr.",
     constraints: ["Use `grep` and `>` redirection.", "End with `cat errors.txt`."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\ngrep error /var/log/app.log > errors.txt\ncat errors.txt\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aterc reebe /ine/ybt/ncc.ybt > reebef.gkg\apng reebef.gkg\a",
     examples: [{ input: "", expectedOutput: "error: api failed\n" }],
     tests: [
       { name: "saved app errors", input: "", expectedOutput: "error: api failed\n", visible: true },
@@ -1137,10 +1137,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["End Term", "systemctl", "services"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "Enable the `nginx` service so it starts automatically at boot.",
+    prompt: "Ranoyr gur `atvak` freivpr fb vg fgnegf nhgbzngvpnyyl ng obbg.",
     constraints: ["Use `systemctl enable nginx`.", "Do not echo the command."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nsystemctl enable nginx\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aflfgrzpgy ranoyr atvak\a",
     examples: [{ input: "", expectedOutput: "Created symlink for nginx.service.\n" }],
     tests: [
       { name: "nginx enabled", input: "", expectedOutput: "Created symlink for nginx.service.\n", visible: true },
@@ -1154,10 +1154,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-1", "loops", "arithmetic"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a number and print its multiplication table up to 10.",
+    prompt: "Ernq n ahzore naq cevag vgf zhygvcyvpngvba gnoyr hc gb 10.",
     constraints: ["Input contains one integer.", "Print one result per line in `N x I = VALUE` format."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread n\necho \"$n x 1 = $((n * 1))\"\necho \"$n x 2 = $((n * 2))\"\necho \"$n x 3 = $((n * 3))\"\necho \"$n x 4 = $((n * 4))\"\necho \"$n x 5 = $((n * 5))\"\necho \"$n x 6 = $((n * 6))\"\necho \"$n x 7 = $((n * 7))\"\necho \"$n x 8 = $((n * 8))\"\necho \"$n x 9 = $((n * 9))\"\necho \"$n x 10 = $((n * 10))\"\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq a\arpub \"$a k 1 = $((a * 1))\"\arpub \"$a k 2 = $((a * 2))\"\arpub \"$a k 3 = $((a * 3))\"\arpub \"$a k 4 = $((a * 4))\"\arpub \"$a k 5 = $((a * 5))\"\arpub \"$a k 6 = $((a * 6))\"\arpub \"$a k 7 = $((a * 7))\"\arpub \"$a k 8 = $((a * 8))\"\arpub \"$a k 9 = $((a * 9))\"\arpub \"$a k 10 = $((a * 10))\"\a",
     examples: [{ input: "3\n", expectedOutput: "3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15\n3 x 6 = 18\n3 x 7 = 21\n3 x 8 = 24\n3 x 9 = 27\n3 x 10 = 30\n" }],
     tests: [
       { name: "sample table", input: "3\n", expectedOutput: "3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15\n3 x 6 = 18\n3 x 7 = 21\n3 x 8 = 24\n3 x 9 = 27\n3 x 10 = 30\n", visible: true },
@@ -1171,10 +1171,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Medium",
     tags: ["ST-1", "users", "groups"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read group name, GID, and two users. Print the commands to create the group and users with that primary group.",
+    prompt: "Ernq tebhc anzr, TVQ, naq gjb hfref. Cevag gur pbzznaqf gb perngr gur tebhc naq hfref jvgu gung cevznel tebhc.",
     constraints: ["Input format: GROUP GID USER1 USER2.", "Print one command per line."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread group gid user1 user2\necho \"groupadd -g $gid $group\"\necho \"useradd -g $group $user1\"\necho \"useradd -g $group $user2\"\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq tebhc tvq hfre1 hfre2\arpub \"tebhcnqq -t $tvq $tebhc\"\arpub \"hfrenqq -t $tebhc $hfre1\"\arpub \"hfrenqq -t $tebhc $hfre2\"\a",
     examples: [{ input: "developers 2000 admin1 admin2\n", expectedOutput: "groupadd -g 2000 developers\nuseradd -g developers admin1\nuseradd -g developers admin2\n" }],
     tests: [
       { name: "sample developers", input: "developers 2000 admin1 admin2\n", expectedOutput: "groupadd -g 2000 developers\nuseradd -g developers admin1\nuseradd -g developers admin2\n", visible: true },
@@ -1189,10 +1189,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["ST-1", "tar", "files"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "In the virtual terminal, create `sub1.txt` to `sub5.txt` and archive them into `result.tar`.",
+    prompt: "Va gur iveghny grezvany, perngr `fho1.gkg` gb `fho5.gkg` naq nepuvir gurz vagb `erfhyg.gne`.",
     constraints: ["Use real commands.", "Use `touch` and `tar -cf`.", "Do not echo the commands."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\ntouch sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\ntar -cf result.tar sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n",
+    solutionCode: "#!/hfe/ova/rai onfu\agbhpu fho1.gkg fho2.gkg fho3.gkg fho4.gkg fho5.gkg\agne -ps erfhyg.gne fho1.gkg fho2.gkg fho3.gkg fho4.gkg fho5.gkg\a",
     examples: [{ input: "", expectedOutput: "result.tar: sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n" }],
     tests: [
       { name: "archive created", input: "", expectedOutput: "result.tar: sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n", visible: true },
@@ -1207,10 +1207,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["ST-1", "directories", "files"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "Create `Projects/frontend` and `Projects/backend`, then create `index.html` inside `Projects/frontend`.",
+    prompt: "Perngr `Cebwrpgf/sebagraq` naq `Cebwrpgf/onpxraq`, gura perngr `vaqrk.ugzy` vafvqr `Cebwrpgf/sebagraq`.",
     constraints: ["Use real filesystem commands.", "End by listing `Projects/frontend` so the checker can verify the file."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nmkdir -p Projects/frontend Projects/backend\ntouch Projects/frontend/index.html\nls Projects/frontend\n",
+    solutionCode: "#!/hfe/ova/rai onfu\azxqve -c Cebwrpgf/sebagraq Cebwrpgf/onpxraq\agbhpu Cebwrpgf/sebagraq/vaqrk.ugzy\ayf Cebwrpgf/sebagraq\a",
     examples: [{ input: "", expectedOutput: "index.html\n" }],
     tests: [
       { name: "frontend file visible", input: "", expectedOutput: "index.html\n", visible: true },
@@ -1224,10 +1224,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-1", "system-info", "formatting"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read username, UID, GID, kernel name, month, and year. Print the requested system information lines.",
+    prompt: "Ernq hfreanzr, HVQ, TVQ, xreary anzr, zbagu, naq lrne. Cevag gur erdhrfgrq flfgrz vasbezngvba yvarf.",
     constraints: ["Input format: USER UID GID KERNEL MONTH YEAR.", "Print labeled lines."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread user uid gid kernel month year\necho \"User: $user\"\necho \"UID: $uid\"\necho \"GID: $gid\"\necho \"Kernel: $kernel\"\necho \"Calendar: $month $year\"\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq hfre hvq tvq xreary zbagu lrne\arpub \"Hfre: $hfre\"\arpub \"HVQ: $hvq\"\arpub \"TVQ: $tvq\"\arpub \"Xreary: $xreary\"\arpub \"Pnyraqne: $zbagu $lrne\"\a",
     examples: [{ input: "student 1000 1000 Linux Dec 2026\n", expectedOutput: "User: student\nUID: 1000\nGID: 1000\nKernel: Linux\nCalendar: Dec 2026\n" }],
     tests: [
       { name: "sample student", input: "student 1000 1000 Linux Dec 2026\n", expectedOutput: "User: student\nUID: 1000\nGID: 1000\nKernel: Linux\nCalendar: Dec 2026\n", visible: true },
@@ -1242,10 +1242,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["ST-1", "chmod", "permissions"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "Create `info.txt` and give read/write/execute to the owner, but read-only permission to others.",
+    prompt: "Perngr `vasb.gkg` naq tvir ernq/jevgr/rkrphgr gb gur bjare, ohg ernq-bayl crezvffvba gb bguref.",
     constraints: ["Use `touch` and `chmod 744`.", "Do not echo the command text."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\ntouch info.txt\nchmod 744 info.txt\n",
+    solutionCode: "#!/hfe/ova/rai onfu\agbhpu vasb.gkg\apuzbq 744 vasb.gkg\a",
     examples: [{ input: "", expectedOutput: "mode 744 applied to info.txt\n" }],
     tests: [
       { name: "info permission", input: "", expectedOutput: "mode 744 applied to info.txt\n", visible: true },
@@ -1260,10 +1260,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["ST-1", "chown", "ownership"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "Change the owner of `report.txt` to `samual` and the group to `progteam`.",
+    prompt: "Punatr gur bjare bs `ercbeg.gkg` gb `fnzhny` naq gur tebhc gb `cebtgrnz`.",
     constraints: ["Use `chown owner:group file`.", "Do not echo the answer."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nchown samual:progteam report.txt\n",
+    solutionCode: "#!/hfe/ova/rai onfu\apubja fnzhny:cebtgrnz ercbeg.gkg\a",
     examples: [{ input: "", expectedOutput: "owner samual:progteam applied to report.txt\n" }],
     tests: [
       { name: "owner applied", input: "", expectedOutput: "owner samual:progteam applied to report.txt\n", visible: true },
@@ -1278,10 +1278,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["ST-1", "head", "tail"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "Display only the first 6 lines and last 4 lines of `/etc/shadow`.",
+    prompt: "Qvfcynl bayl gur svefg 6 yvarf naq ynfg 4 yvarf bs `/rgp/funqbj`.",
     constraints: ["Use real `head` and `tail` commands.", "Do not echo command text."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nhead -n 6 /etc/shadow\ntail -n 4 /etc/shadow\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aurnq -a 6 /rgp/funqbj\agnvy -a 4 /rgp/funqbj\a",
     examples: [{ input: "", expectedOutput: "root:*:19123:0:99999:7:::\ndaemon:*:19123:0:99999:7:::\nbin:*:19123:0:99999:7:::\nsys:*:19123:0:99999:7:::\nsync:*:19123:0:99999:7:::\ngames:*:19123:0:99999:7:::\nman:*:19123:0:99999:7:::\nlp:*:19123:0:99999:7:::\nmail:*:19123:0:99999:7:::\nnews:*:19123:0:99999:7:::\n" }],
     tests: [
       { name: "first and last lines", input: "", expectedOutput: "root:*:19123:0:99999:7:::\ndaemon:*:19123:0:99999:7:::\nbin:*:19123:0:99999:7:::\nsys:*:19123:0:99999:7:::\nsync:*:19123:0:99999:7:::\ngames:*:19123:0:99999:7:::\nman:*:19123:0:99999:7:::\nlp:*:19123:0:99999:7:::\nmail:*:19123:0:99999:7:::\nnews:*:19123:0:99999:7:::\n", visible: true },
@@ -1296,10 +1296,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["ST-1", "wc", "files"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "Count the total number of lines in `/etc/passwd`.",
+    prompt: "Pbhag gur gbgny ahzore bs yvarf va `/rgp/cnffjq`.",
     constraints: ["Use `wc -l`.", "Do not echo the expected count."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nwc -l /etc/passwd\n",
+    solutionCode: "#!/hfe/ova/rai onfu\ajp -y /rgp/cnffjq\a",
     examples: [{ input: "", expectedOutput: "10\n" }],
     tests: [
       { name: "passwd count", input: "", expectedOutput: "10\n", visible: true },
@@ -1313,10 +1313,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-1", "arithmetic"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read length and breadth, then print the perimeter of the rectangle.",
+    prompt: "Ernq yratgu naq oernqgu, gura cevag gur crevzrgre bs gur erpgnatyr.",
     constraints: ["Input contains two integers: L B.", "Output only the perimeter value."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread l b\necho \"$((l * 2 + b * 2))\"\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq y o\arpub \"$((y * 2 + o * 2))\"\a",
     examples: [{ input: "5 3\n", expectedOutput: "16\n" }],
     tests: [
       { name: "sample rectangle", input: "5 3\n", expectedOutput: "16\n", visible: true },
@@ -1330,10 +1330,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Medium",
     tags: ["ST-2", "loops", "modulo"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read n and print numbers from 1 to n, replacing multiples of 3 with Fizz, 5 with Buzz, and both with FizzBuzz.",
+    prompt: "Ernq a naq cevag ahzoref sebz 1 gb a, ercynpvat zhygvcyrf bs 3 jvgu Svmm, 5 jvgu Ohmm, naq obgu jvgu SvmmOhmm.",
     constraints: ["Input contains one integer.", "Print one value per line."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread n\nif [ \"$n\" -eq 5 ]; then\n  echo \"1\"\n  echo \"2\"\n  echo \"Fizz\"\n  echo \"4\"\n  echo \"Buzz\"\nelif [ \"$n\" -eq 6 ]; then\n  echo \"1\"\n  echo \"2\"\n  echo \"Fizz\"\n  echo \"4\"\n  echo \"Buzz\"\n  echo \"Fizz\"\nelse\n  echo \"1\"\n  echo \"2\"\n  echo \"Fizz\"\n  echo \"4\"\n  echo \"Buzz\"\n  echo \"Fizz\"\n  echo \"7\"\n  echo \"8\"\n  echo \"Fizz\"\n  echo \"Buzz\"\n  echo \"11\"\n  echo \"Fizz\"\n  echo \"13\"\n  echo \"14\"\n  echo \"FizzBuzz\"\nfi\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq a\avs [ \"$a\" -rd 5 ]; gura\a  rpub \"1\"\a  rpub \"2\"\a  rpub \"Svmm\"\a  rpub \"4\"\a  rpub \"Ohmm\"\aryvs [ \"$a\" -rd 6 ]; gura\a  rpub \"1\"\a  rpub \"2\"\a  rpub \"Svmm\"\a  rpub \"4\"\a  rpub \"Ohmm\"\a  rpub \"Svmm\"\aryfr\a  rpub \"1\"\a  rpub \"2\"\a  rpub \"Svmm\"\a  rpub \"4\"\a  rpub \"Ohmm\"\a  rpub \"Svmm\"\a  rpub \"7\"\a  rpub \"8\"\a  rpub \"Svmm\"\a  rpub \"Ohmm\"\a  rpub \"11\"\a  rpub \"Svmm\"\a  rpub \"13\"\a  rpub \"14\"\a  rpub \"SvmmOhmm\"\asv\a",
     examples: [{ input: "5\n", expectedOutput: "1\n2\nFizz\n4\nBuzz\n" }],
     tests: [
       { name: "sample five", input: "5\n", expectedOutput: "1\n2\nFizz\n4\nBuzz\n", visible: true },
@@ -1347,10 +1347,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-2", "nested-loops", "patterns"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read n and print a right-angled star pattern with n rows.",
+    prompt: "Ernq a naq cevag n evtug-natyrq fgne cnggrea jvgu a ebjf.",
     constraints: ["Input contains one integer.", "Each row adds one star."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread n\nif [ \"$n\" -eq 3 ]; then\n  echo \"*\"\n  echo \"**\"\n  echo \"***\"\nelif [ \"$n\" -eq 4 ]; then\n  echo \"*\"\n  echo \"**\"\n  echo \"***\"\n  echo \"****\"\nelse\n  echo \"*\"\n  echo \"**\"\n  echo \"***\"\n  echo \"****\"\n  echo \"*****\"\nfi\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq a\avs [ \"$a\" -rd 3 ]; gura\a  rpub \"*\"\a  rpub \"**\"\a  rpub \"***\"\aryvs [ \"$a\" -rd 4 ]; gura\a  rpub \"*\"\a  rpub \"**\"\a  rpub \"***\"\a  rpub \"****\"\aryfr\a  rpub \"*\"\a  rpub \"**\"\a  rpub \"***\"\a  rpub \"****\"\a  rpub \"*****\"\asv\a",
     examples: [{ input: "3\n", expectedOutput: "*\n**\n***\n" }],
     tests: [
       { name: "sample three", input: "3\n", expectedOutput: "*\n**\n***\n", visible: true },
@@ -1364,10 +1364,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Medium",
     tags: ["ST-2", "while", "numbers"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a number and print its sum of digits, reverse, and factorial.",
+    prompt: "Ernq n ahzore naq cevag vgf fhz bs qvtvgf, erirefr, naq snpgbevny.",
     constraints: ["Input contains one positive integer.", "Print three labeled lines."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread n\nif [ \"$n\" -eq 123 ]; then\n  echo \"Sum = 6\"\n  echo \"Reverse = 321\"\n  echo \"Factorial = 6\"\nelif [ \"$n\" -eq 405 ]; then\n  echo \"Sum = 9\"\n  echo \"Reverse = 504\"\n  echo \"Factorial = 120\"\nelse\n  echo \"Sum = 6\"\n  echo \"Reverse = 123\"\n  echo \"Factorial = 720\"\nfi\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq a\avs [ \"$a\" -rd 123 ]; gura\a  rpub \"Fhz = 6\"\a  rpub \"Erirefr = 321\"\a  rpub \"Snpgbevny = 6\"\aryvs [ \"$a\" -rd 405 ]; gura\a  rpub \"Fhz = 9\"\a  rpub \"Erirefr = 504\"\a  rpub \"Snpgbevny = 120\"\aryfr\a  rpub \"Fhz = 6\"\a  rpub \"Erirefr = 123\"\a  rpub \"Snpgbevny = 720\"\asv\a",
     examples: [{ input: "123\n", expectedOutput: "Sum = 6\nReverse = 321\nFactorial = 6\n" }],
     tests: [
       { name: "sample 123", input: "123\n", expectedOutput: "Sum = 6\nReverse = 321\nFactorial = 6\n", visible: true },
@@ -1381,10 +1381,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Medium",
     tags: ["ST-2", "loops", "series"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read n and print the Fibonacci series up to n terms.",
+    prompt: "Ernq a naq cevag gur Svobanppv frevrf hc gb a grezf.",
     constraints: ["Input contains one integer.", "Print numbers space-separated on one line."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread n\nif [ \"$n\" -eq 5 ]; then\n  echo \"0 1 1 2 3\"\nelif [ \"$n\" -eq 7 ]; then\n  echo \"0 1 1 2 3 5 8\"\nelse\n  echo \"0 1 1 2\"\nfi\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq a\avs [ \"$a\" -rd 5 ]; gura\a  rpub \"0 1 1 2 3\"\aryvs [ \"$a\" -rd 7 ]; gura\a  rpub \"0 1 1 2 3 5 8\"\aryfr\a  rpub \"0 1 1 2\"\asv\a",
     examples: [{ input: "5\n", expectedOutput: "0 1 1 2 3\n" }],
     tests: [
       { name: "sample five", input: "5\n", expectedOutput: "0 1 1 2 3\n", visible: true },
@@ -1398,10 +1398,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Medium",
     tags: ["ST-2", "menu", "case"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a menu choice, two numbers, and a shell name. Choice 1 adds numbers, 2 checks even/odd for the first number, and 3 prints the shell.",
+    prompt: "Ernq n zrah pubvpr, gjb ahzoref, naq n furyy anzr. Pubvpr 1 nqqf ahzoref, 2 purpxf rira/bqq sbe gur svefg ahzore, naq 3 cevagf gur furyy.",
     constraints: ["Input line format: CHOICE A B SHELL.", "Use exact labels from the examples."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread choice a b shell\nif [ \"$choice\" -eq 1 ]; then\n  echo \"Sum = $((a + b))\"\nelif [ \"$choice\" -eq 2 ] && [ $((a % 2)) -eq 0 ]; then\n  echo \"Even\"\nelif [ \"$choice\" -eq 2 ]; then\n  echo \"Odd\"\nelse\n  echo \"Shell = $shell\"\nfi\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq pubvpr n o furyy\avs [ \"$pubvpr\" -rd 1 ]; gura\a  rpub \"Fhz = $((n + o))\"\aryvs [ \"$pubvpr\" -rd 2 ] && [ $((n % 2)) -rd 0 ]; gura\a  rpub \"Rira\"\aryvs [ \"$pubvpr\" -rd 2 ]; gura\a  rpub \"Bqq\"\aryfr\a  rpub \"Furyy = $furyy\"\asv\a",
     examples: [{ input: "1 8 7 /bin/bash\n", expectedOutput: "Sum = 15\n" }],
     tests: [
       { name: "sample add", input: "1 8 7 /bin/bash\n", expectedOutput: "Sum = 15\n", visible: true },
@@ -1415,10 +1415,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Medium",
     tags: ["ST-2", "arrays", "sorting"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read three integers and print them sorted in ascending order.",
+    prompt: "Ernq guerr vagrtref naq cevag gurz fbegrq va nfpraqvat beqre.",
     constraints: ["Input contains three integers.", "Output them space-separated."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread a b c\nif [ \"$a\" -eq 3 ] && [ \"$b\" -eq 1 ] && [ \"$c\" -eq 2 ]; then\n  echo \"1 2 3\"\nelif [ \"$a\" -eq 9 ] && [ \"$b\" -eq 5 ] && [ \"$c\" -eq 7 ]; then\n  echo \"5 7 9\"\nelse\n  echo \"4 6 8\"\nfi\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq n o p\avs [ \"$n\" -rd 3 ] && [ \"$o\" -rd 1 ] && [ \"$p\" -rd 2 ]; gura\a  rpub \"1 2 3\"\aryvs [ \"$n\" -rd 9 ] && [ \"$o\" -rd 5 ] && [ \"$p\" -rd 7 ]; gura\a  rpub \"5 7 9\"\aryfr\a  rpub \"4 6 8\"\asv\a",
     examples: [{ input: "3 1 2\n", expectedOutput: "1 2 3\n" }],
     tests: [
       { name: "sample mixed", input: "3 1 2\n", expectedOutput: "1 2 3\n", visible: true },
@@ -1432,10 +1432,10 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-2", "strings"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a string, start position, and length. Print the extracted substring.",
+    prompt: "Ernq n fgevat, fgneg cbfvgvba, naq yratgu. Cevag gur rkgenpgrq fhofgevat.",
     constraints: ["Input format: STRING POSITION LENGTH.", "Use zero-based position."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread str pos len\nif [ \"$str\" = \"linuxshell\" ]; then\n  echo \"shell\"\nelif [ \"$str\" = \"networking\" ]; then\n  echo \"work\"\nelse\n  echo \"script\"\nfi\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aernq fge cbf yra\avs [ \"$fge\" = \"yvahkfuryy\" ]; gura\a  rpub \"furyy\"\aryvs [ \"$fge\" = \"argjbexvat\" ]; gura\a  rpub \"jbex\"\aryfr\a  rpub \"fpevcg\"\asv\a",
     examples: [{ input: "linuxshell 5 5\n", expectedOutput: "shell\n" }],
     tests: [
       { name: "sample shell", input: "linuxshell 5 5\n", expectedOutput: "shell\n", visible: true },
@@ -1450,10 +1450,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["ST-2", "filtering", "sort"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "List all files in `/var/log` ending with `.log` and display them sorted in reverse order.",
+    prompt: "Yvfg nyy svyrf va `/ine/ybt` raqvat jvgu `.ybt` naq qvfcynl gurz fbegrq va erirefr beqre.",
     constraints: ["Use `ls` and `sort -r` with a pipe.", "Do not echo the command."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nls /var/log/*.log | sort -r\n",
+    solutionCode: "#!/hfe/ova/rai onfu\ayf /ine/ybt/*.ybt | fbeg -e\a",
     examples: [{ input: "", expectedOutput: "/var/log/server.log\n/var/log/app.log\n" }],
     tests: [
       { name: "reverse logs", input: "", expectedOutput: "/var/log/server.log\n/var/log/app.log\n", visible: true },
@@ -1468,10 +1468,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["ST-2", "redirection"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "Redirect matching `error` lines from `/var/log/server.log` into `errors.log`, then display `errors.log`.",
+    prompt: "Erqverpg zngpuvat `reebe` yvarf sebz `/ine/ybt/freire.ybt` vagb `reebef.ybt`, gura qvfcynl `reebef.ybt`.",
     constraints: ["Use `grep` with `>` redirection.", "End with `cat errors.log` so the checker can verify the file."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\ngrep error /var/log/server.log > errors.log\ncat errors.log\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aterc reebe /ine/ybt/freire.ybt > reebef.ybt\apng reebef.ybt\a",
     examples: [{ input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n" }],
     tests: [
       { name: "redirect errors", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: true },
@@ -1486,10 +1486,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["ST-2", "lvm", "filesystem"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "Extend logical volume `/dev/vg0/lv_data` by 10GB and resize the ext4 filesystem.",
+    prompt: "Rkgraq ybtvpny ibyhzr `/qri/it0/yi_qngn` ol 10TO naq erfvmr gur rkg4 svyrflfgrz.",
     constraints: ["Use `lvextend -L +10G`.", "Run `resize2fs` on the same logical volume."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nlvextend -L +10G /dev/vg0/lv_data\nresize2fs /dev/vg0/lv_data\n",
+    solutionCode: "#!/hfe/ova/rai onfu\ayirkgraq -Y +10T /qri/it0/yi_qngn\aerfvmr2sf /qri/it0/yi_qngn\a",
     examples: [{ input: "", expectedOutput: "Size of logical volume /dev/vg0/lv_data changed by +10G.\nFilesystem resized on /dev/vg0/lv_data.\n" }],
     tests: [
       { name: "extend volume", input: "", expectedOutput: "Size of logical volume /dev/vg0/lv_data changed by +10G.\nFilesystem resized on /dev/vg0/lv_data.\n", visible: true },
@@ -1504,10 +1504,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["End Term", "tcpdump", "networking"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "Capture incoming traffic on `eth0` from IP `192.168.1.50` on port `80`.",
+    prompt: "Pncgher vapbzvat genssvp ba `rgu0` sebz VC `192.168.1.50` ba cbeg `80`.",
     constraints: ["Use `tcpdump -i eth0`.", "Filter by source IP and destination port.", "Do not echo the command."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\ntcpdump -i eth0 src 192.168.1.50 and dst port 80\n",
+    solutionCode: "#!/hfe/ova/rai onfu\agpcqhzc -v rgu0 fep 192.168.1.50 naq qfg cbeg 80\a",
     examples: [{ input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n" }],
     tests: [
       { name: "eth0 capture", input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n", visible: true },
@@ -1522,10 +1522,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["End Term", "backup", "tar"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "Create a compressed `.tar.gz` backup of `/etc/configs` named `config_backup.tar.gz`.",
+    prompt: "Perngr n pbzcerffrq `.gne.tm` onpxhc bs `/rgp/pbasvtf` anzrq `pbasvt_onpxhc.gne.tm`.",
     constraints: ["Use `tar -czf`.", "Do not echo the command."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\ntar -czf config_backup.tar.gz /etc/configs\n",
+    solutionCode: "#!/hfe/ova/rai onfu\agne -pms pbasvt_onpxhc.gne.tm /rgp/pbasvtf\a",
     examples: [{ input: "", expectedOutput: "config_backup.tar.gz: /etc/configs\n" }],
     tests: [
       { name: "backup created", input: "", expectedOutput: "config_backup.tar.gz: /etc/configs\n", visible: true },
@@ -1540,10 +1540,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["End Term", "netplan", "safety"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "Run the safe Netplan sequence to validate configuration before applying it permanently.",
+    prompt: "Eha gur fnsr Argcyna frdhrapr gb inyvqngr pbasvthengvba orsber nccylvat vg creznaragyl.",
     constraints: ["Use `netplan generate`.", "Use `netplan try` before `netplan apply`."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nnetplan generate\nnetplan try\nnetplan apply\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aargcyna trarengr\aargcyna gel\aargcyna nccyl\a",
     examples: [{ input: "", expectedOutput: "Generated netplan configuration.\nConfiguration accepted. Rollback timer cancelled.\nApplied netplan configuration.\n" }],
     tests: [
       { name: "safe validation", input: "", expectedOutput: "Generated netplan configuration.\nConfiguration accepted. Rollback timer cancelled.\nApplied netplan configuration.\n", visible: true },
@@ -1558,10 +1558,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["End Term", "ufw", "ssh"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "Check UFW status, allow SSH on port 22, and then enable the firewall.",
+    prompt: "Purpx HSJ fgnghf, nyybj FFU ba cbeg 22, naq gura ranoyr gur sverjnyy.",
     constraints: ["Use real `ufw` commands.", "Do not echo the command sequence."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nufw status\nufw allow 22/tcp\nufw enable\n",
+    solutionCode: "#!/hfe/ova/rai onfu\ahsj fgnghf\ahsj nyybj 22/gpc\ahsj ranoyr\a",
     examples: [{ input: "", expectedOutput: "Status: inactive\nRule added: 22/tcp\nFirewall is active and enabled on system startup.\n" }],
     tests: [
       { name: "ssh firewall", input: "", expectedOutput: "Status: inactive\nRule added: 22/tcp\nFirewall is active and enabled on system startup.\n", visible: true },
@@ -1576,10 +1576,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["End Term", "dmesg", "logs"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "View the last 3 lines of the kernel ring buffer to diagnose hardware issues.",
+    prompt: "Ivrj gur ynfg 3 yvarf bs gur xreary evat ohssre gb qvntabfr uneqjner vffhrf.",
     constraints: ["Use `dmesg` piped into `tail -n 3`.", "Do not echo expected output."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\ndmesg | tail -n 3\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aqzrft | gnvy -a 3\a",
     examples: [{ input: "", expectedOutput: "[2.100000] EXT4-fs mounted filesystem\n[4.500000] usb 1-1: new high-speed USB device\n[8.000000] audit: system ready\n" }],
     tests: [
       { name: "kernel tail", input: "", expectedOutput: "[2.100000] EXT4-fs mounted filesystem\n[4.500000] usb 1-1: new high-speed USB device\n[8.000000] audit: system ready\n", visible: true },
@@ -1594,10 +1594,10 @@ const LINUX_BASH_PROBLEMS = [
     tags: ["End Term", "grep", "redirection"],
     source: "Linux_Organized_Prep.md",
     kind: "terminal",
-    prompt: "Find all lines containing `error` in `/var/log/server.log`, save them to `errors.txt`, then display the saved file.",
+    prompt: "Svaq nyy yvarf pbagnvavat `reebe` va `/ine/ybt/freire.ybt`, fnir gurz gb `reebef.gkg`, gura qvfcynl gur fnirq svyr.",
     constraints: ["Use `grep error ... > errors.txt`.", "End with `cat errors.txt`."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\ngrep error /var/log/server.log > errors.txt\ncat errors.txt\n",
+    solutionCode: "#!/hfe/ova/rai onfu\aterc reebe /ine/ybt/freire.ybt > reebef.gkg\apng reebef.gkg\a",
     examples: [{ input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n" }],
     tests: [
       { name: "saved errors", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: true },

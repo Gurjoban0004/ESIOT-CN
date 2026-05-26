@@ -513,32 +513,52 @@ main.content-pane {
 }
 
 
-/* Bash Specific Overrides */
-main.content-pane.bash-mode {
+/* Bash/Practice Specific Overrides */
+main.content-pane.bash-mode,
+main.content-pane.practice-mode {
   padding: 0 !important;
 }
 
-main.content-pane.bash-mode #reading-pane {
+main.content-pane.bash-mode #reading-pane,
+main.content-pane.practice-mode #reading-pane {
   display: flex !important;
   flex-direction: column;
-  height: 100%;
-}
-
-main.content-pane.bash-mode #reading-content-area {
-  max-width: none !important;
-  margin: 0 !important;
-  height: 100%;
-  flex: 1;
-}
-
-.bash-workspace {
-  display: flex;
   height: 100%;
   width: 100%;
 }
 
-.bash-description-pane {
+main.content-pane.bash-mode .content-header,
+main.content-pane.bash-mode .topic-bottom-nav,
+main.content-pane.practice-mode .content-header,
+main.content-pane.practice-mode .topic-bottom-nav {
+  display: none !important;
+}
+
+main.content-pane.bash-mode #reading-content-area,
+main.content-pane.practice-mode #reading-content-area {
+  max-width: none !important;
+  margin: 0 !important;
+  height: 100%;
+  width: 100%;
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+.bash-workspace,
+.practice-workspace {
+  display: flex;
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.bash-description-pane,
+.practice-info-pane {
   width: 400px;
+  min-width: 250px;
+  max-width: 70%;
   flex-shrink: 0;
   border-right: 1px solid var(--border-color);
   padding: 1.5rem;
@@ -546,11 +566,18 @@ main.content-pane.bash-mode #reading-content-area {
   background-color: #FFFDFB;
 }
 
-.bash-editor-pane {
+.bash-editor-pane,
+.practice-questions-pane {
   flex: 1;
   display: flex;
   flex-direction: column;
   overflow: hidden;
+  background-color: #FFFDFB;
+}
+
+.practice-questions-pane {
+  overflow-y: auto;
+  padding: 1.5rem;
 }
 
 .bash-code-editor {

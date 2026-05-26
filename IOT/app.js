@@ -613,12 +613,16 @@ function setActiveSection(sectionId) {
   state.searchQuery = '';
   elements.searchInput.value = '';
 
-  // Handle Bash section layout
+  // Handle Bash/Practice section layout
   const mainContentPane = document.getElementById('main-content-pane');
   if (isBashSection(sectionId)) {
     mainContentPane.classList.add('bash-mode');
-  } else {
+    mainContentPane.classList.remove('practice-mode');
+  } else if (isMcqSection(sectionId)) {
+    mainContentPane.classList.add('practice-mode');
     mainContentPane.classList.remove('bash-mode');
+  } else {
+    mainContentPane.classList.remove('bash-mode', 'practice-mode');
   }
 
   // Set accent color for this section
@@ -2239,10 +2243,6 @@ function renderPracticeUnit(unitIndex) {
   elements.welcomeScreen.style.display = 'none';
   elements.readingPane.style.display = 'block';
 
-  const sectionName = CONFIG.subjects[state.activeSubject].sectionNames[state.activeSection] || 'Practice';
-  elements.sectionBadge.textContent = sectionName;
-  elements.mainTitle.textContent = unitObj.unitName;
-
   const allQuestions = mcqBank.flatMap(u => u.questions || []);
   const totalQuestions = allQuestions.length || 100;
   
@@ -2265,26 +2265,21 @@ function renderPracticeUnit(unitIndex) {
     <div class="quiz-dashboard-header">
       <h3>
         <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--active-accent);"><path d="M12 20h9"></path><path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4L16.5 3.5z"></path></svg>
-        Subject Practice Dashboard
+        Practice Dashboard
       </h3>
       <div class="quiz-stats-grid">
         <div class="quiz-stat-card">
-          <span class="quiz-stat-label">Total Score</span>
-          <span class="quiz-stat-value">${correctCount}<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);"> / ${totalQuestions}</span></span>
+          <span class="quiz-stat-label">Score</span>
+          <span class="quiz-stat-value">${correctCount} / ${totalQuestions}</span>
         </div>
         <div class="quiz-stat-card">
           <span class="quiz-stat-label">Accuracy</span>
-          <span class="quiz-stat-value">${accuracy}<span style="font-size: 1.25rem; font-weight: 600;">%</span></span>
-        </div>
-        <div class="quiz-stat-card">
-          <span class="quiz-stat-label">Progress</span>
-          <span class="quiz-stat-value">${answeredCount}<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);"> / ${totalQuestions}</span></span>
+          <span class="quiz-stat-value">${accuracy}%</span>
         </div>
       </div>
-      <div class="quiz-controls">
-        <button class="quiz-reset-btn" id="quiz-reset-progress-btn">
-          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"></path></svg>
-          Reset Subject Progress
+      <div class="quiz-controls" style="margin-top: 1rem;">
+        <button class="quiz-reset-btn" id="quiz-reset-progress-btn" style="width: 100%; font-size: 0.8rem;">
+          Reset Progress
         </button>
       </div>
     </div>
@@ -2346,7 +2341,31 @@ function renderPracticeUnit(unitIndex) {
     `;
   }).join('');
 
-  elements.contentArea.innerHTML = dashboardHtml + questionsHtml;
+  elements.contentArea.innerHTML = `
+    <div class="practice-workspace">
+      <section class="practice-info-pane" id="practice-info-pane">
+        <div class="bash-problem-header">
+           <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--active-accent); letter-spacing: 0.05em;">${CONFIG.subjects[state.activeSubject].sectionNames[state.activeSection]}</span>
+           <h3 style="margin-top: 0.5rem; border-left: none; padding-left: 0; font-size: 1.4rem;">${unitObj.unitName}</h3>
+        </div>
+        ${dashboardHtml}
+        <div style="margin-top: 2rem; font-size: 0.85rem; color: var(--text-secondary);">
+          <p>Select the correct option for each question. Your progress is saved automatically.</p>
+        </div>
+      </section>
+
+      <div class="resizer-h" id="resizer-practice-h">
+        <div class="resizer-notch"></div>
+      </div>
+
+      <section class="practice-questions-pane">
+        ${questionsHtml}
+      </section>
+    </div>
+  `;
+
+  // Initialize resizer
+  initResizer('resizer-practice-h', 'practice-info-pane', 'horizontal');
 
   const resetBtn = document.getElementById('quiz-reset-progress-btn');
   if (resetBtn) {
@@ -2357,7 +2376,7 @@ function renderPracticeUnit(unitIndex) {
     });
   }
 
-  // Re-run KaTeX auto-render on the content area
+  // Re-run KaTeX auto-render
   if (typeof renderMathInElement === 'function') {
     renderMathInElement(elements.contentArea, {
       delimiters: [
@@ -2370,7 +2389,6 @@ function renderPracticeUnit(unitIndex) {
     });
   }
 
-  // Shuffle the options
   shuffleMcqOptions(elements.contentArea);
 
   const sidebarButtons = elements.topicList.querySelectorAll('.topic-item');
@@ -2384,26 +2402,13 @@ function renderPracticeUnit(unitIndex) {
 
   const totalUnits = mcqBank.length;
   const isLastUnit = unitIndex === totalUnits - 1;
+  elements.nextBtn.innerHTML = isLastUnit ? 'Practice Bank Completed! 🎓' : 'Next Unit →';
+  elements.nextBtn.disabled = false;
+  elements.nextBtn.style.opacity = '1';
 
-  if (isLastUnit) {
-    elements.nextBtn.innerHTML = 'Practice Bank Completed! 🎓';
-    elements.nextBtn.style.backgroundColor = '#EEF6F2';
-    elements.nextBtn.style.borderColor = '#CDE3D5';
-    elements.nextBtn.style.color = '#4A7A60';
-    elements.nextBtn.style.opacity = '0.7';
-    elements.nextBtn.style.cursor = 'default';
-  } else {
-    elements.nextBtn.innerHTML = 'Next Unit <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
-    elements.nextBtn.style.backgroundColor = '';
-    elements.nextBtn.style.borderColor = '';
-    elements.nextBtn.style.color = '';
-    elements.nextBtn.style.opacity = '';
-    elements.nextBtn.style.cursor = 'pointer';
-  }
-
-  elements.readingPane.scrollIntoView({ behavior: 'smooth', block: 'start' });
   document.getElementById('main-content-pane').scrollTop = 0;
 }
+
 
 // ============================================================
 //  LAYOUT
