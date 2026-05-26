@@ -994,6 +994,42 @@ nav.top-nav button.active[data-section="bashPractice"] {
   color: var(--text-secondary);
 }
 
+.bash-solution-block {
+  display: flex;
+  flex-direction: column;
+  gap: 0.8rem;
+}
+
+.bash-solution-toggle {
+  align-self: flex-start;
+  border: 1px solid #CDE8D9;
+  background: #EAF5EF;
+  color: #2F6F5E;
+  border-radius: 6px;
+  padding: 0.55rem 0.85rem;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.bash-solution-toggle:hover {
+  background: #DDF0E6;
+}
+
+.bash-solution-code {
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  background: #1F2421;
+  color: #E9F1EA;
+  font-family: var(--font-mono);
+  font-size: 0.84rem;
+  line-height: 1.55;
+  padding: 1rem;
+  white-space: pre-wrap;
+  overflow: auto;
+}
+
 .bash-example {
   border-left: 4px solid var(--active-accent);
   background: #F8F3EC;

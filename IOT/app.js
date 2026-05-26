@@ -1160,11 +1160,13 @@ function renderBashResults(results) {
         <span>${result.passed ? 'Passed' : 'Failed'}</span>
       </div>
       ${result.visible || !result.passed ? `
+        ${result.visible ? `
         <div class="bash-result-grid">
           <div><label>Input</label><pre>${escapeHtml(result.input)}</pre></div>
           <div><label>Expected</label><pre>${escapeHtml(result.expectedOutput)}</pre></div>
           <div><label>Your Output</label><pre>${escapeHtml(result.actualOutput || '(empty)')}</pre></div>
         </div>
+        ` : '<p class="bash-hidden-case">Hidden case failed. Re-check your logic against edge cases without relying on the sample output.</p>'}
       ` : '<p class="bash-hidden-case">Hidden case passed.</p>'}
     </div>
   `).join('');
@@ -1180,6 +1182,7 @@ function runBashProblem(problem, mode) {
   state.bashProgress[state.activeSubject][problem.id] = {
     ...state.bashProgress[state.activeSubject][problem.id],
     code,
+    codeVersion: problem.version || 2,
     lastResults: results,
     lastMode: mode,
     solved: solved || (state.bashProgress[state.activeSubject][problem.id] || {}).solved === true
@@ -1205,7 +1208,10 @@ function renderBashProblem(index) {
   if (!problem) return;
 
   const progress = state.bashProgress[state.activeSubject][problem.id] || {};
-  const currentCode = progress.code || problem.starterCode;
+  const problemVersion = problem.version || 2;
+  const currentCode = progress.codeVersion === problemVersion
+    ? progress.code
+    : (problem.starterCode || '#!/usr/bin/env bash\n\n');
   const lastResults = progress.lastResults || [];
   const passedCount = lastResults.filter(result => result.passed).length;
   const resultSummary = lastResults.length
@@ -1256,6 +1262,10 @@ function renderBashProblem(index) {
           <h4>Constraints</h4>
           <ul style="font-size: 0.9rem;">${constraintsHtml}</ul>
         </div>
+        <div class="bash-section-block bash-solution-block">
+          <button class="bash-solution-toggle" id="bash-solution-toggle">Show Answer</button>
+          <pre class="bash-solution-code" id="bash-solution-code" hidden>${escapeHtml(problem.solutionCode || '')}</pre>
+        </div>
       </section>
       <section class="bash-editor-pane">
         <div class="bash-editor-toolbar">
@@ -1281,13 +1291,29 @@ function renderBashProblem(index) {
   editor.addEventListener('input', event => {
     state.bashProgress[state.activeSubject][problem.id] = {
       ...state.bashProgress[state.activeSubject][problem.id],
-      code: event.target.value
+      code: event.target.value,
+      codeVersion: problemVersion
     };
     saveBashProgress();
   });
 
   document.getElementById('bash-run-btn').addEventListener('click', () => runBashProblem(problem, 'run'));
   document.getElementById('bash-submit-btn').addEventListener('click', () => runBashProblem(problem, 'submit'));
+
+  const solutionToggle = document.getElementById('bash-solution-toggle');
+  const solutionCode = document.getElementById('bash-solution-code');
+  if (solutionToggle && solutionCode) {
+    solutionToggle.addEventListener('click', () => {
+      const isHidden = solutionCode.hasAttribute('hidden');
+      if (isHidden) {
+        solutionCode.removeAttribute('hidden');
+        solutionToggle.textContent = 'Hide Answer';
+      } else {
+        solutionCode.setAttribute('hidden', '');
+        solutionToggle.textContent = 'Show Answer';
+      }
+    });
+  }
   
   // Mini nav listeners
   const miniPrev = document.getElementById('bash-mini-prev');
