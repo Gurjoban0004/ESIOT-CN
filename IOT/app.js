@@ -197,14 +197,6 @@ function setupSecurity() {
   setInterval(check, 2000);
 }
 
-function decodeData(str) {
-  if (!str || typeof str !== 'string') return str;
-  // Simple rotation cipher for obfuscation
-  return str.replace(/[a-zA-Z]/g, c => {
-    return String.fromCharCode((c <= 'Z' ? 90 : 122) >= (c = c.charCodeAt(0) + 13) ? c : c - 26);
-  });
-}
-
 // ============================================================
 //  LOCAL STORAGE PROGRESS
 // ============================================================
@@ -849,7 +841,7 @@ function selectTopic(index) {
   const sectionName = CONFIG.subjects[state.activeSubject].sectionNames[state.activeSection] || state.activeSection;
   elements.sectionBadge.textContent = sectionName;
   elements.mainTitle.textContent = topic.title;
-  elements.contentArea.innerHTML = decodeData(topic.html);
+  elements.contentArea.innerHTML = topic.html;
 
   // Restore scroll behavior for reading
   elements.contentArea.style.overflowY = 'auto';
@@ -1945,7 +1937,7 @@ function renderBashProblem(index) {
   const problemVersion = problem.version || 2;
   const currentCode = progress.codeVersion === problemVersion
     ? progress.code
-    : (decodeData(problem.starterCode) || '#!/usr/bin/env bash\n\n');
+    : (problem.starterCode || '#!/usr/bin/env bash\n\n');
   const lastResults = progress.lastResults || [];
   const passedCount = lastResults.filter(result => result.passed).length;
   const resultSummary = lastResults.length
@@ -2023,7 +2015,7 @@ function renderBashProblem(index) {
         </div>
         <div class="bash-section-block">
           <h4>Problem</h4>
-          <p style="font-size: 0.95rem;">${escapeHtml(decodeData(problem.prompt))}</p>
+          <p style="font-size: 0.95rem;">${escapeHtml(problem.prompt)}</p>
         </div>
         <div class="bash-section-block">
           <h4>Examples</h4>
@@ -2037,7 +2029,7 @@ function renderBashProblem(index) {
         ${labReferenceHtml}
         <div class="bash-section-block bash-solution-block">
           <button class="bash-solution-toggle" id="bash-solution-toggle">Show Answer</button>
-          <pre class="bash-solution-code" id="bash-solution-code" hidden>${escapeHtml(decodeData(problem.solutionCode || ''))}</pre>
+          <pre class="bash-solution-code" id="bash-solution-code" hidden>${escapeHtml(problem.solutionCode || '')}</pre>
         </div>
       </section>
 
@@ -2046,15 +2038,15 @@ function renderBashProblem(index) {
       </div>
 
       <section class="bash-editor-pane">
-        <div class="bash-editor-toolbar" style="padding: 0.75rem 1.5rem; background: #FFFDFB; border-bottom: 1px solid var(--border-color); flex-shrink: 0;">
-          <span style="font-size: 0.85rem; font-weight: 600;">${problem.kind === 'terminal' ? 'Linux Lab Editor' : 'Bash Script Editor'}</span>
-          <div style="display: flex; gap: 0.5rem;">
-            <button class="bash-reset-btn" id="bash-reset-btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Reset</button>
-            <button class="bash-run-btn" id="bash-run-btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Run</button>
-            <button class="bash-submit-btn" id="bash-submit-btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; background: var(--active-accent); color: white; border: none; border-radius: 4px; cursor: pointer;">Submit</button>
+        <div class="bash-editor-toolbar">
+          <span class="bash-editor-title">${problem.kind === 'terminal' ? 'Linux Lab Editor' : 'Bash Script Editor'}</span>
+          <div class="bash-editor-actions">
+            <button class="bash-reset-btn" id="bash-reset-btn">Reset</button>
+            <button class="bash-run-btn" id="bash-run-btn">Run</button>
+            <button class="bash-submit-btn" id="bash-submit-btn">Submit</button>
           </div>
         </div>
-        <textarea class="bash-code-editor" id="bash-code-editor" spellcheck="false" style="flex: 1; min-height: 100px;">${escapeHtml(currentCode)}</textarea>
+        <textarea class="bash-code-editor" id="bash-code-editor" spellcheck="false">${escapeHtml(currentCode)}</textarea>
         
         <div class="resizer-v" id="resizer-bash-v">
           <div class="resizer-notch"></div>
@@ -2305,13 +2297,13 @@ function renderPracticeUnit(unitIndex) {
     let unitExplanation = '';
 
     const optionsListHtml = Object.keys(q.options).map(optLetter => {
-      const rawText = decodeData(q.options[optLetter]);
+      const rawText = q.options[optLetter];
       const parsed = parseOption(rawText);
       
       if (optLetter === q.correct && parsed.explanation) {
         unitExplanation = parsed.explanation;
       } else if (optLetter === q.correct && q.explanation) {
-        unitExplanation = decodeData(q.explanation);
+        unitExplanation = q.explanation;
       }
 
       let optionClasses = 'mcq-option';
@@ -2341,7 +2333,7 @@ function renderPracticeUnit(unitIndex) {
 
     return `
       <div class="mcq-card" data-question-id="${q.id}" data-correct-answer="${q.correct}">
-        <div class="mcq-question"><strong>Q${qNum}.</strong> ${decodeData(q.question)}</div>
+        <div class="mcq-question"><strong>Q${qNum}.</strong> ${q.question}</div>
         <div class="mcq-options${answeredClass}" data-correct="${q.correct}">
           ${optionsListHtml}
         </div>
