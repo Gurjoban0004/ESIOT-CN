@@ -1,4 +1,4 @@
-// Prep Hub Application Logic — Supports ES & IoT and Computer Networks
+// Prep Hub Application Logic — Supports ES & IoT, Computer Networks, and Linux
 
 // ============================================================
 //  CONFIGURATION
@@ -65,6 +65,28 @@ const CONFIG = {
         { id: 'unit9', label: 'Unit 9' },
         { id: 'practice', label: 'Practice' }
       ]
+    },
+    linux: {
+      label: "Linux",
+      examTime: new Date("2026-06-05T09:30:00+05:30").getTime(),
+      storageKey: "linux_mastered_topics",
+      storageKeyPractice: "linux_mcq_answers",
+      storageKeyBash: "linux_bash_progress",
+      data: {},
+      mcqs: null,
+      bashProblems: null,
+      themeColors: {
+        linuxMcq: '#3A8F65',
+        bashPractice: '#2F6F5E'
+      },
+      sectionNames: {
+        linuxMcq: 'Linux MCQs',
+        bashPractice: 'Bash Practice'
+      },
+      tabs: [
+        { id: 'linuxMcq', label: 'MCQs' },
+        { id: 'bashPractice', label: 'Bash Practice' }
+      ]
     }
   }
 };
@@ -79,11 +101,16 @@ let state = {
   searchQuery: '',
   mastered: {
     iot: { st1: [], st2: [], endTerm: [], cheatSheet: [], practice: [] },
-    cn:  { unit1_2: [], unit3_4: [], unit5_6: [], unit7_8: [], unit9: [], practice: [] }
+    cn:  { unit1_2: [], unit3_4: [], unit5_6: [], unit7_8: [], unit9: [], practice: [] },
+    linux: { linuxMcq: [], bashPractice: [] }
   },
   practiceAnswers: {
     iot: {},
-    cn: {}
+    cn: {},
+    linux: {}
+  },
+  bashProgress: {
+    linux: {}
   }
 };
 
@@ -122,6 +149,8 @@ function init() {
   CONFIG.subjects.cn.data = typeof CN_STUDY_DATA !== 'undefined' ? CN_STUDY_DATA : {};
   CONFIG.subjects.iot.mcqs = typeof IOT_MCQ_BANK !== 'undefined' ? IOT_MCQ_BANK : [];
   CONFIG.subjects.cn.mcqs = typeof CN_MCQ_BANK !== 'undefined' ? CN_MCQ_BANK : [];
+  CONFIG.subjects.linux.mcqs = typeof LINUX_MCQ_BANK !== 'undefined' ? LINUX_MCQ_BANK : [];
+  CONFIG.subjects.linux.bashProblems = typeof LINUX_BASH_PROBLEMS !== 'undefined' ? LINUX_BASH_PROBLEMS : [];
 
   loadAllProgress();
   setupEventListeners();
