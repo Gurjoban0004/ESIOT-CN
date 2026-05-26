@@ -1181,6 +1181,9 @@ function runBashProblem(problem, mode) {
   const summary = document.getElementById('bash-results-summary');
   if (summary) summary.textContent = `${passedCount} passed / ${results.length} total`;
 
+  const panel = document.querySelector('.bash-results-panel');
+  if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+
   renderSidebar();
   updateProgressBar();
 }
