@@ -802,6 +802,267 @@ function updateProgressBar() {
 }
 
 // ============================================================
+//  BASH SIMULATION & CHECKING
+// ============================================================
+function normalizeOutput(value) {
+  return String(value || '')
+    .replace(/\r\n/g, '\n')
+    .replace(/\r/g, '\n')
+    .replace(/[ \t]+\n/g, '\n');
+}
+
+function outputsMatch(actual, expected) {
+  return normalizeOutput(actual).trimEnd() === normalizeOutput(expected).trimEnd();
+}
+
+function tokenizeBash(script) {
+  return script
+    .replace(/\r\n/g, '\n')
+    .split('\n')
+    .map(line => line.trim())
+    .filter(line => line && !line.startsWith('#') && line !== '#!/usr/bin/env bash' && line !== '#!/bin/bash');
+}
+
+function simulateBash(script, input) {
+  const inputLines = normalizeOutput(input).split('\n');
+  let inputCursor = 0;
+  const vars = {};
+  const output = [];
+  const lines = tokenizeBash(script);
+
+  function readVars(names) {
+    const raw = inputLines[inputCursor] || '';
+    inputCursor += 1;
+    const parts = raw.trim().split(/\s+/).filter(Boolean);
+    names.forEach((name, index) => {
+      vars[name] = parts[index] !== undefined ? parts[index] : '';
+    });
+  }
+
+  function stripOuterQuotes(value) {
+    return String(value || '').replace(/^['"]|['"]$/g, '');
+  }
+
+  function expandArithmeticExpression(expr) {
+    const safeExpr = expr.replace(/\b[a-zA-Z_][a-zA-Z0-9_]*\b/g, name => {
+      return Number(vars[name] || 0);
+    });
+    if (!/^[0-9+\-*/%<>=!&| ().]+$/.test(safeExpr)) return '';
+    try {
+      return String(Function(`"use strict"; return (${safeExpr});`)());
+    } catch (e) {
+      return '';
+    }
+  }
+
+  function expandValue(text) {
+    return stripOuterQuotes(String(text || '')
+      .replace(/\$\(\(([^)]+)\)\)/g, (_, expr) => expandArithmeticExpression(expr))
+      .replace(/\$([a-zA-Z_][a-zA-Z0-9_]*)/g, (_, name) => vars[name] || ''));
+  }
+
+  function valueToNumber(value) {
+    return Number(expandValue(value));
+  }
+
+  function evalSingleTest(condition) {
+    let clean = condition
+      .replace(/^if\s+/, '')
+      .replace(/^elif\s+/, '')
+      .replace(/\bthen\b/g, '')
+      .replace(/[{};]/g, '')
+      .trim();
+
+    const arithmeticMatch = clean.match(/^\(\((.+)\)\)$/);
+    if (arithmeticMatch) {
+      return expandArithmeticExpression(arithmeticMatch[1]) === 'true';
+    }
+
+    const bracketMatch = clean.match(/^\[\s*(.+?)\s*\]$/);
+    if (!bracketMatch) return false;
+
+    const binaryMatch = bracketMatch[1].match(/^(.*?)\s+(-eq|-ne|-gt|-ge|-lt|-le|==|=|!=)\s+(.*?)$/);
+    if (binaryMatch) {
+      const leftRaw = binaryMatch[1].trim();
+      const op = binaryMatch[2];
+      const rightRaw = binaryMatch[3].trim();
+      const leftText = expandValue(leftRaw);
+      const rightText = expandValue(rightRaw);
+      const leftNum = Number(leftText);
+      const rightNum = Number(rightText);
+
+      switch (op) {
+        case '-eq': return leftNum === rightNum;
+        case '-ne': return leftNum !== rightNum;
+        case '-gt': return leftNum > rightNum;
+        case '-ge': return leftNum >= rightNum;
+        case '-lt': return leftNum < rightNum;
+        case '-le': return leftNum <= rightNum;
+        case '=':
+        case '==': return leftText === rightText;
+        case '!=': return leftText !== rightText;
+        default: return false;
+      }
+    }
+
+    const unaryMatch = bracketMatch[1].match(/^(-z|-n)\s+(.+)$/);
+    if (unaryMatch) {
+      const op = unaryMatch[1];
+      const target = expandValue(unaryMatch[2]);
+      if (op === '-z') return target.length === 0;
+      if (op === '-n') return target.length > 0;
+    }
+
+    return false;
+  }
+
+  function evalCondition(condition) {
+    const normalized = condition
+      .replace(/^if\s+/, '')
+      .replace(/^elif\s+/, '')
+      .replace(/\bthen\b/g, '')
+      .trim();
+
+    return normalized.split(/\s+\|\|\s+/).some(orPart => {
+      return orPart.split(/\s+&&\s+/).every(andPart => evalSingleTest(andPart.trim()));
+    });
+  }
+
+  function runSimpleLine(line) {
+    const compact = line.replace(/;$/, '').trim();
+    const readMatch = compact.match(/^read\s+(.+)$/);
+    if (readMatch) {
+      readVars(readMatch[1].split(/\s+/));
+      return;
+    }
+
+    const assignMatch = compact.match(/^([a-zA-Z_][a-zA-Z0-9_]*)=(.+)$/);
+    if (assignMatch) {
+      vars[assignMatch[1]] = expandValue(assignMatch[2]);
+      return;
+    }
+
+    const echoMatch = compact.match(/^echo(?:\s+(-n))?\s*(.*)$/);
+    if (echoMatch) {
+      const text = expandValue(echoMatch[2] || '');
+      if (echoMatch[1] === '-n') {
+        output.push(text);
+      } else {
+        output.push(`${text}\n`);
+      }
+      return;
+    }
+
+    const printfMatch = compact.match(/^printf\s+["']%s\\n["']\s+(.+)$/);
+    if (printfMatch) {
+      output.push(`${expandValue(printfMatch[1])}\n`);
+    }
+  }
+
+  function collectIfBranches(startIndex) {
+    const branches = [];
+    let current = { condition: lines[startIndex], body: [] };
+    branches.push(current);
+    let i = startIndex + 1;
+
+    while (i < lines.length) {
+      const line = lines[i];
+      if (line === 'then') {
+        i += 1;
+        continue;
+      }
+      if (line.startsWith('elif ')) {
+        current = { condition: line, body: [] };
+        branches.push(current);
+        i += 1;
+        continue;
+      }
+      if (line === 'else') {
+        current = { condition: null, body: [] };
+        branches.push(current);
+        i += 1;
+        continue;
+      }
+      if (line === 'fi') {
+        return { branches, endIndex: i };
+      }
+      current.body.push(line);
+      i += 1;
+    }
+
+    return { branches, endIndex: i };
+  }
+
+  function runCase(startIndex) {
+    const caseLine = lines[startIndex];
+    const valueMatch = caseLine.match(/^case\s+(.+)\s+in$/);
+    if (!valueMatch) return startIndex;
+    const switchValue = expandValue(valueMatch[1]);
+    let matched = false;
+    let i = startIndex + 1;
+
+    while (i < lines.length && lines[i] !== 'esac') {
+      const patternLine = lines[i];
+      const patternMatch = patternLine.match(/^(.+?)\)\s*(.*?)(?:\s*;;)?$/);
+      if (patternMatch) {
+        const pattern = stripOuterQuotes(patternMatch[1].trim());
+        const command = patternMatch[2].trim();
+        if (!matched && (pattern === '*' || pattern === switchValue)) {
+          if (command) runSimpleLine(command);
+          matched = true;
+        }
+      }
+      i += 1;
+    }
+
+    return i;
+  }
+
+  try {
+    for (let i = 0; i < lines.length; i++) {
+      const line = lines[i];
+      if (line.startsWith('if ')) {
+        const { branches, endIndex } = collectIfBranches(i);
+        const branch = branches.find(item => item.condition === null || evalCondition(item.condition));
+        if (branch) branch.body.forEach(runSimpleLine);
+        i = endIndex;
+      } else if (line.startsWith('case ')) {
+        i = runCase(i);
+      } else {
+        runSimpleLine(line);
+      }
+    }
+  } catch (e) {
+    return { output: output.join(''), error: e.message || 'Unable to simulate this script.' };
+  }
+
+  return {
+    output: output.join(''),
+    error: ''
+  };
+}
+
+function evaluateBashProblem(problem, script, mode) {
+  const tests = mode === 'run'
+    ? problem.tests.filter(test => test.visible)
+    : problem.tests;
+
+  return tests.map(test => {
+    const result = simulateBash(script, test.input);
+    const passed = !result.error && outputsMatch(result.output, test.expectedOutput);
+    return {
+      name: test.name,
+      visible: test.visible,
+      input: test.input,
+      expectedOutput: test.expectedOutput,
+      actualOutput: result.output,
+      error: result.error,
+      passed
+    };
+  });
+}
+
+// ============================================================
 //  PRACTICE MODE RENDERING & HELPERS
 // ============================================================
 function parseOption(text) {
