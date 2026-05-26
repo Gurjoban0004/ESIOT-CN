@@ -109,7 +109,8 @@ const elements = {
   prevBtn: document.getElementById('prev-topic-btn'),
   nextBtn: document.getElementById('next-topic-btn'),
   subjectBtns: document.querySelectorAll('.subject-btn'),
-  mobileBrandTitle: document.getElementById('mobile-brand-title')
+  mobileBrandTitle: document.getElementById('mobile-brand-title'),
+  mobileSectionNav: document.getElementById('mobile-section-nav')
 };
 
 // ============================================================
@@ -382,8 +383,10 @@ function setActiveSubject(subjectId) {
 function renderTopNav(subjectId) {
   const tabs = CONFIG.subjects[subjectId].tabs;
   elements.topNavBar.innerHTML = '';
+  if (elements.mobileSectionNav) elements.mobileSectionNav.innerHTML = '';
 
   tabs.forEach((tab, i) => {
+    // Desktop Button
     const btn = document.createElement('button');
     btn.setAttribute('data-section', tab.id);
     btn.textContent = tab.label;
@@ -393,6 +396,19 @@ function renderTopNav(subjectId) {
       closeMobileSidebar();
     });
     elements.topNavBar.appendChild(btn);
+
+    // Mobile Button
+    if (elements.mobileSectionNav) {
+      const mobBtn = document.createElement('button');
+      mobBtn.setAttribute('data-section', tab.id);
+      mobBtn.textContent = tab.label;
+      if (i === 0) mobBtn.classList.add('active');
+      mobBtn.addEventListener('click', () => {
+        setActiveSection(tab.id);
+        closeMobileSidebar();
+      });
+      elements.mobileSectionNav.appendChild(mobBtn);
+    }
   });
 }
 
@@ -409,7 +425,7 @@ function setActiveSection(sectionId) {
   const color = CONFIG.subjects[state.activeSubject].themeColors[sectionId] || '#B58A3D';
   document.documentElement.style.setProperty('--active-accent', color);
 
-  // Highlight nav tab
+  // Highlight desktop nav tab
   const navBtns = elements.topNavBar.querySelectorAll('button');
   navBtns.forEach(btn => {
     if (btn.getAttribute('data-section') === sectionId) {
@@ -418,6 +434,18 @@ function setActiveSection(sectionId) {
       btn.classList.remove('active');
     }
   });
+
+  // Highlight mobile nav tab
+  if (elements.mobileSectionNav) {
+    const mobBtns = elements.mobileSectionNav.querySelectorAll('button');
+    mobBtns.forEach(btn => {
+      if (btn.getAttribute('data-section') === sectionId) {
+        btn.classList.add('active');
+      } else {
+        btn.classList.remove('active');
+      }
+    });
+  }
 
   updateProgressBar();
   renderSidebar();

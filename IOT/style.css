@@ -1018,3 +1018,96 @@ nav.top-nav button.active[data-section="practice"] {
   color: var(--text-primary);
   font-weight: 600;
 }
+
+/* ============================================================
+   MOBILE SECTION NAVIGATION SWICHER
+   ============================================================ */
+.mobile-section-nav {
+  display: none;
+  flex-direction: column;
+  gap: 0.35rem;
+  padding: 0.75rem 1rem;
+  border-bottom: 1px solid var(--border-color);
+}
+
+.mobile-section-nav button {
+  width: 100%;
+  background: none;
+  border: 1px solid var(--border-color);
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  text-align: left;
+  transition: all 0.2s ease;
+}
+
+.mobile-section-nav button:hover {
+  background-color: #EFE9DE;
+  color: var(--text-primary);
+}
+
+/* Accent highlight backgrounds on mobile active buttons */
+.mobile-section-nav button.active[data-section="st1"],
+.mobile-section-nav button.active[data-section="st2"] {
+  background-color: #FDF1ED;
+  color: var(--accent-st1);
+  border-color: #F3D9D2;
+}
+
+.mobile-section-nav button.active[data-section="endTerm"] {
+  background-color: #FAF8EE;
+  color: #B58A3D;
+  border-color: #EBE3D5;
+}
+
+.mobile-section-nav button.active[data-section="cheatSheet"] {
+  background-color: #ECEEF2;
+  color: var(--accent-cheat);
+  border-color: #D3D7E0;
+}
+
+.mobile-section-nav button.active[data-section="unit1_2"] {
+  background-color: #EDF1FD;
+  color: #5F7AE0;
+  border-color: #D9E1FC;
+}
+
+.mobile-section-nav button.active[data-section="unit3_4"] {
+  background-color: #F0F4F8;
+  color: #7A9FBF;
+  border-color: #D6E2ED;
+}
+
+.mobile-section-nav button.active[data-section="unit5_6"] {
+  background-color: #EDF6F3;
+  color: #5F9E8A;
+  border-color: #D5EBE4;
+}
+
+.mobile-section-nav button.active[data-section="unit7_8"] {
+  background-color: #F5EDF6;
+  color: #8A5F9E;
+  border-color: #ECD9F0;
+}
+
+.mobile-section-nav button.active[data-section="unit9"] {
+  background-color: #FDF5F5;
+  color: #9E5F5F;
+  border-color: #F9D9D9;
+}
+
+.mobile-section-nav button.active[data-section="practice"] {
+  background-color: #FDF1ED;
+  color: #8C4735;
+  border-color: #F3D9D2;
+}
+
+@media (max-width: 900px) {
+  .mobile-section-nav {
+    display: flex;
+  }
+}
