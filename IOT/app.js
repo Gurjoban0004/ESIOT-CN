@@ -290,6 +290,14 @@ function setupEventListeners() {
       return;
     }
 
+    if (isBashSection()) {
+      const bashProblems = getActiveBashProblems();
+      if (state.activeTopicIndex < bashProblems.length - 1) {
+        selectTopic(state.activeTopicIndex + 1);
+      }
+      return;
+    }
+
     const subjectData = CONFIG.subjects[state.activeSubject].data;
     const totalTopics = subjectData[state.activeSection]?.length || 0;
 
@@ -318,6 +326,9 @@ function setupEventListeners() {
         const mcqBank = getActiveMcqBank();
         const totalUnits = mcqBank.length;
         if (state.activeTopicIndex < totalUnits - 1) selectTopic(state.activeTopicIndex + 1);
+      } else if (isBashSection()) {
+        const bashProblems = getActiveBashProblems();
+        if (state.activeTopicIndex < bashProblems.length - 1) selectTopic(state.activeTopicIndex + 1);
       } else {
         const subjectData = CONFIG.subjects[state.activeSubject].data;
         const totalTopics = subjectData[state.activeSection]?.length || 0;
@@ -551,6 +562,43 @@ function setActiveSection(sectionId) {
 function renderSidebar() {
   elements.topicList.innerHTML = '';
 
+  if (isBashSection()) {
+    const problems = getActiveBashProblems();
+    problems.forEach((problem, index) => {
+      const searchText = `${problem.title} ${problem.tags.join(' ')}`.toLowerCase();
+      const matchesSearch = searchText.includes(state.searchQuery);
+      if (!matchesSearch) return;
+
+      const progress = state.bashProgress[state.activeSubject][problem.id] || {};
+      const isSolved = progress.solved === true;
+      const isActive = index === state.activeTopicIndex;
+
+      const button = document.createElement('button');
+      button.className = `topic-item ${isActive ? 'active' : ''} ${isSolved ? 'mastered' : ''}`;
+      button.setAttribute('data-index', index);
+
+      const checkbox = document.createElement('div');
+      checkbox.className = 'checkbox-circle';
+      if (isSolved) {
+        checkbox.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+      }
+      button.appendChild(checkbox);
+
+      const textSpan = document.createElement('span');
+      textSpan.className = 'topic-title-text';
+      textSpan.textContent = problem.title;
+      button.appendChild(textSpan);
+
+      button.addEventListener('click', () => {
+        selectTopic(index);
+        closeMobileSidebar();
+      });
+
+      elements.topicList.appendChild(button);
+    });
+    return;
+  }
+
   if (isMcqSection()) {
     const mcqBank = getActiveMcqBank();
     mcqBank.forEach((unitObj, index) => {
@@ -644,6 +692,11 @@ function renderSidebar() {
 // ============================================================
 function selectTopic(index) {
   state.activeTopicIndex = index;
+
+  if (isBashSection()) {
+    renderBashProblem(index);
+    return;
+  }
 
   if (isMcqSection()) {
     renderPracticeUnit(index);
@@ -767,6 +820,19 @@ function updateNextButtonState() {
 }
 
 function updateProgressBar() {
+  if (isBashSection()) {
+    const problems = getActiveBashProblems();
+    const solvedCount = problems.filter(problem => {
+      const progress = state.bashProgress[state.activeSubject][problem.id] || {};
+      return progress.solved === true;
+    }).length;
+    const total = problems.length;
+    const percentage = total > 0 ? Math.round((solvedCount / total) * 100) : 0;
+    elements.progressPercent.textContent = `${percentage}% Solved (${solvedCount}/${total})`;
+    elements.progressBar.style.width = `${percentage}%`;
+    return;
+  }
+
   if (isMcqSection()) {
     const mcqBank = getActiveMcqBank();
     const allQuestions = mcqBank.flatMap(u => u.questions || []);
@@ -1060,6 +1126,177 @@ function evaluateBashProblem(problem, script, mode) {
       passed
     };
   });
+}
+
+function escapeHtml(value) {
+  return String(value || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;')
+    .replace(/'/g, '&#039;');
+}
+
+function renderBashResults(results) {
+  if (!results.length) {
+    return '<p class="bash-idle-state">Run sample tests or submit all tests to see output comparison.</p>';
+  }
+
+  return results.map(result => `
+    <div class="bash-result-card ${result.passed ? 'passed' : 'failed'}">
+      <div class="bash-result-title">
+        <strong>${escapeHtml(result.name)}</strong>
+        <span>${result.passed ? 'Passed' : 'Failed'}</span>
+      </div>
+      ${result.visible || !result.passed ? `
+        <div class="bash-result-grid">
+          <div><label>Input</label><pre>${escapeHtml(result.input)}</pre></div>
+          <div><label>Expected</label><pre>${escapeHtml(result.expectedOutput)}</pre></div>
+          <div><label>Your Output</label><pre>${escapeHtml(result.actualOutput || '(empty)')}</pre></div>
+        </div>
+      ` : '<p class="bash-hidden-case">Hidden case passed.</p>'}
+    </div>
+  `).join('');
+}
+
+function runBashProblem(problem, mode) {
+  const editor = document.getElementById('bash-code-editor');
+  const code = editor ? editor.value : '';
+  const results = evaluateBashProblem(problem, code, mode);
+  const passedCount = results.filter(result => result.passed).length;
+  const solved = mode === 'submit' && passedCount === results.length;
+
+  state.bashProgress[state.activeSubject][problem.id] = {
+    ...state.bashProgress[state.activeSubject][problem.id],
+    code,
+    lastResults: results,
+    lastMode: mode,
+    solved: solved || (state.bashProgress[state.activeSubject][problem.id] || {}).solved === true
+  };
+  saveBashProgress();
+
+  const body = document.getElementById('bash-results-body');
+  if (body) body.innerHTML = renderBashResults(results);
+
+  const summary = document.getElementById('bash-results-summary');
+  if (summary) summary.textContent = `${passedCount} passed / ${results.length} total`;
+
+  renderSidebar();
+  updateProgressBar();
+}
+
+function renderBashProblem(index) {
+  const problems = getActiveBashProblems();
+  const problem = problems[index];
+  if (!problem) return;
+
+  const progress = state.bashProgress[state.activeSubject][problem.id] || {};
+  const currentCode = progress.code || problem.starterCode;
+  const lastResults = progress.lastResults || [];
+  const passedCount = lastResults.filter(result => result.passed).length;
+  const resultSummary = lastResults.length
+    ? `${passedCount} passed / ${lastResults.length} total`
+    : 'No run yet';
+
+  elements.welcomeScreen.style.display = 'none';
+  elements.readingPane.style.display = 'block';
+  elements.sectionBadge.textContent = CONFIG.subjects[state.activeSubject].sectionNames[state.activeSection];
+  elements.mainTitle.textContent = problem.title;
+
+  const examplesHtml = problem.examples.map(example => `
+    <div class="bash-example">
+      <label>Input</label>
+      <pre>${escapeHtml(example.input)}</pre>
+      <label>Expected Output</label>
+      <pre>${escapeHtml(example.expectedOutput)}</pre>
+    </div>
+  `).join('');
+
+  const constraintsHtml = problem.constraints.map(item => `<li>${escapeHtml(item)}</li>`).join('');
+
+  elements.contentArea.innerHTML = `
+    <div class="bash-workspace">
+      <section class="bash-description-pane">
+        <div class="bash-problem-header">
+          <h3>${escapeHtml(problem.title)}</h3>
+          <div class="bash-tags">
+            <span>${escapeHtml(problem.difficulty)}</span>
+            ${problem.tags.map(tag => `<span>${escapeHtml(tag)}</span>`).join('')}
+          </div>
+        </div>
+        <div class="bash-section-block">
+          <h4>Problem</h4>
+          <p>${escapeHtml(problem.prompt)}</p>
+        </div>
+        <div class="bash-section-block">
+          <h4>Examples</h4>
+          ${examplesHtml}
+        </div>
+        <div class="bash-section-block">
+          <h4>Constraints</h4>
+          <ul>${constraintsHtml}</ul>
+        </div>
+      </section>
+      <section class="bash-editor-pane">
+        <div class="bash-editor-toolbar">
+          <span>Bash</span>
+          <div>
+            <button class="bash-run-btn" id="bash-run-btn">Run</button>
+            <button class="bash-submit-btn" id="bash-submit-btn">Submit</button>
+          </div>
+        </div>
+        <textarea class="bash-code-editor" id="bash-code-editor" spellcheck="false">${escapeHtml(currentCode)}</textarea>
+        <div class="bash-results-panel">
+          <div class="bash-results-header">
+            <strong>Test Results</strong>
+            <span id="bash-results-summary">${resultSummary}</span>
+          </div>
+          <div id="bash-results-body">${renderBashResults(lastResults)}</div>
+        </div>
+      </section>
+    </div>
+  `;
+
+  const editor = document.getElementById('bash-code-editor');
+  editor.addEventListener('input', event => {
+    state.bashProgress[state.activeSubject][problem.id] = {
+      ...state.bashProgress[state.activeSubject][problem.id],
+      code: event.target.value
+    };
+    saveBashProgress();
+  });
+
+  document.getElementById('bash-run-btn').addEventListener('click', () => runBashProblem(problem, 'run'));
+  document.getElementById('bash-submit-btn').addEventListener('click', () => runBashProblem(problem, 'submit'));
+
+  const sidebarButtons = elements.topicList.querySelectorAll('.topic-item');
+  sidebarButtons.forEach(btn => {
+    const idx = parseInt(btn.getAttribute('data-index'));
+    btn.classList.toggle('active', idx === index);
+  });
+
+  elements.prevBtn.disabled = index === 0;
+  elements.prevBtn.style.opacity = index === 0 ? '0.5' : '1';
+
+  const isLastProblem = index === problems.length - 1;
+  if (isLastProblem) {
+    elements.nextBtn.innerHTML = 'Practice Complete';
+    elements.nextBtn.style.backgroundColor = '#EEF6F2';
+    elements.nextBtn.style.borderColor = '#CDE3D5';
+    elements.nextBtn.style.color = '#4A7A60';
+    elements.nextBtn.style.opacity = '0.7';
+    elements.nextBtn.style.cursor = 'default';
+  } else {
+    elements.nextBtn.innerHTML = 'Next Problem <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>';
+    elements.nextBtn.style.backgroundColor = '';
+    elements.nextBtn.style.borderColor = '';
+    elements.nextBtn.style.color = '';
+    elements.nextBtn.style.opacity = '';
+    elements.nextBtn.style.cursor = 'pointer';
+  }
+
+  elements.readingPane.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.getElementById('main-content-pane').scrollTop = 0;
 }
 
 // ============================================================
