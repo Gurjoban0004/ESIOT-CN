@@ -1,0 +1,140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>ES & IoT Exam Prep Hub</title>
+  <meta name="description" content="A premium, focused exam preparation environment for Embedded Systems and IoT. Fully paginated with progress tracking.">
+  <link rel="stylesheet" href="style.css">
+  <!-- KaTeX for rendering mathematical formulas beautifully -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.css">
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/katex.min.js"></script>
+  <script defer src="https://cdn.jsdelivr.net/npm/katex@0.16.8/dist/contrib/auto-render.min.js" onload="renderMathInElement(document.body, { delimiters: [{left: '$$', right: '$$', display: true}, {left: '$', right: '$', display: false}] });"></script>
+</head>
+<body>
+
+  <header>
+    <div class="brand">
+      <button class="menu-toggle" id="desktop-sidebar-toggle" aria-label="Toggle Sidebar" style="margin-right: 0.5rem;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+      </button>
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--active-accent); margin-right: 0.25rem;"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
+      <h1>Prep Hub</h1>
+    </div>
+
+    <!-- Subject Switcher -->
+    <div class="subject-switcher">
+      <button class="subject-btn active" id="subject-iot" data-subject="iot">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"></path></svg>
+        ES & IoT
+      </button>
+      <button class="subject-btn" id="subject-cn" data-subject="cn">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="9" height="9"></rect><rect x="13" y="2" width="9" height="9"></rect><rect x="13" y="13" width="9" height="9"></rect><rect x="2" y="13" width="9" height="9"></rect></svg>
+        Computer Networks
+      </button>
+    </div>
+    
+    <nav class="top-nav" id="top-nav-bar">
+      <!-- Rendered by JS based on active subject -->
+    </nav>
+    
+    <div class="exam-timer" id="countdown-timer">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+      <span id="timer-text">Exam Countdown</span>
+    </div>
+  </header>
+
+  <!-- --- Mobile Header --- -->
+  <div class="mobile-header">
+    <button class="menu-toggle" id="menu-toggle-btn" aria-label="Toggle Navigation Menu">
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+    </button>
+    <div class="brand">
+      <h1 id="mobile-brand-title" style="font-size: 1.1rem;">ES & IoT Prep</h1>
+    </div>
+    <div class="exam-timer" id="mobile-countdown-timer" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;">
+      <span id="mobile-timer-text">--h --m</span>
+    </div>
+  </div>
+
+  <!-- --- Main Container --- -->
+  <div class="container">
+    
+    <!-- --- Sidebar (Left Navigation) --- -->
+    <aside class="sidebar" id="sidebar-pane">
+      <div class="sidebar-switcher-container">
+        <div class="subject-switcher">
+          <button class="subject-btn active" data-subject="iot">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"></path></svg>
+            ES & IoT
+          </button>
+          <button class="subject-btn" data-subject="cn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="9" height="9"></rect><rect x="13" y="2" width="9" height="9"></rect><rect x="13" y="13" width="9" height="9"></rect><rect x="2" y="13" width="9" height="9"></rect></svg>
+            Computer Networks
+          </button>
+        </div>
+      </div>
+      <div class="sidebar-search">
+        <div class="search-wrapper">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+          <input type="text" id="search-input" placeholder="Search topics...">
+        </div>
+      </div>
+      
+      <div class="progress-widget">
+        <div class="progress-header">
+          <span>PROGRESS</span>
+          <span id="progress-percentage">0% Mastered</span>
+        </div>
+        <div class="progress-track">
+          <div class="progress-fill" id="progress-fill-bar"></div>
+        </div>
+      </div>
+      
+      <div class="topic-list" id="topic-list-container">
+        <!-- Rendered dynamically by JS -->
+      </div>
+    </aside>
+    
+    <!-- --- Content Area (Right Main Panel) --- -->
+    <main class="content-pane" id="main-content-pane">
+      <!-- Dynamic reading area -->
+      <div id="welcome-screen" class="welcome-screen">
+        <svg width="64" height="64" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path></svg>
+        <h2>Select a Topic to Start Studying</h2>
+        <p>Choose an exam section above and click any topic in the sidebar to review the comprehensive study notes.</p>
+      </div>
+
+      <div id="reading-pane" style="display: none;">
+        <div class="content-header">
+          <div class="content-title-section">
+            <p class="section-badge" id="topic-section-badge">ST-1 Exam Content</p>
+            <h2 id="topic-main-title">Topic Title</h2>
+          </div>
+        </div>
+        
+        <article class="reading-area" id="reading-content-area">
+          <!-- Rendered dynamically by JS -->
+        </article>
+        
+        <div class="topic-bottom-nav">
+          <button class="nav-prev-btn" id="prev-topic-btn">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            Previous Topic
+          </button>
+          <button class="nav-next-btn" id="next-topic-btn">
+            Next Topic
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"></line><polyline points="12 5 19 12 12 19"></polyline></svg>
+          </button>
+        </div>
+      </div>
+      
+    </main>
+    
+  </div>
+
+  <!-- Load files -->
+  <script src="data.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

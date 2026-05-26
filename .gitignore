@@ -1,0 +1,19 @@
+# Ignore study materials and source documents
+Computer Networks/
+IOT/*.pptx
+IOT/*.pdf
+IOT/*.txt
+IOT/*.md
+IOT/*.json
+IOT/*.png
+IOT/*.jpeg
+IOT/*.jpg
+
+# Ignore system files
+.DS_Store
+Thumbs.db
+*.log
+.gemini/
+.tempmediaStorage/
+*~
+*.swp
