@@ -496,6 +496,14 @@ function setActiveSection(sectionId) {
   state.searchQuery = '';
   elements.searchInput.value = '';
 
+  // Handle Bash section layout
+  const mainContentPane = document.getElementById('main-content-pane');
+  if (isBashSection(sectionId)) {
+    mainContentPane.classList.add('bash-active');
+  } else {
+    mainContentPane.classList.remove('bash-active');
+  }
+
   // Set accent color for this section
   const color = CONFIG.subjects[state.activeSubject].themeColors[sectionId] || '#B58A3D';
   document.documentElement.style.setProperty('--active-accent', color);
@@ -1206,9 +1214,8 @@ function renderBashProblem(index) {
 
   elements.welcomeScreen.style.display = 'none';
   elements.readingPane.style.display = 'block';
-  elements.sectionBadge.textContent = CONFIG.subjects[state.activeSubject].sectionNames[state.activeSection];
-  elements.mainTitle.textContent = problem.title;
-
+  // Note: Badge and Title are hidden via CSS in bash-active mode
+  
   const examplesHtml = problem.examples.map(example => `
     <div class="bash-example">
       <label>Input</label>
@@ -1224,7 +1231,14 @@ function renderBashProblem(index) {
     <div class="bash-workspace">
       <section class="bash-description-pane">
         <div class="bash-problem-header">
-          <h3>${escapeHtml(problem.title)}</h3>
+          <div class="bash-header-top-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
+             <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--active-accent); letter-spacing: 0.05em;">${CONFIG.subjects[state.activeSubject].sectionNames[state.activeSection]}</span>
+             <div class="bash-nav-mini" style="display: flex; gap: 0.5rem;">
+                <button id="bash-mini-prev" class="nav-prev-btn" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" ${index === 0 ? 'disabled style="opacity:0.5"' : ''}>←</button>
+                <button id="bash-mini-next" class="nav-next-btn" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" ${index === problems.length - 1 ? 'disabled style="opacity:0.5"' : ''}>→</button>
+             </div>
+          </div>
+          <h3 style="margin-top: 0; border-left: none; padding-left: 0;">${escapeHtml(problem.title)}</h3>
           <div class="bash-tags">
             <span>${escapeHtml(problem.difficulty)}</span>
             ${problem.tags.map(tag => `<span>${escapeHtml(tag)}</span>`).join('')}
@@ -1274,6 +1288,12 @@ function renderBashProblem(index) {
 
   document.getElementById('bash-run-btn').addEventListener('click', () => runBashProblem(problem, 'run'));
   document.getElementById('bash-submit-btn').addEventListener('click', () => runBashProblem(problem, 'submit'));
+  
+  // Mini nav listeners
+  const miniPrev = document.getElementById('bash-mini-prev');
+  const miniNext = document.getElementById('bash-mini-next');
+  if (miniPrev) miniPrev.addEventListener('click', () => selectTopic(index - 1));
+  if (miniNext) miniNext.addEventListener('click', () => selectTopic(index + 1));
 
   const sidebarButtons = elements.topicList.querySelectorAll('.topic-item');
   sidebarButtons.forEach(btn => {
