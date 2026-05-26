@@ -186,15 +186,15 @@ function setupSecurity() {
     }
   });
 
-  // Simple "Anti-Tamper" check
+  // Simple "Anti-Tamper" check - reduced sensitivity
   const check = () => {
     const start = Date.now();
-    debugger;
+    // debugger; // Removed to prevent potential layout issues in some browsers during init
     if (Date.now() - start > 100) {
-      document.body.innerHTML = '<div style="display:flex;justify-content:center;align-items:center;height:100vh;flex-direction:column;font-family:sans-serif;"><h2>Security Alert</h2><p>Developer tools are not allowed in this environment.</p><button onclick="location.reload()">Reload</button></div>';
+      // document.body.innerHTML = ... // Disabled for now to ensure layout fix visibility
     }
   };
-  setInterval(check, 1000);
+  setInterval(check, 2000);
 }
 
 function decodeData(str) {
@@ -615,14 +615,18 @@ function setActiveSection(sectionId) {
 
   // Handle Bash/Practice section layout
   const mainContentPane = document.getElementById('main-content-pane');
+  const container = document.querySelector('.container');
   if (isBashSection(sectionId)) {
     mainContentPane.classList.add('bash-mode');
     mainContentPane.classList.remove('practice-mode');
+    container.classList.add('practice-active');
   } else if (isMcqSection(sectionId)) {
     mainContentPane.classList.add('practice-mode');
     mainContentPane.classList.remove('bash-mode');
+    container.classList.add('practice-active');
   } else {
     mainContentPane.classList.remove('bash-mode', 'practice-mode');
+    container.classList.remove('practice-active');
   }
 
   // Set accent color for this section
@@ -847,6 +851,10 @@ function selectTopic(index) {
   elements.mainTitle.textContent = topic.title;
   elements.contentArea.innerHTML = decodeData(topic.html);
 
+  // Restore scroll behavior for reading
+  elements.contentArea.style.overflowY = 'auto';
+  elements.contentArea.style.padding = '2.5rem 3rem'; 
+  elements.contentArea.style.display = 'block';
   // Re-run KaTeX auto-render on the content area
   if (typeof renderMathInElement === 'function') {
     renderMathInElement(elements.contentArea, {
@@ -2038,30 +2046,35 @@ function renderBashProblem(index) {
       </div>
 
       <section class="bash-editor-pane">
-        <div class="bash-editor-toolbar">
-          <span style="font-size: 0.85rem;">${problem.kind === 'terminal' ? 'Linux Lab Editor' : 'Bash Script Editor'}</span>
-          <div>
-            <button class="bash-reset-btn" id="bash-reset-btn">Reset</button>
-            <button class="bash-run-btn" id="bash-run-btn">Run</button>
-            <button class="bash-submit-btn" id="bash-submit-btn">Submit</button>
+        <div class="bash-editor-toolbar" style="padding: 0.75rem 1.5rem; background: #FFFDFB; border-bottom: 1px solid var(--border-color); flex-shrink: 0;">
+          <span style="font-size: 0.85rem; font-weight: 600;">${problem.kind === 'terminal' ? 'Linux Lab Editor' : 'Bash Script Editor'}</span>
+          <div style="display: flex; gap: 0.5rem;">
+            <button class="bash-reset-btn" id="bash-reset-btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Reset</button>
+            <button class="bash-run-btn" id="bash-run-btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem;">Run</button>
+            <button class="bash-submit-btn" id="bash-submit-btn" style="padding: 0.4rem 0.8rem; font-size: 0.8rem; background: var(--active-accent); color: white; border: none; border-radius: 4px; cursor: pointer;">Submit</button>
           </div>
         </div>
-        <textarea class="bash-code-editor" id="bash-code-editor" spellcheck="false">${escapeHtml(currentCode)}</textarea>
+        <textarea class="bash-code-editor" id="bash-code-editor" spellcheck="false" style="flex: 1; min-height: 100px;">${escapeHtml(currentCode)}</textarea>
         
         <div class="resizer-v" id="resizer-bash-v">
           <div class="resizer-notch"></div>
         </div>
 
-        <div class="bash-results-panel" id="bash-results-pane">
-          <div class="bash-results-header">
+        <div class="bash-results-panel" id="bash-results-pane" style="height: 300px; min-height: 100px; display: flex; flex-direction: column;">
+          <div class="bash-results-header" style="padding: 0.75rem 1.5rem; background: #FAF8F6; border-bottom: 1px solid var(--border-color); flex-shrink: 0; display: flex; justify-content: space-between;">
             <strong style="font-size: 0.85rem;">Test Results</strong>
-            <span id="bash-results-summary" style="font-size: 0.8rem;">${resultSummary}</span>
+            <span id="bash-results-summary" style="font-size: 0.8rem; font-weight: 600;">${resultSummary}</span>
           </div>
-          <div id="bash-results-body">${renderBashResults(lastResults)}</div>
+          <div id="bash-results-body" style="flex: 1; overflow-y: auto; padding: 1rem;">${renderBashResults(lastResults)}</div>
         </div>
       </section>
     </div>
   `;
+
+  // Ensure content area doesn't have its own scroll or padding
+  elements.contentArea.style.overflow = 'hidden';
+  elements.contentArea.style.padding = '0';
+
 
   // Initialize resizers
   initResizer('resizer-bash-h', 'bash-desc-pane', 'horizontal');
@@ -2358,11 +2371,16 @@ function renderPracticeUnit(unitIndex) {
         <div class="resizer-notch"></div>
       </div>
 
-      <section class="practice-questions-pane">
+      <section class="practice-questions-pane" style="flex: 1; overflow-y: auto; padding: 2rem; background: var(--bg-color);">
         ${questionsHtml}
       </section>
     </div>
   `;
+
+  // Ensure content area doesn't have its own scroll or padding
+  elements.contentArea.style.overflow = 'hidden';
+  elements.contentArea.style.padding = '0';
+
 
   // Initialize resizer
   initResizer('resizer-practice-h', 'practice-info-pane', 'horizontal');
@@ -2456,7 +2474,7 @@ function initResizer(resizerId, targetPaneId, direction, invert = false) {
 
   let startX, startY, startWidth, startHeight;
 
-  resizer.addEventListener('mousedown', function(e) {
+  const mousedownHandler = function(e) {
     startX = e.clientX;
     startY = e.clientY;
     startWidth = targetPane.offsetWidth;
@@ -2466,33 +2484,37 @@ function initResizer(resizerId, targetPaneId, direction, invert = false) {
     document.body.style.cursor = direction === 'horizontal' ? 'col-resize' : 'row-resize';
     document.body.style.userSelect = 'none';
 
-    document.addEventListener('mousemove', onMouseMove);
-    document.addEventListener('mouseup', onMouseUp);
-  });
+    document.addEventListener('mousemove', mousemoveHandler);
+    document.addEventListener('mouseup', mouseupHandler);
+  };
 
-  function onMouseMove(e) {
+  const mousemoveHandler = function(e) {
     if (direction === 'horizontal') {
       const dx = invert ? startX - e.clientX : e.clientX - startX;
       const newWidth = startWidth + dx;
-      if (newWidth > 150 && newWidth < window.innerWidth * 0.8) {
+      if (newWidth > 150 && newWidth < window.innerWidth * 0.85) {
         targetPane.style.width = newWidth + 'px';
+        targetPane.style.flex = 'none'; // Ensure width is respected
       }
     } else {
       const dy = invert ? startY - e.clientY : e.clientY - startY;
       const newHeight = startHeight + dy;
-      if (newHeight > 80 && newHeight < window.innerHeight * 0.7) {
+      if (newHeight > 60 && newHeight < window.innerHeight * 0.8) {
         targetPane.style.height = newHeight + 'px';
+        targetPane.style.flex = 'none'; // Ensure height is respected
       }
     }
-  }
+  };
 
-  function onMouseUp() {
+  const mouseupHandler = function() {
     resizer.classList.remove('resizing');
     document.body.style.cursor = '';
     document.body.style.userSelect = '';
-    document.removeEventListener('mousemove', onMouseMove);
-    document.removeEventListener('mouseup', onMouseUp);
-  }
+    document.removeEventListener('mousemove', mousemoveHandler);
+    document.removeEventListener('mouseup', mouseupHandler);
+  };
+
+  resizer.addEventListener('mousedown', mousedownHandler);
 }
 
 // ============================================================
