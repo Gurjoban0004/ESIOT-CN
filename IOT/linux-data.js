@@ -1082,15 +1082,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Medium",
     tags: ["End Term", "tcpdump", "networking"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read an interface, source IP, and destination port. Print the tcpdump command that captures matching traffic.",
-    constraints: ["Input format: INTERFACE SOURCE_IP PORT.", "Output one command only."],
+    kind: "terminal",
+    prompt: "Run a tcpdump capture on `eth0` for source `192.168.1.50` and destination port `80`.",
+    constraints: ["Use the real `tcpdump` command in the virtual lab.", "Do not echo command text."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread iface src port\necho \"tcpdump -i $iface src $src and dst port $port\"\n",
-    examples: [{ input: "eth0 192.168.1.50 80\n", expectedOutput: "tcpdump -i eth0 src 192.168.1.50 and dst port 80\n" }],
+    solutionCode: "#!/usr/bin/env bash\ntcpdump -i eth0 src 192.168.1.50 and dst port 80\n",
+    examples: [{ input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n" }],
     tests: [
-      { name: "sample web traffic", input: "eth0 192.168.1.50 80\n", expectedOutput: "tcpdump -i eth0 src 192.168.1.50 and dst port 80\n", visible: true },
-      { name: "ssh traffic", input: "ens33 10.0.0.5 22\n", expectedOutput: "tcpdump -i ens33 src 10.0.0.5 and dst port 22\n", visible: true },
-      { name: "api traffic", input: "wlan0 172.16.2.10 443\n", expectedOutput: "tcpdump -i wlan0 src 172.16.2.10 and dst port 443\n", visible: false }
+      { name: "capture executed", input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n", visible: true },
+      { name: "packet visible", input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n", visible: true },
+      { name: "hidden packet check", input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n", visible: false }
     ]
   },
   {
@@ -1099,15 +1100,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["End Term", "backup", "tar"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a source directory and backup filename. Print the command to create a compressed tar.gz backup.",
-    constraints: ["Input format: SOURCE_DIR BACKUP_FILE.", "Output one `tar` command."],
+    kind: "terminal",
+    prompt: "Create a compressed backup of `/etc/configs` named `configs.tar.gz`.",
+    constraints: ["Use `tar -czf`.", "Do not echo the command."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread source backup\necho \"tar -czf $backup $source\"\n",
-    examples: [{ input: "/etc/configs configs.tar.gz\n", expectedOutput: "tar -czf configs.tar.gz /etc/configs\n" }],
+    solutionCode: "#!/usr/bin/env bash\ntar -czf configs.tar.gz /etc/configs\n",
+    examples: [{ input: "", expectedOutput: "configs.tar.gz: /etc/configs\n" }],
     tests: [
-      { name: "sample configs", input: "/etc/configs configs.tar.gz\n", expectedOutput: "tar -czf configs.tar.gz /etc/configs\n", visible: true },
-      { name: "home backup", input: "/home/student home.tar.gz\n", expectedOutput: "tar -czf home.tar.gz /home/student\n", visible: true },
-      { name: "logs backup", input: "/var/log logs.tar.gz\n", expectedOutput: "tar -czf logs.tar.gz /var/log\n", visible: false }
+      { name: "backup created", input: "", expectedOutput: "configs.tar.gz: /etc/configs\n", visible: true },
+      { name: "tar executed", input: "", expectedOutput: "configs.tar.gz: /etc/configs\n", visible: true },
+      { name: "hidden backup check", input: "", expectedOutput: "configs.tar.gz: /etc/configs\n", visible: false }
     ]
   },
   {
@@ -1116,15 +1118,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["End Term", "grep", "redirection"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a search word, input log file, and output file. Print the command that extracts matching lines into the output file.",
-    constraints: ["Input format: WORD INPUT_FILE OUTPUT_FILE.", "Output one command only."],
+    kind: "terminal",
+    prompt: "Extract `error` lines from `/var/log/app.log` into `errors.txt`, then show the saved file.",
+    constraints: ["Use `grep` and `>` redirection.", "End with `cat errors.txt`."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread word input output\necho \"grep $word $input > $output\"\n",
-    examples: [{ input: "error app.log errors.txt\n", expectedOutput: "grep error app.log > errors.txt\n" }],
+    solutionCode: "#!/usr/bin/env bash\ngrep error /var/log/app.log > errors.txt\ncat errors.txt\n",
+    examples: [{ input: "", expectedOutput: "error: api failed\n" }],
     tests: [
-      { name: "sample errors", input: "error app.log errors.txt\n", expectedOutput: "grep error app.log > errors.txt\n", visible: true },
-      { name: "warnings", input: "warn system.log warnings.txt\n", expectedOutput: "grep warn system.log > warnings.txt\n", visible: true },
-      { name: "failed auth", input: "Failed auth.log failed.txt\n", expectedOutput: "grep Failed auth.log > failed.txt\n", visible: false }
+      { name: "saved app errors", input: "", expectedOutput: "error: api failed\n", visible: true },
+      { name: "cat output file", input: "", expectedOutput: "error: api failed\n", visible: true },
+      { name: "hidden grep check", input: "", expectedOutput: "error: api failed\n", visible: false }
     ]
   },
   {
@@ -1133,15 +1136,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["End Term", "systemctl", "services"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a service name and print the command that enables it to start at boot.",
-    constraints: ["Input contains one service name.", "Output one `systemctl` command."],
+    kind: "terminal",
+    prompt: "Enable the `nginx` service so it starts automatically at boot.",
+    constraints: ["Use `systemctl enable nginx`.", "Do not echo the command."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread service\necho \"systemctl enable $service\"\n",
-    examples: [{ input: "nginx\n", expectedOutput: "systemctl enable nginx\n" }],
+    solutionCode: "#!/usr/bin/env bash\nsystemctl enable nginx\n",
+    examples: [{ input: "", expectedOutput: "Created symlink for nginx.service.\n" }],
     tests: [
-      { name: "sample nginx", input: "nginx\n", expectedOutput: "systemctl enable nginx\n", visible: true },
-      { name: "ssh", input: "ssh\n", expectedOutput: "systemctl enable ssh\n", visible: true },
-      { name: "docker", input: "docker\n", expectedOutput: "systemctl enable docker\n", visible: false }
+      { name: "nginx enabled", input: "", expectedOutput: "Created symlink for nginx.service.\n", visible: true },
+      { name: "systemctl executed", input: "", expectedOutput: "Created symlink for nginx.service.\n", visible: true },
+      { name: "hidden enable check", input: "", expectedOutput: "Created symlink for nginx.service.\n", visible: false }
     ]
   },
   {
@@ -1184,15 +1188,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-1", "tar", "files"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read an archive name. Print commands to create `sub1.txt` to `sub5.txt` and add them to the archive.",
-    constraints: ["Input contains the archive name.", "Use `touch` and `tar -cf`."],
+    kind: "terminal",
+    prompt: "In the virtual terminal, create `sub1.txt` to `sub5.txt` and archive them into `result.tar`.",
+    constraints: ["Use real commands.", "Use `touch` and `tar -cf`.", "Do not echo the commands."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread archive\necho \"touch sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\"\necho \"tar -cf $archive sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\"\n",
-    examples: [{ input: "result.tar\n", expectedOutput: "touch sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\ntar -cf result.tar sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n" }],
+    solutionCode: "#!/usr/bin/env bash\ntouch sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\ntar -cf result.tar sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n",
+    examples: [{ input: "", expectedOutput: "result.tar: sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n" }],
     tests: [
-      { name: "sample archive", input: "result.tar\n", expectedOutput: "touch sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\ntar -cf result.tar sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n", visible: true },
-      { name: "backup archive", input: "backup.tar\n", expectedOutput: "touch sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\ntar -cf backup.tar sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n", visible: true },
-      { name: "final archive", input: "final.tar\n", expectedOutput: "touch sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\ntar -cf final.tar sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n", visible: false }
+      { name: "archive created", input: "", expectedOutput: "result.tar: sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n", visible: true },
+      { name: "tar command executed", input: "", expectedOutput: "result.tar: sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n", visible: true },
+      { name: "hidden archive check", input: "", expectedOutput: "result.tar: sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n", visible: false }
     ]
   },
   {
@@ -1201,15 +1206,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-1", "directories", "files"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a root directory, two subdirectories, and a file name. Print commands to create the structure and file.",
-    constraints: ["Input format: ROOT SUBDIR1 SUBDIR2 FILE.", "Create the file inside the first subdirectory."],
+    kind: "terminal",
+    prompt: "Create `Projects/frontend` and `Projects/backend`, then create `index.html` inside `Projects/frontend`.",
+    constraints: ["Use real filesystem commands.", "End by listing `Projects/frontend` so the checker can verify the file."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread root front back file\necho \"mkdir -p $root/$front $root/$back\"\necho \"touch $root/$front/$file\"\n",
-    examples: [{ input: "Projects frontend backend index.html\n", expectedOutput: "mkdir -p Projects/frontend Projects/backend\ntouch Projects/frontend/index.html\n" }],
+    solutionCode: "#!/usr/bin/env bash\nmkdir -p Projects/frontend Projects/backend\ntouch Projects/frontend/index.html\nls Projects/frontend\n",
+    examples: [{ input: "", expectedOutput: "index.html\n" }],
     tests: [
-      { name: "sample projects", input: "Projects frontend backend index.html\n", expectedOutput: "mkdir -p Projects/frontend Projects/backend\ntouch Projects/frontend/index.html\n", visible: true },
-      { name: "app project", input: "App client server main.html\n", expectedOutput: "mkdir -p App/client App/server\ntouch App/client/main.html\n", visible: true },
-      { name: "site project", input: "Site public api home.html\n", expectedOutput: "mkdir -p Site/public Site/api\ntouch Site/public/home.html\n", visible: false }
+      { name: "frontend file visible", input: "", expectedOutput: "index.html\n", visible: true },
+      { name: "directory listing", input: "", expectedOutput: "index.html\n", visible: true },
+      { name: "hidden structure check", input: "", expectedOutput: "index.html\n", visible: false }
     ]
   },
   {
@@ -1235,15 +1241,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-1", "chmod", "permissions"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a file name and permission mode. Print commands to create the file and apply that mode.",
-    constraints: ["For the original task, `info.txt` should use mode `744`.", "Print one command per line."],
+    kind: "terminal",
+    prompt: "Create `info.txt` and give read/write/execute to the owner, but read-only permission to others.",
+    constraints: ["Use `touch` and `chmod 744`.", "Do not echo the command text."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread file mode\necho \"touch $file\"\necho \"chmod $mode $file\"\n",
-    examples: [{ input: "info.txt 744\n", expectedOutput: "touch info.txt\nchmod 744 info.txt\n" }],
+    solutionCode: "#!/usr/bin/env bash\ntouch info.txt\nchmod 744 info.txt\n",
+    examples: [{ input: "", expectedOutput: "mode 744 applied to info.txt\n" }],
     tests: [
-      { name: "sample info", input: "info.txt 744\n", expectedOutput: "touch info.txt\nchmod 744 info.txt\n", visible: true },
-      { name: "script file", input: "run.sh 755\n", expectedOutput: "touch run.sh\nchmod 755 run.sh\n", visible: true },
-      { name: "notes file", input: "notes.txt 644\n", expectedOutput: "touch notes.txt\nchmod 644 notes.txt\n", visible: false }
+      { name: "info permission", input: "", expectedOutput: "mode 744 applied to info.txt\n", visible: true },
+      { name: "chmod executed", input: "", expectedOutput: "mode 744 applied to info.txt\n", visible: true },
+      { name: "hidden mode check", input: "", expectedOutput: "mode 744 applied to info.txt\n", visible: false }
     ]
   },
   {
@@ -1252,15 +1259,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-1", "chown", "ownership"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a file, owner, and group. Print the command that changes ownership.",
-    constraints: ["Input format: FILE OWNER GROUP.", "Output one `chown` command."],
+    kind: "terminal",
+    prompt: "Change the owner of `report.txt` to `samual` and the group to `progteam`.",
+    constraints: ["Use `chown owner:group file`.", "Do not echo the answer."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread file owner group\necho \"chown $owner:$group $file\"\n",
-    examples: [{ input: "report.txt samual progteam\n", expectedOutput: "chown samual:progteam report.txt\n" }],
+    solutionCode: "#!/usr/bin/env bash\nchown samual:progteam report.txt\n",
+    examples: [{ input: "", expectedOutput: "owner samual:progteam applied to report.txt\n" }],
     tests: [
-      { name: "sample report", input: "report.txt samual progteam\n", expectedOutput: "chown samual:progteam report.txt\n", visible: true },
-      { name: "data file", input: "data.txt admin staff\n", expectedOutput: "chown admin:staff data.txt\n", visible: true },
-      { name: "log file", input: "app.log root adm\n", expectedOutput: "chown root:adm app.log\n", visible: false }
+      { name: "owner applied", input: "", expectedOutput: "owner samual:progteam applied to report.txt\n", visible: true },
+      { name: "group applied", input: "", expectedOutput: "owner samual:progteam applied to report.txt\n", visible: true },
+      { name: "hidden ownership check", input: "", expectedOutput: "owner samual:progteam applied to report.txt\n", visible: false }
     ]
   },
   {
@@ -1269,15 +1277,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-1", "head", "tail"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a file path plus two counts. Print commands to show the first N lines and last M lines.",
-    constraints: ["Input format: FILE FIRST_COUNT LAST_COUNT.", "Use `head -n` and `tail -n`."],
+    kind: "terminal",
+    prompt: "Display only the first 6 lines and last 4 lines of `/etc/shadow`.",
+    constraints: ["Use real `head` and `tail` commands.", "Do not echo command text."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread file first last\necho \"head -n $first $file\"\necho \"tail -n $last $file\"\n",
-    examples: [{ input: "/etc/shadow 6 4\n", expectedOutput: "head -n 6 /etc/shadow\ntail -n 4 /etc/shadow\n" }],
+    solutionCode: "#!/usr/bin/env bash\nhead -n 6 /etc/shadow\ntail -n 4 /etc/shadow\n",
+    examples: [{ input: "", expectedOutput: "root:*:19123:0:99999:7:::\ndaemon:*:19123:0:99999:7:::\nbin:*:19123:0:99999:7:::\nsys:*:19123:0:99999:7:::\nsync:*:19123:0:99999:7:::\ngames:*:19123:0:99999:7:::\nman:*:19123:0:99999:7:::\nlp:*:19123:0:99999:7:::\nmail:*:19123:0:99999:7:::\nnews:*:19123:0:99999:7:::\n" }],
     tests: [
-      { name: "sample shadow", input: "/etc/shadow 6 4\n", expectedOutput: "head -n 6 /etc/shadow\ntail -n 4 /etc/shadow\n", visible: true },
-      { name: "passwd sample", input: "/etc/passwd 5 3\n", expectedOutput: "head -n 5 /etc/passwd\ntail -n 3 /etc/passwd\n", visible: true },
-      { name: "log sample", input: "/var/log/syslog 10 8\n", expectedOutput: "head -n 10 /var/log/syslog\ntail -n 8 /var/log/syslog\n", visible: false }
+      { name: "first and last lines", input: "", expectedOutput: "root:*:19123:0:99999:7:::\ndaemon:*:19123:0:99999:7:::\nbin:*:19123:0:99999:7:::\nsys:*:19123:0:99999:7:::\nsync:*:19123:0:99999:7:::\ngames:*:19123:0:99999:7:::\nman:*:19123:0:99999:7:::\nlp:*:19123:0:99999:7:::\nmail:*:19123:0:99999:7:::\nnews:*:19123:0:99999:7:::\n", visible: true },
+      { name: "head tail commands", input: "", expectedOutput: "root:*:19123:0:99999:7:::\ndaemon:*:19123:0:99999:7:::\nbin:*:19123:0:99999:7:::\nsys:*:19123:0:99999:7:::\nsync:*:19123:0:99999:7:::\ngames:*:19123:0:99999:7:::\nman:*:19123:0:99999:7:::\nlp:*:19123:0:99999:7:::\nmail:*:19123:0:99999:7:::\nnews:*:19123:0:99999:7:::\n", visible: true },
+      { name: "hidden shadow check", input: "", expectedOutput: "root:*:19123:0:99999:7:::\ndaemon:*:19123:0:99999:7:::\nbin:*:19123:0:99999:7:::\nsys:*:19123:0:99999:7:::\nsync:*:19123:0:99999:7:::\ngames:*:19123:0:99999:7:::\nman:*:19123:0:99999:7:::\nlp:*:19123:0:99999:7:::\nmail:*:19123:0:99999:7:::\nnews:*:19123:0:99999:7:::\n", visible: false }
     ]
   },
   {
@@ -1286,15 +1295,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-1", "wc", "files"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a file path and print the command that counts its total lines.",
-    constraints: ["Input contains one file path.", "Use `wc -l`."],
+    kind: "terminal",
+    prompt: "Count the total number of lines in `/etc/passwd`.",
+    constraints: ["Use `wc -l`.", "Do not echo the expected count."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread file\necho \"wc -l $file\"\n",
-    examples: [{ input: "/etc/passwd\n", expectedOutput: "wc -l /etc/passwd\n" }],
+    solutionCode: "#!/usr/bin/env bash\nwc -l /etc/passwd\n",
+    examples: [{ input: "", expectedOutput: "10\n" }],
     tests: [
-      { name: "sample passwd", input: "/etc/passwd\n", expectedOutput: "wc -l /etc/passwd\n", visible: true },
-      { name: "shadow", input: "/etc/shadow\n", expectedOutput: "wc -l /etc/shadow\n", visible: true },
-      { name: "hosts", input: "/etc/hosts\n", expectedOutput: "wc -l /etc/hosts\n", visible: false }
+      { name: "passwd count", input: "", expectedOutput: "10\n", visible: true },
+      { name: "wc command", input: "", expectedOutput: "10\n", visible: true },
+      { name: "hidden line count", input: "", expectedOutput: "10\n", visible: false }
     ]
   },
   {
@@ -1439,15 +1449,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-2", "filtering", "sort"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a directory and extension. Print the command to list matching files sorted in reverse order.",
-    constraints: ["Input format: DIRECTORY EXTENSION.", "Do not include the dot in the extension input."],
+    kind: "terminal",
+    prompt: "List all files in `/var/log` ending with `.log` and display them sorted in reverse order.",
+    constraints: ["Use `ls` and `sort -r` with a pipe.", "Do not echo the command."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread dir ext\necho \"ls $dir/*.$ext | sort -r\"\n",
-    examples: [{ input: "/var/log log\n", expectedOutput: "ls /var/log/*.log | sort -r\n" }],
+    solutionCode: "#!/usr/bin/env bash\nls /var/log/*.log | sort -r\n",
+    examples: [{ input: "", expectedOutput: "/var/log/server.log\n/var/log/app.log\n" }],
     tests: [
-      { name: "sample logs", input: "/var/log log\n", expectedOutput: "ls /var/log/*.log | sort -r\n", visible: true },
-      { name: "tmp txt", input: "/tmp txt\n", expectedOutput: "ls /tmp/*.txt | sort -r\n", visible: true },
-      { name: "home conf", input: "/home/student conf\n", expectedOutput: "ls /home/student/*.conf | sort -r\n", visible: false }
+      { name: "reverse logs", input: "", expectedOutput: "/var/log/server.log\n/var/log/app.log\n", visible: true },
+      { name: "pipe sort", input: "", expectedOutput: "/var/log/server.log\n/var/log/app.log\n", visible: true },
+      { name: "hidden filter check", input: "", expectedOutput: "/var/log/server.log\n/var/log/app.log\n", visible: false }
     ]
   },
   {
@@ -1456,15 +1467,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["ST-2", "redirection"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a command, output file, and error file. Print the redirection command.",
-    constraints: ["Input format: COMMAND OUTPUT_FILE ERROR_FILE.", "Redirect stdout and stderr separately."],
+    kind: "terminal",
+    prompt: "Redirect matching `error` lines from `/var/log/server.log` into `errors.log`, then display `errors.log`.",
+    constraints: ["Use `grep` with `>` redirection.", "End with `cat errors.log` so the checker can verify the file."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread cmd output error\necho \"$cmd > $output 2> $error\"\n",
-    examples: [{ input: "ls output.log errors.log\n", expectedOutput: "ls > output.log 2> errors.log\n" }],
+    solutionCode: "#!/usr/bin/env bash\ngrep error /var/log/server.log > errors.log\ncat errors.log\n",
+    examples: [{ input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n" }],
     tests: [
-      { name: "sample ls", input: "ls output.log errors.log\n", expectedOutput: "ls > output.log 2> errors.log\n", visible: true },
-      { name: "find command", input: "find out.log err.log\n", expectedOutput: "find > out.log 2> err.log\n", visible: true },
-      { name: "grep command", input: "grep results.log faults.log\n", expectedOutput: "grep > results.log 2> faults.log\n", visible: false }
+      { name: "redirect errors", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: true },
+      { name: "cat redirected file", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: true },
+      { name: "hidden redirection check", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: false }
     ]
   },
   {
@@ -1473,15 +1485,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Medium",
     tags: ["ST-2", "lvm", "filesystem"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a logical volume path and size. Print commands to extend it and resize the ext4 filesystem.",
-    constraints: ["Input format: LV_PATH SIZE.", "Use `lvextend` and `resize2fs`."],
+    kind: "terminal",
+    prompt: "Extend logical volume `/dev/vg0/lv_data` by 10GB and resize the ext4 filesystem.",
+    constraints: ["Use `lvextend -L +10G`.", "Run `resize2fs` on the same logical volume."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread lv size\necho \"lvextend -L +$size $lv\"\necho \"resize2fs $lv\"\n",
-    examples: [{ input: "/dev/vg0/lv_data 10G\n", expectedOutput: "lvextend -L +10G /dev/vg0/lv_data\nresize2fs /dev/vg0/lv_data\n" }],
+    solutionCode: "#!/usr/bin/env bash\nlvextend -L +10G /dev/vg0/lv_data\nresize2fs /dev/vg0/lv_data\n",
+    examples: [{ input: "", expectedOutput: "Size of logical volume /dev/vg0/lv_data changed by +10G.\nFilesystem resized on /dev/vg0/lv_data.\n" }],
     tests: [
-      { name: "sample lv", input: "/dev/vg0/lv_data 10G\n", expectedOutput: "lvextend -L +10G /dev/vg0/lv_data\nresize2fs /dev/vg0/lv_data\n", visible: true },
-      { name: "home lv", input: "/dev/vg0/home 5G\n", expectedOutput: "lvextend -L +5G /dev/vg0/home\nresize2fs /dev/vg0/home\n", visible: true },
-      { name: "data lv", input: "/dev/data/app 2G\n", expectedOutput: "lvextend -L +2G /dev/data/app\nresize2fs /dev/data/app\n", visible: false }
+      { name: "extend volume", input: "", expectedOutput: "Size of logical volume /dev/vg0/lv_data changed by +10G.\nFilesystem resized on /dev/vg0/lv_data.\n", visible: true },
+      { name: "resize filesystem", input: "", expectedOutput: "Size of logical volume /dev/vg0/lv_data changed by +10G.\nFilesystem resized on /dev/vg0/lv_data.\n", visible: true },
+      { name: "hidden lvm check", input: "", expectedOutput: "Size of logical volume /dev/vg0/lv_data changed by +10G.\nFilesystem resized on /dev/vg0/lv_data.\n", visible: false }
     ]
   },
   {
@@ -1490,15 +1503,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Medium",
     tags: ["End Term", "tcpdump", "networking"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read an interface, source IP, and destination port. Print the tcpdump command to capture that incoming traffic.",
-    constraints: ["Input format: INTERFACE SOURCE_IP PORT.", "Output one tcpdump command."],
+    kind: "terminal",
+    prompt: "Capture incoming traffic on `eth0` from IP `192.168.1.50` on port `80`.",
+    constraints: ["Use `tcpdump -i eth0`.", "Filter by source IP and destination port.", "Do not echo the command."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread iface src port\necho \"tcpdump -i $iface src $src and dst port $port\"\n",
-    examples: [{ input: "eth0 192.168.1.50 80\n", expectedOutput: "tcpdump -i eth0 src 192.168.1.50 and dst port 80\n" }],
+    solutionCode: "#!/usr/bin/env bash\ntcpdump -i eth0 src 192.168.1.50 and dst port 80\n",
+    examples: [{ input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n" }],
     tests: [
-      { name: "sample eth0", input: "eth0 192.168.1.50 80\n", expectedOutput: "tcpdump -i eth0 src 192.168.1.50 and dst port 80\n", visible: true },
-      { name: "ssh ens33", input: "ens33 10.0.0.5 22\n", expectedOutput: "tcpdump -i ens33 src 10.0.0.5 and dst port 22\n", visible: true },
-      { name: "https wlan0", input: "wlan0 172.16.2.10 443\n", expectedOutput: "tcpdump -i wlan0 src 172.16.2.10 and dst port 443\n", visible: false }
+      { name: "eth0 capture", input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n", visible: true },
+      { name: "packet output", input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n", visible: true },
+      { name: "hidden capture check", input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n", visible: false }
     ]
   },
   {
@@ -1507,15 +1521,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["End Term", "backup", "tar"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a source directory and backup filename. Print the command to create a compressed tar.gz backup.",
-    constraints: ["Input format: SOURCE_DIR BACKUP_FILE.", "Output one tar command."],
+    kind: "terminal",
+    prompt: "Create a compressed `.tar.gz` backup of `/etc/configs` named `config_backup.tar.gz`.",
+    constraints: ["Use `tar -czf`.", "Do not echo the command."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread source backup\necho \"tar -czf $backup $source\"\n",
-    examples: [{ input: "/etc/configs config_backup.tar.gz\n", expectedOutput: "tar -czf config_backup.tar.gz /etc/configs\n" }],
+    solutionCode: "#!/usr/bin/env bash\ntar -czf config_backup.tar.gz /etc/configs\n",
+    examples: [{ input: "", expectedOutput: "config_backup.tar.gz: /etc/configs\n" }],
     tests: [
-      { name: "sample configs", input: "/etc/configs config_backup.tar.gz\n", expectedOutput: "tar -czf config_backup.tar.gz /etc/configs\n", visible: true },
-      { name: "home backup", input: "/home/student home.tar.gz\n", expectedOutput: "tar -czf home.tar.gz /home/student\n", visible: true },
-      { name: "logs backup", input: "/var/log logs.tar.gz\n", expectedOutput: "tar -czf logs.tar.gz /var/log\n", visible: false }
+      { name: "backup created", input: "", expectedOutput: "config_backup.tar.gz: /etc/configs\n", visible: true },
+      { name: "tar gzip command", input: "", expectedOutput: "config_backup.tar.gz: /etc/configs\n", visible: true },
+      { name: "hidden backup check", input: "", expectedOutput: "config_backup.tar.gz: /etc/configs\n", visible: false }
     ]
   },
   {
@@ -1524,15 +1539,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Medium",
     tags: ["End Term", "netplan", "safety"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a Netplan YAML file path. Print the safe sequence to validate before permanently applying changes.",
-    constraints: ["Input contains one YAML path.", "Use generate, try, then apply."],
+    kind: "terminal",
+    prompt: "Run the safe Netplan sequence to validate configuration before applying it permanently.",
+    constraints: ["Use `netplan generate`.", "Use `netplan try` before `netplan apply`."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread file\necho \"netplan generate\"\necho \"netplan try\"\necho \"netplan apply\"\n",
-    examples: [{ input: "/etc/netplan/01-netcfg.yaml\n", expectedOutput: "netplan generate\nnetplan try\nnetplan apply\n" }],
+    solutionCode: "#!/usr/bin/env bash\nnetplan generate\nnetplan try\nnetplan apply\n",
+    examples: [{ input: "", expectedOutput: "Generated netplan configuration.\nConfiguration accepted. Rollback timer cancelled.\nApplied netplan configuration.\n" }],
     tests: [
-      { name: "sample netcfg", input: "/etc/netplan/01-netcfg.yaml\n", expectedOutput: "netplan generate\nnetplan try\nnetplan apply\n", visible: true },
-      { name: "cloud init", input: "/etc/netplan/50-cloud-init.yaml\n", expectedOutput: "netplan generate\nnetplan try\nnetplan apply\n", visible: true },
-      { name: "static config", input: "/etc/netplan/99-static.yaml\n", expectedOutput: "netplan generate\nnetplan try\nnetplan apply\n", visible: false }
+      { name: "safe validation", input: "", expectedOutput: "Generated netplan configuration.\nConfiguration accepted. Rollback timer cancelled.\nApplied netplan configuration.\n", visible: true },
+      { name: "rollback-safe apply", input: "", expectedOutput: "Generated netplan configuration.\nConfiguration accepted. Rollback timer cancelled.\nApplied netplan configuration.\n", visible: true },
+      { name: "hidden netplan check", input: "", expectedOutput: "Generated netplan configuration.\nConfiguration accepted. Rollback timer cancelled.\nApplied netplan configuration.\n", visible: false }
     ]
   },
   {
@@ -1541,15 +1557,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["End Term", "ufw", "ssh"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read an SSH port. Print commands to check UFW status, allow SSH on that port, and enable the firewall.",
-    constraints: ["Input contains one port number.", "Print one UFW command per line."],
+    kind: "terminal",
+    prompt: "Check UFW status, allow SSH on port 22, and then enable the firewall.",
+    constraints: ["Use real `ufw` commands.", "Do not echo the command sequence."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread port\necho \"ufw status\"\necho \"ufw allow $port/tcp\"\necho \"ufw enable\"\n",
-    examples: [{ input: "22\n", expectedOutput: "ufw status\nufw allow 22/tcp\nufw enable\n" }],
+    solutionCode: "#!/usr/bin/env bash\nufw status\nufw allow 22/tcp\nufw enable\n",
+    examples: [{ input: "", expectedOutput: "Status: inactive\nRule added: 22/tcp\nFirewall is active and enabled on system startup.\n" }],
     tests: [
-      { name: "sample ssh", input: "22\n", expectedOutput: "ufw status\nufw allow 22/tcp\nufw enable\n", visible: true },
-      { name: "custom ssh", input: "2222\n", expectedOutput: "ufw status\nufw allow 2222/tcp\nufw enable\n", visible: true },
-      { name: "admin ssh", input: "2200\n", expectedOutput: "ufw status\nufw allow 2200/tcp\nufw enable\n", visible: false }
+      { name: "ssh firewall", input: "", expectedOutput: "Status: inactive\nRule added: 22/tcp\nFirewall is active and enabled on system startup.\n", visible: true },
+      { name: "ufw enabled", input: "", expectedOutput: "Status: inactive\nRule added: 22/tcp\nFirewall is active and enabled on system startup.\n", visible: true },
+      { name: "hidden firewall check", input: "", expectedOutput: "Status: inactive\nRule added: 22/tcp\nFirewall is active and enabled on system startup.\n", visible: false }
     ]
   },
   {
@@ -1558,15 +1575,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["End Term", "dmesg", "logs"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a line count and print the command to view that many recent kernel ring buffer lines.",
-    constraints: ["Input contains one integer.", "Use `dmesg | tail -n`."],
+    kind: "terminal",
+    prompt: "View the last 3 lines of the kernel ring buffer to diagnose hardware issues.",
+    constraints: ["Use `dmesg` piped into `tail -n 3`.", "Do not echo expected output."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread lines\necho \"dmesg | tail -n $lines\"\n",
-    examples: [{ input: "20\n", expectedOutput: "dmesg | tail -n 20\n" }],
+    solutionCode: "#!/usr/bin/env bash\ndmesg | tail -n 3\n",
+    examples: [{ input: "", expectedOutput: "[2.100000] EXT4-fs mounted filesystem\n[4.500000] usb 1-1: new high-speed USB device\n[8.000000] audit: system ready\n" }],
     tests: [
-      { name: "sample twenty", input: "20\n", expectedOutput: "dmesg | tail -n 20\n", visible: true },
-      { name: "ten lines", input: "10\n", expectedOutput: "dmesg | tail -n 10\n", visible: true },
-      { name: "fifty lines", input: "50\n", expectedOutput: "dmesg | tail -n 50\n", visible: false }
+      { name: "kernel tail", input: "", expectedOutput: "[2.100000] EXT4-fs mounted filesystem\n[4.500000] usb 1-1: new high-speed USB device\n[8.000000] audit: system ready\n", visible: true },
+      { name: "pipe tail", input: "", expectedOutput: "[2.100000] EXT4-fs mounted filesystem\n[4.500000] usb 1-1: new high-speed USB device\n[8.000000] audit: system ready\n", visible: true },
+      { name: "hidden dmesg check", input: "", expectedOutput: "[2.100000] EXT4-fs mounted filesystem\n[4.500000] usb 1-1: new high-speed USB device\n[8.000000] audit: system ready\n", visible: false }
     ]
   },
   {
@@ -1575,15 +1593,16 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Easy",
     tags: ["End Term", "grep", "redirection"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a search word, input log file, and output file. Print the command that saves matching lines.",
-    constraints: ["Input format: WORD INPUT_FILE OUTPUT_FILE.", "Use grep with output redirection."],
+    kind: "terminal",
+    prompt: "Find all lines containing `error` in `/var/log/server.log`, save them to `errors.txt`, then display the saved file.",
+    constraints: ["Use `grep error ... > errors.txt`.", "End with `cat errors.txt`."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread word input output\necho \"grep $word $input > $output\"\n",
-    examples: [{ input: "error server.log errors.txt\n", expectedOutput: "grep error server.log > errors.txt\n" }],
+    solutionCode: "#!/usr/bin/env bash\ngrep error /var/log/server.log > errors.txt\ncat errors.txt\n",
+    examples: [{ input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n" }],
     tests: [
-      { name: "sample errors", input: "error server.log errors.txt\n", expectedOutput: "grep error server.log > errors.txt\n", visible: true },
-      { name: "warnings", input: "warn app.log warnings.txt\n", expectedOutput: "grep warn app.log > warnings.txt\n", visible: true },
-      { name: "failed auth", input: "Failed auth.log failed.txt\n", expectedOutput: "grep Failed auth.log > failed.txt\n", visible: false }
+      { name: "saved errors", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: true },
+      { name: "cat errors file", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: true },
+      { name: "hidden log check", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: false }
     ]
   }
 ];

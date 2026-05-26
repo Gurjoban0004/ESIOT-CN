@@ -994,6 +994,39 @@ nav.top-nav button.active[data-section="bashPractice"] {
   color: var(--text-secondary);
 }
 
+.bash-lab-reference {
+  color: var(--text-secondary);
+}
+
+.bash-lab-grid {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 0.75rem;
+}
+
+.bash-lab-grid div {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.4rem;
+  align-items: center;
+}
+
+.bash-lab-grid strong {
+  width: 100%;
+  color: var(--text-primary);
+  font-size: 0.78rem;
+}
+
+.bash-lab-grid code {
+  border: 1px solid var(--border-color);
+  border-radius: 6px;
+  background: #F8F3EC;
+  color: #2F6F5E;
+  padding: 0.25rem 0.45rem;
+  font-family: var(--font-mono);
+  font-size: 0.76rem;
+}
+
 .bash-solution-block {
   display: flex;
   flex-direction: column;

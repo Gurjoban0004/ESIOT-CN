@@ -881,6 +881,21 @@ function updateProgressBar() {
 // ============================================================
 //  BASH SIMULATION & CHECKING
 // ============================================================
+const VIRTUAL_FS = {
+  "/etc/passwd": "root:x:0:0:root:/root:/bin/bash\ndaemon:x:1:1:daemon:/usr/sbin:/usr/sbin/nologin\nbin:x:2:2:bin:/bin:/usr/sbin/nologin\nsys:x:3:3:sys:/dev:/usr/sbin/nologin\nsync:x:4:65534:sync:/bin:/bin/sync\ngames:x:5:60:games:/usr/games:/usr/sbin/nologin\nman:x:6:12:man:/var/cache/man:/usr/sbin/nologin\nlp:x:7:7:lp:/var/spool/lpd:/usr/sbin/nologin\nmail:x:8:8:mail:/var/mail:/usr/sbin/nologin\nnews:x:9:9:news:/var/spool/news:/usr/sbin/nologin",
+  "/etc/shadow": "root:*:19123:0:99999:7:::\ndaemon:*:19123:0:99999:7:::\nbin:*:19123:0:99999:7:::\nsys:*:19123:0:99999:7:::\nsync:*:19123:0:99999:7:::\ngames:*:19123:0:99999:7:::\nman:*:19123:0:99999:7:::\nlp:*:19123:0:99999:7:::\nmail:*:19123:0:99999:7:::\nnews:*:19123:0:99999:7:::",
+  "/etc/hosts": "127.0.0.1\tlocalhost\n127.0.1.1\tubuntu-server\n\n# The following lines are desirable for IPv6 capable hosts\n::1     ip6-localhost ip6-loopback\nfe00::0 ip6-localnet\nff00::0 ip6-mcastprefix\nff02::1 ip6-allnodes\nff02::2 ip6-allrouters",
+  "/var/log/syslog": "May 26 10:00:01 ubuntu systemd[1]: Starting System Logging Service...\nMay 26 10:00:02 ubuntu kernel: [0.000000] Linux version 5.15.0-generic\nMay 26 10:00:05 ubuntu sshd[1234]: Failed password for root from 192.168.1.50 port 54321 ssh2\nMay 26 10:00:10 ubuntu ufw: [UFW BLOCK] IN=eth0 OUT= MAC=... SRC=10.0.0.5 DST=192.168.1.100\nMay 26 10:05:00 ubuntu systemd[1]: Finished System Logging Service.",
+  "/var/log/server.log": "info: server started\nerror: database unavailable\nwarning: retrying connection\nerror: request timed out\ninfo: server stopped",
+  "/var/log/app.log": "info: boot\nwarn: disk almost full\nerror: api failed\nwarn: high memory",
+  "/home/student/a.log": "alpha\nbeta",
+  "/home/student/b.log": "gamma\ndelta",
+  "/tmp/alpha.txt": "9\n2\n5\n1",
+  "/tmp/beta.txt": "banana\napple\ncherry",
+  "notes.txt": "Linux is a family of open-source Unix-like operating systems.\nBash is the most popular shell used in Linux.\nPractice makes perfect.\n12345\n67890",
+  "data.csv": "id,name,role\n1,Alice,Admin\n2,Bob,User\n3,Charlie,User\n4,David,Manager\n5,Eve,User"
+};
+
 function normalizeOutput(value) {
   return String(value || '')
     .replace(/\r\n/g, '\n')
@@ -906,6 +921,18 @@ function simulateBash(script, input) {
   const vars = {};
   const output = [];
   const lines = tokenizeBash(script);
+  const fs = { ...VIRTUAL_FS };
+  const directories = new Set(['/etc', '/var', '/var/log', '/home', '/home/student', '/tmp']);
+  const archives = {};
+  const users = [];
+  const groups = [];
+  const services = {};
+  const firewallRules = [];
+  let lastStatus = 0;
+
+  function stripOuterQuotes(value) {
+    return String(value || '').replace(/^['"]|['"]$/g, '');
+  }
 
   function readVars(names) {
     const raw = inputLines[inputCursor] || '';
@@ -914,10 +941,6 @@ function simulateBash(script, input) {
     names.forEach((name, index) => {
       vars[name] = parts[index] !== undefined ? parts[index] : '';
     });
-  }
-
-  function stripOuterQuotes(value) {
-    return String(value || '').replace(/^['"]|['"]$/g, '');
   }
 
   function expandArithmeticExpression(expr) {
@@ -935,12 +958,293 @@ function simulateBash(script, input) {
   function expandValue(text) {
     return stripOuterQuotes(String(text || '')
       .replace(/\$\(\(([^)]+)\)\)/g, (_, expr) => expandArithmeticExpression(expr))
+      .replace(/\$\{#([a-zA-Z_][a-zA-Z0-9_]*)\}/g, (_, name) => String(vars[name] || '').length)
+      .replace(/\$\{([a-zA-Z_][a-zA-Z0-9_]*):([0-9]+):([0-9]+)\}/g, (_, name, start, length) => {
+        return String(vars[name] || '').slice(Number(start), Number(start) + Number(length));
+      })
+      .replace(/\$\?/g, String(lastStatus))
+      .replace(/\$#/g, String(inputLines.filter(Boolean).length))
+      .replace(/\$[@*]/g, inputLines.filter(Boolean).join(' '))
       .replace(/\$([a-zA-Z_][a-zA-Z0-9_]*)/g, (_, name) => vars[name] || ''));
   }
 
   function valueToNumber(value) {
     return Number(expandValue(value));
   }
+
+  function splitCommandWords(command) {
+    const words = [];
+    let current = '';
+    let quote = null;
+    for (let i = 0; i < command.length; i++) {
+      const char = command[i];
+      if ((char === '"' || char === "'") && quote === null) {
+        quote = char;
+        current += char;
+      } else if (char === quote) {
+        quote = null;
+        current += char;
+      } else if (/\s/.test(char) && quote === null) {
+        if (current) words.push(current);
+        current = '';
+      } else {
+        current += char;
+      }
+    }
+    if (current) words.push(current);
+    return words;
+  }
+
+  function splitByOperator(command, operator) {
+    const parts = [];
+    let current = '';
+    let quote = null;
+    for (let i = 0; i < command.length; i++) {
+      const char = command[i];
+      if ((char === '"' || char === "'") && quote === null) {
+        quote = char;
+      } else if (char === quote) {
+        quote = null;
+      }
+      if (char === operator && quote === null) {
+        parts.push(current.trim());
+        current = '';
+      } else {
+        current += char;
+      }
+    }
+    parts.push(current.trim());
+    return parts.filter(Boolean);
+  }
+
+  function splitRedirection(command) {
+    let quote = null;
+    for (let i = 0; i < command.length; i++) {
+      const char = command[i];
+      if ((char === '"' || char === "'") && quote === null) {
+        quote = char;
+      } else if (char === quote) {
+        quote = null;
+      } else if (char === '>' && quote === null) {
+        const operator = command[i - 1] === '2' ? '2>' : '>';
+        const commandEnd = operator === '2>' ? i - 1 : i;
+        return {
+          command: command.slice(0, commandEnd).trim(),
+          operator,
+          target: command.slice(i + 1).trim()
+        };
+      }
+    }
+    return null;
+  }
+
+  function getFile(path) {
+    const resolved = expandValue(path);
+    return Object.prototype.hasOwnProperty.call(fs, resolved) ? fs[resolved] : null;
+  }
+
+  function setFile(path, content) {
+    fs[expandValue(path)] = content;
+  }
+
+  function listDirectory(target = '') {
+    const dir = target ? expandValue(target).replace(/\/$/, '') : '';
+    const paths = Object.keys(fs);
+    if (!dir || dir === '.') return paths.map(path => path.startsWith('/') ? path : `./${path}`).sort();
+    if (dir.includes('*')) {
+      const pattern = new RegExp(`^${dir.split('*').map(part => part.replace(/[.+?^${}()|[\]\\]/g, '\\$&')).join('.*')}$`);
+      return paths.filter(path => pattern.test(path)).sort();
+    }
+    const prefix = `${dir}/`;
+    return paths
+      .filter(path => path.startsWith(prefix))
+      .map(path => path.slice(prefix.length).split('/')[0])
+      .filter((value, index, arr) => value && arr.indexOf(value) === index)
+      .sort();
+  }
+
+  function ensureTrailingNewline(value) {
+    if (!value) return '';
+    return value.endsWith('\n') ? value : `${value}\n`;
+  }
+
+  const commands = {
+    echo(args) {
+      const nFlag = args[0] === '-n';
+      const text = args.slice(nFlag ? 1 : 0).map(expandValue).join(' ');
+      return text + (nFlag ? '' : '\n');
+    },
+    printf(args) {
+      const format = stripOuterQuotes(args[0] || '');
+      if (format === '%s\\n') return `${expandValue(args.slice(1).join(' '))}\n`;
+      return args.slice(1).map(expandValue).join(' ');
+    },
+    cat(args, stdin) {
+      if (!args.length) return stdin;
+      return args.map(path => {
+        const content = getFile(path);
+        if (content === null) {
+          lastStatus = 1;
+          return `cat: ${expandValue(path)}: No such file or directory\n`;
+        }
+        return ensureTrailingNewline(content);
+      }).join('');
+    },
+    ls(args) {
+      const visibleArgs = args.filter(arg => !arg.startsWith('-'));
+      return `${visibleArgs.length ? visibleArgs.flatMap(listDirectory).join('\n') : listDirectory().join('\n')}\n`;
+    },
+    grep(args, stdin) {
+      const filteredArgs = args.filter(arg => !arg.startsWith('-'));
+      const pattern = stripOuterQuotes(expandValue(filteredArgs[0] || ''));
+      const fileArg = filteredArgs[1];
+      const content = fileArg ? getFile(fileArg) : stdin;
+      if (content === null || content === undefined) return '';
+      return ensureTrailingNewline(String(content).split('\n').filter(line => line.includes(pattern)).join('\n'));
+    },
+    wc(args, stdin) {
+      const visibleArgs = args.filter(arg => !arg.startsWith('-'));
+      const content = visibleArgs.length ? getFile(visibleArgs[visibleArgs.length - 1]) || '' : stdin;
+      if (args.includes('-l')) return `${String(content).split('\n').filter(Boolean).length}\n`;
+      if (args.includes('-c')) return `${String(content).length}\n`;
+      return `${String(content).split(/\s+/).filter(Boolean).length}\n`;
+    },
+    head(args, stdin) {
+      let n = 10;
+      const visibleArgs = [];
+      for (let i = 0; i < args.length; i++) {
+        if (args[i] === '-n') {
+          n = Number(args[i + 1]);
+          i += 1;
+        } else if (/^-\d+$/.test(args[i])) {
+          n = Number(args[i].slice(1));
+        } else {
+          visibleArgs.push(args[i]);
+        }
+      }
+      const content = visibleArgs.length ? getFile(visibleArgs[0]) || '' : stdin;
+      return ensureTrailingNewline(String(content).split('\n').slice(0, n).join('\n'));
+    },
+    tail(args, stdin) {
+      let n = 10;
+      const visibleArgs = [];
+      for (let i = 0; i < args.length; i++) {
+        if (args[i] === '-n') {
+          n = Number(args[i + 1]);
+          i += 1;
+        } else if (/^-\d+$/.test(args[i])) {
+          n = Number(args[i].slice(1));
+        } else {
+          visibleArgs.push(args[i]);
+        }
+      }
+      const content = visibleArgs.length ? getFile(visibleArgs[0]) || '' : stdin;
+      const contentLines = String(content).split('\n').filter(line => line !== '');
+      return ensureTrailingNewline(contentLines.slice(Math.max(0, contentLines.length - n)).join('\n'));
+    },
+    sort(args, stdin) {
+      const visibleArgs = args.filter(arg => !arg.startsWith('-'));
+      const content = visibleArgs.length ? getFile(visibleArgs[visibleArgs.length - 1]) || '' : stdin;
+      const sorted = String(content).split('\n').filter(Boolean);
+      sorted.sort(args.includes('-n') ? (a, b) => parseFloat(a) - parseFloat(b) : undefined);
+      if (args.includes('-r')) sorted.reverse();
+      return ensureTrailingNewline(sorted.join('\n'));
+    },
+    cut(args, stdin) {
+      let delimiter = '\t';
+      let field = 1;
+      const visibleArgs = [];
+      for (let i = 0; i < args.length; i++) {
+        if (args[i] === '-d') delimiter = stripOuterQuotes(args[++i] || delimiter);
+        else if (args[i].startsWith('-d')) delimiter = stripOuterQuotes(args[i].slice(2));
+        else if (args[i] === '-f') field = Number(args[++i] || field);
+        else if (args[i].startsWith('-f')) field = Number(args[i].slice(2));
+        else visibleArgs.push(args[i]);
+      }
+      const content = visibleArgs.length ? getFile(visibleArgs[0]) || '' : stdin;
+      return ensureTrailingNewline(String(content).split('\n').map(line => line.split(delimiter)[field - 1] || '').join('\n'));
+    },
+    touch(args) {
+      args.map(expandValue).forEach(path => setFile(path, getFile(path) || ''));
+      return '';
+    },
+    mkdir(args) {
+      args.filter(arg => arg !== '-p').map(expandValue).forEach(path => directories.add(path));
+      return '';
+    },
+    chmod(args) {
+      return `mode ${expandValue(args[0])} applied to ${expandValue(args[1])}\n`;
+    },
+    chown(args) {
+      return `owner ${expandValue(args[0])} applied to ${expandValue(args[1])}\n`;
+    },
+    groupadd(args) {
+      const gidIndex = args.indexOf('-g');
+      groups.push({ name: expandValue(args[args.length - 1]), gid: gidIndex >= 0 ? expandValue(args[gidIndex + 1]) : '' });
+      return '';
+    },
+    useradd(args) {
+      const groupIndex = args.indexOf('-g');
+      users.push({ name: expandValue(args[args.length - 1]), group: groupIndex >= 0 ? expandValue(args[groupIndex + 1]) : '' });
+      return '';
+    },
+    tar(args) {
+      const archiveIndex = args.findIndex(arg => arg.includes('f') && arg.startsWith('-'));
+      const archiveName = archiveIndex >= 0 ? expandValue(args[archiveIndex + 1]) : expandValue(args[0]);
+      archives[archiveName] = args.slice(archiveIndex + 2).map(expandValue);
+      return `${archiveName}: ${archives[archiveName].join(' ')}\n`;
+    },
+    lvextend(args) {
+      const sizeIndex = args.indexOf('-L');
+      return `Size of logical volume ${expandValue(args[args.length - 1])} changed by ${expandValue(args[sizeIndex + 1])}.\n`;
+    },
+    resize2fs(args) {
+      return `Filesystem resized on ${expandValue(args[0])}.\n`;
+    },
+    netplan(args) {
+      const action = args[0];
+      if (action === 'generate') return 'Generated netplan configuration.\n';
+      if (action === 'try') return 'Configuration accepted. Rollback timer cancelled.\n';
+      if (action === 'apply') return 'Applied netplan configuration.\n';
+      return '';
+    },
+    ufw(args) {
+      if (args[0] === 'status') return firewallRules.length ? `Status: active\n${firewallRules.join('\n')}\n` : 'Status: inactive\n';
+      if (args[0] === 'allow') {
+        firewallRules.push(expandValue(args[1]));
+        return `Rule added: ${expandValue(args[1])}\n`;
+      }
+      if (args[0] === 'enable') return 'Firewall is active and enabled on system startup.\n';
+      return '';
+    },
+    systemctl(args) {
+      if (args[0] === 'enable') {
+        services[expandValue(args[1])] = true;
+        return `Created symlink for ${expandValue(args[1])}.service.\n`;
+      }
+      return '';
+    },
+    tcpdump(args) {
+      const iface = args[args.indexOf('-i') + 1] || 'eth0';
+      const srcIndex = args.indexOf('src');
+      const portIndex = args.indexOf('port');
+      return `listening on ${expandValue(iface)}\nIP ${expandValue(args[srcIndex + 1])}.54321 > 192.168.1.100.${expandValue(args[portIndex + 1])}: Flags [S]\n`;
+    },
+    dmesg() {
+      return '[0.000000] Linux version 5.15.0-generic\n[1.250000] eth0: link up\n[2.100000] EXT4-fs mounted filesystem\n[4.500000] usb 1-1: new high-speed USB device\n[8.000000] audit: system ready\n';
+    },
+    whoami() {
+      return 'student\n';
+    },
+    id(args) {
+      if (args.includes('-u')) return '1000\n';
+      if (args.includes('-g')) return '1000\n';
+      return 'uid=1000(student) gid=1000(student) groups=1000(student)\n';
+    },
+    uname(args) {
+      return args.includes('-s') ? 'Linux\n' : 'Linux ubuntu 5.15.0-generic\n';
+    }
+  };
 
   function evalSingleTest(condition) {
     let clean = condition
@@ -952,7 +1256,7 @@ function simulateBash(script, input) {
 
     const arithmeticMatch = clean.match(/^\(\((.+)\)\)$/);
     if (arithmeticMatch) {
-      return expandArithmeticExpression(arithmeticMatch[1]) === 'true';
+      return Boolean(Number(expandArithmeticExpression(arithmeticMatch[1])));
     }
 
     const bracketMatch = clean.match(/^\[\s*(.+?)\s*\]$/);
@@ -960,15 +1264,11 @@ function simulateBash(script, input) {
 
     const binaryMatch = bracketMatch[1].match(/^(.*?)\s+(-eq|-ne|-gt|-ge|-lt|-le|==|=|!=)\s+(.*?)$/);
     if (binaryMatch) {
-      const leftRaw = binaryMatch[1].trim();
-      const op = binaryMatch[2];
-      const rightRaw = binaryMatch[3].trim();
-      const leftText = expandValue(leftRaw);
-      const rightText = expandValue(rightRaw);
+      const leftText = expandValue(binaryMatch[1].trim());
+      const rightText = expandValue(binaryMatch[3].trim());
       const leftNum = Number(leftText);
       const rightNum = Number(rightText);
-
-      switch (op) {
+      switch (binaryMatch[2]) {
         case '-eq': return leftNum === rightNum;
         case '-ne': return leftNum !== rightNum;
         case '-gt': return leftNum > rightNum;
@@ -982,12 +1282,13 @@ function simulateBash(script, input) {
       }
     }
 
-    const unaryMatch = bracketMatch[1].match(/^(-z|-n)\s+(.+)$/);
+    const unaryMatch = bracketMatch[1].match(/^(-z|-n|-d|-f|-e)\s+(.+)$/);
     if (unaryMatch) {
-      const op = unaryMatch[1];
       const target = expandValue(unaryMatch[2]);
-      if (op === '-z') return target.length === 0;
-      if (op === '-n') return target.length > 0;
+      if (unaryMatch[1] === '-z') return target.length === 0;
+      if (unaryMatch[1] === '-n') return target.length > 0;
+      if (unaryMatch[1] === '-d') return directories.has(target);
+      if (unaryMatch[1] === '-f' || unaryMatch[1] === '-e') return Object.prototype.hasOwnProperty.call(fs, target);
     }
 
     return false;
@@ -1005,6 +1306,41 @@ function simulateBash(script, input) {
     });
   }
 
+  function runPipeline(commandString, initialStdin = '') {
+    const redirection = splitRedirection(commandString);
+    if (redirection) {
+      const result = runPipeline(redirection.command, initialStdin);
+      if (redirection.operator === '>') setFile(redirection.target, result);
+      return '';
+    }
+
+    const stages = splitByOperator(commandString, '|');
+    let currentStdin = initialStdin;
+
+    for (const stage of stages) {
+      const parts = splitCommandWords(stage);
+      const cmdName = parts[0];
+      const args = parts.slice(1);
+
+      if (!cmdName) continue;
+      if (commands[cmdName]) {
+        currentStdin = commands[cmdName](args, currentStdin);
+        lastStatus = 0;
+      } else if (cmdName.includes('=')) {
+        const [name, val] = cmdName.split('=');
+        vars[name] = expandValue(val);
+        currentStdin = '';
+      } else if (cmdName === 'read') {
+        readVars(args);
+        currentStdin = '';
+      } else {
+        lastStatus = 127;
+        currentStdin = '';
+      }
+    }
+    return currentStdin;
+  }
+
   function runSimpleLine(line) {
     const compact = line.replace(/;$/, '').trim();
     const readMatch = compact.match(/^read\s+(.+)$/);
@@ -1019,21 +1355,8 @@ function simulateBash(script, input) {
       return;
     }
 
-    const echoMatch = compact.match(/^echo(?:\s+(-n))?\s*(.*)$/);
-    if (echoMatch) {
-      const text = expandValue(echoMatch[2] || '');
-      if (echoMatch[1] === '-n') {
-        output.push(text);
-      } else {
-        output.push(`${text}\n`);
-      }
-      return;
-    }
-
-    const printfMatch = compact.match(/^printf\s+["']%s\\n["']\s+(.+)$/);
-    if (printfMatch) {
-      output.push(`${expandValue(printfMatch[1])}\n`);
-    }
+    const result = runPipeline(compact);
+    if (result) output.push(result);
   }
 
   function collectIfBranches(startIndex) {
@@ -1113,10 +1436,7 @@ function simulateBash(script, input) {
     return { output: output.join(''), error: e.message || 'Unable to simulate this script.' };
   }
 
-  return {
-    output: output.join(''),
-    error: ''
-  };
+  return { output: output.join(''), error: '' };
 }
 
 function evaluateBashProblem(problem, script, mode) {
@@ -1124,7 +1444,23 @@ function evaluateBashProblem(problem, script, mode) {
     ? problem.tests.filter(test => test.visible)
     : problem.tests;
 
+  const usesEchoShortcut = problem.kind === 'terminal' && tokenizeBash(script).some(line => {
+    const command = line.split('|')[0].trim();
+    return /^echo\b|^printf\b/.test(command);
+  });
+
   return tests.map(test => {
+    if (usesEchoShortcut) {
+      return {
+        name: test.name,
+        visible: test.visible,
+        input: test.input,
+        expectedOutput: test.expectedOutput,
+        actualOutput: '',
+        error: 'Terminal lab tasks must execute Linux commands instead of echoing the answer.',
+        passed: false
+      };
+    }
     const result = simulateBash(script, test.input);
     const passed = !result.error && outputsMatch(result.output, test.expectedOutput);
     return {
@@ -1232,6 +1568,36 @@ function renderBashProblem(index) {
   `).join('');
 
   const constraintsHtml = problem.constraints.map(item => `<li>${escapeHtml(item)}</li>`).join('');
+  const labReferenceHtml = problem.kind === 'terminal' ? `
+    <div class="bash-section-block bash-lab-reference">
+      <h4>Virtual Linux Lab</h4>
+      <div class="bash-lab-grid">
+        <div>
+          <strong>Files</strong>
+          <code>/etc/passwd</code>
+          <code>/etc/shadow</code>
+          <code>/var/log/server.log</code>
+          <code>/var/log/app.log</code>
+        </div>
+        <div>
+          <strong>Commands</strong>
+          <code>cat</code>
+          <code>head</code>
+          <code>tail</code>
+          <code>grep</code>
+          <code>wc</code>
+          <code>sort</code>
+          <code>cut</code>
+          <code>ls</code>
+          <code>touch</code>
+          <code>mkdir</code>
+          <code>tar</code>
+          <code>ufw</code>
+          <code>netplan</code>
+        </div>
+      </div>
+    </div>
+  ` : '';
 
   elements.contentArea.innerHTML = `
     <div class="bash-workspace">
@@ -1247,6 +1613,7 @@ function renderBashProblem(index) {
           <h3 style="margin-top: 0; border-left: none; padding-left: 0; font-size: 1.4rem;">${escapeHtml(problem.title)}</h3>
           <div class="bash-tags">
             <span>${escapeHtml(problem.difficulty)}</span>
+            ${problem.kind === 'terminal' ? '<span>Terminal Lab</span>' : '<span>Script Logic</span>'}
             ${problem.tags.map(tag => `<span>${escapeHtml(tag)}</span>`).join('')}
           </div>
         </div>
@@ -1262,6 +1629,7 @@ function renderBashProblem(index) {
           <h4>Constraints</h4>
           <ul style="font-size: 0.9rem;">${constraintsHtml}</ul>
         </div>
+        ${labReferenceHtml}
         <div class="bash-section-block bash-solution-block">
           <button class="bash-solution-toggle" id="bash-solution-toggle">Show Answer</button>
           <pre class="bash-solution-code" id="bash-solution-code" hidden>${escapeHtml(problem.solutionCode || '')}</pre>
@@ -1269,7 +1637,7 @@ function renderBashProblem(index) {
       </section>
       <section class="bash-editor-pane">
         <div class="bash-editor-toolbar">
-          <span style="font-size: 0.85rem;">Bash Script Editor</span>
+          <span style="font-size: 0.85rem;">${problem.kind === 'terminal' ? 'Linux Lab Editor' : 'Bash Script Editor'}</span>
           <div>
             <button class="bash-run-btn" id="bash-run-btn">Run</button>
             <button class="bash-submit-btn" id="bash-submit-btn">Submit</button>
