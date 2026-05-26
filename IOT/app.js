@@ -499,9 +499,9 @@ function setActiveSection(sectionId) {
   // Handle Bash section layout
   const mainContentPane = document.getElementById('main-content-pane');
   if (isBashSection(sectionId)) {
-    mainContentPane.classList.add('bash-active');
+    mainContentPane.classList.add('bash-mode');
   } else {
-    mainContentPane.classList.remove('bash-active');
+    mainContentPane.classList.remove('bash-mode');
   }
 
   // Set accent color for this section
@@ -1214,7 +1214,7 @@ function renderBashProblem(index) {
 
   elements.welcomeScreen.style.display = 'none';
   elements.readingPane.style.display = 'block';
-  // Note: Badge and Title are hidden via CSS in bash-active mode
+  // Note: Badge and Title are hidden via CSS in bash-mode
   
   const examplesHtml = problem.examples.map(example => `
     <div class="bash-example">
@@ -1233,12 +1233,12 @@ function renderBashProblem(index) {
         <div class="bash-problem-header">
           <div class="bash-header-top-row" style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 0.5rem;">
              <span style="font-size: 0.75rem; text-transform: uppercase; font-weight: 700; color: var(--active-accent); letter-spacing: 0.05em;">${CONFIG.subjects[state.activeSubject].sectionNames[state.activeSection]}</span>
-             <div class="bash-nav-mini" style="display: flex; gap: 0.5rem;">
-                <button id="bash-mini-prev" class="nav-prev-btn" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" ${index === 0 ? 'disabled style="opacity:0.5"' : ''}>←</button>
-                <button id="bash-mini-next" class="nav-next-btn" style="padding: 0.3rem 0.6rem; font-size: 0.75rem;" ${index === problems.length - 1 ? 'disabled style="opacity:0.5"' : ''}>→</button>
+             <div class="bash-nav-mini" style="display: flex; gap: 0.4rem;">
+                <button id="bash-mini-prev" class="nav-prev-btn" style="padding: 0.25rem 0.5rem; font-size: 0.7rem;" ${index === 0 ? 'disabled style="opacity:0.5"' : ''}>←</button>
+                <button id="bash-mini-next" class="nav-next-btn" style="padding: 0.25rem 0.5rem; font-size: 0.7rem;" ${index === problems.length - 1 ? 'disabled style="opacity:0.5"' : ''}>→</button>
              </div>
           </div>
-          <h3 style="margin-top: 0; border-left: none; padding-left: 0;">${escapeHtml(problem.title)}</h3>
+          <h3 style="margin-top: 0; border-left: none; padding-left: 0; font-size: 1.4rem;">${escapeHtml(problem.title)}</h3>
           <div class="bash-tags">
             <span>${escapeHtml(problem.difficulty)}</span>
             ${problem.tags.map(tag => `<span>${escapeHtml(tag)}</span>`).join('')}
@@ -1246,7 +1246,7 @@ function renderBashProblem(index) {
         </div>
         <div class="bash-section-block">
           <h4>Problem</h4>
-          <p>${escapeHtml(problem.prompt)}</p>
+          <p style="font-size: 0.95rem;">${escapeHtml(problem.prompt)}</p>
         </div>
         <div class="bash-section-block">
           <h4>Examples</h4>
@@ -1254,12 +1254,12 @@ function renderBashProblem(index) {
         </div>
         <div class="bash-section-block">
           <h4>Constraints</h4>
-          <ul>${constraintsHtml}</ul>
+          <ul style="font-size: 0.9rem;">${constraintsHtml}</ul>
         </div>
       </section>
       <section class="bash-editor-pane">
         <div class="bash-editor-toolbar">
-          <span>Bash</span>
+          <span style="font-size: 0.85rem;">Bash Script Editor</span>
           <div>
             <button class="bash-run-btn" id="bash-run-btn">Run</button>
             <button class="bash-submit-btn" id="bash-submit-btn">Submit</button>
@@ -1268,8 +1268,8 @@ function renderBashProblem(index) {
         <textarea class="bash-code-editor" id="bash-code-editor" spellcheck="false">${escapeHtml(currentCode)}</textarea>
         <div class="bash-results-panel">
           <div class="bash-results-header">
-            <strong>Test Results</strong>
-            <span id="bash-results-summary">${resultSummary}</span>
+            <strong style="font-size: 0.85rem;">Test Results</strong>
+            <span id="bash-results-summary" style="font-size: 0.8rem;">${resultSummary}</span>
           </div>
           <div id="bash-results-body">${renderBashResults(lastResults)}</div>
         </div>

@@ -397,18 +397,29 @@ main.content-pane {
   position: relative;
 }
 
-main.content-pane.bash-active {
-  padding: 0;
+/* Full-screen bash workspace overrides */
+main.content-pane.bash-mode {
+  padding: 0 !important;
+  display: flex;
+  flex-direction: column;
 }
 
-main.content-pane.bash-active .reading-pane,
-main.content-pane.bash-active #reading-content-area {
+main.content-pane.bash-mode #reading-pane {
+  display: flex !important;
+  flex-direction: column;
   height: 100%;
 }
 
-main.content-pane.bash-active .content-header,
-main.content-pane.bash-active .topic-bottom-nav {
-  display: none;
+main.content-pane.bash-mode #reading-content-area {
+  max-width: none !important;
+  margin: 0 !important;
+  height: 100%;
+  flex: 1;
+}
+
+main.content-pane.bash-mode .content-header,
+main.content-pane.bash-mode .topic-bottom-nav {
+  display: none !important;
 }
 
 .welcome-screen {
@@ -927,13 +938,12 @@ nav.top-nav button.active[data-section="bashPractice"] {
    ============================================================ */
 .bash-workspace {
   display: grid;
-  grid-template-columns: minmax(320px, 0.9fr) minmax(420px, 1.35fr);
+  grid-template-columns: 380px 1fr;
   height: 100%;
   width: 100%;
   border: none;
-  border-radius: 0;
-  overflow: hidden;
   background: #FFFDFB;
+  overflow: hidden;
 }
 
 .bash-description-pane {
