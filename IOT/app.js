@@ -1750,7 +1750,6 @@ window.updateBashHighlighting = function() {
 };
 window.addEventListener('DOMContentLoaded', () => {
   init();
-  initThemeToggle();
 });
 
 // ============================================================
@@ -1761,6 +1760,10 @@ function initThemeToggle() {
   const themeIconPath = document.querySelector('#theme-icon path');
   
   if (!toggleBtn || !themeIconPath) return;
+
+  // Prevent duplicate event listener registration
+  if (toggleBtn.dataset.themeToggleInitialized) return;
+  toggleBtn.dataset.themeToggleInitialized = 'true';
 
   let currentTheme = 'light';
   try {

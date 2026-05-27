@@ -2141,69 +2141,408 @@ nav.top-nav button.active[data-section="bashPractice"] {
 }
 
 /* =========================================
-   DARK THEME
+   DARK THEME & AESTHETIC OVERHAUL
    ========================================= */
 body.dark-theme {
-  --bg-color: #121212;
-  --sidebar-bg: #1A1A1A;
-  --text-primary: #E0E0E0;
-  --text-secondary: #A0A0A0;
-  --border-color: #333333;
+  --bg-color: #181514;       /* Deep warm espresso */
+  --sidebar-bg: #201C1A;     /* Soft dark brown-grey */
+  --text-primary: #EAE3DC;   /* Warm off-white */
+  --text-secondary: #B5AAA0; /* Muted warm grey */
+  --border-color: #38302C;   /* Warm subtle border */
 }
 
-body.dark-theme header, 
-body.dark-theme .container, 
+/* Base structural layout in dark theme */
+body.dark-theme header,
+body.dark-theme .container,
+body.dark-theme .mobile-header,
+body.dark-theme .topic-bottom-nav {
+  background-color: var(--sidebar-bg) !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+
 body.dark-theme .content-pane,
 body.dark-theme .reading-pane,
 body.dark-theme main.content-pane,
-body.dark-theme main.content-pane > #reading-pane,
-body.dark-theme .mcq-card,
-body.dark-theme .practice-stats-card,
-body.dark-theme .bash-result-card,
-body.dark-theme .bash-results-panel, 
-body.dark-theme .bash-description-pane,
-body.dark-theme .bash-editor-pane,
-body.dark-theme .practice-questions-pane,
-body.dark-theme .practice-info-pane,
-body.dark-theme .bash-results-header,
-body.dark-theme .mobile-header,
-body.dark-theme .subject-switcher,
-body.dark-theme .topic-item.active,
-body.dark-theme .search-wrapper input,
-body.dark-theme .bash-editor-toolbar {
+body.dark-theme main.content-pane > #reading-pane {
   background-color: var(--bg-color) !important;
   color: var(--text-primary) !important;
 }
 
-body.dark-theme .bash-editor-wrapper {
-  background-color: #000000 !important;
+/* Sidebar elements in dark theme */
+body.dark-theme .search-wrapper input {
+  background-color: #292320 !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
 }
-
-body.dark-theme nav.top-nav button:hover,
-body.dark-theme #desktop-sidebar-toggle:hover,
-body.dark-theme .topic-item:hover,
-body.dark-theme .zoom-controls button:hover,
-body.dark-theme .zoom-controls,
-body.dark-theme .subject-btn:hover {
-  background-color: var(--sidebar-bg) !important;
+body.dark-theme .search-wrapper svg {
+  color: var(--text-secondary) !important;
+}
+body.dark-theme .progress-widget {
+  background-color: #26201D !important;
+  border-color: var(--border-color) !important;
+}
+body.dark-theme .progress-track {
+  background-color: #362E2A !important;
+}
+body.dark-theme .topic-item:hover {
+  background-color: #292320 !important;
   color: var(--text-primary) !important;
 }
-
-body.dark-theme .progress-widget, 
-body.dark-theme .topic-bottom-nav {
-  background-color: #1A1A1A !important;
+body.dark-theme .topic-item.active {
+  background-color: #2D2724 !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2) !important;
+}
+body.dark-theme .topic-item .checkbox-circle {
+  border-color: var(--text-secondary) !important;
+}
+body.dark-theme .topic-item.mastered .checkbox-circle {
+  background-color: var(--success-color) !important;
+  border-color: var(--success-color) !important;
 }
 
-body.dark-theme nav.top-nav button.active[data-section="st1"] { background-color: #3D221A !important; }
-body.dark-theme nav.top-nav button.active[data-section="st2"] { background-color: #1E2D25 !important; }
-body.dark-theme nav.top-nav button.active[data-section="endTerm"] { background-color: #2D220F !important; }
-body.dark-theme nav.top-nav button.active[data-section="cheatSheet"] { background-color: #141620 !important; }
-body.dark-theme .subject-btn.active { background-color: var(--border-color) !important; color: var(--active-accent) !important; }
+/* Header elements (Switcher, Zoom, Timer) in dark theme */
+body.dark-theme .subject-switcher {
+  background-color: #28221F !important;
+}
+body.dark-theme .subject-btn {
+  color: var(--text-secondary) !important;
+}
+body.dark-theme .subject-btn svg {
+  color: var(--text-secondary) !important;
+}
+body.dark-theme .subject-btn:hover {
+  color: var(--text-primary) !important;
+}
+body.dark-theme .subject-btn.active {
+  background-color: #3A312C !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+}
+body.dark-theme .subject-btn.active svg {
+  color: var(--active-accent) !important;
+}
 
-/* In Light Theme, we want the bash editor background to be dark but if Prism is light, make sure caret matches */
+body.dark-theme .zoom-controls {
+  background-color: #28221F !important;
+}
+body.dark-theme .zoom-controls button {
+  color: var(--text-secondary) !important;
+}
+body.dark-theme .zoom-controls button:hover {
+  background-color: #3A312C !important;
+  color: var(--text-primary) !important;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.15) !important;
+}
+body.dark-theme .zoom-controls div {
+  background-color: var(--border-color) !important;
+}
+
+body.dark-theme .exam-timer {
+  background-color: #2A201C !important;
+  border-color: #4A3A34 !important;
+  color: #E29B7A !important;
+}
+
+/* Top Nav active variables in dark theme */
+body.dark-theme nav.top-nav button {
+  color: var(--text-secondary) !important;
+}
+body.dark-theme nav.top-nav button:hover {
+  background-color: #292320 !important;
+  color: var(--text-primary) !important;
+}
+body.dark-theme nav.top-nav button.active[data-section="st1"] {
+  background-color: #4A2820 !important;
+  color: #FF9B85 !important;
+}
+body.dark-theme nav.top-nav button.active[data-section="st2"] {
+  background-color: #223D32 !important;
+  color: #9CE0C1 !important;
+}
+body.dark-theme nav.top-nav button.active[data-section="endTerm"] {
+  background-color: #3D2D18 !important;
+  color: #E6BC73 !important;
+}
+body.dark-theme nav.top-nav button.active[data-section="cheatSheet"] {
+  background-color: #202334 !important;
+  color: #9C9FB9 !important;
+}
+body.dark-theme nav.top-nav button.active[data-section="practice"],
+body.dark-theme nav.top-nav button.active[data-section="linuxMcq"],
+body.dark-theme nav.top-nav button.active[data-section="bashPractice"] {
+  background-color: #402824 !important;
+  color: #E99D87 !important;
+}
+
+/* MCQ and Practice widgets in dark theme */
+body.dark-theme .practice-questions-pane {
+  background-color: var(--bg-color) !important;
+}
+body.dark-theme .quiz-dashboard-header {
+  background-color: #201C1A !important;
+  border-color: var(--border-color) !important;
+}
+body.dark-theme .practice-stats-card {
+  background-color: #292320 !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+body.dark-theme .practice-stats-card strong {
+  color: var(--text-primary) !important;
+}
+body.dark-theme .mcq-card {
+  background-color: #201C1A !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+body.dark-theme .mcq-question {
+  color: var(--text-primary) !important;
+}
+body.dark-theme .mcq-option {
+  background-color: #292320 !important;
+  border-color: #38302C !important;
+  color: var(--text-secondary) !important;
+}
+body.dark-theme .mcq-option:hover {
+  background-color: #332B27 !important;
+  color: var(--text-primary) !important;
+  border-color: #4A3F39 !important;
+}
+body.dark-theme .mcq-option.correct {
+  background-color: #1A3328 !important;
+  border-color: #285E46 !important;
+  color: #9CE0C1 !important;
+}
+body.dark-theme .mcq-option.incorrect {
+  background-color: #3D221C !important;
+  border-color: #6E382F !important;
+  color: #FFB3A4 !important;
+}
+body.dark-theme .mcq-explanation {
+  background-color: #251F1D !important;
+  color: var(--text-secondary) !important;
+  border-left-color: var(--active-accent) !important;
+}
+body.dark-theme .mcq-explanation strong {
+  color: var(--text-primary) !important;
+}
+body.dark-theme .quiz-reset-btn {
+  background-color: #36221D !important;
+  border-color: #5E362F !important;
+  color: #FFB3A4 !important;
+}
+body.dark-theme .quiz-reset-btn:hover {
+  background-color: #4A2A23 !important;
+  border-color: #8C4735 !important;
+}
+
+/* Bash lab layout in dark theme */
+body.dark-theme .bash-workspace {
+  background-color: var(--bg-color) !important;
+}
+body.dark-theme .bash-description-pane,
+body.dark-theme .practice-info-pane {
+  background-color: #201C1A !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+body.dark-theme .bash-editor-pane {
+  background-color: var(--bg-color) !important;
+  border-color: var(--border-color) !important;
+}
+body.dark-theme .bash-editor-toolbar {
+  background-color: #201C1A !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+body.dark-theme .bash-editor-title {
+  color: var(--text-primary) !important;
+}
+body.dark-theme .bash-results-panel {
+  background-color: #181514 !important;
+  border-color: var(--border-color) !important;
+}
+body.dark-theme .bash-results-header {
+  background-color: #201C1A !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+body.dark-theme .bash-results-body {
+  background-color: #141110 !important;
+  color: var(--text-primary) !important;
+}
+body.dark-theme .bash-result-card {
+  background-color: #201C1A !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+body.dark-theme .bash-example-block,
+body.dark-theme .example-box {
+  background-color: #292320 !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+body.dark-theme .bash-example-block pre,
+body.dark-theme .example-box pre {
+  background-color: #1E1917 !important;
+  border-color: #2D2623 !important;
+  color: #E2DCD5 !important;
+}
+body.dark-theme .bash-example input {
+  background-color: #1E1917 !important;
+  color: var(--text-primary) !important;
+  border-color: var(--border-color) !important;
+}
+body.dark-theme .bash-solution-block {
+  background-color: #292320 !important;
+  border-color: var(--border-color) !important;
+}
+body.dark-theme .bash-solution-toggle {
+  background-color: #38302C !important;
+  border-color: #4D433D !important;
+  color: var(--text-primary) !important;
+}
+body.dark-theme .bash-solution-toggle:hover {
+  background-color: #473E39 !important;
+}
+body.dark-theme .bash-solution-code {
+  background-color: #13100F !important;
+  color: #9CE0C1 !important;
+  border-color: #2D2522 !important;
+}
+body.dark-theme .bash-reset-btn {
+  background-color: #2A2D34 !important;
+  border-color: #404552 !important;
+  color: #A9B2C3 !important;
+}
+body.dark-theme .bash-reset-btn:hover {
+  background-color: #343842 !important;
+  color: #FFF !important;
+}
+
+/* Document content readability in dark theme */
+body.dark-theme .reading-area h3 {
+  color: var(--text-primary) !important;
+}
+body.dark-theme .reading-area h4 {
+  color: var(--text-primary) !important;
+}
+body.dark-theme .reading-area p {
+  color: var(--text-primary) !important;
+}
+body.dark-theme .reading-area li {
+  color: var(--text-primary) !important;
+}
+body.dark-theme .reading-area strong {
+  color: #FFFDFB !important;
+}
+body.dark-theme .reading-area em {
+  color: #EADCD1 !important;
+}
+body.dark-theme .reading-area code {
+  background-color: #382A26 !important;
+  color: #E99D87 !important;
+}
+body.dark-theme .reading-area pre {
+  background-color: #251F1C !important;
+  border-color: #38302C !important;
+  color: #EADCD1 !important;
+}
+body.dark-theme .reading-area pre code {
+  color: #EADCD1 !important;
+}
+body.dark-theme .reading-area table {
+  border-color: #38302C !important;
+}
+body.dark-theme .reading-area th {
+  background-color: #2D2420 !important;
+  color: var(--text-primary) !important;
+  border-color: #38302C !important;
+}
+body.dark-theme .reading-area td {
+  border-color: #38302C !important;
+  color: var(--text-primary) !important;
+}
+body.dark-theme .reading-area tr:nth-child(even) td {
+  background-color: #201C1A !important;
+}
+body.dark-theme .reading-area tr:hover td {
+  background-color: #2D2724 !important;
+}
+body.dark-theme .reading-area .callout {
+  background-color: #2D2420 !important;
+  border-color: #5E3D30 !important;
+  color: var(--text-primary) !important;
+}
+body.dark-theme .reading-area .callout-warning {
+  background-color: #3D221A !important;
+  border-color: #8C4735 !important;
+}
+body.dark-theme .reading-area .callout-key {
+  background-color: #2D2515 !important;
+  border-color: #8C6F35 !important;
+}
+body.dark-theme .reading-area .callout-tip {
+  background-color: #1E2D25 !important;
+  border-color: #4A6E5C !important;
+}
+
+/* Landing Page Overrides in Dark Mode */
+body.dark-theme .landing-page {
+  background:
+    linear-gradient(90deg, rgba(224, 122, 95, 0.055) 1px, transparent 1px),
+    linear-gradient(rgba(224, 122, 95, 0.045) 1px, transparent 1px),
+    var(--bg-color);
+  background-size: 32px 32px;
+}
+body.dark-theme .landing-window.top {
+  background-color: #201C1A !important;
+  border-color: var(--border-color) !important;
+}
+body.dark-theme .landing-window.bottom {
+  background-color: #292320 !important;
+  border-color: var(--border-color) !important;
+}
+body.dark-theme .landing-subject-card {
+  background-color: #201C1A !important;
+  border-color: var(--border-color) !important;
+  color: var(--text-primary) !important;
+}
+body.dark-theme .landing-subject-card:hover {
+  background-color: #2D2724 !important;
+  border-color: var(--active-accent) !important;
+}
+
+/* =========================================
+   GLOBAL BASH EDITOR ESTHETICS & ISOLATION
+   ========================================= */
 .bash-editor-wrapper {
-  background-color: #000000 !important;
+  background-color: #000000 !important; /* Pure black terminal background */
 }
+
+/* Forceful isolation from .reading-area pre stylesheet specificity */
+.reading-area pre.bash-highlighter {
+  background-color: transparent !important;
+  background: transparent !important;
+  border: none !important;
+  padding: 1.5rem !important;
+  margin: 0 !important;
+  border-radius: 0 !important;
+  box-shadow: none !important;
+  overflow: hidden !important;
+  z-index: 1;
+}
+
+.reading-area pre.bash-highlighter code {
+  color: #E9F1EA !important; /* Base untokenized bash code text color */
+  background: transparent !important;
+  padding: 0 !important;
+  font-family: var(--font-mono) !important;
+  font-size: 1rem !important;
+  line-height: 1.6 !important;
+}
+
 .bash-code-editor {
-  caret-color: #E9F1EA !important;
+  caret-color: #E9F1EA !important; /* Terminal style caret */
 }
