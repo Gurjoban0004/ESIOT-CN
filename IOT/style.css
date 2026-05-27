@@ -2139,3 +2139,64 @@ nav.top-nav button.active[data-section="bashPractice"] {
   z-index: 2;
   overflow: auto !important;
 }
+
+/* =========================================
+   DARK THEME
+   ========================================= */
+body.dark-theme {
+  --bg-color: #121212;
+  --sidebar-bg: #1A1A1A;
+  --text-primary: #E0E0E0;
+  --text-secondary: #A0A0A0;
+  --border-color: #333333;
+}
+
+body.dark-theme header, 
+body.dark-theme .container, 
+body.dark-theme .bash-results-panel, 
+body.dark-theme .bash-description-pane,
+body.dark-theme .bash-editor-pane,
+body.dark-theme .practice-questions-pane,
+body.dark-theme .practice-info-pane,
+body.dark-theme .bash-results-header,
+body.dark-theme .mobile-header,
+body.dark-theme .subject-switcher,
+body.dark-theme .topic-item.active,
+body.dark-theme .search-wrapper input,
+body.dark-theme .bash-editor-toolbar {
+  background-color: var(--bg-color) !important;
+  color: var(--text-primary) !important;
+}
+
+body.dark-theme .bash-editor-wrapper {
+  background-color: #000000 !important;
+}
+
+body.dark-theme nav.top-nav button:hover,
+body.dark-theme #desktop-sidebar-toggle:hover,
+body.dark-theme .topic-item:hover,
+body.dark-theme .zoom-controls button:hover,
+body.dark-theme .zoom-controls,
+body.dark-theme .subject-btn:hover {
+  background-color: var(--sidebar-bg) !important;
+  color: var(--text-primary) !important;
+}
+
+body.dark-theme .progress-widget, 
+body.dark-theme .topic-bottom-nav {
+  background-color: #1A1A1A !important;
+}
+
+body.dark-theme nav.top-nav button.active[data-section="st1"] { background-color: #3D221A !important; }
+body.dark-theme nav.top-nav button.active[data-section="st2"] { background-color: #1E2D25 !important; }
+body.dark-theme nav.top-nav button.active[data-section="endTerm"] { background-color: #2D220F !important; }
+body.dark-theme nav.top-nav button.active[data-section="cheatSheet"] { background-color: #141620 !important; }
+body.dark-theme .subject-btn.active { background-color: var(--border-color) !important; color: var(--active-accent) !important; }
+
+/* In Light Theme, we want the bash editor background to be dark but if Prism is light, make sure caret matches */
+.bash-editor-wrapper {
+  background-color: #1F2421 !important;
+}
+.bash-code-editor {
+  caret-color: #E9F1EA !important;
+}

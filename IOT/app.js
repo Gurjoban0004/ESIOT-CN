@@ -27,11 +27,11 @@ const CONFIG = {
         practice: 'Topic-Wise Practice Quiz'
       },
       tabs: [
-        { id: 'st1', label: 'ST-1 (Units 1-2)' },
-        { id: 'st2', label: 'ST-2 (Units 3-4)' },
-        { id: 'endTerm', label: 'End Term (Unit 5)' },
+        { id: 'st1', label: 'ST-1' },
+        { id: 'st2', label: 'ST-2' },
+        { id: 'endTerm', label: 'End Term' },
         { id: 'cheatSheet', label: 'Cheat Sheet' },
-        { id: 'practice', label: 'Practice' }
+        { id: 'practice', label: 'MCQs' }
       ]
     },
     cn: {
@@ -58,12 +58,12 @@ const CONFIG = {
         practice: 'Topic-Wise Practice Quiz'
       },
       tabs: [
-        { id: 'unit1_2', label: 'Units 1-2' },
-        { id: 'unit3_4', label: 'Units 3-4' },
-        { id: 'unit5_6', label: 'Units 5-6' },
-        { id: 'unit7_8', label: 'Units 7-8' },
-        { id: 'unit9', label: 'Unit 9' },
-        { id: 'practice', label: 'Practice' }
+        { id: 'unit1_2', label: 'U1-2' },
+        { id: 'unit3_4', label: 'U3-4' },
+        { id: 'unit5_6', label: 'U5-6' },
+        { id: 'unit7_8', label: 'U7-8' },
+        { id: 'unit9', label: 'U9' },
+        { id: 'practice', label: 'MCQs' }
       ]
     },
     linux: {
@@ -1744,4 +1744,35 @@ window.updateBashHighlighting = function() {
     highlighter.textContent = editor.value;
   }
 };
-window.addEventListener('DOMContentLoaded', init);
+window.addEventListener('DOMContentLoaded', () => {
+  init();
+  initThemeToggle();
+});
+
+// ============================================================
+//  THEME TOGGLE
+// ============================================================
+function initThemeToggle() {
+  const toggleBtn = document.getElementById('theme-toggle');
+  const themeIconPath = document.querySelector('#theme-icon path');
+  
+  if (!toggleBtn || !themeIconPath) return;
+
+  const currentTheme = localStorage.getItem('theme') || 'light';
+  if (currentTheme === 'dark') {
+    document.body.classList.add('dark-theme');
+    themeIconPath.setAttribute('d', 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z'); // Sun icon
+  }
+
+  toggleBtn.addEventListener('click', () => {
+    document.body.classList.toggle('dark-theme');
+    const isDark = document.body.classList.contains('dark-theme');
+    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    
+    if (isDark) {
+      themeIconPath.setAttribute('d', 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z'); // Sun icon
+    } else {
+      themeIconPath.setAttribute('d', 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'); // Moon icon
+    }
+  });
+}
