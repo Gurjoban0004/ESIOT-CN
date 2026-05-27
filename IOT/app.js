@@ -161,6 +161,10 @@ function init() {
   setupSecurity();
 
   renderLandingPage();
+  
+  if (typeof initThemeToggle === 'function') {
+    initThemeToggle();
+  }
 }
 
 function setupSecurity() {

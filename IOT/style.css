@@ -2202,7 +2202,7 @@ body.dark-theme .subject-btn.active { background-color: var(--border-color) !imp
 
 /* In Light Theme, we want the bash editor background to be dark but if Prism is light, make sure caret matches */
 .bash-editor-wrapper {
-  background-color: #1F2421 !important;
+  background-color: #000000 !important;
 }
 .bash-code-editor {
   caret-color: #E9F1EA !important;
