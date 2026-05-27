@@ -1407,10 +1407,12 @@ function updateQuizDashboardStats() {
   const accuracy = answeredCount > 0 ? Math.round((correctCount / answeredCount) * 100) : 0;
 
   const statValues = elements.contentArea.querySelectorAll('.quiz-stat-value');
-  if (statValues.length >= 3) {
+  if (statValues.length >= 2) {
     statValues[0].innerHTML = `${correctCount}<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);"> / ${totalQuestions}</span>`;
     statValues[1].innerHTML = `${accuracy}<span style="font-size: 1.25rem; font-weight: 600;">%</span>`;
-    statValues[2].innerHTML = `${answeredCount}<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);"> / ${totalQuestions}</span>`;
+    if (statValues.length >= 3) {
+      statValues[2].innerHTML = `${answeredCount}<span style="font-size: 1rem; font-weight: 500; color: var(--text-secondary);"> / ${totalQuestions}</span>`;
+    }
   }
 }
 
