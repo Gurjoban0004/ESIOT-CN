@@ -1762,7 +1762,13 @@ function initThemeToggle() {
   
   if (!toggleBtn || !themeIconPath) return;
 
-  const currentTheme = localStorage.getItem('theme') || 'light';
+  let currentTheme = 'light';
+  try {
+    currentTheme = localStorage.getItem('theme') || 'light';
+  } catch (e) {
+    console.warn("localStorage not accessible for theme toggle");
+  }
+
   if (currentTheme === 'dark') {
     document.body.classList.add('dark-theme');
     themeIconPath.setAttribute('d', 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z'); // Sun icon
@@ -1771,7 +1777,9 @@ function initThemeToggle() {
   toggleBtn.addEventListener('click', () => {
     document.body.classList.toggle('dark-theme');
     const isDark = document.body.classList.contains('dark-theme');
-    localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    try {
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    } catch (e) {}
     
     if (isDark) {
       themeIconPath.setAttribute('d', 'M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z'); // Sun icon
