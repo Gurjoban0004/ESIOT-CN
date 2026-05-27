@@ -640,16 +640,16 @@ main.content-pane.practice-mode #reading-content-area {
 }
 
 .bash-run-btn {
-  background-color: var(--active-accent);
-  color: #FFF !important;
-  border: 2px solid var(--active-accent);
+  background-color: #EAF5EF;
+  color: #2F6F5E !important;
+  border: 2px solid #CDE8D9;
 }
 
 .bash-run-btn:hover {
-  background-color: var(--active-accent);
-  filter: brightness(1.1);
-  color: #FFF !important;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  background-color: #DDF0E6;
+  border-color: #83B799;
+  color: #1c4538 !important;
+  box-shadow: 0 4px 12px rgba(47, 111, 94, 0.12);
   transform: translateY(-1px);
 }
 
@@ -1598,19 +1598,20 @@ nav.top-nav button.active[data-section="bashPractice"] {
   background: #1c4538;
 }
 
-.bash-solution-code {
-  border: 1px solid var(--border-color);
+.reading-area .bash-solution-code {
+  border: 1px solid #D8C9B8;
   border-radius: 8px;
-  background: #1F2421;
-  color: #E9F1EA;
+  background: #FFFDFB;
+  color: #1A1918;
   font-family: var(--font-mono);
   font-size: 0.84rem;
   line-height: 1.55;
   padding: 1rem;
-  white-space: pre;
+  white-space: pre-wrap;
   overflow: auto;
-  word-break: break-all;
+  overflow-wrap: anywhere;
   max-height: 400px;
+  box-shadow: inset 4px 0 0 #2F6F5E;
 }
 
 .bash-example {
@@ -1684,15 +1685,16 @@ nav.top-nav button.active[data-section="bashPractice"] {
   color: #fff !important;
 }
 
-.bash-run-btn {
-  background: var(--accent-st1);
-  color: #FFFFFF !important;
-  border-color: #c6674c;
+.bash-editor-toolbar .bash-run-btn {
+  background: #EAF5EF;
+  color: #2F6F5E !important;
+  border-color: #CDE8D9;
 }
 
-.bash-run-btn:hover {
-  background: #EF8D72;
-  color: #fff !important;
+.bash-editor-toolbar .bash-run-btn:hover {
+  background: #DDF0E6;
+  border-color: #83B799;
+  color: #1c4538 !important;
 }
 
 .bash-submit-btn {
