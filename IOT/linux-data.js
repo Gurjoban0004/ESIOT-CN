@@ -953,7 +953,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "sample negative", input: "-5\n", expectedOutput: "Negative\n", visible: true },
       { name: "positive", input: "7\n", expectedOutput: "Positive\n", visible: true },
-      { name: "zero", input: "0\n", expectedOutput: "Zero\n", visible: false }
+      { name: "zero case", input: "0\n", expectedOutput: "Zero\n", visible: true },
+      { name: "large positive", input: "1000000\n", expectedOutput: "Positive\n", visible: false },
+      { name: "large negative", input: "-999999\n", expectedOutput: "Negative\n", visible: false }
     ]
   },
   {
@@ -970,7 +972,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "sample second greater", input: "10 25\n", expectedOutput: "25\n", visible: true },
       { name: "first greater", input: "30 12\n", expectedOutput: "30\n", visible: true },
-      { name: "negative values", input: "-3 -8\n", expectedOutput: "-3\n", visible: false }
+      { name: "equal values", input: "15 15\n", expectedOutput: "15\n", visible: true },
+      { name: "negative values", input: "-3 -8\n", expectedOutput: "-3\n", visible: false },
+      { name: "large values", input: "9999 10000\n", expectedOutput: "10000\n", visible: false }
     ]
   },
   {
@@ -987,7 +991,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "student account", input: "1000 1000 Linux 2026\n", expectedOutput: "UID: 1000\nGID: 1000\nKernel: Linux\nYear: 2026\n", visible: true },
       { name: "service account", input: "120 130 Linux 2025\n", expectedOutput: "UID: 120\nGID: 130\nKernel: Linux\nYear: 2025\n", visible: true },
-      { name: "admin account", input: "0 0 GNU/Linux 2024\n", expectedOutput: "UID: 0\nGID: 0\nKernel: GNU/Linux\nYear: 2024\n", visible: false }
+      { name: "admin account", input: "0 0 GNU/Linux 2024\n", expectedOutput: "UID: 0\nGID: 0\nKernel: GNU/Linux\nYear: 2024\n", visible: true },
+      { name: "future year", input: "5000 5000 OS 3000\n", expectedOutput: "UID: 5000\nGID: 5000\nKernel: OS\nYear: 3000\n", visible: false },
+      { name: "single digit IDs", input: "1 1 Unix 2000\n", expectedOutput: "UID: 1\nGID: 1\nKernel: Unix\nYear: 2000\n", visible: false }
     ]
   },
   {
@@ -1024,7 +1030,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "sample divisible", input: "15\n", expectedOutput: "Divisible by both 3 and 5\n", visible: true },
       { name: "only divisible by 3", input: "9\n", expectedOutput: "Not divisible by both\n", visible: true },
-      { name: "only divisible by 5", input: "20\n", expectedOutput: "Not divisible by both\n", visible: false }
+      { name: "only divisible by 5", input: "20\n", expectedOutput: "Not divisible by both\n", visible: true },
+      { name: "negative divisible", input: "-15\n", expectedOutput: "Divisible by both 3 and 5\n", visible: false },
+      { name: "zero check", input: "0\n", expectedOutput: "Divisible by both 3 and 5\n", visible: false }
     ]
   },
   {
@@ -1062,7 +1070,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "sample", input: "3\n", expectedOutput: "Wednesday\n", visible: true },
       { name: "first day", input: "1\n", expectedOutput: "Monday\n", visible: true },
-      { name: "invalid day", input: "9\n", expectedOutput: "Invalid day\n", visible: false }
+      { name: "last day", input: "7\n", expectedOutput: "Sunday\n", visible: true },
+      { name: "invalid low", input: "0\n", expectedOutput: "Invalid day\n", visible: false },
+      { name: "invalid high", input: "9\n", expectedOutput: "Invalid day\n", visible: false }
     ]
   },
   {
@@ -1078,8 +1088,10 @@ const LINUX_BASH_PROBLEMS = [
     examples: [{ input: "B\n", expectedOutput: "Good\n" }],
     tests: [
       { name: "sample", input: "B\n", expectedOutput: "Good\n", visible: true },
-      { name: "below average", input: "D\n", expectedOutput: "Below Average\n", visible: true },
-      { name: "invalid", input: "F\n", expectedOutput: "Invalid\n", visible: false }
+      { name: "grade A", input: "A\n", expectedOutput: "Excellent\n", visible: true },
+      { name: "grade C", input: "C\n", expectedOutput: "Average\n", visible: true },
+      { name: "below average", input: "D\n", expectedOutput: "Below Average\n", visible: false },
+      { name: "invalid grade", input: "F\n", expectedOutput: "Invalid\n", visible: false }
     ]
   },
   {
@@ -1168,7 +1180,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "sample table", input: "3\n", expectedOutput: "3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15\n3 x 6 = 18\n3 x 7 = 21\n3 x 8 = 24\n3 x 9 = 27\n3 x 10 = 30\n", visible: true },
       { name: "two table", input: "2\n", expectedOutput: "2 x 1 = 2\n2 x 2 = 4\n2 x 3 = 6\n2 x 4 = 8\n2 x 5 = 10\n2 x 6 = 12\n2 x 7 = 14\n2 x 8 = 16\n2 x 9 = 18\n2 x 10 = 20\n", visible: true },
-      { name: "five table", input: "5\n", expectedOutput: "5 x 1 = 5\n5 x 2 = 10\n5 x 3 = 15\n5 x 4 = 20\n5 x 5 = 25\n5 x 6 = 30\n5 x 7 = 35\n5 x 8 = 40\n5 x 9 = 45\n5 x 10 = 50\n", visible: false }
+      { name: "one table", input: "1\n", expectedOutput: "1 x 1 = 1\n1 x 2 = 2\n1 x 3 = 3\n1 x 4 = 4\n1 x 5 = 5\n1 x 6 = 6\n1 x 7 = 7\n1 x 8 = 8\n1 x 9 = 9\n1 x 10 = 10\n", visible: true },
+      { name: "five table", input: "5\n", expectedOutput: "5 x 1 = 5\n5 x 2 = 10\n5 x 3 = 15\n5 x 4 = 20\n5 x 5 = 25\n5 x 6 = 30\n5 x 7 = 35\n5 x 8 = 40\n5 x 9 = 45\n5 x 10 = 50\n", visible: false },
+      { name: "ten table", input: "10\n", expectedOutput: "10 x 1 = 10\n10 x 2 = 20\n10 x 3 = 30\n10 x 4 = 40\n10 x 5 = 50\n10 x 6 = 60\n10 x 7 = 70\n10 x 8 = 80\n10 x 9 = 90\n10 x 10 = 100\n", visible: false }
     ]
   },
   {
@@ -1185,7 +1199,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "sample developers", input: "developers 2000 admin1 admin2\n", expectedOutput: "groupadd -g 2000 developers\nuseradd -g developers admin1\nuseradd -g developers admin2\n", visible: true },
       { name: "qa group", input: "qa 2100 tester1 tester2\n", expectedOutput: "groupadd -g 2100 qa\nuseradd -g qa tester1\nuseradd -g qa tester2\n", visible: true },
-      { name: "ops group", input: "ops 2200 ops1 ops2\n", expectedOutput: "groupadd -g 2200 ops\nuseradd -g ops ops1\nuseradd -g ops ops2\n", visible: false }
+      { name: "sysadmin group", input: "sysadmin 500 root1 root2\n", expectedOutput: "groupadd -g 500 sysadmin\nuseradd -g sysadmin root1\nuseradd -g sysadmin root2\n", visible: true },
+      { name: "ops group", input: "ops 2200 ops1 ops2\n", expectedOutput: "groupadd -g 2200 ops\nuseradd -g ops ops1\nuseradd -g ops ops2\n", visible: false },
+      { name: "guest group", input: "guest 9999 guest1 guest2\n", expectedOutput: "groupadd -g 9999 guest\nuseradd -g guest guest1\nuseradd -g guest guest2\n", visible: false }
     ]
   },
   {
@@ -1203,7 +1219,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "archive created", input: "", expectedOutput: "result.tar: sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n", visible: true },
       { name: "tar command executed", input: "", expectedOutput: "result.tar: sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n", visible: true },
-      { name: "hidden archive check", input: "", expectedOutput: "result.tar: sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n", visible: false }
+      { name: "file check", input: "", expectedOutput: "result.tar: sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n", visible: true },
+      { name: "hidden archive check", input: "", expectedOutput: "result.tar: sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n", visible: false },
+      { name: "hidden command check", input: "", expectedOutput: "result.tar: sub1.txt sub2.txt sub3.txt sub4.txt sub5.txt\n", visible: false }
     ]
   },
   {
@@ -1221,7 +1239,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "frontend file visible", input: "", expectedOutput: "index.html\n", visible: true },
       { name: "directory listing", input: "", expectedOutput: "index.html\n", visible: true },
-      { name: "hidden structure check", input: "", expectedOutput: "index.html\n", visible: false }
+      { name: "backend check", input: "", expectedOutput: "index.html\n", visible: true },
+      { name: "hidden structure check", input: "", expectedOutput: "index.html\n", visible: false },
+      { name: "hidden mkdir check", input: "", expectedOutput: "index.html\n", visible: false }
     ]
   },
   {
@@ -1238,7 +1258,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "sample student", input: "student 1000 1000 Linux Dec 2026\n", expectedOutput: "User: student\nUID: 1000\nGID: 1000\nKernel: Linux\nCalendar: Dec 2026\n", visible: true },
       { name: "admin account", input: "admin 0 0 Linux Dec 2026\n", expectedOutput: "User: admin\nUID: 0\nGID: 0\nKernel: Linux\nCalendar: Dec 2026\n", visible: true },
-      { name: "service account", input: "svc 120 130 Linux Jan 2027\n", expectedOutput: "User: svc\nUID: 120\nGID: 130\nKernel: Linux\nCalendar: Jan 2027\n", visible: false }
+      { name: "root user", input: "root 0 0 Unix Jan 1970\n", expectedOutput: "User: root\nUID: 0\nGID: 0\nKernel: Unix\nCalendar: Jan 1970\n", visible: true },
+      { name: "service account", input: "svc 120 130 Linux Jan 2027\n", expectedOutput: "User: svc\nUID: 120\nGID: 130\nKernel: Linux\nCalendar: Jan 2027\n", visible: false },
+      { name: "guest account", input: "guest 5000 5000 Linux Feb 2028\n", expectedOutput: "User: guest\nUID: 5000\nGID: 5000\nKernel: Linux\nCalendar: Feb 2028\n", visible: false }
     ]
   },
   {
@@ -1256,7 +1278,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "info permission", input: "", expectedOutput: "mode 744 applied to info.txt\n", visible: true },
       { name: "chmod executed", input: "", expectedOutput: "mode 744 applied to info.txt\n", visible: true },
-      { name: "hidden mode check", input: "", expectedOutput: "mode 744 applied to info.txt\n", visible: false }
+      { name: "touch check", input: "", expectedOutput: "mode 744 applied to info.txt\n", visible: true },
+      { name: "hidden mode check", input: "", expectedOutput: "mode 744 applied to info.txt\n", visible: false },
+      { name: "hidden owner check", input: "", expectedOutput: "mode 744 applied to info.txt\n", visible: false }
     ]
   },
   {
@@ -1274,7 +1298,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "owner applied", input: "", expectedOutput: "owner samual:progteam applied to report.txt\n", visible: true },
       { name: "group applied", input: "", expectedOutput: "owner samual:progteam applied to report.txt\n", visible: true },
-      { name: "hidden ownership check", input: "", expectedOutput: "owner samual:progteam applied to report.txt\n", visible: false }
+      { name: "file report check", input: "", expectedOutput: "owner samual:progteam applied to report.txt\n", visible: true },
+      { name: "hidden ownership check", input: "", expectedOutput: "owner samual:progteam applied to report.txt\n", visible: false },
+      { name: "hidden group check", input: "", expectedOutput: "owner samual:progteam applied to report.txt\n", visible: false }
     ]
   },
   {
@@ -1292,7 +1318,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "first and last lines", input: "", expectedOutput: "root:*:19123:0:99999:7:::\ndaemon:*:19123:0:99999:7:::\nbin:*:19123:0:99999:7:::\nsys:*:19123:0:99999:7:::\nsync:*:19123:0:99999:7:::\ngames:*:19123:0:99999:7:::\nman:*:19123:0:99999:7:::\nlp:*:19123:0:99999:7:::\nmail:*:19123:0:99999:7:::\nnews:*:19123:0:99999:7:::\n", visible: true },
       { name: "head tail commands", input: "", expectedOutput: "root:*:19123:0:99999:7:::\ndaemon:*:19123:0:99999:7:::\nbin:*:19123:0:99999:7:::\nsys:*:19123:0:99999:7:::\nsync:*:19123:0:99999:7:::\ngames:*:19123:0:99999:7:::\nman:*:19123:0:99999:7:::\nlp:*:19123:0:99999:7:::\nmail:*:19123:0:99999:7:::\nnews:*:19123:0:99999:7:::\n", visible: true },
-      { name: "hidden shadow check", input: "", expectedOutput: "root:*:19123:0:99999:7:::\ndaemon:*:19123:0:99999:7:::\nbin:*:19123:0:99999:7:::\nsys:*:19123:0:99999:7:::\nsync:*:19123:0:99999:7:::\ngames:*:19123:0:99999:7:::\nman:*:19123:0:99999:7:::\nlp:*:19123:0:99999:7:::\nmail:*:19123:0:99999:7:::\nnews:*:19123:0:99999:7:::\n", visible: false }
+      { name: "line count check", input: "", expectedOutput: "root:*:19123:0:99999:7:::\ndaemon:*:19123:0:99999:7:::\nbin:*:19123:0:99999:7:::\nsys:*:19123:0:99999:7:::\nsync:*:19123:0:99999:7:::\ngames:*:19123:0:99999:7:::\nman:*:19123:0:99999:7:::\nlp:*:19123:0:99999:7:::\nmail:*:19123:0:99999:7:::\nnews:*:19123:0:99999:7:::\n", visible: true },
+      { name: "hidden shadow check", input: "", expectedOutput: "root:*:19123:0:99999:7:::\ndaemon:*:19123:0:99999:7:::\nbin:*:19123:0:99999:7:::\nsys:*:19123:0:99999:7:::\nsync:*:19123:0:99999:7:::\ngames:*:19123:0:99999:7:::\nman:*:19123:0:99999:7:::\nlp:*:19123:0:99999:7:::\nmail:*:19123:0:99999:7:::\nnews:*:19123:0:99999:7:::\n", visible: false },
+      { name: "hidden content check", input: "", expectedOutput: "root:*:19123:0:99999:7:::\ndaemon:*:19123:0:99999:7:::\nbin:*:19123:0:99999:7:::\nsys:*:19123:0:99999:7:::\nsync:*:19123:0:99999:7:::\ngames:*:19123:0:99999:7:::\nman:*:19123:0:99999:7:::\nlp:*:19123:0:99999:7:::\nmail:*:19123:0:99999:7:::\nnews:*:19123:0:99999:7:::\n", visible: false }
     ]
   },
   {
@@ -1310,7 +1338,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "passwd count", input: "", expectedOutput: "10\n", visible: true },
       { name: "wc command", input: "", expectedOutput: "10\n", visible: true },
-      { name: "hidden line count", input: "", expectedOutput: "10\n", visible: false }
+      { name: "passwd file access", input: "", expectedOutput: "10\n", visible: true },
+      { name: "hidden line count", input: "", expectedOutput: "10\n", visible: false },
+      { name: "hidden tool check", input: "", expectedOutput: "10\n", visible: false }
     ]
   },
   {
@@ -1327,7 +1357,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "sample rectangle", input: "5 3\n", expectedOutput: "16\n", visible: true },
       { name: "square", input: "4 4\n", expectedOutput: "16\n", visible: true },
-      { name: "large rectangle", input: "10 7\n", expectedOutput: "34\n", visible: false }
+      { name: "tiny rectangle", input: "1 1\n", expectedOutput: "4\n", visible: true },
+      { name: "large rectangle", input: "10 7\n", expectedOutput: "34\n", visible: false },
+      { name: "long rectangle", input: "100 2\n", expectedOutput: "204\n", visible: false }
     ]
   },
   {
@@ -1344,7 +1376,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "sample five", input: "5\n", expectedOutput: "1\n2\nFizz\n4\nBuzz\n", visible: true },
       { name: "six values", input: "6\n", expectedOutput: "1\n2\nFizz\n4\nBuzz\nFizz\n", visible: true },
-      { name: "fifteen values", input: "15\n", expectedOutput: "1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz\n11\nFizz\n13\n14\nFizzBuzz\n", visible: false }
+      { name: "fifteen values", input: "15\n", expectedOutput: "1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz\n11\nFizz\n13\n14\nFizzBuzz\n", visible: true },
+      { name: "one value", input: "1\n", expectedOutput: "1\n", visible: false },
+      { name: "thirty values", input: "30\n", expectedOutput: "1\n2\nFizz\n4\nBuzz\nFizz\n7\n8\nFizz\nBuzz\n11\nFizz\n13\n14\nFizzBuzz\n16\n17\nFizz\n19\nBuzz\nFizz\n22\n23\nFizz\nBuzz\n26\nFizz\n28\n29\nFizzBuzz\n", visible: false }
     ]
   },
   {
@@ -1361,7 +1395,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "sample three", input: "3\n", expectedOutput: "*\n**\n***\n", visible: true },
       { name: "four rows", input: "4\n", expectedOutput: "*\n**\n***\n****\n", visible: true },
-      { name: "five rows", input: "5\n", expectedOutput: "*\n**\n***\n****\n*****\n", visible: false }
+      { name: "one row", input: "1\n", expectedOutput: "*\n", visible: true },
+      { name: "five rows", input: "5\n", expectedOutput: "*\n**\n***\n****\n*****\n", visible: false },
+      { name: "seven rows", input: "7\n", expectedOutput: "*\n**\n***\n****\n*****\n******\n*******\n", visible: false }
     ]
   },
   {
@@ -1378,7 +1414,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "sample 123", input: "123\n", expectedOutput: "Sum = 6\nReverse = 321\nFactorial = 720\n", visible: true },
       { name: "405", input: "405\n", expectedOutput: "Sum = 9\nReverse = 504\nFactorial = 362880\n", visible: true },
-      { name: "321", input: "321\n", expectedOutput: "Sum = 6\nReverse = 123\nFactorial = 720\n", visible: false }
+      { name: "single digit", input: "5\n", expectedOutput: "Sum = 5\nReverse = 5\nFactorial = 120\n", visible: true },
+      { name: "321", input: "321\n", expectedOutput: "Sum = 6\nReverse = 123\nFactorial = 720\n", visible: false },
+      { name: "large number", input: "111\n", expectedOutput: "Sum = 3\nReverse = 111\nFactorial = 6\n", visible: false }
     ]
   },
   {
@@ -1395,7 +1433,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "sample five", input: "5\n", expectedOutput: "0 1 1 2 3\n", visible: true },
       { name: "seven terms", input: "7\n", expectedOutput: "0 1 1 2 3 5 8\n", visible: true },
-      { name: "four terms", input: "4\n", expectedOutput: "0 1 1 2\n", visible: false }
+      { name: "two terms", input: "2\n", expectedOutput: "0 1\n", visible: true },
+      { name: "four terms", input: "4\n", expectedOutput: "0 1 1 2\n", visible: false },
+      { name: "ten terms", input: "10\n", expectedOutput: "0 1 1 2 3 5 8 13 21 34\n", visible: false }
     ]
   },
   {
@@ -1412,7 +1452,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "sample add", input: "1 8 7 /bin/bash\n", expectedOutput: "Sum = 15\n", visible: true },
       { name: "even check", input: "2 10 0 /bin/zsh\n", expectedOutput: "Even\n", visible: true },
-      { name: "shell print", input: "3 0 0 /bin/bash\n", expectedOutput: "Shell = /bin/bash\n", visible: false }
+      { name: "odd check", input: "2 7 0 /bin/sh\n", expectedOutput: "Odd\n", visible: true },
+      { name: "shell print", input: "3 0 0 /bin/bash\n", expectedOutput: "Shell = /bin/bash\n", visible: false },
+      { name: "large add", input: "1 100 200 /bin/bash\n", expectedOutput: "Sum = 300\n", visible: false }
     ]
   },
   {
@@ -1429,7 +1471,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "sample mixed", input: "3 1 2\n", expectedOutput: "1 2 3\n", visible: true },
       { name: "descending odd", input: "9 5 7\n", expectedOutput: "5 7 9\n", visible: true },
-      { name: "already sorted", input: "4 6 8\n", expectedOutput: "4 6 8\n", visible: false }
+      { name: "negative mixed", input: "0 -5 2\n", expectedOutput: "-5 0 2\n", visible: true },
+      { name: "already sorted", input: "4 6 8\n", expectedOutput: "4 6 8\n", visible: false },
+      { name: "all equal", input: "5 5 5\n", expectedOutput: "5 5 5\n", visible: false }
     ]
   },
   {
@@ -1446,7 +1490,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "sample shell", input: "linuxshell 5 5\n", expectedOutput: "shell\n", visible: true },
       { name: "network", input: "networking 3 4\n", expectedOutput: "work\n", visible: true },
-      { name: "bashscript", input: "bashscript 4 6\n", expectedOutput: "script\n", visible: false }
+      { name: "full string", input: "hello 0 5\n", expectedOutput: "hello\n", visible: true },
+      { name: "bashscript", input: "bashscript 4 6\n", expectedOutput: "script\n", visible: false },
+      { name: "single char", input: "linux 0 1\n", expectedOutput: "l\n", visible: false }
     ]
   },
   {
@@ -1464,7 +1510,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "reverse logs", input: "", expectedOutput: "/var/log/server.log\n/var/log/app.log\n", visible: true },
       { name: "pipe sort", input: "", expectedOutput: "/var/log/server.log\n/var/log/app.log\n", visible: true },
-      { name: "hidden filter check", input: "", expectedOutput: "/var/log/server.log\n/var/log/app.log\n", visible: false }
+      { name: "log count check", input: "", expectedOutput: "/var/log/server.log\n/var/log/app.log\n", visible: true },
+      { name: "hidden filter check", input: "", expectedOutput: "/var/log/server.log\n/var/log/app.log\n", visible: false },
+      { name: "hidden sort check", input: "", expectedOutput: "/var/log/server.log\n/var/log/app.log\n", visible: false }
     ]
   },
   {
@@ -1482,7 +1530,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "redirect errors", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: true },
       { name: "cat redirected file", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: true },
-      { name: "hidden redirection check", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: false }
+      { name: "file error.log check", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: true },
+      { name: "hidden redirection check", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: false },
+      { name: "hidden grep check", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: false }
     ]
   },
   {
@@ -1500,7 +1550,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "extend volume", input: "", expectedOutput: "Size of logical volume /dev/vg0/lv_data changed by +10G.\nFilesystem resized on /dev/vg0/lv_data.\n", visible: true },
       { name: "resize filesystem", input: "", expectedOutput: "Size of logical volume /dev/vg0/lv_data changed by +10G.\nFilesystem resized on /dev/vg0/lv_data.\n", visible: true },
-      { name: "hidden lvm check", input: "", expectedOutput: "Size of logical volume /dev/vg0/lv_data changed by +10G.\nFilesystem resized on /dev/vg0/lv_data.\n", visible: false }
+      { name: "volume path check", input: "", expectedOutput: "Size of logical volume /dev/vg0/lv_data changed by +10G.\nFilesystem resized on /dev/vg0/lv_data.\n", visible: true },
+      { name: "hidden lvm check", input: "", expectedOutput: "Size of logical volume /dev/vg0/lv_data changed by +10G.\nFilesystem resized on /dev/vg0/lv_data.\n", visible: false },
+      { name: "hidden resize check", input: "", expectedOutput: "Size of logical volume /dev/vg0/lv_data changed by +10G.\nFilesystem resized on /dev/vg0/lv_data.\n", visible: false }
     ]
   },
   {
@@ -1518,7 +1570,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "eth0 capture", input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n", visible: true },
       { name: "packet output", input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n", visible: true },
-      { name: "hidden capture check", input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n", visible: false }
+      { name: "port 80 check", input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n", visible: true },
+      { name: "hidden capture check", input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n", visible: false },
+      { name: "hidden source check", input: "", expectedOutput: "listening on eth0\nIP 192.168.1.50.54321 > 192.168.1.100.80: Flags [S]\n", visible: false }
     ]
   },
   {
@@ -1536,7 +1590,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "backup created", input: "", expectedOutput: "config_backup.tar.gz: /etc/configs\n", visible: true },
       { name: "tar gzip command", input: "", expectedOutput: "config_backup.tar.gz: /etc/configs\n", visible: true },
-      { name: "hidden backup check", input: "", expectedOutput: "config_backup.tar.gz: /etc/configs\n", visible: false }
+      { name: "file existence check", input: "", expectedOutput: "config_backup.tar.gz: /etc/configs\n", visible: true },
+      { name: "hidden backup check", input: "", expectedOutput: "config_backup.tar.gz: /etc/configs\n", visible: false },
+      { name: "hidden compression check", input: "", expectedOutput: "config_backup.tar.gz: /etc/configs\n", visible: false }
     ]
   },
   {
@@ -1554,7 +1610,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "safe validation", input: "", expectedOutput: "Generated netplan configuration.\nConfiguration accepted. Rollback timer cancelled.\nApplied netplan configuration.\n", visible: true },
       { name: "rollback-safe apply", input: "", expectedOutput: "Generated netplan configuration.\nConfiguration accepted. Rollback timer cancelled.\nApplied netplan configuration.\n", visible: true },
-      { name: "hidden netplan check", input: "", expectedOutput: "Generated netplan configuration.\nConfiguration accepted. Rollback timer cancelled.\nApplied netplan configuration.\n", visible: false }
+      { name: "sequence check", input: "", expectedOutput: "Generated netplan configuration.\nConfiguration accepted. Rollback timer cancelled.\nApplied netplan configuration.\n", visible: true },
+      { name: "hidden netplan check", input: "", expectedOutput: "Generated netplan configuration.\nConfiguration accepted. Rollback timer cancelled.\nApplied netplan configuration.\n", visible: false },
+      { name: "hidden generate check", input: "", expectedOutput: "Generated netplan configuration.\nConfiguration accepted. Rollback timer cancelled.\nApplied netplan configuration.\n", visible: false }
     ]
   },
   {
@@ -1572,7 +1630,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "ssh firewall", input: "", expectedOutput: "Status: inactive\nRule added: 22/tcp\nFirewall is active and enabled on system startup.\n", visible: true },
       { name: "ufw enabled", input: "", expectedOutput: "Status: inactive\nRule added: 22/tcp\nFirewall is active and enabled on system startup.\n", visible: true },
-      { name: "hidden firewall check", input: "", expectedOutput: "Status: inactive\nRule added: 22/tcp\nFirewall is active and enabled on system startup.\n", visible: false }
+      { name: "rule 22 check", input: "", expectedOutput: "Status: inactive\nRule added: 22/tcp\nFirewall is active and enabled on system startup.\n", visible: true },
+      { name: "hidden firewall check", input: "", expectedOutput: "Status: inactive\nRule added: 22/tcp\nFirewall is active and enabled on system startup.\n", visible: false },
+      { name: "hidden status check", input: "", expectedOutput: "Status: inactive\nRule added: 22/tcp\nFirewall is active and enabled on system startup.\n", visible: false }
     ]
   },
   {
@@ -1590,7 +1650,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "kernel tail", input: "", expectedOutput: "[2.100000] EXT4-fs mounted filesystem\n[4.500000] usb 1-1: new high-speed USB device\n[8.000000] audit: system ready\n", visible: true },
       { name: "pipe tail", input: "", expectedOutput: "[2.100000] EXT4-fs mounted filesystem\n[4.500000] usb 1-1: new high-speed USB device\n[8.000000] audit: system ready\n", visible: true },
-      { name: "hidden dmesg check", input: "", expectedOutput: "[2.100000] EXT4-fs mounted filesystem\n[4.500000] usb 1-1: new high-speed USB device\n[8.000000] audit: system ready\n", visible: false }
+      { name: "dmesg access", input: "", expectedOutput: "[2.100000] EXT4-fs mounted filesystem\n[4.500000] usb 1-1: new high-speed USB device\n[8.000000] audit: system ready\n", visible: true },
+      { name: "hidden dmesg check", input: "", expectedOutput: "[2.100000] EXT4-fs mounted filesystem\n[4.500000] usb 1-1: new high-speed USB device\n[8.000000] audit: system ready\n", visible: false },
+      { name: "hidden line check", input: "", expectedOutput: "[2.100000] EXT4-fs mounted filesystem\n[4.500000] usb 1-1: new high-speed USB device\n[8.000000] audit: system ready\n", visible: false }
     ]
   },
   {
@@ -1608,7 +1670,9 @@ const LINUX_BASH_PROBLEMS = [
     tests: [
       { name: "saved errors", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: true },
       { name: "cat errors file", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: true },
-      { name: "hidden log check", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: false }
+      { name: "log existence", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: true },
+      { name: "hidden log check", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: false },
+      { name: "hidden cat check", input: "", expectedOutput: "error: database unavailable\nerror: request timed out\n", visible: false }
     ]
   }
 ];
