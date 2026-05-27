@@ -48,7 +48,15 @@ function tokenizeBash(script) {
     while (line.endsWith('\\') && i + 1 < rawLines.length) {
       line = line.slice(0, -1).trimEnd() + ' ' + rawLines[++i].trim();
     }
-    result.push(line);
+    
+    // Fix: separate 'then', 'else', or 'do' if they prefix a command on the same line
+    const keywordMatch = line.match(/^(then|else|do)\s+(.+)$/);
+    if (keywordMatch) {
+      result.push(keywordMatch[1]);
+      result.push(keywordMatch[2]);
+    } else {
+      result.push(line);
+    }
   }
   return result;
 }
