@@ -627,27 +627,28 @@ main.content-pane.practice-mode #reading-content-area {
 }
 
 .bash-reset-btn {
-  background-color: transparent;
-  color: #6B7280;
-  border: 2px solid #E5E7EB;
+  background-color: #f3f4f6;
+  color: #374151 !important;
+  border: 2px solid #d1d5db;
 }
 
 .bash-reset-btn:hover {
-  background-color: #F9FAFB;
-  border-color: #D1D5DB;
-  color: #374151;
+  background-color: #e5e7eb;
+  border-color: #9ca3af;
+  color: #111827 !important;
   transform: translateY(-1px);
 }
 
 .bash-run-btn {
-  background-color: #FFF;
-  color: var(--active-accent);
+  background-color: var(--active-accent);
+  color: #FFF !important;
   border: 2px solid var(--active-accent);
 }
 
 .bash-run-btn:hover {
   background-color: var(--active-accent);
-  color: #FFF;
+  filter: brightness(1.1);
+  color: #FFF !important;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
   transform: translateY(-1px);
 }
@@ -1582,9 +1583,9 @@ nav.top-nav button.active[data-section="bashPractice"] {
 
 .bash-solution-toggle {
   align-self: flex-start;
-  border: 1px solid #CDE8D9;
-  background: #EAF5EF;
-  color: #2F6F5E;
+  border: 1px solid #1c4538;
+  background: #2F6F5E;
+  color: #FFFFFF !important;
   border-radius: 6px;
   padding: 0.55rem 0.85rem;
   font-family: var(--font-sans);
@@ -1594,7 +1595,7 @@ nav.top-nav button.active[data-section="bashPractice"] {
 }
 
 .bash-solution-toggle:hover {
-  background: #DDF0E6;
+  background: #1c4538;
 }
 
 .bash-solution-code {
@@ -1673,25 +1674,25 @@ nav.top-nav button.active[data-section="bashPractice"] {
 }
 
 .bash-reset-btn {
-  background: #343d39;
-  color: #E8F0EA;
-  border-color: #47544F;
+  background: #4b5852;
+  color: #FFFFFF !important;
+  border-color: #63746c;
 }
 
 .bash-reset-btn:hover {
-  background: #3e4a45;
-  color: #fff;
+  background: #5d6d66;
+  color: #fff !important;
 }
 
 .bash-run-btn {
   background: var(--accent-st1);
-  color: #FFF;
+  color: #FFFFFF !important;
   border-color: #c6674c;
 }
 
 .bash-run-btn:hover {
   background: #EF8D72;
-  color: #fff;
+  color: #fff !important;
 }
 
 .bash-submit-btn {

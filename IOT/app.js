@@ -68,7 +68,7 @@ const CONFIG = {
     },
     linux: {
       label: "Linux",
-      examTime: new Date("2026-06-05T09:30:00+05:30").getTime(),
+      examTime: new Date("2026-06-06T09:30:00+05:30").getTime(),
       storageKey: "linux_mastered_topics",
       storageKeyPractice: "linux_mcq_answers",
       storageKeyBash: "linux_bash_progress",
