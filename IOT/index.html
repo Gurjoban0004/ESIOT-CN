@@ -17,52 +17,55 @@
   <script defer src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-bash.min.js"></script>
 </head>
 <body>
-
   <header>
-    <div class="brand">
-      <button class="menu-toggle" id="desktop-sidebar-toggle" aria-label="Toggle Sidebar" style="margin-right: 0.5rem;">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-      </button>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--active-accent); margin-right: 0.25rem;"><rect x="2" y="2" width="20" height="8" rx="2" ry="2"></rect><rect x="2" y="14" width="20" height="8" rx="2" ry="2"></rect><line x1="6" y1="6" x2="6.01" y2="6"></line><line x1="6" y1="18" x2="6.01" y2="18"></line></svg>
-      <h1>prep</h1>
-    </div>
-
-    <!-- Subject Switcher -->
-    <div class="subject-switcher">
-      <button class="subject-btn active" id="subject-iot" data-subject="iot">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"></path></svg>
-        ES & IoT
-      </button>
-      <button class="subject-btn" id="subject-cn" data-subject="cn">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="9" height="9"></rect><rect x="13" y="2" width="9" height="9"></rect><rect x="13" y="13" width="9" height="9"></rect><rect x="2" y="13" width="9" height="9"></rect></svg>
-        Computer Networks
-      </button>
-      <button class="subject-btn" id="subject-linux" data-subject="linux">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
-        Linux
-      </button>
+    <div class="header-left" style="display: flex; align-items: center; gap: 2rem;">
+      <div class="brand">
+        <button id="desktop-sidebar-toggle" aria-label="Toggle Sidebar">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+        </button>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="var(--accent-st1)" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 19.5v-15A2.5 2.5 0 0 1 6.5 2H20v20H6.5a2.5 2.5 0 0 1 0-5H20"></path></svg>
+        <h1>prep</h1>
+      </div>
+      
+      <!-- Subject Switcher -->
+      <div class="subject-switcher">
+        <button class="subject-btn active" id="subject-iot" data-subject="iot">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="3"></circle><path d="M19.07 4.93a10 10 0 0 1 0 14.14M4.93 4.93a10 10 0 0 0 0 14.14"></path></svg>
+          ES & IoT
+        </button>
+        <button class="subject-btn" id="subject-cn" data-subject="cn">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="9" height="9"></rect><rect x="13" y="2" width="9" height="9"></rect><rect x="13" y="13" width="9" height="9"></rect><rect x="2" y="13" width="9" height="9"></rect></svg>
+          Computer Networks
+        </button>
+        <button class="subject-btn" id="subject-linux" data-subject="linux">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="4 17 10 11 4 5"></polyline><line x1="12" y1="19" x2="20" y2="19"></line></svg>
+          Linux
+        </button>
+      </div>
     </div>
     
     <nav class="top-nav" id="top-nav-bar">
       <!-- Rendered by JS based on active subject -->
     </nav>
     
-    <div class="zoom-controls">
-      <button id="theme-toggle" aria-label="Toggle Dark/Light Theme">
-        <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-          <!-- Default is moon (dark mode toggle) -->
-          <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-        </svg>
-      </button>
-      <div style="width: 1px; background: var(--border-color); margin: 4px 2px;"></div>
-      <button id="zoom-out" aria-label="Decrease Font Size">A-</button>
-      <button id="zoom-default" aria-label="Default Font Size">A</button>
-      <button id="zoom-in" aria-label="Increase Font Size">A+</button>
-    </div>
-    
-    <div class="exam-timer" id="countdown-timer">
-      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-      <span id="timer-text">Exam Countdown</span>
+    <div class="header-right" style="display: flex; align-items: center; gap: 1rem;">
+      <div class="zoom-controls" style="margin: 0;">
+        <button id="theme-toggle" aria-label="Toggle Dark/Light Theme">
+          <svg id="theme-icon" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+            <!-- Default is moon (dark mode toggle) -->
+            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+          </svg>
+        </button>
+        <div style="width: 1px; background: var(--border-color); margin: 4px 2px;"></div>
+        <button id="zoom-out" aria-label="Decrease Font Size">A-</button>
+        <button id="zoom-default" aria-label="Default Font Size">A</button>
+        <button id="zoom-in" aria-label="Increase Font Size">A+</button>
+      </div>
+      
+      <div class="exam-timer" id="exam-timer">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        <span id="countdown">Exam in --d --h</span>
+      </div>
     </div>
   </header>
 

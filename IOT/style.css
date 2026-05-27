@@ -2153,6 +2153,13 @@ body.dark-theme {
 
 body.dark-theme header, 
 body.dark-theme .container, 
+body.dark-theme .content-pane,
+body.dark-theme .reading-pane,
+body.dark-theme main.content-pane,
+body.dark-theme main.content-pane > #reading-pane,
+body.dark-theme .mcq-card,
+body.dark-theme .practice-stats-card,
+body.dark-theme .bash-result-card,
 body.dark-theme .bash-results-panel, 
 body.dark-theme .bash-description-pane,
 body.dark-theme .bash-editor-pane,
