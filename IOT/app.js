@@ -1222,7 +1222,10 @@ function renderBashProblem(index) {
             <button class="bash-submit-btn" id="bash-submit-btn">Submit</button>
           </div>
         </div>
-        <textarea class="bash-code-editor" id="bash-code-editor" spellcheck="false">${escapeHtml(currentCode)}</textarea>
+        <div class="bash-editor-wrapper">
+          <pre id="bash-highlighter" class="bash-highlighter" aria-hidden="true"><code class="language-bash"></code></pre>
+          <textarea class="bash-code-editor" id="bash-code-editor" spellcheck="false">${escapeHtml(currentCode)}</textarea>
+        </div>
         
         <div class="resizer-v" id="resizer-bash-v">
           <div class="resizer-notch"></div>
@@ -1249,6 +1252,16 @@ function renderBashProblem(index) {
   initResizer('resizer-bash-v', 'bash-results-pane', 'vertical', true);
 
   const editor = document.getElementById('bash-code-editor');
+  
+  // Syntax Highlighting & Syncing
+  const highlighterPre = document.getElementById('bash-highlighter');
+  if (editor && highlighterPre) {
+    editor.addEventListener('scroll', () => {
+      highlighterPre.scrollTop = editor.scrollTop;
+      highlighterPre.scrollLeft = editor.scrollLeft;
+    });
+  }
+
   editor.addEventListener('input', event => {
     state.bashProgress[state.activeSubject][problem.id] = {
       ...state.bashProgress[state.activeSubject][problem.id],
@@ -1256,7 +1269,11 @@ function renderBashProblem(index) {
       codeVersion: problemVersion
     };
     saveBashProgress();
+    if (window.updateBashHighlighting) window.updateBashHighlighting();
   });
+  
+  // Initial highlight
+  if (window.updateBashHighlighting) window.updateBashHighlighting();
 
   document.getElementById('bash-run-btn').addEventListener('click', () => runBashProblem(problem, 'run'));
   document.getElementById('bash-submit-btn').addEventListener('click', () => runBashProblem(problem, 'submit'));
@@ -1271,6 +1288,7 @@ function renderBashProblem(index) {
       lastMode: null
     };
     saveBashProgress();
+    if (window.updateBashHighlighting) window.updateBashHighlighting();
     const body = document.getElementById('bash-results-body');
     if (body) body.innerHTML = renderBashResults([]);
     const summary = document.getElementById('bash-results-summary');
@@ -1690,4 +1708,41 @@ function initResizer(resizerId, targetPaneId, direction, invert = false) {
 // ============================================================
 //  RUN APP
 // ============================================================
+initApp();
+
+// ============================================================
+//  ZOOM AND UI CONTROLS
+// ============================================================
+let currentZoom = 1;
+const zoomContainer = document.querySelector('.container');
+
+document.getElementById('zoom-in')?.addEventListener('click', () => {
+  currentZoom = Math.min(currentZoom + 0.1, 1.5);
+  if (zoomContainer) zoomContainer.style.zoom = currentZoom;
+});
+
+document.getElementById('zoom-out')?.addEventListener('click', () => {
+  currentZoom = Math.max(currentZoom - 0.1, 0.7);
+  if (zoomContainer) zoomContainer.style.zoom = currentZoom;
+});
+
+document.getElementById('zoom-default')?.addEventListener('click', () => {
+  currentZoom = 1;
+  if (zoomContainer) zoomContainer.style.zoom = currentZoom;
+});
+
+// ============================================================
+//  SYNTAX HIGHLIGHTER HELPER
+// ============================================================
+window.updateBashHighlighting = function() {
+  const editor = document.getElementById('bash-code-editor');
+  const highlighter = document.querySelector('#bash-highlighter code');
+  if (!editor || !highlighter) return;
+  
+  if (window.Prism) {
+    highlighter.innerHTML = Prism.highlight(editor.value, Prism.languages.bash, 'bash');
+  } else {
+    highlighter.textContent = editor.value;
+  }
+};
 window.addEventListener('DOMContentLoaded', init);
