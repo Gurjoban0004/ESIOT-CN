@@ -353,7 +353,9 @@ function setupEventListeners() {
 
   // Keyboard shortcuts
   document.addEventListener('keydown', (e) => {
-    if (elements.searchInput === document.activeElement) return;
+    const activeTag = document.activeElement ? document.activeElement.tagName.toLowerCase() : '';
+    const isTyping = activeTag === 'input' || activeTag === 'textarea' || (document.activeElement && document.activeElement.isContentEditable);
+    if (elements.searchInput === document.activeElement || isTyping) return;
 
     if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') {
       if (state.activeTopicIndex > 0) selectTopic(state.activeTopicIndex - 1);
