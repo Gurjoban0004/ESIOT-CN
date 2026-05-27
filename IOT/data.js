@@ -383,10 +383,10 @@ const IOT_MCQ_BANK = [
         "id": 1,
         "question": "Which of the following is the defining characteristic of an embedded system?",
         "options": {
-          "a": "Vg pna eha nal trareny-checbfr qrfxgbc bcrengvat flfgrz",
-          "b": "Vg vf cebtenzzrq rkpyhfviryl va uvtu-yriry Clguba fpevcg ng ehagvzr",
-          "c": "**Vg vf n pbzovangvba bs uneqjner naq fbsgjner qrfvtarq sbe n fcrpvsvp, qrqvpngrq gnfx ✓**",
-          "d": "Vg ynpxf nal sbez bs zvpebcebprffbef be pbageby ybtvp"
+          "a": "It can run any general-purpose desktop operating system",
+          "b": "It is programmed exclusively in high-level Python script at runtime",
+          "c": "**It is a combination of hardware and software designed for a specific, dedicated task ✓**",
+          "d": "It lacks any form of microprocessors or control logic"
         },
         "correct": "c"
       },
@@ -394,10 +394,10 @@ const IOT_MCQ_BANK = [
         "id": 2,
         "question": "What is the primary economic driver for resource sharing in enterprise networks?",
         "options": {
-          "a": "Gb vapernfr genafzvffvba yngrapl",
-          "b": "**Gb erqhpr uneqjner qhcyvpngvba naq ybjre pncvgny rkcraqvgher ✓**",
-          "c": "Gb ryvzvangr gur arrq sbe sverjnyyf",
-          "d": "Gb olcnff ybpny argjbex npprff yriryf"
+          "a": "To increase transmission latency",
+          "b": "**To reduce hardware duplication and lower capital expenditure ✓**",
+          "c": "To eliminate the need for firewalls",
+          "d": "To bypass local network access levels"
         },
         "correct": "b"
       },
@@ -405,10 +405,10 @@ const IOT_MCQ_BANK = [
         "id": 3,
         "question": "Why is the software in an embedded system referred to as 'firmware'?",
         "options": {
-          "a": "Vg vf culfvpnyyl evtvq naq pnaabg or hctenqrq",
-          "b": "**Vg vf rzorqqrq qverpgyl vagb aba-ibyngvyr uneqjner zrzbel yvxr EBZ be Synfu ✓**",
-          "c": "Vg bayl ehaf jura gur uneqjner vf xrcg ng pbyq grzcrengherf",
-          "d": "Vg vf fhccyvrq ol gur pbzchgre punffvf znahsnpghere"
+          "a": "It is physically rigid and cannot be upgraded",
+          "b": "**It is embedded directly into non-volatile hardware memory like ROM or Flash ✓**",
+          "c": "It only runs when the hardware is kept at cold temperatures",
+          "d": "It is supplied by the computer chassis manufacturer"
         },
         "correct": "b"
       },
@@ -416,10 +416,10 @@ const IOT_MCQ_BANK = [
         "id": 4,
         "question": "Which processor type is hardwired to execute a single specific task and cannot be reprogrammed?",
         "options": {
-          "a": "Trareny Checbfr Cebprffbe (TCC)",
-          "b": "Qvtvgny Fvtany Cebprffbe (QFC)",
-          "c": "**Fvatyr-Checbfr Rzorqqrq Cebprffbe ✓**",
-          "d": "Zvpebpbagebyyre"
+          "a": "General Purpose Processor (GPP)",
+          "b": "Digital Signal Processor (DSP)",
+          "c": "**Single-Purpose Embedded Processor ✓**",
+          "d": "Microcontroller"
         },
         "correct": "c"
       },
@@ -427,10 +427,10 @@ const IOT_MCQ_BANK = [
         "id": 5,
         "question": "In a Microprocessor, which components are external to the main CPU chip?",
         "options": {
-          "a": "Bayl gur Nevguzrgvp Ybtvp Havg (NYH)",
-          "b": "**ENZ, EBZ, naq V/B crevcureny pbagebyyref ✓**",
-          "c": "Gur PCH ertvfgref naq gur Vafgehpgvba Qrpbqre",
-          "d": "Gur Cebtenz Pbhagre naq Pbageby Havg"
+          "a": "Only the Arithmetic Logic Unit (ALU)",
+          "b": "**RAM, ROM, and I/O peripheral controllers ✓**",
+          "c": "The CPU registers and the Instruction Decoder",
+          "d": "The Program Counter and Control Unit"
         },
         "correct": "b"
       },
@@ -449,10 +449,10 @@ const IOT_MCQ_BANK = [
         "id": 7,
         "question": "What is the 'Von Neumann Bottleneck'?",
         "options": {
-          "a": "Gur PCH ehaavat bhg bs ertvfgre fcnpr qhevat n zhygvcyl-npphzhyngr vafgehpgvba",
-          "b": "Gur vanovyvgl bs gur PCH gb pbzcvyr nffrzoyl pbqr qverpgyl",
-          "c": "**Gur PCH pnaabg ernq qngn naq srgpu vafgehpgvbaf ng gur fnzr gvzr orpnhfr gurl funer gur fnzr ohf ✓**",
-          "d": "Qngn pbeehcgvat jura geniryyvat guebhtu n svore bcgvp pnoyr"
+          "a": "The CPU running out of register space during a multiply-accumulate instruction",
+          "b": "The inability of the CPU to compile assembly code directly",
+          "c": "**The CPU cannot read data and fetch instructions at the same time because they share the same bus ✓**",
+          "d": "Data corrupting when travelling through a fiber optic cable"
         },
         "correct": "c"
       },
@@ -471,10 +471,10 @@ const IOT_MCQ_BANK = [
         "id": 9,
         "question": "A System-on-Chip (SoC) is best described as:",
         "options": {
-          "a": "N zvpebcebprffbe pbaarpgrq gb rkgreany ENZ ba n zbgureobneq",
-          "b": "**Na vagrtengrq pvephvg gung vapbecbengrf n PCH, zrzbel, V/B cbegf, naq enqvb zbqhyrf ba n fvatyr fvyvpba qvr ✓**",
-          "c": "N pybhq freire pyhfgre ehaavat iveghny znpuvar pbagebyyref",
-          "d": "N culfvpny fgne gbcbybtl argjbex hfvat cnffvir uhof"
+          "a": "A microprocessor connected to external RAM on a motherboard",
+          "b": "**An integrated circuit that incorporates a CPU, memory, I/O ports, and radio modules on a single silicon die ✓**",
+          "c": "A cloud server cluster running virtual machine controllers",
+          "d": "A physical star topology network using passive hubs"
         },
         "correct": "b"
       },
@@ -482,10 +482,10 @@ const IOT_MCQ_BANK = [
         "id": 10,
         "question": "Which of the following is a key characteristic of General Purpose Processors (GPPs)?",
         "options": {
-          "a": "Uvtuyl bcgvzvmrq sbe ybj-cbjre onggrel bcrengvbaf",
-          "b": "Fgevpgyl yvzvgrq gb fvatyr-shapgvba vaqhfgevny nccyvpngvbaf",
-          "c": "**Uvtu pbzchgngvbany cbjre jvgu trareny vafgehpgvba frgf, ohg uvtu pbfg naq cbjre qenj ✓**",
-          "d": "Zhfg or fgberq va n jevgr-bapr ernq-znal EBZ puvc"
+          "a": "Highly optimized for low-power battery operations",
+          "b": "Strictly limited to single-function industrial applications",
+          "c": "**High computational power with general instruction sets, but high cost and power draw ✓**",
+          "d": "Must be stored in a write-once read-many ROM chip"
         },
         "correct": "c"
       },
@@ -493,10 +493,10 @@ const IOT_MCQ_BANK = [
         "id": 11,
         "question": "Which of the following is an application of an Application Specific Instruction Set Processor (ASIP)?",
         "options": {
-          "a": "Ehaavat fgnaqneq bssvpr cebqhpgvivgl fhvgrf ba n qrfxgbc",
-          "b": "**Qvtvgny fvtany cebprffvat naq ivqrb rapbqvat vafvqr n pnzren ✓**",
-          "c": "Ubfgvat choyvp jrofvgrf ba n iveghny cevingr freire",
-          "d": "Nyybpngvat VC nqqerffrf ba n QUPC freire"
+          "a": "Running standard office productivity suites on a desktop",
+          "b": "**Digital signal processing and video encoding inside a camera ✓**",
+          "c": "Hosting public websites on a virtual private server",
+          "d": "Allocating IP addresses on a DHCP server"
         },
         "correct": "b"
       },
@@ -505,8 +505,8 @@ const IOT_MCQ_BANK = [
         "question": "Which design metric is typically a major constraint in battery-operated consumer IoT devices?",
         "options": {
           "a": "Znvasenzr pbzcngvovyvgl",
-          "b": "Znkvzhz qngnonfr fvmr pncnpvgl",
-          "c": "**Ybj cbjre pbafhzcgvba naq fznyy culfvpny sbbgcevag ✓**",
+          "b": "Maximum database size capacity",
+          "c": "**Low power consumption and small physical footprint ✓**",
           "d": "ROPQVP qrpbqvat fcrrqf"
         },
         "correct": "c"
@@ -515,10 +515,10 @@ const IOT_MCQ_BANK = [
         "id": 13,
         "question": "What does 'autonomous' mean in the definition of a computer network?",
         "options": {
-          "a": "Gur argjbex ehaf ragveryl jvgubhg uhzna nqzvavfgengbef",
-          "b": "**Rnpu pbaarpgrq pbzchgre vf pncnoyr bs ehaavat vaqrcraqragyl naq cbffrffrf vgf bja PCH ✓**",
-          "c": "Gur pnoyvat zhfg ebhgr vgfrys nhgbzngvpnyyl hfvat fzneg cebgbpbyf",
-          "d": "Nyy qrivprf zhfg or nffvtarq gur fnzr VC cersvk"
+          "a": "The network runs entirely without human administrators",
+          "b": "**Each connected computer is capable of running independently and possesses its own CPU ✓**",
+          "c": "The cabling must route itself automatically using smart protocols",
+          "d": "All devices must be assigned the same IP prefix"
         },
         "correct": "b"
       },
@@ -526,10 +526,10 @@ const IOT_MCQ_BANK = [
         "id": 14,
         "question": "The CPU instruction cycle consists of which sequential phases?",
         "options": {
-          "a": "Qrpbqr, Rapncfhyngr, Ebhgr, Grezvangr",
-          "b": "Purpx, Nzcyvsvrf, Zbqhyngr, Genafzvg",
-          "c": "**Srgpu, Qrpbqr, Rkrphgr ✓**",
-          "d": "Frtzrag, Cnpxntr, Qryvire, Purpx"
+          "a": "Decode, Encapsulate, Route, Terminate",
+          "b": "Check, Amplifies, Modulate, Transmit",
+          "c": "**Fetch, Decode, Execute ✓**",
+          "d": "Segment, Package, Deliver, Check"
         },
         "correct": "c"
       },
@@ -537,10 +537,10 @@ const IOT_MCQ_BANK = [
         "id": 15,
         "question": "Which CPU register holds the memory address of the next instruction to be fetched?",
         "options": {
-          "a": "Vafgehpgvba Ertvfgre (VE)",
+          "a": "Instruction Register (IR)",
           "b": "Npphzhyngbe (NPP)",
-          "c": "**Cebtenz Pbhagre (CP) ✓**",
-          "d": "Zrzbel Qngn Ertvfgre (ZQE)"
+          "c": "**Program Counter (PC) ✓**",
+          "d": "Memory Data Register (MDR)"
         },
         "correct": "c"
       },
@@ -560,7 +560,7 @@ const IOT_MCQ_BANK = [
         "question": "Which of the following is a classic example of a Microcontroller?",
         "options": {
           "a": "Vagry Pber v7-13700X",
-          "b": "**NGzrtn328C (hfrq va Neqhvab Hab) ✓**",
+          "b": "**ATmega328P (used in Arduino Uno) ✓**",
           "c": "AIVQVN EGK 4090 TCH",
           "d": "NZQ Elmra 5 5600K"
         },
@@ -572,8 +572,8 @@ const IOT_MCQ_BANK = [
         "options": {
           "a": "FENZ",
           "b": "QENZ",
-          "c": "**EBZ be Synfu zrzbel ✓**",
-          "d": "Iveghny Fjnc Zrzbel"
+          "c": "**ROM or Flash memory ✓**",
+          "d": "Virtual Swap Memory"
         },
         "correct": "c"
       },
@@ -581,10 +581,10 @@ const IOT_MCQ_BANK = [
         "id": 19,
         "question": "What is the primary function of a Digital Signal Processor (DSP)?",
         "options": {
-          "a": "Gb ebhgr VC cnpxrgf npebff JNA obhaqnevrf",
-          "b": "**Gb cresbez encvq zngurzngvpny bcrengvbaf yvxr zhygvcyl-npphzhyngr ba qvtvgvmrq fvtanyf ✓**",
-          "c": "Gb pbaireg nanybt cubar yvarf gb qvtvgny Rgurearg cbegf",
-          "d": "Gb npg nf n prageny pbagebyyre va Fgne gbcbybtvrf"
+          "a": "To route IP packets across WAN boundaries",
+          "b": "**To perform rapid mathematical operations like multiply-accumulate on digitized signals ✓**",
+          "c": "To convert analog phone lines to digital Ethernet ports",
+          "d": "To act as a central controller in Star topologies"
         },
         "correct": "b"
       },
@@ -592,10 +592,10 @@ const IOT_MCQ_BANK = [
         "id": 20,
         "question": "Which design aspect is a disadvantage of Harvard Architecture compared to Von Neumann?",
         "options": {
-          "a": "Fybjre rkrphgvba fcrrqf qhr gb funerq ohfrf",
-          "b": "Vanovyvgl gb fhccbeg uvtu-cresbeznapr nccyvpngvbaf",
-          "c": "**Vapernfrq uneqjner pbzcyrkvgl naq pbfg qhr gb qhny ohf ebhgvat ✓**",
-          "d": "Fhfprcgvovyvgl gb gur pbhag-gb-vasvavgl ceboyrz"
+          "a": "Slower execution speeds due to shared buses",
+          "b": "Inability to support high-performance applications",
+          "c": "**Increased hardware complexity and cost due to dual bus routing ✓**",
+          "d": "Susceptibility to the count-to-infinity problem"
         },
         "correct": "c"
       }
@@ -609,10 +609,10 @@ const IOT_MCQ_BANK = [
         "id": 21,
         "question": "What is the relationship between power supply voltage and gate switching speed in digital logic circuits?",
         "options": {
-          "a": "Ybjre ibygntr vapernfrf fjvgpuvat fcrrq",
-          "b": "**Uvture ibygntr vapernfrf fjvgpuvat fcrrq, erqhpvat cebcntngvba qrynl ✓**",
-          "c": "Ibygntr qbrf abg nssrpg fjvgpuvat fcrrq",
-          "d": "Fjvgpuvat fcrrq vf qrgrezvarq bayl ol gur pelfgny yratgu"
+          "a": "Lower voltage increases switching speed",
+          "b": "**Higher voltage increases switching speed, reducing propagation delay ✓**",
+          "c": "Voltage does not affect switching speed",
+          "d": "Switching speed is determined only by the crystal length"
         },
         "correct": "b"
       },
@@ -621,7 +621,7 @@ const IOT_MCQ_BANK = [
         "question": "Which logic level voltage range is commonly used for modern low-power mobile SoCs?",
         "options": {
           "a": "5.0I ± 0.25I",
-          "b": "**1.5I ± 0.2I be ybjre ✓**",
+          "b": "**1.5V ± 0.2V or lower ✓**",
           "c": "12.0I ± 1.0I",
           "d": "3.3I ± 0.3I"
         },
@@ -631,10 +631,10 @@ const IOT_MCQ_BANK = [
         "id": 23,
         "question": "What is the purpose of a Quartz Crystal in an oscillator circuit?",
         "options": {
-          "a": "Gb npg nf n ibygntr svygre",
-          "b": "**Gb trarengr n uvtuyl fgnoyr, cerpvfr pybpx serdhrapl hfvat cvrmbryrpgevp cebcregvrf ✓**",
-          "c": "Gb qrgrpg grzcrengher inevngvbaf va gur fvyvpba qvr",
-          "d": "Gb cebgrpg gur PCH ntnvafg cbjre fhetrf"
+          "a": "To act as a voltage filter",
+          "b": "**To generate a highly stable, precise clock frequency using piezoelectric properties ✓**",
+          "c": "To detect temperature variations in the silicon die",
+          "d": "To protect the CPU against power surges"
         },
         "correct": "b"
       },
@@ -642,10 +642,10 @@ const IOT_MCQ_BANK = [
         "id": 24,
         "question": "What type of reset circuit uses a capacitor and a resistor to hold the reset pin low for a short duration after power-on?",
         "options": {
-          "a": "Npgvir uvtu fbsgjner erfrg",
-          "b": "**EP Cbjre-ba Erfrg pvephvg ✓**",
-          "c": "Jngpuqbt biresybj erfrg",
-          "d": "Oebja-bhg qrgrpgvba vagreehcg"
+          "a": "Active high software reset",
+          "b": "**RC Power-on Reset circuit ✓**",
+          "c": "Watchdog overflow reset",
+          "d": "Brown-out detection interrupt"
         },
         "correct": "b"
       },
@@ -653,10 +653,10 @@ const IOT_MCQ_BANK = [
         "id": 25,
         "question": "A Watchdog Timer (WDT) is primarily designed to:",
         "options": {
-          "a": "Pbhag rkgreany vachg chyfrf sebz frafbef",
-          "b": "**Erpbire gur zvpebpbagebyyre sebz fbsgjner unatf ol gevttrevat n erfrg vs abg pyrnerq erthyneyl ✓**",
-          "c": "Zrnfher gur rkrphgvba fcrrq bs gur znva ybbc",
-          "d": "Cresbez rapelcgvba pnyphyngvbaf ba qngn cnpxrgf"
+          "a": "Count external input pulses from sensors",
+          "b": "**Recover the microcontroller from software hangs by triggering a reset if not cleared regularly ✓**",
+          "c": "Measure the execution speed of the main loop",
+          "d": "Perform encryption calculations on data packets"
         },
         "correct": "b"
       },
@@ -664,10 +664,10 @@ const IOT_MCQ_BANK = [
         "id": 26,
         "question": "Brown-out Detection (BOD) circuits monitor which parameter?",
         "options": {
-          "a": "PCH bcrengvat grzcrengher",
-          "b": "**Cbjre fhccyl ibygntr yriryf, erfrggvat gur PCH vs ibygntr qebcf orybj n guerfubyq ✓**",
-          "c": "Gur nzbhag bs nzovrag yvtug fheebhaqvat gur qrivpr",
-          "d": "Havpnfg cnpxrg pbyyvfvbaf ba Rgurearg cbegf"
+          "a": "CPU operating temperature",
+          "b": "**Power supply voltage levels, resetting the CPU if voltage drops below a threshold ✓**",
+          "c": "The amount of ambient light surrounding the device",
+          "d": "Unicast packet collisions on Ethernet ports"
         },
         "correct": "b"
       },
@@ -675,8 +675,8 @@ const IOT_MCQ_BANK = [
         "id": 27,
         "question": "Which type of memory is volatile and loses its data when power is disconnected?",
         "options": {
-          "a": "RRCEBZ",
-          "b": "Synfu Zrzbel",
+          "a": "EEPROM",
+          "b": "Flash Memory",
           "c": "**FENZ / QENZ ✓**",
           "d": "Znfxrq EBZ"
         },
@@ -686,10 +686,10 @@ const IOT_MCQ_BANK = [
         "id": 28,
         "question": "What is the difference between EEPROM and Flash memory?",
         "options": {
-          "a": "RRCEBZ vf ibyngvyr juvyr Synfu vf aba-ibyngvyr",
-          "b": "**RRCEBZ nyybjf olgr-yriry renfvat, juvyr Synfu vf renfrq va ynetr oybpxf ✓**",
-          "c": "Synfu zrzbel erdhverf pbafgnag erserfuvat juvyr RRCEBZ qbrf abg",
-          "d": "RRCEBZ vf zhpu snfgre guna Synfu zrzbel"
+          "a": "EEPROM is volatile while Flash is non-volatile",
+          "b": "**EEPROM allows byte-level erasing, while Flash is erased in large blocks ✓**",
+          "c": "Flash memory requires constant refreshing while EEPROM does not",
+          "d": "EEPROM is much faster than Flash memory"
         },
         "correct": "b"
       },
@@ -697,9 +697,9 @@ const IOT_MCQ_BANK = [
         "id": 29,
         "question": "Which of the following is classified as an active sensor?",
         "options": {
-          "a": "**YVQNE (erdhverf fraqvat n yvtug chyfr gb zrnfher ersyrpgvba) ✓**",
+          "a": "**LIDAR (requires sending a light pulse to measure reflection) ✓**",
           "b": "YQE (Yvtug Qrcraqrag Erfvfgbe)",
-          "c": "Gurezvfgbe (punatrf erfvfgnapr jvgu grzcrengher)",
+          "c": "Thermistor (changes resistance with temperature)",
           "d": "Cubgbqvbqr"
         },
         "correct": "a"
@@ -710,7 +710,7 @@ const IOT_MCQ_BANK = [
         "options": {
           "a": "Vgf erfvfgnapr vapernfrf fvtavsvpnagyl",
           "b": "**Vgf erfvfgnapr qrpernfrf fvtavsvpnagyl ✓**",
-          "c": "Vg trarengrf na ryrpgevpny pheerag qverpgyl",
+          "c": "It generates an electrical current directly",
           "d": "Vgf pncnpvgnapr punatrf"
         },
         "correct": "b"
@@ -719,10 +719,10 @@ const IOT_MCQ_BANK = [
         "id": 31,
         "question": "How does an LM35 temperature sensor represent temperature values?",
         "options": {
-          "a": "Ol bhgchggvat n 10-ovg FCV qvtvgny jbeq",
-          "b": "**Ol bhgchggvat n yvarne nanybt ibygntr (10zI cre qrterr Pryfvhf) ✓**",
-          "c": "Ol nygrevat vgf pncnpvgnapr ol 1aS cre qrterr",
-          "d": "Ol trarengvat uvtu-serdhrapl qvtvgny chyfrf"
+          "a": "By outputting a 10-bit SPI digital word",
+          "b": "**By outputting a linear analog voltage (10mV per degree Celsius) ✓**",
+          "c": "By altering its capacitance by 1nF per degree",
+          "d": "By generating high-frequency digital pulses"
         },
         "correct": "b"
       },
@@ -730,9 +730,9 @@ const IOT_MCQ_BANK = [
         "id": 32,
         "question": "Which sensor would be most appropriate to measure pressure changes in a pneumatic system?",
         "options": {
-          "a": "YZ35 frafbe",
-          "b": "**Cvrmbryrpgevp be Pncnpvgvir cerffher frafbe ✓**",
-          "c": "Hygenfbavp UP-FE04 frafbe",
+          "a": "LM35 sensor",
+          "b": "**Piezoelectric or Capacitive pressure sensor ✓**",
+          "c": "Ultrasonic HC-SR04 sensor",
           "d": "Yvtug Qrcraqrag Erfvfgbe"
         },
         "correct": "b"
@@ -741,10 +741,10 @@ const IOT_MCQ_BANK = [
         "id": 33,
         "question": "An Actuator is best defined as a device that:",
         "options": {
-          "a": "Pbairegf culfvpny dhnagvgvrf vagb ryrpgevpny fvtanyf",
-          "b": "**Pbairegf ryrpgevpny raretl be pbageby fvtanyf vagb culfvpny npgvba/zbgvba ✓**",
-          "c": "Svygref abvfr sebz nanybt vachgf",
-          "d": "Trarengrf uvtu serdhrapl pybpx fvtanyf"
+          "a": "Converts physical quantities into electrical signals",
+          "b": "**Converts electrical energy or control signals into physical action/motion ✓**",
+          "c": "Filters noise from analog inputs",
+          "d": "Generates high frequency clock signals"
         },
         "correct": "b"
       },
@@ -763,10 +763,10 @@ const IOT_MCQ_BANK = [
         "id": 35,
         "question": "How does a Solenoid valve convert electrical energy into mechanical movement?",
         "options": {
-          "a": "Ol hfvat n cvrmbryrpgevp pelfgny neenl",
-          "b": "**Ol cnffvat pheerag guebhtu n pbvy gb trarengr na ryrpgebzntargvp svryq gung chyyf n cyhatre ✓**",
-          "c": "Ol hfvat n trne genva naq oehfurf",
-          "d": "Ol inelvat vgf vagreany erfvfgnapr"
+          "a": "By using a piezoelectric crystal array",
+          "b": "**By passing current through a coil to generate an electromagnetic field that pulls a plunger ✓**",
+          "c": "By using a gear train and brushes",
+          "d": "By varying its internal resistance"
         },
         "correct": "b"
       },
@@ -774,10 +774,10 @@ const IOT_MCQ_BANK = [
         "id": 36,
         "question": "A servo motor differs from a standard DC motor because:",
         "options": {
-          "a": "Vg ynpxf vagreany pbccre pbvyf",
-          "b": "**Vg vapyhqrf n srrqonpx frafbe (cbgragvbzrgre) naq pbageby pvephvg gb znvagnva n cerpvfr natyr ✓**",
-          "c": "Vg ehaf qverpgyl ba NP cbjre",
-          "d": "Vg pnaabg or pbagebyyrq ol n zvpebpbagebyyre"
+          "a": "It lacks internal copper coils",
+          "b": "**It includes a feedback sensor (potentiometer) and control circuit to maintain a precise angle ✓**",
+          "c": "It runs directly on AC power",
+          "d": "It cannot be controlled by a microcontroller"
         },
         "correct": "b"
       },
@@ -785,10 +785,10 @@ const IOT_MCQ_BANK = [
         "id": 37,
         "question": "Which type of reset occurs when the input supply voltage drops below the safe limit for CPU operations?",
         "options": {
-          "a": "Fbsgjner Erfrg",
-          "b": "**Oebja-bhg Erfrg ✓**",
-          "c": "Jngpuqbt Gvzrbhg Erfrg",
-          "d": "Znahny Chfuohggba Erfrg"
+          "a": "Software Reset",
+          "b": "**Brown-out Reset ✓**",
+          "c": "Watchdog Timeout Reset",
+          "d": "Manual Pushbutton Reset"
         },
         "correct": "b"
       },
@@ -796,10 +796,10 @@ const IOT_MCQ_BANK = [
         "id": 38,
         "question": "What is the advantage of using a crystal oscillator over an RC oscillator?",
         "options": {
-          "a": "Pelfgny bfpvyyngbef ner purncre gb vagrtengr ba n fvyvpba qvr",
-          "b": "**Pelfgny bfpvyyngbef cebivqr n zhpu uvture serdhrapl fgnovyvgl naq cerpvfvba ✓**",
+          "a": "Crystal oscillators are cheaper to integrate on a silicon die",
+          "b": "**Crystal oscillators provide a much higher frequency stability and precision ✓**",
           "c": "EP bfpvyyngbef erdhver rkgreany dhnegm vachgf",
-          "d": "Pelfgny bfpvyyngbef qb abg erdhver cbjre fhccyl yvarf"
+          "d": "Crystal oscillators do not require power supply lines"
         },
         "correct": "b"
       },
@@ -808,9 +808,9 @@ const IOT_MCQ_BANK = [
         "question": "Which component acts as an electrical barrier or switch to control high-voltage/high-current devices using low-voltage microcontroller pins?",
         "options": {
           "a": "Pncnpvgbe",
-          "b": "**Erynl be Bcgbpbhcyre ✓**",
+          "b": "**Relay or Optocoupler ✓**",
           "c": "Gurezvfgbe",
-          "d": "Erfvfgbe Argjbex"
+          "d": "Resistor Network"
         },
         "correct": "b"
       },
@@ -818,10 +818,10 @@ const IOT_MCQ_BANK = [
         "id": 40,
         "question": "What will happen if software fails to 'kick' or clear the Watchdog Timer before its counter overflows?",
         "options": {
-          "a": "Gur PCH unygf vafgehpgvba rkrphgvba vaqrsvavgryl",
-          "b": "**Gur Jngpuqbt pvephvg gevttref n uneqjner erfrg bs gur zvpebpbagebyyre ✓**",
-          "c": "Gur PCH nhgbzngvpnyyl ragref fyrrc zbqr",
-          "d": "Gur flfgrz fjvgpurf gb frpbaqnel synfu zrzbel"
+          "a": "The CPU halts instruction execution indefinitely",
+          "b": "**The Watchdog circuit triggers a hardware reset of the microcontroller ✓**",
+          "c": "The CPU automatically enters sleep mode",
+          "d": "The system switches to secondary flash memory"
         },
         "correct": "b"
       }
@@ -835,9 +835,9 @@ const IOT_MCQ_BANK = [
         "id": 41,
         "question": "Which of the following represents the basic physical design of an IoT system?",
         "options": {
-          "a": "Bayl uvtu-cresbeznapr pbzchgvat qngnonfrf",
-          "b": "**Guvatf (VbG qrivprf) naq pbzzhavpngvba cebgbpbyf ✓**",
-          "c": "N pragenyvmrq znvasenzr jvgu qhzo grezvanyf",
+          "a": "Only high-performance computing databases",
+          "b": "**Things (IoT devices) and communication protocols ✓**",
+          "c": "A centralized mainframe with dumb terminals",
           "d": "Jverq pbnkvny pnoyrf bayl"
         },
         "correct": "b"
@@ -846,10 +846,10 @@ const IOT_MCQ_BANK = [
         "id": 42,
         "question": "In the logical design of an IoT system, what is the role of the 'Communication' functional block?",
         "options": {
-          "a": "Nhguragvpngvat hfref naq cnffjbeqf",
-          "b": "**Unaqyvat gur pbzzhavpngvba cebgbpbyf naq qngn rkpunatr orgjrra qrivprf naq freiref ✓**",
-          "c": "Znantvat ybpny frafbe qngnonfrf",
-          "d": "Ehaavat znpuvar yrneavat nytbevguzf ba gur qrivpr"
+          "a": "Authenticating users and passwords",
+          "b": "**Handling the communication protocols and data exchange between devices and servers ✓**",
+          "c": "Managing local sensor databases",
+          "d": "Running machine learning algorithms on the device"
         },
         "correct": "b"
       },
@@ -857,8 +857,8 @@ const IOT_MCQ_BANK = [
         "id": 43,
         "question": "Which IoT communication model is characterized by the client sending a request and the server responding immediately, in a synchronous, stateless manner?",
         "options": {
-          "a": "Chfu-Chyy Zbqry",
-          "b": "**Erdhrfg-Erfcbafr Zbqry ✓**",
+          "a": "Push-Pull Model",
+          "b": "**Request-Response Model ✓**",
           "c": "Choyvfu-Fhofpevor Zbqry",
           "d": "Rkpyhfvir Cnve Zbqry"
         },
@@ -868,10 +868,10 @@ const IOT_MCQ_BANK = [
         "id": 44,
         "question": "In a Publish-Subscribe communication model, which entity is responsible for routing messages from publishers to subscribers based on topics?",
         "options": {
-          "a": "Tngrjnl",
-          "b": "**Oebxre ✓**",
-          "c": "Pyvrag Ebhgre",
-          "d": "Npprff Cbvag"
+          "a": "Gateway",
+          "b": "**Broker ✓**",
+          "c": "Client Router",
+          "d": "Access Point"
         },
         "correct": "b"
       },
@@ -879,8 +879,8 @@ const IOT_MCQ_BANK = [
         "id": 45,
         "question": "Which IoT communication model uses a persistent, bidirectional, full-duplex connection over a single TCP socket?",
         "options": {
-          "a": "Erdhrfg-Erfcbafr Zbqry",
-          "b": "Chfu-Chyy Zbqry",
+          "a": "Request-Response Model",
+          "b": "Push-Pull Model",
           "c": "**Rkpyhfvir Cnve Zbqry ✓**",
           "d": "Choyvfu-Fhofpevor Zbqry"
         },
@@ -890,10 +890,10 @@ const IOT_MCQ_BANK = [
         "id": 46,
         "question": "What is a key difference between M2M (Machine-to-Machine) and IoT (Internet of Things)?",
         "options": {
-          "a": "Z2Z hgvyvmrf pybhq qngnonfrf, jurernf VbG eryvrf ba qverpg cbvag-gb-cbvag yvaxf",
-          "b": "**Z2Z glcvpnyyl hfrf vfbyngrq cbvag-gb-cbvag yvaxf; VbG hfrf tybony vagrearg argjbexf naq pybhq nepuvgrpgherf ✓**",
-          "c": "Z2Z vf uvtuyl fpnynoyr pbzcnerq gb VbG",
-          "d": "VbG qbrf abg fhccbeg jveryrff pbzzhavpngvba"
+          "a": "M2M utilizes cloud databases, whereas IoT relies on direct point-to-point links",
+          "b": "**M2M typically uses isolated point-to-point links; IoT uses global internet networks and cloud architectures ✓**",
+          "c": "M2M is highly scalable compared to IoT",
+          "d": "IoT does not support wireless communication"
         },
         "correct": "b"
       },
@@ -901,10 +901,10 @@ const IOT_MCQ_BANK = [
         "id": 47,
         "question": "An IoT system is designed with a single device that collects data, stores it in a local database, and displays it via a local web interface without any cloud dependency. This matches which IoT Level?",
         "options": {
-          "a": "**VbG Yriry-1 ✓**",
-          "b": "VbG Yriry-2",
-          "c": "VbG Yriry-3",
-          "d": "VbG Yriry-4"
+          "a": "**IoT Level-1 ✓**",
+          "b": "IoT Level-2",
+          "c": "IoT Level-3",
+          "d": "IoT Level-4"
         },
         "correct": "a"
       },
@@ -912,10 +912,10 @@ const IOT_MCQ_BANK = [
         "id": 48,
         "question": "In IoT Level-3, what is the primary role of the Cloud?",
         "options": {
-          "a": "Gur pybhq bayl cresbezf ybpny frafbe ernqvat",
-          "b": "**Qngn vf fgberq naq nanylmrq va gur pybhq, juvyr gur ybpny qrivpr bayl frafrf naq fraqf qngn ✓**",
-          "c": "Ab pybhq rkvfgf va Yriry-3",
-          "d": "Gur pybhq znantrf gur ybpny zrfu gbcbybtl"
+          "a": "The cloud only performs local sensor reading",
+          "b": "**Data is stored and analyzed in the cloud, while the local device only senses and sends data ✓**",
+          "c": "No cloud exists in Level-3",
+          "d": "The cloud manages the local mesh topology"
         },
         "correct": "b"
       },
@@ -923,10 +923,10 @@ const IOT_MCQ_BANK = [
         "id": 49,
         "question": "Which IoT level is characterized by multiple independent nodes, a centralized cloud database, and observer nodes running analytical applications?",
         "options": {
-          "a": "VbG Yriry-3",
-          "b": "VbG Yriry-4",
-          "c": "**VbG Yriry-5 ✓**",
-          "d": "VbG Yriry-1"
+          "a": "IoT Level-3",
+          "b": "IoT Level-4",
+          "c": "**IoT Level-5 ✓**",
+          "d": "IoT Level-1"
         },
         "correct": "c"
       },
@@ -934,9 +934,9 @@ const IOT_MCQ_BANK = [
         "id": 50,
         "question": "In the Publish-Subscribe model, publishers and subscribers do not need to know about each other. This is known as:",
         "options": {
-          "a": "Flzzrgevp rapelcgvba",
-          "b": "**Qrpbhcyvat va fcnpr naq gvzr ✓**",
-          "c": "Qlanzvp ebhgvat",
+          "a": "Symmetric encryption",
+          "b": "**Decoupling in space and time ✓**",
+          "c": "Dynamic routing",
           "d": "Ybtvpny tebhcvat"
         },
         "correct": "b"
@@ -945,10 +945,10 @@ const IOT_MCQ_BANK = [
         "id": 51,
         "question": "Which functional block of an IoT system handles device authentication, authorization, and data encryption?",
         "options": {
-          "a": "Nccyvpngvba oybpx",
-          "b": "**Frphevgl oybpx ✓**",
-          "c": "Qrivpr oybpx",
-          "d": "Freivprf oybpx"
+          "a": "Application block",
+          "b": "**Security block ✓**",
+          "c": "Device block",
+          "d": "Services block"
         },
         "correct": "b"
       },
@@ -956,10 +956,10 @@ const IOT_MCQ_BANK = [
         "id": 52,
         "question": "What is the primary function of the 'Device' block in the physical design of IoT?",
         "options": {
-          "a": "Ebhgvat cnpxrgf npebff qvssrerag fhoargf",
-          "b": "**Frafvat, npghngvba, qngn cebprffvat, naq ybpny pbageby shapgvbaf ✓**",
-          "c": "Znantvat pybhq qngnonfrf",
-          "d": "Genafyngvat cebgbpby fgnpxf"
+          "a": "Routing packets across different subnets",
+          "b": "**Sensing, actuation, data processing, and local control functions ✓**",
+          "c": "Managing cloud databases",
+          "d": "Translating protocol stacks"
         },
         "correct": "b"
       },
@@ -967,10 +967,10 @@ const IOT_MCQ_BANK = [
         "id": 53,
         "question": "Which IoT level is best suited for complex, wide-area applications with high volumes of data, requiring multiple end-nodes and cloud-based big data analytics?",
         "options": {
-          "a": "VbG Yriry-1",
-          "b": "VbG Yriry-2",
-          "c": "**VbG Yriry-6 ✓**",
-          "d": "VbG Yriry-3"
+          "a": "IoT Level-1",
+          "b": "IoT Level-2",
+          "c": "**IoT Level-6 ✓**",
+          "d": "IoT Level-3"
         },
         "correct": "c"
       },
@@ -978,10 +978,10 @@ const IOT_MCQ_BANK = [
         "id": 54,
         "question": "The Push-Pull communication model is best described as:",
         "options": {
-          "a": "N flapuebabhf zbqry jurer gur pyvrag chyyf qngn sebz gur freire",
-          "b": "**Na nflapuebabhf zbqry jurer dhrhrf qrpbhcyr choyvfuref naq pbafhzref, chfuvat qngn sebz cebqhpre gb dhrhr naq chyyvat sebz dhrhr gb pbafhzre ✓**",
-          "c": "N pbaarpgvba-bevragrq rkpyhfvir cnve zbqry",
-          "d": "N zhygvpnfg enqvb oebnqpnfg"
+          "a": "A synchronous model where the client pulls data from the server",
+          "b": "**An asynchronous model where queues decouple publishers and consumers, pushing data from producer to queue and pulling from queue to consumer ✓**",
+          "c": "A connection-oriented exclusive pair model",
+          "d": "A multicast radio broadcast"
         },
         "correct": "b"
       },
@@ -989,10 +989,10 @@ const IOT_MCQ_BANK = [
         "id": 55,
         "question": "In which M2M component is the communication logic typically embedded?",
         "options": {
-          "a": "Trareny checbfr jro oebjfre",
-          "b": "**Z2Z Nern Argjbex Abqr/Zbqhyr ✓**",
-          "c": "Pybhq Qngnonfr pyhfgre",
-          "d": "QAF freire"
+          "a": "General purpose web browser",
+          "b": "**M2M Area Network Node/Module ✓**",
+          "c": "Cloud Database cluster",
+          "d": "DNS server"
         },
         "correct": "b"
       },
@@ -1011,7 +1011,7 @@ const IOT_MCQ_BANK = [
         "id": 57,
         "question": "What type of communication model does MQTT utilize?",
         "options": {
-          "a": "Erdhrfg-Erfcbafr",
+          "a": "Request-Response",
           "b": "**Choyvfu-Fhofpevor ✓**",
           "c": "Rkpyhfvir Cnve",
           "d": "Fvzcyr Cbyyvat"
@@ -1022,10 +1022,10 @@ const IOT_MCQ_BANK = [
         "id": 58,
         "question": "In IoT logical design, which block provides services like device discovery, device registry, and status monitoring?",
         "options": {
-          "a": "Qrivpr oybpx",
-          "b": "**Znantrzrag oybpx ✓**",
-          "c": "Nccyvpngvba oybpx",
-          "d": "Frphevgl oybpx"
+          "a": "Device block",
+          "b": "**Management block ✓**",
+          "c": "Application block",
+          "d": "Security block"
         },
         "correct": "b"
       },
@@ -1034,7 +1034,7 @@ const IOT_MCQ_BANK = [
         "question": "Which of the following is a primary domain application for IoT?",
         "options": {
           "a": "Fgnaqneq znvasenzr ongpu pbzcvyvat",
-          "b": "**Fzneg Pvgvrf, Fzneg Tevq, naq Vaqhfgevny Nhgbzngvba ✓**",
+          "b": "**Smart Cities, Smart Grid, and Industrial Automation ✓**",
           "c": "Bssyvar zntargvp gncr fgbentr",
           "d": "Hafuvryqrq pbccre ohf gbcbybtvrf"
         },
@@ -1044,10 +1044,10 @@ const IOT_MCQ_BANK = [
         "id": 60,
         "question": "M2M systems generally emphasize which aspect of network communication?",
         "options": {
-          "a": "Raq-hfre vagrenpgvir tencuvpf vagresnprf",
-          "b": "**Qverpg znpuvar-gb-znpuvar gryrzrgel naq qrivpr vagrtengvba ✓**",
-          "c": "Fbpvny zrqvn qngn zvavat",
-          "d": "Bcra-npprff choyvp vagrearg flfgrzf"
+          "a": "End-user interactive graphics interfaces",
+          "b": "**Direct machine-to-machine telemetry and device integration ✓**",
+          "c": "Social media data mining",
+          "d": "Open-access public internet systems"
         },
         "correct": "b"
       }
@@ -1106,7 +1106,7 @@ const IOT_MCQ_BANK = [
         "question": "The built-in Analog-to-Digital Converter (ADC) on the Arduino Uno has what resolution?",
         "options": {
           "a": "8-ovg",
-          "b": "**10-ovg ✓** *(inyhrf 0 gb 1023)*\a",
+          "b": "**10-bit ✓** *(values 0 to 1023)*\n",
           "c": "12-ovg",
           "d": "16-ovg"
         },
@@ -1116,10 +1116,10 @@ const IOT_MCQ_BANK = [
         "id": 66,
         "question": "What are the two mandatory functions in every Arduino sketch?",
         "options": {
-          "a": "`fgneg()` naq `ybbc()`",
-          "b": "**`frghc()` naq `ybbc()` ✓**",
-          "c": "`frghc()` naq `eha()`",
-          "d": "`vavg()` naq `znva()`"
+          "a": "`start()` and `loop()`",
+          "b": "**`setup()` and `loop()` ✓**",
+          "c": "`setup()` and `run()`",
+          "d": "`init()` and `main()`"
         },
         "correct": "b"
       },
@@ -1127,10 +1127,10 @@ const IOT_MCQ_BANK = [
         "id": 67,
         "question": "What is the function of the `setup()` block in Arduino programming?",
         "options": {
-          "a": "Vg ehaf pbagvahbhfyl gb cebprff pnyphyngvbaf",
-          "b": "**Vg ehaf bapr ng fgneghc gb vavgvnyvmr cva zbqrf, frevny pbzzhavpngvba, naq inevnoyrf ✓**",
-          "c": "Vg pbzcvyrf gur ovanel pbqr gb synfu zrzbel",
-          "d": "Vg zbavgbef gur jngpuqbt gvzre erfrg fgngr"
+          "a": "It runs continuously to process calculations",
+          "b": "**It runs once at startup to initialize pin modes, serial communication, and variables ✓**",
+          "c": "It compiles the binary code to flash memory",
+          "d": "It monitors the watchdog timer reset state"
         },
         "correct": "b"
       },
@@ -1162,7 +1162,7 @@ const IOT_MCQ_BANK = [
         "options": {
           "a": "250",
           "b": "512",
-          "c": "**511 be 512 ✓** *(2.5 / 5.0 * 1023 = 511.5)*\a",
+          "c": "**511 or 512 ✓** *(2.5 / 5.0 * 1023 = 511.5)*\n",
           "d": "1023"
         },
         "correct": "c"
@@ -1182,10 +1182,10 @@ const IOT_MCQ_BANK = [
         "id": 72,
         "question": "What is the range of values that can be passed to the `analogWrite()` function?",
         "options": {
-          "a": "0 gb 1023",
-          "b": "**0 gb 255 ✓** *(8-ovg erfbyhgvba)*\a",
-          "c": "0 gb 100",
-          "d": "-127 gb 128"
+          "a": "0 to 1023",
+          "b": "**0 to 255 ✓** *(8-bit resolution)*\n",
+          "c": "0 to 100",
+          "d": "-127 to 128"
         },
         "correct": "b"
       },
@@ -1193,10 +1193,10 @@ const IOT_MCQ_BANK = [
         "id": 73,
         "question": "To establish serial communication between the Arduino Uno and a PC at 9600 baud, what command is used in `setup()`?",
         "options": {
-          "a": "`Frevny.fgneg(9600);`",
-          "b": "**`Frevny.ortva(9600);` ✓**",
-          "c": "`Frevny.onhq(9600);`",
-          "d": "`Frevny.bcra(9600);`"
+          "a": "`Serial.start(9600);`",
+          "b": "**`Serial.begin(9600);` ✓**",
+          "c": "`Serial.baud(9600);`",
+          "d": "`Serial.open(9600);`"
         },
         "correct": "b"
       },
@@ -1215,10 +1215,10 @@ const IOT_MCQ_BANK = [
         "id": 75,
         "question": "When connecting an LED to a digital output pin on the Arduino, why is a resistor placed in series with the LED?",
         "options": {
-          "a": "Gb vapernfr gur ibygntr yriry gb gur YRQ",
-          "b": "**Gb yvzvg gur pheerag naq cerirag oheavat bhg gur YRQ naq zvpebpbagebyyre cva ✓**",
-          "c": "Gb svygre uvtu-serdhrapl bfpvyyngbe abvfr",
-          "d": "Gb npg nf n chyy-hc erfvfgbe"
+          "a": "To increase the voltage level to the LED",
+          "b": "**To limit the current and prevent burning out the LED and microcontroller pin ✓**",
+          "c": "To filter high-frequency oscillator noise",
+          "d": "To act as a pull-up resistor"
         },
         "correct": "b"
       },
@@ -1226,7 +1226,7 @@ const IOT_MCQ_BANK = [
         "id": 76,
         "question": "What function is used to create a non-blocking delay or check elapsed time in milliseconds since the Arduino board began running?",
         "options": {
-          "a": "`qrynl()`",
+          "a": "`delay()`",
           "b": "**`zvyyvf()` ✓**",
           "c": "`qrynlZvpebfrpbaqf()`",
           "d": "`fyrrc()`"
@@ -1237,10 +1237,10 @@ const IOT_MCQ_BANK = [
         "id": 77,
         "question": "What is the problem with using the `delay(1000)` function in an interactive sensor control system?",
         "options": {
-          "a": "Vg qenjf uvtu cbjre sebz gur fhccyl",
-          "b": "**Vg oybpxf vafgehpgvba rkrphgvba, ceriragvat gur zvpebpbagebyyre sebz ernqvat frafbe vachgf qhevat gur qrynl ✓**",
-          "c": "Vg sbeprf n oebja-bhg erfrg",
-          "d": "Vg birejevgrf gur obbgybnqre synfu frpgbef"
+          "a": "It draws high power from the supply",
+          "b": "**It blocks instruction execution, preventing the microcontroller from reading sensor inputs during the delay ✓**",
+          "c": "It forces a brown-out reset",
+          "d": "It overwrites the bootloader flash sectors"
         },
         "correct": "b"
       },
@@ -1248,9 +1248,9 @@ const IOT_MCQ_BANK = [
         "id": 78,
         "question": "Which of the following lines correctly configures an analog pin A0 as digital input with an internal pull-up resistor?",
         "options": {
-          "a": "`cvaZbqr(N0, VACHG);`",
-          "b": "**`cvaZbqr(N0, VACHG_CHYYHC);` ✓**",
-          "c": "`qvtvgnyJevgr(N0, UVTU);`",
+          "a": "`pinMode(A0, INPUT);`",
+          "b": "**`pinMode(A0, INPUT_PULLUP);` ✓**",
+          "c": "`digitalWrite(A0, HIGH);`",
           "d": "`nanybtJevgr(N0, 255);`"
         },
         "correct": "b"
@@ -1289,7 +1289,7 @@ const IOT_MCQ_BANK = [
         "options": {
           "a": "VRRR 802.11 (Jv-Sv)",
           "b": "**VRRR 802.15.4 ✓**",
-          "c": "VRRR 802.3 (Rgurearg)",
+          "c": "IEEE 802.3 (Ethernet)",
           "d": "Oyhrgbbgu 5.0"
         },
         "correct": "b"
@@ -1310,7 +1310,7 @@ const IOT_MCQ_BANK = [
         "question": "Which wireless protocol is designed specifically for short-range low-power consumption in battery-powered devices like beacons and fitness trackers?",
         "options": {
           "a": "Fgnaqneq Pynffvp Oyhrgbbgu",
-          "b": "**OYR (Oyhrgbbgu Ybj Raretl) ✓**",
+          "b": "**BLE (Bluetooth Low Energy) ✓**",
           "c": "VRRR 802.11n",
           "d": "100OnfrSK"
         },
@@ -1320,10 +1320,10 @@ const IOT_MCQ_BANK = [
         "id": 84,
         "question": "What is the main function of the 6LoWPAN protocol layer?",
         "options": {
-          "a": "Cebivqvat nccyvpngvba vagresnprf yvxr UGGC erdhrfgf",
-          "b": "**Urnqre pbzcerffvba naq sentzragngvba gb genafzvg VCi6 cnpxrgf bire ybj-cbjre VRRR 802.15.4 yvaxf ✓**",
-          "c": "Rapelcgvat ybpny qngnonfrf",
-          "d": "Znantvat culfvpny pbaarpgvbaf bire HGC"
+          "a": "Providing application interfaces like HTTP requests",
+          "b": "**Header compression and fragmentation to transmit IPv6 packets over low-power IEEE 802.15.4 links ✓**",
+          "c": "Encrypting local databases",
+          "d": "Managing physical connections over UTP"
         },
         "correct": "b"
       },
@@ -1331,10 +1331,10 @@ const IOT_MCQ_BANK = [
         "id": 85,
         "question": "Which layer of the OSI model does 6LoWPAN operate between?",
         "options": {
-          "a": "Genafcbeg naq Frffvba Ynlref",
-          "b": "**Argjbex (VC) naq Qngn Yvax (ZNP) Ynlref ✓**",
-          "c": "Culfvpny naq Qngn Yvax Ynlref",
-          "d": "Nccyvpngvba naq Genafcbeg Ynlref"
+          "a": "Transport and Session Layers",
+          "b": "**Network (IP) and Data Link (MAC) Layers ✓**",
+          "c": "Physical and Data Link Layers",
+          "d": "Application and Transport Layers"
         },
         "correct": "b"
       },
@@ -1343,7 +1343,7 @@ const IOT_MCQ_BANK = [
         "question": "MQTT (Message Queuing Telemetry Transport) is built on top of which transport layer protocol?",
         "options": {
           "a": "HQC",
-          "b": "**GPC ✓** *(hfrf cbeg 1883 be 8883 sbe frpher)*\a",
+          "b": "**TCP ✓** *(uses port 1883 or 8883 for secure)*\n",
           "c": "VPZC",
           "d": "GSGC"
         },
@@ -1354,7 +1354,7 @@ const IOT_MCQ_BANK = [
         "question": "CoAP (Constrained Application Protocol) is designed as a lightweight alternative to HTTP. It runs over which transport layer protocol?",
         "options": {
           "a": "GPC",
-          "b": "**HQC ✓** *(hfrf cbeg 5683)*\a",
+          "b": "**UDP ✓** *(uses port 5683)*\n",
           "c": "FPGC",
           "d": "VCfrp"
         },
@@ -1364,10 +1364,10 @@ const IOT_MCQ_BANK = [
         "id": 88,
         "question": "Which of the following best contrasts MQTT and CoAP?",
         "options": {
-          "a": "ZDGG vf pbaarpgvbayrff bire HQC, juvyr PbNC vf pbaarpgvba-bevragrq bire GPC",
-          "b": "**ZDGG vf znal-gb-znal choyvfu-fhofpevor bire GPC, juvyr PbNC vf bar-gb-bar ERFGshy erdhrfg-erfcbafr bire HQC ✓**",
+          "a": "MQTT is connectionless over UDP, while CoAP is connection-oriented over TCP",
+          "b": "**MQTT is many-to-many publish-subscribe over TCP, while CoAP is one-to-one RESTful request-response over UDP ✓**",
           "c": "ZDGG hfrf zber onaqjvqgu guna UGGC",
-          "d": "PbNC qbrf abg fhccbeg TRG naq CBFG zrgubqf"
+          "d": "CoAP does not support GET and POST methods"
         },
         "correct": "b"
       },
@@ -1375,10 +1375,10 @@ const IOT_MCQ_BANK = [
         "id": 89,
         "question": "In MQTT, what is a 'topic'?",
         "options": {
-          "a": "N culfvpny nqqerff bs gur oebxre",
-          "b": "**N uvrenepuvpny fgevat xrl (r.t. 'ubzr/yvivatebbz/grzc') hfrq gb pngrtbevmr naq ebhgr zrffntrf ✓**",
-          "c": "Gur cnlybnq fvmr va olgrf",
-          "d": "Gur havdhr pyvrag vqragvsvre"
+          "a": "A physical address of the broker",
+          "b": "**A hierarchical string key (e.g. 'home/livingroom/temp') used to categorize and route messages ✓**",
+          "c": "The payload size in bytes",
+          "d": "The unique client identifier"
         },
         "correct": "b"
       },
@@ -1386,10 +1386,10 @@ const IOT_MCQ_BANK = [
         "id": 90,
         "question": "What are the three Quality of Service (QoS) levels supported by MQTT?",
         "options": {
-          "a": "Uvtu, Zrqvhz, Ybj",
-          "b": "**0 (Ng zbfg bapr), 1 (Ng yrnfg bapr), 2 (Rknpgyl bapr) ✓**",
+          "a": "High, Medium, Low",
+          "b": "**0 (At most once), 1 (At least once), 2 (Exactly once) ✓**",
           "c": "GPC, HQC, VC",
-          "d": "Orfg-rssbeg, Thnenagrrq, Erny-gvzr"
+          "d": "Best-effort, Guaranteed, Real-time"
         },
         "correct": "b"
       },
@@ -1410,8 +1410,8 @@ const IOT_MCQ_BANK = [
         "options": {
           "a": "Aba-pbasveznoyr (ABA)",
           "b": "**Pbasveznoyr (PBA) ✓**",
-          "c": "Npxabjyrqtzrag (NPX)",
-          "d": "Erfrg (EFG)"
+          "c": "Acknowledgment (ACK)",
+          "d": "Reset (RST)"
         },
         "correct": "b"
       },
@@ -1430,10 +1430,10 @@ const IOT_MCQ_BANK = [
         "id": 94,
         "question": "What is the role of an MQTT Broker?",
         "options": {
-          "a": "Vg trarengrf frafbe qngn",
-          "b": "**Vg npgf nf n prageny freire gung erprvirf choyvpngvbaf naq sbejneqf gurz gb fhofpevoref onfrq ba gbcvp svygref ✓**",
-          "c": "Vg genafyngrf culfvpny fvtanyf gb bcgvpny chyfrf",
-          "d": "Vg pbzcerffrf VCi6 urnqref"
+          "a": "It generates sensor data",
+          "b": "**It acts as a central server that receives publications and forwards them to subscribers based on topic filters ✓**",
+          "c": "It translates physical signals to optical pulses",
+          "d": "It compresses IPv6 headers"
         },
         "correct": "b"
       },
@@ -1452,10 +1452,10 @@ const IOT_MCQ_BANK = [
         "id": 96,
         "question": "In BLE, how are data services organized and exposed?",
         "options": {
-          "a": "Hfvat phzhyngvir fyvqvat jvaqbjf",
-          "b": "**Hfvat TNGG (Trarevp Nggevohgr Cebsvyr) freivprf naq punenpgrevfgvpf ✓**",
-          "c": "Hfvat HQC cbeg ahzoref",
-          "d": "Hfvat ZNP nqqerff gnoyrf"
+          "a": "Using cumulative sliding windows",
+          "b": "**Using GATT (Generic Attribute Profile) services and characteristics ✓**",
+          "c": "Using UDP port numbers",
+          "d": "Using MAC address tables"
         },
         "correct": "b"
       },
@@ -1463,10 +1463,10 @@ const IOT_MCQ_BANK = [
         "id": 97,
         "question": "What is the maximum payload size of an IEEE 802.15.4 frame before fragmentation at the 6LoWPAN layer?",
         "options": {
-          "a": "1500 olgrf",
-          "b": "**127 olgrf ✓**",
-          "c": "64 olgrf",
-          "d": "1518 olgrf"
+          "a": "1500 bytes",
+          "b": "**127 bytes ✓**",
+          "c": "64 bytes",
+          "d": "1518 bytes"
         },
         "correct": "b"
       },
@@ -1485,10 +1485,10 @@ const IOT_MCQ_BANK = [
         "id": 99,
         "question": "What is the standard IPv6 packet size that 6LoWPAN must compress and fragment to fit into 802.15.4 frames?",
         "options": {
-          "a": "64 olgrf",
-          "b": "**1280 olgrf (VCi6 ZGH erdhverzrag) ✓**",
-          "c": "1500 olgrf",
-          "d": "65535 olgrf"
+          "a": "64 bytes",
+          "b": "**1280 bytes (IPv6 MTU requirement) ✓**",
+          "c": "1500 bytes",
+          "d": "65535 bytes"
         },
         "correct": "b"
       },
@@ -1498,7 +1498,7 @@ const IOT_MCQ_BANK = [
         "options": {
           "a": "OYR",
           "b": "VRRR 802.15.4",
-          "c": "**Fgnaqneq Jv-Sv (VRRR 802.11) ✓**",
+          "c": "**Standard Wi-Fi (IEEE 802.11) ✓**",
           "d": "YbEnJNA"
         },
         "correct": "c"
@@ -1528,9 +1528,9 @@ const CN_MCQ_BANK = [
         "question": "In a mesh topology with 8 devices, what is the minimum number of ports required on each device?",
         "options": {
           "a": "8 cbegf",
-          "b": "**7 cbegf ✓** *($A - 1 = 7$)*\a",
-          "c": "28 cbegf",
-          "d": "56 cbegf"
+          "b": "**7 ports ✓** *($N - 1 = 7$)*\n",
+          "c": "28 ports",
+          "d": "56 ports"
         },
         "correct": "b"
       },
@@ -1538,10 +1538,10 @@ const CN_MCQ_BANK = [
         "id": 3,
         "question": "A physical star network with a central hub is used to connect hosts. What is the logical topology of this network?",
         "options": {
-          "a": "Ybtvpny Fgne",
-          "b": "**Ybtvpny Ohf ✓** *(fvapr n uho sybbqf fvtanyf, orunivat ybtvpnyyl nf n funerq ohf)*\a",
-          "c": "Ybtvpny Evat",
-          "d": "Ybtvpny Zrfu"
+          "a": "Logical Star",
+          "b": "**Logical Bus ✓** *(since a hub floods signals, behaving logically as a shared bus)*\n",
+          "c": "Logical Ring",
+          "d": "Logical Mesh"
         },
         "correct": "b"
       },
@@ -1549,10 +1549,10 @@ const CN_MCQ_BANK = [
         "id": 4,
         "question": "Which topology requires terminators at both ends of the main backbone cable to prevent signal reflection?",
         "options": {
-          "a": "Fgne Gbcbybtl",
-          "b": "**Ohf Gbcbybtl ✓**",
-          "c": "Evat Gbcbybtl",
-          "d": "Zrfu Gbcbybtl"
+          "a": "Star Topology",
+          "b": "**Bus Topology ✓**",
+          "c": "Ring Topology",
+          "d": "Mesh Topology"
         },
         "correct": "b"
       },
@@ -1560,10 +1560,10 @@ const CN_MCQ_BANK = [
         "id": 5,
         "question": "What is the primary role of the active Monitor Station in a Ring topology?",
         "options": {
-          "a": "Vg rapelcgf hfre senzrf",
-          "b": "**Vg znantrf gbxraf, unaqyrf ybfg gbxraf, naq chetrf becunarq senzrf ✓**",
-          "c": "Vg qlanzvpnyyl nffvtaf VC nqqerffrf",
-          "d": "Vg npgf nf n qrsnhyg tngrjnl ebhgre"
+          "a": "It encrypts user frames",
+          "b": "**It manages tokens, handles lost tokens, and purges orphaned frames ✓**",
+          "c": "It dynamically assigns IP addresses",
+          "d": "It acts as a default gateway router"
         },
         "correct": "b"
       },
@@ -1571,10 +1571,10 @@ const CN_MCQ_BANK = [
         "id": 6,
         "question": "If a switch has 12 ports, how many collision domains and broadcast domains does it create?",
         "options": {
-          "a": "1 pbyyvfvba qbznva, 12 oebnqpnfg qbznvaf",
-          "b": "**12 pbyyvfvba qbznvaf, 1 oebnqpnfg qbznva ✓** *(rnpu fjvgpu cbeg vf n frcnengr pbyyvfvba qbznva)*\a",
-          "c": "12 pbyyvfvba qbznvaf, 12 oebnqpnfg qbznvaf",
-          "d": "1 pbyyvfvba qbznva, 1 oebnqpnfg qbznva"
+          "a": "1 collision domain, 12 broadcast domains",
+          "b": "**12 collision domains, 1 broadcast domain ✓** *(each switch port is a separate collision domain)*\n",
+          "c": "12 collision domains, 12 broadcast domains",
+          "d": "1 collision domain, 1 broadcast domain"
         },
         "correct": "b"
       },
@@ -1582,9 +1582,9 @@ const CN_MCQ_BANK = [
         "id": 7,
         "question": "Which network device is designed to isolate broadcast traffic entirely between two LAN segments?",
         "options": {
-          "a": "Ynlre 2 Fjvgpu",
-          "b": "Ynlre 2 Oevqtr",
-          "c": "**Ynlre 3 Ebhgre ✓** *(ebhgref oernx oebnqpnfg qbznvaf)*\a",
+          "a": "Layer 2 Switch",
+          "b": "Layer 2 Bridge",
+          "c": "**Layer 3 Router ✓** *(routers break broadcast domains)*\n",
           "d": "Zhygvcbeg Uho"
         },
         "correct": "c"
@@ -1595,8 +1595,8 @@ const CN_MCQ_BANK = [
         "options": {
           "a": "Vagenarg",
           "b": "**Rkgenarg ✓**",
-          "c": "Vagrearg",
-          "d": "Crefbany Nern Argjbex"
+          "c": "Internet",
+          "d": "Personal Area Network"
         },
         "correct": "b"
       },
@@ -1604,10 +1604,10 @@ const CN_MCQ_BANK = [
         "id": 9,
         "question": "Which statement is true regarding LANs and WANs?",
         "options": {
-          "a": "YNAf ner znantrq ol choyvp gryrpbz pbzcnavrf; JNAf ner cevingryl bjarq",
-          "b": "**YNAf ner cevingryl bjarq jvgu uvtu fcrrqf naq ybj qrynlf; JNAf pbire ynetr nernf hfvat yrnfrq gryrpbz pvephvgf ✓**",
-          "c": "JNAf unir ybjre cebcntngvba qrynlf guna YNAf",
-          "d": "YNAf hgvyvmr fngryyvgr pbzzhavpngvba, juvyr JNAf hfr gjvfgrq cnve pnoyrf"
+          "a": "LANs are managed by public telecom companies; WANs are privately owned",
+          "b": "**LANs are privately owned with high speeds and low delays; WANs cover large areas using leased telecom circuits ✓**",
+          "c": "WANs have lower propagation delays than LANs",
+          "d": "LANs utilize satellite communication, while WANs use twisted pair cables"
         },
         "correct": "b"
       },
@@ -1615,10 +1615,10 @@ const CN_MCQ_BANK = [
         "id": 10,
         "question": "A network topology consists of a central primary star controller connected to secondary hub stars. This is a:",
         "options": {
-          "a": "Zrfu Gbcbybtl",
-          "b": "**Gerr Gbcbybtl ✓**",
-          "c": "Evat Gbcbybtl",
-          "d": "Ohf Gbcbybtl"
+          "a": "Mesh Topology",
+          "b": "**Tree Topology ✓**",
+          "c": "Ring Topology",
+          "d": "Bus Topology"
         },
         "correct": "b"
       },
@@ -1626,10 +1626,10 @@ const CN_MCQ_BANK = [
         "id": 11,
         "question": "In a Ring network, what happens if a link breaks in a Dual Ring configuration?",
         "options": {
-          "a": "Gur ragver argjbex penfurf vzzrqvngryl",
-          "b": "**Gur obhaqnel abqrf jenc gur cevznel naq frpbaqnel evatf gbtrgure gb znvagnva n fvatyr ybbc ✓**",
-          "c": "Qngn vf ebhgrq guebhtu n qrsnhyg tngrjnl",
-          "d": "N pbyyvfvba wnz fvtany vf oebnqpnfg"
+          "a": "The entire network crashes immediately",
+          "b": "**The boundary nodes wrap the primary and secondary rings together to maintain a single loop ✓**",
+          "c": "Data is routed through a default gateway",
+          "d": "A collision jam signal is broadcast"
         },
         "correct": "b"
       },
@@ -1637,10 +1637,10 @@ const CN_MCQ_BANK = [
         "id": 12,
         "question": "What is the total number of physical ports required across all devices in a fully mesh network with 5 nodes?",
         "options": {
-          "a": "10 cbegf",
-          "b": "**20 cbegf ✓** *($A \\gvzrf (A-1) = 20$)*\a",
+          "a": "10 ports",
+          "b": "**20 ports ✓** *($N \\times (N-1) = 20$)*\n",
           "c": "5 cbegf",
-          "d": "25 cbegf"
+          "d": "25 ports"
         },
         "correct": "b"
       },
@@ -1649,9 +1649,9 @@ const CN_MCQ_BANK = [
         "question": "Which of the following is classified as an end device?",
         "options": {
           "a": "Uho",
-          "b": "Oevqtr",
-          "c": "**VC Frphevgl Pnzren ✓**",
-          "d": "Fjvgpu"
+          "b": "Bridge",
+          "c": "**IP Security Camera ✓**",
+          "d": "Switch"
         },
         "correct": "c"
       },
@@ -1660,9 +1660,9 @@ const CN_MCQ_BANK = [
         "question": "Which medium encodes signals as pulses of light?",
         "options": {
           "a": "Fuvryqrq Gjvfgrq Cnve",
-          "b": "Pbnkvny Pnoyr",
+          "b": "Coaxial Cable",
           "c": "**Svore-bcgvp Pnoyr ✓**",
-          "d": "Zvpebjnir Yvax"
+          "d": "Microwave Link"
         },
         "correct": "c"
       },
@@ -1670,10 +1670,10 @@ const CN_MCQ_BANK = [
         "id": 15,
         "question": "A logical topology is defined at which layer of the OSI model?",
         "options": {
-          "a": "Culfvpny Ynlre (Y1)",
-          "b": "**Qngn Yvax Ynlre (Y2) ✓**",
-          "c": "Argjbex Ynlre (Y3)",
-          "d": "Genafcbeg Ynlre (Y4)"
+          "a": "Physical Layer (L1)",
+          "b": "**Data Link Layer (L2) ✓**",
+          "c": "Network Layer (L3)",
+          "d": "Transport Layer (L4)"
         },
         "correct": "b"
       },
@@ -1681,10 +1681,10 @@ const CN_MCQ_BANK = [
         "id": 16,
         "question": "Why is a transparent bridge called transparent?",
         "options": {
-          "a": "Vg vf culfvpnyyl znqr bs genafcnerag svore tynff",
-          "b": "**Pbaarpgrq ubfgf ner hanjner bs vgf cerfrapr ba gur argjbex frtzrag ✓**",
-          "c": "Vg sbejneqf cnpxrgf jvgubhg ernqvat ZNP nqqerffrf",
-          "d": "Vg orunirf yvxr n Ynlre 1 ercrngre"
+          "a": "It is physically made of transparent fiber glass",
+          "b": "**Connected hosts are unaware of its presence on the network segment ✓**",
+          "c": "It forwards packets without reading MAC addresses",
+          "d": "It behaves like a Layer 1 repeater"
         },
         "correct": "b"
       },
@@ -1692,10 +1692,10 @@ const CN_MCQ_BANK = [
         "id": 17,
         "question": "What represents the physical connection point between a computer host and the transmission medium?",
         "options": {
-          "a": "Tngrjnl",
-          "b": "**AVP (Argjbex Vagresnpr Pneq) ✓**",
-          "c": "Ebhgvat Gnoyr",
-          "d": "VC Nqqerff"
+          "a": "Gateway",
+          "b": "**NIC (Network Interface Card) ✓**",
+          "c": "Routing Table",
+          "d": "IP Address"
         },
         "correct": "b"
       },
@@ -1703,10 +1703,10 @@ const CN_MCQ_BANK = [
         "id": 18,
         "question": "What is the primary drawback of a fully mesh topology?",
         "options": {
-          "a": "Ybj eryvnovyvgl",
-          "b": "Uvtu pbyyvfvba serdhrapl",
-          "c": "**Rkgerzryl uvtu pbfg naq pbzcyrk pnoyvat ynlbhg ✓**",
-          "d": "eryvnapr ba n prageny fjvgpu pbagebyyre"
+          "a": "Low reliability",
+          "b": "High collision frequency",
+          "c": "**Extremely high cost and complex cabling layout ✓**",
+          "d": "reliance on a central switch controller"
         },
         "correct": "b"
       },
@@ -1725,10 +1725,10 @@ const CN_MCQ_BANK = [
         "id": 20,
         "question": "In a shared media network, what happens if two devices transmit simultaneously?",
         "options": {
-          "a": "Gur qngn vf fhpprffshyyl zretrq",
-          "b": "**N cnpxrg pbyyvfvba bpphef, pbeehcgvat gur fvtanyf ✓**",
-          "c": "Gur ebhgre ebhgrf gurz gb frcnengr fhoargf",
-          "d": "N gbxra vf trarengrq ol gur zbavgbe fgngvba"
+          "a": "The data is successfully merged",
+          "b": "**A packet collision occurs, corrupting the signals ✓**",
+          "c": "The router routes them to separate subnets",
+          "d": "A token is generated by the monitor station"
         },
         "correct": "b"
       }
@@ -1753,10 +1753,10 @@ const CN_MCQ_BANK = [
         "id": 22,
         "question": "Which OSI model layer is responsible for translating data between formats (e.g. ASCII to EBCDIC) and handling encryption?",
         "options": {
-          "a": "Nccyvpngvba Ynlre",
-          "b": "Frffvba Ynlre",
-          "c": "**Cerfragngvba Ynlre ✓**",
-          "d": "Genafcbeg Ynlre"
+          "a": "Application Layer",
+          "b": "Session Layer",
+          "c": "**Presentation Layer ✓**",
+          "d": "Transport Layer"
         },
         "correct": "c"
       },
@@ -1764,10 +1764,10 @@ const CN_MCQ_BANK = [
         "id": 23,
         "question": "Which of the following represents the correct sequence of layers in the OSI model from top to bottom?",
         "options": {
-          "a": "Culfvpny, Qngn Yvax, Argjbex, Genafcbeg, Frffvba, Cerfragngvba, Nccyvpngvba",
-          "b": "**Nccyvpngvba, Cerfragngvba, Frffvba, Genafcbeg, Argjbex, Qngn Yvax, Culfvpny ✓**",
-          "c": "Nccyvpngvba, Frffvba, Cerfragngvba, Genafcbeg, Argjbex, Qngn Yvax, Culfvpny",
-          "d": "Culfvpny, Argjbex, Qngn Yvax, Genafcbeg, Cerfragngvba, Frffvba, Nccyvpngvba"
+          "a": "Physical, Data Link, Network, Transport, Session, Presentation, Application",
+          "b": "**Application, Presentation, Session, Transport, Network, Data Link, Physical ✓**",
+          "c": "Application, Session, Presentation, Transport, Network, Data Link, Physical",
+          "d": "Physical, Network, Data Link, Transport, Presentation, Session, Application"
         },
         "correct": "b"
       },
@@ -1775,10 +1775,10 @@ const CN_MCQ_BANK = [
         "id": 24,
         "question": "What is the Protocol Data Unit (PDU) processed at the Transport Layer (Layer 4) for TCP?",
         "options": {
-          "a": "Qngn",
+          "a": "Data",
           "b": "**Frtzrag ✓**",
-          "c": "Cnpxrg",
-          "d": "Senzr"
+          "c": "Packet",
+          "d": "Frame"
         },
         "correct": "b"
       },
@@ -1786,10 +1786,10 @@ const CN_MCQ_BANK = [
         "id": 25,
         "question": "Which of the following ports are used by FTP (File Transfer Protocol)?",
         "options": {
-          "a": "Cbegf 67 naq 68",
-          "b": "**Cbegf 20 naq 21 ✓** *(20 sbe Qngn, 21 sbe Pbageby)*\a",
-          "c": "Cbegf 161 naq 162",
-          "d": "Cbeg 80 naq 443"
+          "a": "Ports 67 and 68",
+          "b": "**Ports 20 and 21 ✓** *(20 for Data, 21 for Control)*\n",
+          "c": "Ports 161 and 162",
+          "d": "Port 80 and 443"
         },
         "correct": "b"
       },
@@ -1797,10 +1797,10 @@ const CN_MCQ_BANK = [
         "id": 26,
         "question": "What is the port number utilized by the Domain Name System (DNS)?",
         "options": {
-          "a": "Cbeg 22",
-          "b": "Cbeg 25",
-          "c": "**Cbeg 53 ✓**",
-          "d": "Cbeg 69"
+          "a": "Port 22",
+          "b": "Port 25",
+          "c": "**Port 53 ✓**",
+          "d": "Port 69"
         },
         "correct": "c"
       },
@@ -1819,10 +1819,10 @@ const CN_MCQ_BANK = [
         "id": 28,
         "question": "What is the difference between Single-mode and Multi-mode Optical Fiber?",
         "options": {
-          "a": "Fvatyr-zbqr hfrf YRQf; Zhygv-zbqr hfrf Ynfref",
-          "b": "**Fvatyr-zbqr unf n aneebj pber naq ybj qvfcrefvba sbe ybat qvfgnaprf; Zhygv-zbqr unf n jvqr pber sbe fubegre qvfgnaprf ✓**",
-          "c": "Zhygv-zbqr unf ybjre qvfcrefvba guna Fvatyr-zbqr",
-          "d": "Fvatyr-zbqr genafzvgf nanybt ryrpgevpny jnirf"
+          "a": "Single-mode uses LEDs; Multi-mode uses Lasers",
+          "b": "**Single-mode has a narrow core and low dispersion for long distances; Multi-mode has a wide core for shorter distances ✓**",
+          "c": "Multi-mode has lower dispersion than Single-mode",
+          "d": "Single-mode transmits analog electrical waves"
         },
         "correct": "b"
       },
@@ -1853,9 +1853,9 @@ const CN_MCQ_BANK = [
         "question": "In the cable designator \"100BaseTX\", what does \"100\" and \"Base\" signify?",
         "options": {
           "a": "100 zrgref znkvzhz yratgu, Onfvp fuvryqvat",
-          "b": "**100 Zocf genafzvffvba fcrrq, Onfronaq qvtvgny fvtanyvat ✓**",
-          "c": "100 punaaryf, Oebnqonaq nanybt fvtanyvat",
-          "d": "100 ZUm serdhrapl, pbnkvny zrqvn"
+          "b": "**100 Mbps transmission speed, Baseband digital signaling ✓**",
+          "c": "100 channels, Broadband analog signaling",
+          "d": "100 MHz frequency, coaxial media"
         },
         "correct": "b"
       },
@@ -1874,10 +1874,10 @@ const CN_MCQ_BANK = [
         "id": 33,
         "question": "The original TCP/IP model has 4 layers. Which layer combines the OSI Physical and Data Link layers?",
         "options": {
-          "a": "Vagrearg Ynlre",
-          "b": "**Argjbex Npprff Ynlre ✓**",
-          "c": "Genafcbeg Ynlre",
-          "d": "Nccyvpngvba Ynlre"
+          "a": "Internet Layer",
+          "b": "**Network Access Layer ✓**",
+          "c": "Transport Layer",
+          "d": "Application Layer"
         },
         "correct": "b"
       },
@@ -1885,10 +1885,10 @@ const CN_MCQ_BANK = [
         "id": 34,
         "question": "What happens during the Data De-encapsulation process at the receiver?",
         "options": {
-          "a": "Urnqref ner nqqrq nf qngn zbirf qbja gur fgnpx",
-          "b": "**Urnqref ner fgevccrq bss nf qngn zbirf hc gur fgnpx ✓**",
-          "c": "Qngn vf zbqhyngrq vagb bcgvpny fvtanyf",
-          "d": "Gur GGY svryq vf qrperzragrq ol 1"
+          "a": "Headers are added as data moves down the stack",
+          "b": "**Headers are stripped off as data moves up the stack ✓**",
+          "c": "Data is modulated into optical signals",
+          "d": "The TTL field is decremented by 1"
         },
         "correct": "b"
       },
@@ -1896,10 +1896,10 @@ const CN_MCQ_BANK = [
         "id": 35,
         "question": "Which port number does the Simple Network Management Protocol (SNMP) use for agent polling?",
         "options": {
-          "a": "Cbeg 23",
-          "b": "Cbeg 25",
-          "c": "**Cbeg 161 ✓** *(Cbeg 162 vf hfrq sbe Gencf)*\a",
-          "d": "Cbeg 179"
+          "a": "Port 23",
+          "b": "Port 25",
+          "c": "**Port 161 ✓** *(Port 162 is used for Traps)*\n",
+          "d": "Port 179"
         },
         "correct": "c"
       },
@@ -1907,9 +1907,9 @@ const CN_MCQ_BANK = [
         "id": 36,
         "question": "Which medium uses twisted wire pairs to cancel out electromagnetic interference and crosstalk?",
         "options": {
-          "a": "Pbnkvny Pnoyr",
+          "a": "Coaxial Cable",
           "b": "**Hafuvryqrq Gjvfgrq Cnve (HGC) ✓**",
-          "c": "Fvatyr-Zbqr Svore",
+          "c": "Single-Mode Fiber",
           "d": "Greerfgevny Zvpebjnirf"
         },
         "correct": "b"
@@ -1918,10 +1918,10 @@ const CN_MCQ_BANK = [
         "id": 37,
         "question": "The physical socket where a network cable connects to a computer is called a:",
         "options": {
-          "a": "Vagresnpr",
-          "b": "**Culfvpny Cbeg ✓**",
+          "a": "Interface",
+          "b": "**Physical Port ✓**",
           "c": "AVP EBZ",
-          "d": "OVN Nqqerff"
+          "d": "BIA Address"
         },
         "correct": "b"
       },
@@ -1929,10 +1929,10 @@ const CN_MCQ_BANK = [
         "id": 38,
         "question": "The port numbers reserved by IANA for standard system services (Well-Known Ports) span which range?",
         "options": {
-          "a": "1024 gb 49151",
-          "b": "**0 gb 1023 ✓**",
-          "c": "49152 gb 65535",
-          "d": "0 gb 65535"
+          "a": "1024 to 49151",
+          "b": "**0 to 1023 ✓**",
+          "c": "49152 to 65535",
+          "d": "0 to 65535"
         },
         "correct": "b"
       },
@@ -1940,10 +1940,10 @@ const CN_MCQ_BANK = [
         "id": 39,
         "question": "Which Layer of the OSI model manages checkpoints, session IDs, and dialog control?",
         "options": {
-          "a": "Genafcbeg Ynlre",
-          "b": "**Frffvba Ynlre ✓**",
-          "c": "Cerfragngvba Ynlre",
-          "d": "Qngn Yvax Ynlre"
+          "a": "Transport Layer",
+          "b": "**Session Layer ✓**",
+          "c": "Presentation Layer",
+          "d": "Data Link Layer"
         },
         "correct": "b"
       },
@@ -1952,7 +1952,7 @@ const CN_MCQ_BANK = [
         "question": "What is the primary advantage of UTP over STP cabling?",
         "options": {
           "a": "HGC cebivqrf orggre RZV fuvryqvat",
-          "b": "**HGC vf purncre, zber syrkvoyr, naq rnfvre gb vafgnyy ✓**",
+          "b": "**UTP is cheaper, more flexible, and easier to install ✓**",
           "c": "HGC unf ybatre frtzrag yvzvgf guna FGC",
           "d": "HGC qbrf abg erdhver EW-45 pbaarpgbef"
         },
@@ -1968,10 +1968,10 @@ const CN_MCQ_BANK = [
         "id": 41,
         "question": "Which layer of the OSI model does a multi-port transparent switch operate at?",
         "options": {
-          "a": "Culfvpny Ynlre (Ynlre 1)",
-          "b": "**Qngn Yvax Ynlre (Ynlre 2) ✓**",
-          "c": "Argjbex Ynlre (Ynlre 3)",
-          "d": "Genafcbeg Ynlre (Ynlre 4)"
+          "a": "Physical Layer (Layer 1)",
+          "b": "**Data Link Layer (Layer 2) ✓**",
+          "c": "Network Layer (Layer 3)",
+          "d": "Transport Layer (Layer 4)"
         },
         "correct": "b"
       },
@@ -1980,8 +1980,8 @@ const CN_MCQ_BANK = [
         "question": "Which switch forwarding method checks the Frame Check Sequence (FCS) checksum before transmitting the frame?",
         "options": {
           "a": "Phg-Guebhtu",
-          "b": "**Fgber-naq-Sbejneq ✓**",
-          "c": "Sentzrag-Serr",
+          "b": "**Store-and-Forward ✓**",
+          "c": "Fragment-Free",
           "d": "Nqncgvir Fjvgpuvat"
         },
         "correct": "b"
@@ -1990,9 +1990,9 @@ const CN_MCQ_BANK = [
         "id": 43,
         "question": "A switch forwarding method that buffers the first 64 bytes of a frame to filter out collision fragments is:",
         "options": {
-          "a": "Fgber-naq-Sbejneq",
+          "a": "Store-and-Forward",
           "b": "Phg-Guebhtu",
-          "c": "**Sentzrag-Serr ✓**",
+          "c": "**Fragment-Free ✓**",
           "d": "Cernzoyr Svygrevat"
         },
         "correct": "c"
@@ -2001,10 +2001,10 @@ const CN_MCQ_BANK = [
         "id": 44,
         "question": "What is the minimum frame size of a standard Ethernet frame (excluding the preamble and SFD)?",
         "options": {
-          "a": "46 olgrf",
-          "b": "**64 olgrf ✓**",
-          "c": "1518 olgrf",
-          "d": "1500 olgrf"
+          "a": "46 bytes",
+          "b": "**64 bytes ✓**",
+          "c": "1518 bytes",
+          "d": "1500 bytes"
         },
         "correct": "b"
       },
@@ -2012,10 +2012,10 @@ const CN_MCQ_BANK = [
         "id": 45,
         "question": "What is the maximum size of a standard Ethernet frame payload (data field)?",
         "options": {
-          "a": "64 olgrf",
-          "b": "1518 olgrf",
-          "c": "**1500 olgrf ✓**",
-          "d": "46 olgrf"
+          "a": "64 bytes",
+          "b": "1518 bytes",
+          "c": "**1500 bytes ✓**",
+          "d": "46 bytes"
         },
         "correct": "c"
       },
@@ -2023,10 +2023,10 @@ const CN_MCQ_BANK = [
         "id": 46,
         "question": "If an Ethernet frame is received with a payload of 30 bytes, what action is taken to meet standard sizing rules?",
         "options": {
-          "a": "Gur senzr vf qvfpneqrq nf n ehag senzr",
-          "b": "**Cnqqvat olgrf (mrebf) ner nqqrq gb gur cnlybnq gb ernpu gur 46-olgr zvavzhz ✓**",
-          "c": "Gur purpxfhz vf erpnyphyngrq sbe n 30-olgr senzr",
-          "d": "Gur fjvgpu ohssref vg va fgber-naq-sbejneq zbqr"
+          "a": "The frame is discarded as a runt frame",
+          "b": "**Padding bytes (zeros) are added to the payload to reach the 46-byte minimum ✓**",
+          "c": "The checksum is recalculated for a 30-byte frame",
+          "d": "The switch buffers it in store-and-forward mode"
         },
         "correct": "b"
       },
@@ -2034,10 +2034,10 @@ const CN_MCQ_BANK = [
         "id": 47,
         "question": "A MAC address is a 48-bit address. The first 3 bytes (24 bits) represent which identifier?",
         "options": {
-          "a": "Qrivpr Frevny VQ",
-          "b": "**BHV (Betnavmngvbanyyl Havdhr Vqragvsvre) nffvtarq ol VRRR ✓**",
-          "c": "VC Fhoarg Znfx cersvk",
-          "d": "Cebgbpby Cbeg Ahzore"
+          "a": "Device Serial ID",
+          "b": "**OUI (Organizationally Unique Identifier) assigned by IEEE ✓**",
+          "c": "IP Subnet Mask prefix",
+          "d": "Protocol Port Number"
         },
         "correct": "b"
       },
@@ -2067,10 +2067,10 @@ const CN_MCQ_BANK = [
         "id": 50,
         "question": "The IEEE splits the Data Link Layer into two sublayers. Which sublayer handles logical protocol multiplexing using EtherType?",
         "options": {
-          "a": "ZNP Fhoynlre",
-          "b": "**YYP (Ybtvpny Yvax Pbageby) Fhoynlre ✓**",
+          "a": "MAC Sublayer",
+          "b": "**LLC (Logical Link Control) Sublayer ✓**",
           "c": "6YbJCNA Fhoynlre",
-          "d": "Culfvpny Pbqvat Fhoynlre"
+          "d": "Physical Coding Sublayer"
         },
         "correct": "b"
       },
@@ -2078,10 +2078,10 @@ const CN_MCQ_BANK = [
         "id": 51,
         "question": "Which of the following devices operates at Layer 1 of the OSI model?",
         "options": {
-          "a": "Fjvgpu",
-          "b": "**Uho be Ercrngre ✓**",
-          "c": "Ebhgre",
-          "d": "Oevqtr"
+          "a": "Switch",
+          "b": "**Hub or Repeater ✓**",
+          "c": "Router",
+          "d": "Bridge"
         },
         "correct": "b"
       },
@@ -2089,10 +2089,10 @@ const CN_MCQ_BANK = [
         "id": 52,
         "question": "What is the primary action of a transparent bridge when it receives a frame with an unknown destination MAC address?",
         "options": {
-          "a": "Qebc gur senzr vzzrqvngryl",
-          "b": "**Sybbq gur senzr bhg bs nyy cbegf rkprcg gur cbeg bs bevtva ✓**",
-          "c": "Dhrel gur qrsnhyg tngrjnl ebhgre",
-          "d": "Ybt n ZNP pbyyvfvba reebe"
+          "a": "Drop the frame immediately",
+          "b": "**Flood the frame out of all ports except the port of origin ✓**",
+          "c": "Query the default gateway router",
+          "d": "Log a MAC collision error"
         },
         "correct": "b"
       },
@@ -2100,10 +2100,10 @@ const CN_MCQ_BANK = [
         "id": 53,
         "question": "Which device translates protocols between entirely different architectures (e.g. TCP/IP to IBM SNA)?",
         "options": {
-          "a": "Ynlre 3 Ebhgre",
-          "b": "**Tngrjnl ✓**",
-          "c": "Ynlre 2 Fjvgpu",
-          "d": "Npgvir Uho"
+          "a": "Layer 3 Router",
+          "b": "**Gateway ✓**",
+          "c": "Layer 2 Switch",
+          "d": "Active Hub"
         },
         "correct": "b"
       },
@@ -2111,10 +2111,10 @@ const CN_MCQ_BANK = [
         "id": 54,
         "question": "How is the Least Significant Bit of the first byte of a MAC address (the I/G bit) used?",
         "options": {
-          "a": "Gb qrabgr gur irefvba bs gur ZNP nqqerff",
-          "b": "**Gb qvfgvathvfu orgjrra Havpnfg (0) naq Zhygvpnfg/Oebnqpnfg (1) senzrf ✓**",
-          "c": "Gb vqragvsl gur VRRR znahsnpghere pbqr",
-          "d": "Gb pnyphyngr gur SPF genvyre purpxfhz"
+          "a": "To denote the version of the MAC address",
+          "b": "**To distinguish between Unicast (0) and Multicast/Broadcast (1) frames ✓**",
+          "c": "To identify the IEEE manufacturer code",
+          "d": "To calculate the FCS trailer checksum"
         },
         "correct": "b"
       },
@@ -2122,10 +2122,10 @@ const CN_MCQ_BANK = [
         "id": 55,
         "question": "What is the maximum size of a standard Ethernet frame (including headers, but excluding preamble and SFD)?",
         "options": {
-          "a": "64 olgrf",
-          "b": "1500 olgrf",
-          "c": "**1518 olgrf ✓** *(6 Qrfgvangvba + 6 Fbhepr + 2 Yratgu/Glcr + 1500 Qngn + 4 SPF)*\a",
-          "d": "1526 olgrf"
+          "a": "64 bytes",
+          "b": "1500 bytes",
+          "c": "**1518 bytes ✓** *(6 Destination + 6 Source + 2 Length/Type + 1500 Data + 4 FCS)*\n",
+          "d": "1526 bytes"
         },
         "correct": "c"
       },
@@ -2133,9 +2133,9 @@ const CN_MCQ_BANK = [
         "id": 56,
         "question": "A MAC address is hardcoded in a NIC's ROM, which is commonly referred to as the:",
         "options": {
-          "a": "Ybtvpny Nqqerff",
-          "b": "**Ohearq-Va Nqqerff (OVN) ✓**",
-          "c": "Havpnfg vqragvsvre",
+          "a": "Logical Address",
+          "b": "**Burned-In Address (BIA) ✓**",
+          "c": "Unicast identifier",
           "d": "BHV vaqrk"
         },
         "correct": "b"
@@ -2144,10 +2144,10 @@ const CN_MCQ_BANK = [
         "id": 57,
         "question": "Which of the following is a Layer 2 function?",
         "options": {
-          "a": "Ertrarengvat ovg yriry fvtanyf",
-          "b": "**Senzvat, culfvpny nqqerffvat, naq reebe qrgrpgvba ✓**",
-          "c": "Ebhgvat cnpxrgf npebff qvssrerag fhoargf",
-          "d": "Qvnybt pbageby naq purpxcbvagf"
+          "a": "Regenerating bit level signals",
+          "b": "**Framing, physical addressing, and error detection ✓**",
+          "c": "Routing packets across different subnets",
+          "d": "Dialog control and checkpoints"
         },
         "correct": "b"
       },
@@ -2157,7 +2157,7 @@ const CN_MCQ_BANK = [
         "options": {
           "a": "100%",
           "b": "50%",
-          "c": "**0% (pbyyvfvba-serr) ✓**",
+          "c": "**0% (collision-free) ✓**",
           "d": "18.4%"
         },
         "correct": "c"
@@ -2166,10 +2166,10 @@ const CN_MCQ_BANK = [
         "id": 59,
         "question": "What happens if a switch receives an Ethernet frame that is 50 bytes long?",
         "options": {
-          "a": "Gur fjvgpu cnqf vg gb 64 olgrf",
-          "b": "**Gur fjvgpu qvfpneqf vg nf n ehag senzr/pbyyvfvba sentzrag ✓**",
-          "c": "Gur fjvgpu sbejneqf vg gb gur ebhgre",
-          "d": "Gur fjvgpu sybbqf vg bhg bs nyy cbegf"
+          "a": "The switch pads it to 64 bytes",
+          "b": "**The switch discards it as a runt frame/collision fragment ✓**",
+          "c": "The switch forwards it to the router",
+          "d": "The switch floods it out of all ports"
         },
         "correct": "b"
       },
@@ -2178,9 +2178,9 @@ const CN_MCQ_BANK = [
         "question": "Which sublayer of the Data Link Layer regulates medium access (CSMA/CD, token passing)?",
         "options": {
           "a": "YYP Fhoynlre",
-          "b": "**ZNP Fhoynlre ✓**",
+          "b": "**MAC Sublayer ✓**",
           "c": "VC Fhoynlre",
-          "d": "Culfvpny Ynlre"
+          "d": "Physical Layer"
         },
         "correct": "b"
       }
@@ -2196,7 +2196,7 @@ const CN_MCQ_BANK = [
         "options": {
           "a": "`1101001`",
           "b": "`0101011`",
-          "c": "**`1101001` ✓** *(Pbyhza fhzf bs 1f: pby1: 1+0=1=>1; pby2: 0+1=1=>1; pby3: 1+1=2=>0; pby4: 0+1=1=>1; pby5: 1+1=2=>0; pby6: 0+0=0=>0; pby7: 1+0=1=>1)*\a",
+          "c": "**`1101001` ✓** *(Column sums of 1s: col1: 1+0=1=>1; col2: 0+1=1=>1; col3: 1+1=2=>0; col4: 0+1=1=>1; col5: 1+1=2=>0; col6: 0+0=0=>0; col7: 1+0=1=>1)*\n",
           "d": "`0010110`"
         },
         "correct": "c"
@@ -2205,10 +2205,10 @@ const CN_MCQ_BANK = [
         "id": 62,
         "question": "Why is simple VRC (parity check) ineffective at detecting burst errors?",
         "options": {
-          "a": "Vg pnaabg qrgrpg fvatyr ovg syvcf",
-          "b": "**Na rira ahzore bs ovg reebef va gur fnzr olgr pnapryf bhg gur cnevgl pbhag, rfpncvat qrgrpgvba ✓**",
-          "c": "Vg erdhverf qhny ohf nepuvgrpgherf",
-          "d": "Vg bayl bcrengrf ba bcgvpny svore"
+          "a": "It cannot detect single bit flips",
+          "b": "**An even number of bit errors in the same byte cancels out the parity count, escaping detection ✓**",
+          "c": "It requires dual bus architectures",
+          "d": "It only operates on optical fiber"
         },
         "correct": "b"
       },
@@ -2227,10 +2227,10 @@ const CN_MCQ_BANK = [
         "id": 64,
         "question": "If a receiver calculates a checksum sum of all blocks (including the checksum block) to be `1111` before complementing, what is the status of the data?",
         "options": {
-          "a": "Qngn pbagnvaf reebef naq zhfg or qvfpneqrq",
-          "b": "**Ab reebe vf qrgrpgrq, gur qngn vf npprcgrq ✓** *(pbzcyrzrag bs 1111 vf 0000)*\a",
-          "c": "Qngn arrqf cnqqvat",
-          "d": "Gur purpxfhz zhfg or erpnyphyngrq"
+          "a": "Data contains errors and must be discarded",
+          "b": "**No error is detected, the data is accepted ✓** *(complement of 1111 is 0000)*\n",
+          "c": "Data needs padding",
+          "d": "The checksum must be recalculated"
         },
         "correct": "b"
       },
@@ -2238,10 +2238,10 @@ const CN_MCQ_BANK = [
         "id": 65,
         "question": "How many redundancy bits ($r$) are required by Hamming Code to secure a 4-bit dataword ($m=4$)?",
         "options": {
-          "a": "2 ovgf",
-          "b": "**3 ovgf ✓** *(fvapr 2^3 >= 4 + 3 + 1)*\a",
-          "c": "4 ovgf",
-          "d": "5 ovgf"
+          "a": "2 bits",
+          "b": "**3 bits ✓** *(since 2^3 >= 4 + 3 + 1)*\n",
+          "c": "4 bits",
+          "d": "5 bits"
         },
         "correct": "b"
       },
@@ -2250,7 +2250,7 @@ const CN_MCQ_BANK = [
         "question": "In a 7-bit Hamming code codeword, at what bit positions are the parity bits placed?",
         "options": {
           "a": "Bqq cbfvgvbaf (1, 3, 5, 7)",
-          "b": "**Cbfvgvbaf gung ner cbjref bs 2 (1, 2, 4) ✓**",
+          "b": "**Positions that are powers of 2 (1, 2, 4) ✓**",
           "c": "Rira cbfvgvbaf (2, 4, 6)",
           "d": "Cevzr cbfvgvbaf (2, 3, 5, 7)"
         },
@@ -2262,7 +2262,7 @@ const CN_MCQ_BANK = [
         "options": {
           "a": "36.8%",
           "b": "50.0%",
-          "c": "**18.4% ✓** *($0.184$ jura T=0.5)*\a",
+          "c": "**18.4% ✓** *($0.184$ when G=0.5)*\n",
           "d": "10.0%"
         },
         "correct": "c"
@@ -2282,10 +2282,10 @@ const CN_MCQ_BANK = [
         "id": 69,
         "question": "In p-persistent CSMA, what does a station do when it senses the channel is idle?",
         "options": {
-          "a": "Genafzvgf vzzrqvngryl jvgu cebonovyvgl 1",
-          "b": "**Genafzvgf jvgu cebonovyvgl c, naq qrynlf genafzvffvba ol bar fybg jvgu cebonovyvgl 1-c ✓**",
-          "c": "Jnvgf n enaqbz onpx-bss gvzr naq frafrf ntnva",
-          "d": "Fraqf n wnzzvat fvtany"
+          "a": "Transmits immediately with probability 1",
+          "b": "**Transmits with probability p, and delays transmission by one slot with probability 1-p ✓**",
+          "c": "Waits a random back-off time and senses again",
+          "d": "Sends a jamming signal"
         },
         "correct": "b"
       },
@@ -2293,7 +2293,7 @@ const CN_MCQ_BANK = [
         "id": 70,
         "question": "What is the vulnerable time window during which a collision can occur in Pure ALOHA?",
         "options": {
-          "a": "Rdhny gb gur cebcntngvba qrynl ($G_c$)",
+          "a": "Equal to the propagation delay ($T_p$)",
           "b": "**Twice the frame transmission time ($2 \\times T_{fr}$) ✓**",
           "c": "Equal to the frame transmission time ($T_{fr}$)",
           "d": "Half the frame transmission time"
@@ -2304,10 +2304,10 @@ const CN_MCQ_BANK = [
         "id": 71,
         "question": "What is the minimum frame size for a 10 Mbps CSMA/CD network where the maximum propagation delay is $25.6\\ \\mu s$?",
         "options": {
-          "a": "32 olgrf",
-          "b": "**64 olgrf ✓** *(10Z * 2 * 25.6μf = 512 ovgf = 64 olgrf)*\a",
-          "c": "128 olgrf",
-          "d": "512 olgrf"
+          "a": "32 bytes",
+          "b": "**64 bytes ✓** *(10M * 2 * 25.6μs = 512 bits = 64 bytes)*\n",
+          "c": "128 bytes",
+          "d": "512 bytes"
         },
         "correct": "b"
       },
@@ -2315,9 +2315,9 @@ const CN_MCQ_BANK = [
         "id": 72,
         "question": "CSMA/CA avoids collisions in wireless networks using which mechanism?",
         "options": {
-          "a": "Yvfgravat sbe ryrpgevpny ersyrpgvbaf ba gur jver",
-          "b": "**VSF (Vagresenzr Fcnpr) gvzref naq enaqbz Pbagragvba Jvaqbjf ✓**",
-          "c": "N gbxra cnffvat zbavgbe fgngvba",
+          "a": "Listening for electrical reflections on the wire",
+          "b": "**IFS (Interframe Space) timers and random Contention Windows ✓**",
+          "c": "A token passing monitor station",
           "d": "Zbqhyb-2 KBE qvivfvba"
         },
         "correct": "b"
@@ -2348,10 +2348,10 @@ const CN_MCQ_BANK = [
         "id": 75,
         "question": "In CDMA, how is Station A's data recovered from the combined channel data $D = [0, -2, 0, +2]$ if its chip code is $C_A = [+1, -1, -1, +1]$?",
         "options": {
-          "a": "Ol cresbezvat zbqhyb-2 KBE qvivfvba",
-          "b": "**Ol pnyphyngvat gur qbg cebqhpg (Q · PN) naq qvivqvat ol gur pbqr yratgu (4) ✓** *(tvirf +1, v.r. ovg 1)*\a",
-          "c": "Ol purpxvat gur cnevgl ovg",
-          "d": "Ol qrperzragvat gur GGY"
+          "a": "By performing modulo-2 XOR division",
+          "b": "**By calculating the dot product (D · CA) and dividing by the code length (4) ✓** *(gives +1, i.e. bit 1)*\n",
+          "c": "By checking the parity bit",
+          "d": "By decrementing the TTL"
         },
         "correct": "b"
       },
@@ -2359,10 +2359,10 @@ const CN_MCQ_BANK = [
         "id": 76,
         "question": "What is the length of a burst error if the received data block `10010011` has errors at positions 2 and 6?",
         "options": {
-          "a": "2 ovgf",
-          "b": "**5 ovgf ✓** *(sebz cbfvgvba 2 gb 6 vf 5 ovgf)*\a",
-          "c": "6 ovgf",
-          "d": "8 ovgf"
+          "a": "2 bits",
+          "b": "**5 bits ✓** *(from position 2 to 6 is 5 bits)*\n",
+          "c": "6 bits",
+          "d": "8 bits"
         },
         "correct": "b"
       },
@@ -2381,10 +2381,10 @@ const CN_MCQ_BANK = [
         "id": 78,
         "question": "How many zeros are appended to the dataword before division if the CRC divisor is `10111`?",
         "options": {
-          "a": "5 mrebf",
-          "b": "**4 mrebf ✓** *($A - 1 = 4$)*\a",
-          "c": "6 mrebf",
-          "d": "3 mrebf"
+          "a": "5 zeros",
+          "b": "**4 zeros ✓** *($N - 1 = 4$)*\n",
+          "c": "6 zeros",
+          "d": "3 zeros"
         },
         "correct": "b"
       },
@@ -2395,7 +2395,7 @@ const CN_MCQ_BANK = [
           "a": "1-Crefvfgrag",
           "b": "**Aba-Crefvfgrag ✓**",
           "c": "c-Crefvfgrag",
-          "d": "Npgvir-Crefvfgrag"
+          "d": "Active-Persistent"
         },
         "correct": "b"
       },
@@ -2405,7 +2405,7 @@ const CN_MCQ_BANK = [
         "options": {
           "a": "EGF",
           "b": "PGF",
-          "c": "**Wnzzvat Fvtany ✓**",
+          "c": "**Jamming Signal ✓**",
           "d": "Cernzoyr"
         },
         "correct": "c"
@@ -2442,9 +2442,9 @@ const CN_MCQ_BANK = [
         "id": 83,
         "question": "What is the receiver window size ($W_r$) in Go-Back-N ARQ?",
         "options": {
-          "a": "Rdhny gb gur fraqre jvaqbj fvmr",
-          "b": "**1 ✓** *(vg bayl npprcgf senzrf va fgevpg frdhragvny beqre)*\a",
-          "c": "Unys gur fraqre jvaqbj fvmr",
+          "a": "Equal to the sender window size",
+          "b": "**1 ✓** *(it only accepts frames in strict sequential order)*\n",
+          "c": "Half the sender window size",
           "d": "Hayvzvgrq"
         },
         "correct": "b"
@@ -2464,10 +2464,10 @@ const CN_MCQ_BANK = [
         "id": 85,
         "question": "Why is Selective Repeat ARQ more efficient than Go-Back-N on noisy channels?",
         "options": {
-          "a": "Vg hfrf fznyyre frdhrapr ahzoref",
-          "b": "**Vg bayl ergenafzvgf gur fcrpvsvp ybfg/pbeehcgrq senzr, ohssrevat bgure bhg-bs-beqre neevinyf ✓**",
-          "c": "Vg qbrf abg erdhver gvzref",
-          "d": "Vg bcrengrf jvgubhg frdhrapr ahzoref"
+          "a": "It uses smaller sequence numbers",
+          "b": "**It only retransmits the specific lost/corrupted frame, buffering other out-of-order arrivals ✓**",
+          "c": "It does not require timers",
+          "d": "It operates without sequence numbers"
         },
         "correct": "b"
       },
@@ -2477,8 +2477,8 @@ const CN_MCQ_BANK = [
         "options": {
           "a": "Sentzragngvba",
           "b": "**Cvttlonpxvat ✓**",
-          "c": "Ebhgvat",
-          "d": "Pbyyvfvba Qrgrpgvba"
+          "c": "Routing",
+          "d": "Collision Detection"
         },
         "correct": "b"
       },
@@ -2487,7 +2487,7 @@ const CN_MCQ_BANK = [
         "question": "In IPv4 packet fragmentation, if a 4000-byte packet is fragmented with an MTU of 1500 bytes (20-byte IP header), what is the Fragment Offset of the second fragment?",
         "options": {
           "a": "1480",
-          "b": "**185 ✓** *(1480 olgrf bs qngn frag va svefg sentzrag; Bssfrg = 1480 / 8 = 185)*\a",
+          "b": "**185 ✓** *(1480 bytes of data sent in first fragment; Offset = 1480 / 8 = 185)*\n",
           "c": "370",
           "d": "0"
         },
@@ -2500,7 +2500,7 @@ const CN_MCQ_BANK = [
           "a": "ZS = 1",
           "b": "**ZS = 0 ✓** *(vaqvpngrf ab zber sentzragf sbyybj)*\a",
           "c": "ZS = 2",
-          "d": "ZS vf bzvggrq"
+          "d": "MF is omitted"
         },
         "correct": "b"
       },
@@ -2508,10 +2508,10 @@ const CN_MCQ_BANK = [
         "id": 89,
         "question": "Which IPv4 header field prevents packets from circulating endlessly in routing loops by being decremented at each hop?",
         "options": {
-          "a": "Urnqre Purpxfhz",
-          "b": "**Gvzr gb Yvir (GGY) ✓**",
+          "a": "Header Checksum",
+          "b": "**Time to Live (TTL) ✓**",
           "c": "Vqragvsvpngvba",
-          "d": "Cebgbpby"
+          "d": "Protocol"
         },
         "correct": "b"
       },
@@ -2530,10 +2530,10 @@ const CN_MCQ_BANK = [
         "id": 91,
         "question": "What is the primary operational flaw of the Distance Vector Routing protocol when links fail?",
         "options": {
-          "a": "Uvtu PCH hgvyvmngvba",
-          "b": "**Gur Pbhag-gb-Vasvavgl ceboyrz ✓**",
-          "c": "YFC cnpxrg sybbqvat ybbcf",
-          "d": "Nqqerff qrcyrgvba"
+          "a": "High CPU utilization",
+          "b": "**The Count-to-Infinity problem ✓**",
+          "c": "LSP packet flooding loops",
+          "d": "Address depletion"
         },
         "correct": "b"
       },
@@ -2552,10 +2552,10 @@ const CN_MCQ_BANK = [
         "id": 93,
         "question": "What is the IP range of Class B networks in classful addressing?",
         "options": {
-          "a": "`0.0.0.0` gb `127.255.255.255`",
-          "b": "**`128.0.0.0` gb `191.255.255.255` ✓**",
-          "c": "`192.0.0.0` gb `223.255.255.255`",
-          "d": "`224.0.0.0` gb `239.255.255.255`"
+          "a": "`0.0.0.0` to `127.255.255.255`",
+          "b": "**`128.0.0.0` to `191.255.255.255` ✓**",
+          "c": "`192.0.0.0` to `223.255.255.255`",
+          "d": "`224.0.0.0` to `239.255.255.255`"
         },
         "correct": "b"
       },
@@ -2563,10 +2563,10 @@ const CN_MCQ_BANK = [
         "id": 94,
         "question": "Why is the number of usable hosts in any subnet block calculated as $2^h - 2$?",
         "options": {
-          "a": "Gb yrnir fcnpr sbe frpbaqnel uhof",
-          "b": "**Gb rkpyhqr gur erfreirq argjbex nqqerff (svefg VC) naq oebnqpnfg nqqerff (ynfg VC) ✓**",
-          "c": "Gb nppbhag sbe cnpxrg pbyyvfvbaf",
-          "d": "Gb nppbzzbqngr qlanzvp cbegf"
+          "a": "To leave space for secondary hubs",
+          "b": "**To exclude the reserved network address (first IP) and broadcast address (last IP) ✓**",
+          "c": "To account for packet collisions",
+          "d": "To accommodate dynamic ports"
         },
         "correct": "b"
       },
@@ -2575,7 +2575,7 @@ const CN_MCQ_BANK = [
         "question": "What is the network address (first address) for the CIDR block IP address `192.168.1.50/29`?",
         "options": {
           "a": "`192.168.1.0`",
-          "b": "**`192.168.1.48` ✓** *(50 va ovanel: 00110010; /29 znfx xrrcf svefg 5 ovgf bs ynfg bpgrg => 00110000 = 48)*\a",
+          "b": "**`192.168.1.48` ✓** *(50 in binary: 00110010; /29 mask keeps first 5 bits of last octet => 00110000 = 48)*\n",
           "c": "`192.168.1.40`",
           "d": "`192.168.1.32`"
         },
@@ -2598,7 +2598,7 @@ const CN_MCQ_BANK = [
         "options": {
           "a": "BFCS",
           "b": "EVC",
-          "c": "**OTC ✓** *(Obeqre Tngrjnl Cebgbpby)*\a",
+          "c": "**BGP ✓** *(Border Gateway Protocol)*\n",
           "d": "VPZC"
         },
         "correct": "c"
@@ -2607,10 +2607,10 @@ const CN_MCQ_BANK = [
         "id": 98,
         "question": "What does a network mask of `255.255.255.0` indicate?",
         "options": {
-          "a": "Gur svefg 16 ovgf ercerfrag gur ubfg VQ",
-          "b": "**Gur svefg 24 ovgf ercerfrag gur argjbex VQ, naq gur ynfg 8 ovgf ercerfrag gur ubfg VQ ✓**",
-          "c": "Gur argjbex pna fhccbeg 255 fhoargf",
-          "d": "Nyy VC nqqerffrf va guvf oybpx ner zhygvpnfg bayl"
+          "a": "The first 16 bits represent the host ID",
+          "b": "**The first 24 bits represent the network ID, and the last 8 bits represent the host ID ✓**",
+          "c": "The network can support 255 subnets",
+          "d": "All IP addresses in this block are multicast only"
         },
         "correct": "b"
       },
@@ -2618,10 +2618,10 @@ const CN_MCQ_BANK = [
         "id": 99,
         "question": "In Link State Routing, what does each router do to learn the complete network topology?",
         "options": {
-          "a": "Crevbqvpnyyl funerf vgf ebhgvat gnoyr jvgu qverpg arvtuobef",
-          "b": "**Sybbqf Yvax Fgngr Cnpxrgf (YFCf) gb nyy ebhgref va gur argjbex ✓**",
-          "c": "Fraqf rpub cvatf gb gur qrsnhyg tngrjnl",
-          "d": "Dhrevrf n prageny QAF ertvfgene"
+          "a": "Periodically shares its routing table with direct neighbors",
+          "b": "**Floods Link State Packets (LSPs) to all routers in the network ✓**",
+          "c": "Sends echo pings to the default gateway",
+          "d": "Queries a central DNS registrar"
         },
         "correct": "b"
       },
@@ -2630,7 +2630,7 @@ const CN_MCQ_BANK = [
         "question": "In a sliding window protocol, if the sender window size is 15 and the sequence numbers use 4 bits, what is the maximum efficiency?",
         "options": {
           "a": "50%",
-          "b": "**100% ✓** *(fvapr Jf >= 1 + 2n vf fngvfsvrq)*\a",
+          "b": "**100% ✓** *(since Ws >= 1 + 2a is satisfied)*\n",
           "c": "15%",
           "d": "75%"
         },

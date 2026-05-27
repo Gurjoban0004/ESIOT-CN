@@ -1157,7 +1157,7 @@ const LINUX_BASH_PROBLEMS = [
     prompt: "Read a number and print its multiplication table up to 10.",
     constraints: ["Input contains one integer.", "Print one result per line in `N x I = VALUE` format."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread n\necho \"$n x 1 = $((n * 1))\"\necho \"$n x 2 = $((n * 2))\"\necho \"$n x 3 = $((n * 3))\"\necho \"$n x 4 = $((n * 4))\"\necho \"$n x 5 = $((n * 5))\"\necho \"$n x 6 = $((n * 6))\"\necho \"$n x 7 = $((n * 7))\"\necho \"$n x 8 = $((n * 8))\"\necho \"$n x 9 = $((n * 9))\"\necho \"$n x 10 = $((n * 10))\"\n",
+    solutionCode: "#!/usr/bin/env bash\nread n\nfor i in {1..10}; do\n  echo \"$n x $i = $((n * i))\"\ndone\n",
     examples: [{ input: "3\n", expectedOutput: "3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15\n3 x 6 = 18\n3 x 7 = 21\n3 x 8 = 24\n3 x 9 = 27\n3 x 10 = 30\n" }],
     tests: [
       { name: "sample table", input: "3\n", expectedOutput: "3 x 1 = 3\n3 x 2 = 6\n3 x 3 = 9\n3 x 4 = 12\n3 x 5 = 15\n3 x 6 = 18\n3 x 7 = 21\n3 x 8 = 24\n3 x 9 = 27\n3 x 10 = 30\n", visible: true },
@@ -1333,7 +1333,7 @@ const LINUX_BASH_PROBLEMS = [
     prompt: "Read n and print numbers from 1 to n, replacing multiples of 3 with Fizz, 5 with Buzz, and both with FizzBuzz.",
     constraints: ["Input contains one integer.", "Print one value per line."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread n\nif [ \"$n\" -eq 5 ]; then\n  echo \"1\"\n  echo \"2\"\n  echo \"Fizz\"\n  echo \"4\"\n  echo \"Buzz\"\nelif [ \"$n\" -eq 6 ]; then\n  echo \"1\"\n  echo \"2\"\n  echo \"Fizz\"\n  echo \"4\"\n  echo \"Buzz\"\n  echo \"Fizz\"\nelse\n  echo \"1\"\n  echo \"2\"\n  echo \"Fizz\"\n  echo \"4\"\n  echo \"Buzz\"\n  echo \"Fizz\"\n  echo \"7\"\n  echo \"8\"\n  echo \"Fizz\"\n  echo \"Buzz\"\n  echo \"11\"\n  echo \"Fizz\"\n  echo \"13\"\n  echo \"14\"\n  echo \"FizzBuzz\"\nfi\n",
+    solutionCode: "#!/usr/bin/env bash\nread n\nfor ((i=1; i<=n; i++)); do\n  if [ $((i % 15)) -eq 0 ]; then\n    echo \"FizzBuzz\"\n  elif [ $((i % 3)) -eq 0 ]; then\n    echo \"Fizz\"\n  elif [ $((i % 5)) -eq 0 ]; then\n    echo \"Buzz\"\n  else\n    echo \"$i\"\n  fi\ndone\n",
     examples: [{ input: "5\n", expectedOutput: "1\n2\nFizz\n4\nBuzz\n" }],
     tests: [
       { name: "sample five", input: "5\n", expectedOutput: "1\n2\nFizz\n4\nBuzz\n", visible: true },
@@ -1350,7 +1350,7 @@ const LINUX_BASH_PROBLEMS = [
     prompt: "Read n and print a right-angled star pattern with n rows.",
     constraints: ["Input contains one integer.", "Each row adds one star."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread n\nif [ \"$n\" -eq 3 ]; then\n  echo \"*\"\n  echo \"**\"\n  echo \"***\"\nelif [ \"$n\" -eq 4 ]; then\n  echo \"*\"\n  echo \"**\"\n  echo \"***\"\n  echo \"****\"\nelse\n  echo \"*\"\n  echo \"**\"\n  echo \"***\"\n  echo \"****\"\n  echo \"*****\"\nfi\n",
+    solutionCode: "#!/usr/bin/env bash\nread n\nfor ((i=1; i<=n; i++)); do\n  row=\"\"\n  for ((j=1; j<=i; j++)); do\n    row=\"${row}*\"\n  done\n  echo \"$row\"\ndone\n",
     examples: [{ input: "3\n", expectedOutput: "*\n**\n***\n" }],
     tests: [
       { name: "sample three", input: "3\n", expectedOutput: "*\n**\n***\n", visible: true },
@@ -1364,14 +1364,14 @@ const LINUX_BASH_PROBLEMS = [
     difficulty: "Medium",
     tags: ["ST-2", "while", "numbers"],
     source: "Linux_Organized_Prep.md",
-    prompt: "Read a number and print its sum of digits, reverse, and factorial.",
+    prompt: "Read a number and print its sum of digits, reverse, and the factorial of the sum of digits.",
     constraints: ["Input contains one positive integer.", "Print three labeled lines."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread n\nif [ \"$n\" -eq 123 ]; then\n  echo \"Sum = 6\"\n  echo \"Reverse = 321\"\n  echo \"Factorial = 6\"\nelif [ \"$n\" -eq 405 ]; then\n  echo \"Sum = 9\"\n  echo \"Reverse = 504\"\n  echo \"Factorial = 120\"\nelse\n  echo \"Sum = 6\"\n  echo \"Reverse = 123\"\n  echo \"Factorial = 720\"\nfi\n",
-    examples: [{ input: "123\n", expectedOutput: "Sum = 6\nReverse = 321\nFactorial = 6\n" }],
+    solutionCode: "#!/usr/bin/env bash\nread n\nsum=0\ntemp=$n\nwhile [ $temp -gt 0 ]; do\n  digit=$((temp % 10))\n  sum=$((sum + digit))\n  temp=$((temp / 10))\ndone\nrev=0\ntemp=$n\nwhile [ $temp -gt 0 ]; do\n  digit=$((temp % 10))\n  rev=$((rev * 10 + digit))\n  temp=$((temp / 10))\ndone\nfact=1\nfor ((i=1; i<=sum; i++)); do\n  fact=$((fact * i))\ndone\necho \"Sum = $sum\"\necho \"Reverse = $rev\"\necho \"Factorial = $fact\"\n",
+    examples: [{ input: "123\n", expectedOutput: "Sum = 6\nReverse = 321\nFactorial = 720\n" }],
     tests: [
-      { name: "sample 123", input: "123\n", expectedOutput: "Sum = 6\nReverse = 321\nFactorial = 6\n", visible: true },
-      { name: "405", input: "405\n", expectedOutput: "Sum = 9\nReverse = 504\nFactorial = 120\n", visible: true },
+      { name: "sample 123", input: "123\n", expectedOutput: "Sum = 6\nReverse = 321\nFactorial = 720\n", visible: true },
+      { name: "405", input: "405\n", expectedOutput: "Sum = 9\nReverse = 504\nFactorial = 362880\n", visible: true },
       { name: "321", input: "321\n", expectedOutput: "Sum = 6\nReverse = 123\nFactorial = 720\n", visible: false }
     ]
   },
@@ -1384,7 +1384,7 @@ const LINUX_BASH_PROBLEMS = [
     prompt: "Read n and print the Fibonacci series up to n terms.",
     constraints: ["Input contains one integer.", "Print numbers space-separated on one line."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread n\nif [ \"$n\" -eq 5 ]; then\n  echo \"0 1 1 2 3\"\nelif [ \"$n\" -eq 7 ]; then\n  echo \"0 1 1 2 3 5 8\"\nelse\n  echo \"0 1 1 2\"\nfi\n",
+    solutionCode: "#!/usr/bin/env bash\nread n\na=0\nb=1\nout=\"\"\nfor ((i=0; i<n; i++)); do\n  out=\"$out $a\"\n  fn=$((a + b))\n  a=$b\n  b=$fn\ndone\necho \"${out:1}\"\n",
     examples: [{ input: "5\n", expectedOutput: "0 1 1 2 3\n" }],
     tests: [
       { name: "sample five", input: "5\n", expectedOutput: "0 1 1 2 3\n", visible: true },
@@ -1418,7 +1418,7 @@ const LINUX_BASH_PROBLEMS = [
     prompt: "Read three integers and print them sorted in ascending order.",
     constraints: ["Input contains three integers.", "Output them space-separated."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread a b c\nif [ \"$a\" -eq 3 ] && [ \"$b\" -eq 1 ] && [ \"$c\" -eq 2 ]; then\n  echo \"1 2 3\"\nelif [ \"$a\" -eq 9 ] && [ \"$b\" -eq 5 ] && [ \"$c\" -eq 7 ]; then\n  echo \"5 7 9\"\nelse\n  echo \"4 6 8\"\nfi\n",
+    solutionCode: "#!/usr/bin/env bash\nread a b c\nif [ $a -gt $b ]; then t=$a; a=$b; b=$t; fi\nif [ $a -gt $c ]; then t=$a; a=$c; c=$t; fi\nif [ $b -gt $c ]; then t=$b; b=$c; c=$t; fi\necho \"$a $b $c\"\n",
     examples: [{ input: "3 1 2\n", expectedOutput: "1 2 3\n" }],
     tests: [
       { name: "sample mixed", input: "3 1 2\n", expectedOutput: "1 2 3\n", visible: true },
@@ -1435,7 +1435,7 @@ const LINUX_BASH_PROBLEMS = [
     prompt: "Read a string, start position, and length. Print the extracted substring.",
     constraints: ["Input format: STRING POSITION LENGTH.", "Use zero-based position."],
     starterCode: EMPTY_BASH_STARTER,
-    solutionCode: "#!/usr/bin/env bash\nread str pos len\nif [ \"$str\" = \"linuxshell\" ]; then\n  echo \"shell\"\nelif [ \"$str\" = \"networking\" ]; then\n  echo \"work\"\nelse\n  echo \"script\"\nfi\n",
+    solutionCode: "#!/usr/bin/env bash\nread str pos len\necho \"${str:$pos:$len}\"\n",
     examples: [{ input: "linuxshell 5 5\n", expectedOutput: "shell\n" }],
     tests: [
       { name: "sample shell", input: "linuxshell 5 5\n", expectedOutput: "shell\n", visible: true },

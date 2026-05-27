@@ -39,6 +39,7 @@ function loadSandbox() {
     .replace('const LINUX_MCQ_BANK', 'var LINUX_MCQ_BANK')
     .replace('const LINUX_BASH_PROBLEMS', 'var LINUX_BASH_PROBLEMS');
   vm.runInContext(dataSource, sandbox);
+  vm.runInContext(fs.readFileSync('IOT/bash-engine.js', 'utf8'), sandbox);
   vm.runInContext(fs.readFileSync('IOT/app.js', 'utf8'), sandbox);
   return sandbox;
 }
@@ -229,7 +230,7 @@ while [ $temp -gt 0 ]; do
 done
 fact=1
 i=1
-while [ $i -le $n ]; do
+while [ $i -le $sum ]; do
   fact=$((fact * i))
   i=$((i + 1))
 done
