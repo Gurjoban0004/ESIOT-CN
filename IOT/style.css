@@ -2546,3 +2546,786 @@ body.dark-theme .landing-subject-card:hover {
 .bash-code-editor {
   caret-color: #E9F1EA !important; /* Terminal style caret */
 }
+
+/* ============================================================
+   SMART NOTES — Floating Action Button (FAB)
+   ============================================================ */
+.smart-notes-fab {
+  position: fixed;
+  bottom: 2rem;
+  right: 2rem;
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--active-accent), #B58A3D);
+  color: #FFFDFB;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 4px 16px rgba(44, 42, 41, 0.18), 0 1px 4px rgba(44, 42, 41, 0.1);
+  z-index: 500;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+}
+
+.smart-notes-fab:hover {
+  transform: scale(1.1);
+  box-shadow: 0 6px 24px rgba(44, 42, 41, 0.25), 0 2px 6px rgba(44, 42, 41, 0.12);
+}
+
+.smart-notes-fab.panel-open {
+  transform: scale(0.9) rotate(45deg);
+}
+
+.smart-notes-fab .notes-count {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+  min-width: 20px;
+  height: 20px;
+  padding: 0 5px;
+  border-radius: 10px;
+  background-color: #E07A5F;
+  color: #FFFDFB;
+  font-size: 0.7rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--font-sans);
+  box-shadow: 0 2px 4px rgba(224, 122, 95, 0.3);
+  transition: transform 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.smart-notes-fab .notes-count.bump {
+  transform: scale(1.3);
+}
+
+.smart-notes-fab .notes-count:empty,
+.smart-notes-fab .notes-count[data-count="0"] {
+  display: none;
+}
+
+/* ============================================================
+   SMART NOTES — Side Panel
+   ============================================================ */
+.smart-notes-panel {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 400px;
+  height: 100vh;
+  background-color: #FFFDFB;
+  border-left: 1px solid var(--border-color);
+  box-shadow: -8px 0 30px rgba(44, 42, 41, 0.08);
+  z-index: 490;
+  display: flex;
+  flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+  font-family: var(--font-sans);
+}
+
+.smart-notes-panel.open {
+  transform: translateX(0);
+}
+
+.smart-notes-header {
+  padding: 1.25rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-shrink: 0;
+  background-color: #FAF8F5;
+}
+
+.smart-notes-header-left {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+.smart-notes-header-left h3 {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: var(--text-primary);
+  margin: 0;
+  border-left: none;
+  padding-left: 0;
+}
+
+.smart-notes-header-actions {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.smart-notes-header-actions button {
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.4rem 0.7rem;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.smart-notes-header-actions button:hover {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  border-color: var(--active-accent);
+}
+
+.smart-notes-header-actions button.copied {
+  background-color: #EEF6F2;
+  color: #2E5C43;
+  border-color: #CDE3D5;
+}
+
+.smart-notes-close-btn {
+  background: none !important;
+  border: none !important;
+  cursor: pointer;
+  color: var(--text-secondary);
+  padding: 0.3rem;
+  border-radius: 6px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.smart-notes-close-btn:hover {
+  background-color: #F0EAE1 !important;
+  color: var(--text-primary);
+}
+
+/* Filters */
+.smart-notes-filters {
+  padding: 0.75rem 1.5rem;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  gap: 0.4rem;
+  flex-shrink: 0;
+  flex-wrap: wrap;
+}
+
+.smart-notes-filter-pill {
+  background: none;
+  border: 1px solid var(--border-color);
+  border-radius: 20px;
+  padding: 0.3rem 0.8rem;
+  font-family: var(--font-sans);
+  font-size: 0.78rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.smart-notes-filter-pill:hover {
+  background-color: #F0EAE1;
+  color: var(--text-primary);
+}
+
+.smart-notes-filter-pill.active {
+  background-color: var(--active-accent);
+  color: #FFFDFB;
+  border-color: var(--active-accent);
+}
+
+/* Notes List */
+.smart-notes-body {
+  flex: 1;
+  overflow-y: auto;
+  padding: 1rem 1.25rem;
+}
+
+.smart-notes-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem 1rem;
+  text-align: center;
+  color: var(--text-secondary);
+}
+
+.smart-notes-empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 0.75rem;
+  opacity: 0.4;
+}
+
+.smart-notes-empty p {
+  font-size: 0.9rem;
+  line-height: 1.5;
+  max-width: 260px;
+}
+
+/* Individual Note Card */
+.smart-note-card {
+  background-color: #FAF8F5;
+  border: 1px solid var(--border-color);
+  border-radius: 10px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+  transition: all 0.2s ease;
+  animation: noteSlideIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+  position: relative;
+}
+
+.smart-note-card:hover {
+  border-color: var(--active-accent);
+  box-shadow: 0 2px 8px rgba(44, 42, 41, 0.05);
+}
+
+@keyframes noteSlideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-8px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.smart-note-source {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.smart-note-source-badge {
+  font-size: 0.7rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.15rem 0.5rem;
+  border-radius: 4px;
+  background-color: #F0EAE1;
+  color: var(--text-secondary);
+}
+
+.smart-note-source-badge.source-iot { background-color: #FDF1ED; color: #8C4735; }
+.smart-note-source-badge.source-cn { background-color: #EDF1FD; color: #5F7AE0; }
+.smart-note-source-badge.source-linux { background-color: #EAF5EF; color: #2F6F5E; }
+
+.smart-note-timestamp {
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  opacity: 0.7;
+  margin-left: auto;
+}
+
+.smart-note-context {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  margin-bottom: 0.5rem;
+  font-weight: 500;
+}
+
+.smart-note-content {
+  font-size: 0.9rem;
+  color: var(--text-primary);
+  line-height: 1.55;
+  margin-bottom: 0.4rem;
+  word-break: break-word;
+}
+
+.smart-note-content.selection-text {
+  border-left: 3px solid var(--active-accent);
+  padding-left: 0.6rem;
+  font-style: italic;
+  color: var(--text-secondary);
+}
+
+.smart-note-annotation {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  margin-top: 0.35rem;
+  line-height: 1.5;
+}
+
+.smart-note-delete {
+  position: absolute;
+  top: 0.6rem;
+  right: 0.6rem;
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--text-secondary);
+  opacity: 0;
+  padding: 0.25rem;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.smart-note-card:hover .smart-note-delete {
+  opacity: 0.6;
+}
+
+.smart-note-delete:hover {
+  opacity: 1 !important;
+  color: #E07A5F;
+  background-color: #FDF1ED;
+}
+
+/* Footer — Add Note */
+.smart-notes-footer {
+  padding: 1rem 1.25rem;
+  border-top: 1px solid var(--border-color);
+  flex-shrink: 0;
+  background-color: #FAF8F5;
+}
+
+.smart-notes-input-row {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.smart-notes-textarea {
+  flex: 1;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  resize: none;
+  outline: none;
+  background-color: #FFFDFB;
+  color: var(--text-primary);
+  line-height: 1.45;
+  min-height: 40px;
+  max-height: 100px;
+  transition: border-color 0.2s ease;
+}
+
+.smart-notes-textarea:focus {
+  border-color: var(--active-accent);
+}
+
+.smart-notes-textarea::placeholder {
+  color: var(--text-secondary);
+  opacity: 0.6;
+}
+
+.smart-notes-add-btn {
+  background-color: var(--active-accent);
+  color: #FFFDFB;
+  border: none;
+  border-radius: 8px;
+  padding: 0 1rem;
+  cursor: pointer;
+  font-family: var(--font-sans);
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.smart-notes-add-btn:hover {
+  filter: brightness(1.08);
+  transform: translateY(-1px);
+}
+
+/* ============================================================
+   SMART NOTES — Selection Tooltip
+   ============================================================ */
+.selection-tooltip {
+  position: absolute;
+  background-color: #FFFDFB;
+  border: 1px solid var(--border-color);
+  box-shadow: 0 4px 16px rgba(44, 42, 41, 0.12);
+  border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+  font-family: var(--font-sans);
+  font-size: 0.82rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  z-index: 510;
+  display: none;
+  align-items: center;
+  gap: 0.35rem;
+  transition: all 0.15s ease;
+  white-space: nowrap;
+  animation: tooltipPop 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+@keyframes tooltipPop {
+  from { opacity: 0; transform: translateY(4px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.selection-tooltip:hover {
+  border-color: var(--active-accent);
+  color: var(--active-accent);
+  box-shadow: 0 4px 20px rgba(44, 42, 41, 0.16);
+}
+
+.selection-tooltip.visible {
+  display: flex;
+}
+
+/* ============================================================
+   SMART NOTES — Starred Section in Panel
+   ============================================================ */
+.starred-section-toggle {
+  width: 100%;
+  background: none;
+  border: none;
+  border-top: 1px solid var(--border-color);
+  padding: 0.75rem 1.25rem;
+  font-family: var(--font-sans);
+  font-size: 0.88rem;
+  font-weight: 600;
+  color: var(--text-primary);
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  transition: background-color 0.2s ease;
+}
+
+.starred-section-toggle:hover {
+  background-color: #FAF8F5;
+}
+
+.starred-section-toggle .starred-count {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  background-color: #F0EAE1;
+  padding: 0.15rem 0.5rem;
+  border-radius: 10px;
+}
+
+.starred-section-content {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.35s ease;
+}
+
+.starred-section-content.expanded {
+  max-height: 2000px;
+}
+
+.starred-section-list {
+  padding: 0.5rem 1.25rem 1rem;
+}
+
+.starred-mcq-item {
+  background-color: #FAF8F5;
+  border: 1px solid var(--border-color);
+  border-radius: 8px;
+  padding: 0.75rem;
+  margin-bottom: 0.5rem;
+  font-size: 0.85rem;
+  line-height: 1.45;
+  color: var(--text-primary);
+}
+
+.starred-mcq-item-header {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  margin-bottom: 0.35rem;
+}
+
+.starred-mcq-subject-badge {
+  font-size: 0.65rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  padding: 0.1rem 0.4rem;
+  border-radius: 4px;
+  background-color: #F0EAE1;
+  color: var(--text-secondary);
+}
+
+.starred-mcq-question-text {
+  font-size: 0.85rem;
+  color: var(--text-primary);
+  margin-bottom: 0.25rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.starred-mcq-answer {
+  font-size: 0.78rem;
+  color: var(--success-color);
+  font-weight: 600;
+}
+
+/* ============================================================
+   STARRED MCQ — Star Button on MCQ Cards
+   ============================================================ */
+.mcq-card-header {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.mcq-star-btn {
+  background: none;
+  border: none;
+  cursor: pointer;
+  font-size: 1.25rem;
+  color: #D5CAB9;
+  padding: 0.2rem;
+  border-radius: 4px;
+  transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+  flex-shrink: 0;
+  line-height: 1;
+}
+
+.mcq-star-btn:hover {
+  color: #E3B261;
+  transform: scale(1.15);
+}
+
+.mcq-star-btn.starred {
+  color: #E3B261;
+  text-shadow: 0 0 8px rgba(227, 178, 97, 0.3);
+}
+
+@keyframes starPop {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.4); }
+  100% { transform: scale(1); }
+}
+
+.mcq-star-btn.star-animate {
+  animation: starPop 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+/* Starred Filter Toggle in Practice Dashboard */
+.starred-filter-btn {
+  background-color: #FFFDFB;
+  border: 1.5px solid var(--border-color);
+  color: var(--text-secondary);
+  font-family: var(--font-sans);
+  font-size: 0.8rem;
+  font-weight: 600;
+  padding: 0.5rem 1.2rem;
+  border-radius: 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.starred-filter-btn:hover {
+  background-color: #FAF8EE;
+  border-color: #E3B261;
+  color: #B58A3D;
+}
+
+.starred-filter-btn.active {
+  background-color: #FAF8EE;
+  border-color: #E3B261;
+  color: #B58A3D;
+  box-shadow: 0 0 0 2px rgba(227, 178, 97, 0.15);
+}
+
+/* ============================================================
+   SMART NOTES + STARRED — Dark Theme Overrides
+   ============================================================ */
+body.dark-theme .smart-notes-fab {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4), 0 1px 4px rgba(0, 0, 0, 0.2);
+}
+
+body.dark-theme .smart-notes-panel {
+  background-color: #201C1A;
+  border-left-color: var(--border-color);
+  box-shadow: -8px 0 30px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .smart-notes-header {
+  background-color: #26201D;
+  border-bottom-color: var(--border-color);
+}
+
+body.dark-theme .smart-notes-header-left h3 {
+  color: var(--text-primary);
+}
+
+body.dark-theme .smart-notes-header-actions button {
+  color: var(--text-secondary);
+  border-color: var(--border-color);
+}
+
+body.dark-theme .smart-notes-header-actions button:hover {
+  background-color: #292320;
+  color: var(--text-primary);
+}
+
+body.dark-theme .smart-notes-header-actions button.copied {
+  background-color: #1A3328;
+  color: #9CE0C1;
+  border-color: #285E46;
+}
+
+body.dark-theme .smart-notes-close-btn:hover {
+  background-color: #292320 !important;
+}
+
+body.dark-theme .smart-notes-filter-pill {
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+body.dark-theme .smart-notes-filter-pill:hover {
+  background-color: #292320;
+  color: var(--text-primary);
+}
+
+body.dark-theme .smart-notes-filter-pill.active {
+  background-color: var(--active-accent);
+  color: #FFFDFB;
+  border-color: var(--active-accent);
+}
+
+body.dark-theme .smart-note-card {
+  background-color: #26201D;
+  border-color: var(--border-color);
+}
+
+body.dark-theme .smart-note-card:hover {
+  border-color: var(--active-accent);
+}
+
+body.dark-theme .smart-note-source-badge {
+  background-color: #292320;
+  color: var(--text-secondary);
+}
+
+body.dark-theme .smart-note-source-badge.source-iot { background-color: #402824; color: #E99D87; }
+body.dark-theme .smart-note-source-badge.source-cn { background-color: #202334; color: #9C9FB9; }
+body.dark-theme .smart-note-source-badge.source-linux { background-color: #1E2D25; color: #9CE0C1; }
+
+body.dark-theme .smart-note-content { color: var(--text-primary); }
+body.dark-theme .smart-note-content.selection-text { color: var(--text-secondary); }
+body.dark-theme .smart-note-annotation { color: var(--text-primary); }
+body.dark-theme .smart-note-context { color: var(--text-secondary); }
+
+body.dark-theme .smart-note-delete:hover {
+  color: #FFB3A4;
+  background-color: #3D221C;
+}
+
+body.dark-theme .smart-notes-footer {
+  background-color: #26201D;
+  border-top-color: var(--border-color);
+}
+
+body.dark-theme .smart-notes-textarea {
+  background-color: #181514;
+  color: var(--text-primary);
+  border-color: var(--border-color);
+}
+
+body.dark-theme .selection-tooltip {
+  background-color: #2D2724;
+  border-color: var(--border-color);
+  color: var(--text-primary);
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+}
+
+body.dark-theme .selection-tooltip:hover {
+  border-color: var(--active-accent);
+  color: var(--active-accent);
+}
+
+body.dark-theme .starred-section-toggle {
+  border-top-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+body.dark-theme .starred-section-toggle:hover {
+  background-color: #26201D;
+}
+
+body.dark-theme .starred-section-toggle .starred-count {
+  background-color: #292320;
+  color: var(--text-secondary);
+}
+
+body.dark-theme .starred-mcq-item {
+  background-color: #26201D;
+  border-color: var(--border-color);
+  color: var(--text-primary);
+}
+
+body.dark-theme .starred-mcq-subject-badge {
+  background-color: #292320;
+  color: var(--text-secondary);
+}
+
+body.dark-theme .mcq-star-btn {
+  color: #4A3F39;
+}
+
+body.dark-theme .mcq-star-btn:hover {
+  color: #E3B261;
+}
+
+body.dark-theme .mcq-star-btn.starred {
+  color: #E3B261;
+  text-shadow: 0 0 8px rgba(227, 178, 97, 0.25);
+}
+
+body.dark-theme .starred-filter-btn {
+  background-color: #201C1A;
+  border-color: var(--border-color);
+  color: var(--text-secondary);
+}
+
+body.dark-theme .starred-filter-btn:hover {
+  background-color: #2D2420;
+  border-color: #B58A3D;
+  color: #E3B261;
+}
+
+body.dark-theme .starred-filter-btn.active {
+  background-color: #2D2420;
+  border-color: #B58A3D;
+  color: #E3B261;
+}
+
+/* ============================================================
+   SMART NOTES + STARRED — Mobile Overrides
+   ============================================================ */
+@media (max-width: 900px) {
+  .smart-notes-panel {
+    width: 100%;
+  }
+
+  .smart-notes-fab {
+    bottom: 1.25rem;
+    right: 1.25rem;
+    width: 46px;
+    height: 46px;
+  }
+}

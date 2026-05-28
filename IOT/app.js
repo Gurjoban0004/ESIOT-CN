@@ -111,7 +111,15 @@ let state = {
   },
   bashProgress: {
     linux: {}
-  }
+  },
+  smartNotes: [],
+  starredMcqs: {
+    iot: [],
+    cn: [],
+    linux: []
+  },
+  notesFilterSubject: 'all',
+  showStarredOnly: false
 };
 
 // ============================================================
@@ -153,6 +161,8 @@ function init() {
   CONFIG.subjects.linux.bashProblems = typeof LINUX_BASH_PROBLEMS !== 'undefined' ? LINUX_BASH_PROBLEMS : [];
 
   loadAllProgress();
+  loadSmartNotes();
+  loadStarredMcqs();
   setupEventListeners();
   updateTimer();
   setInterval(updateTimer, 60000);
@@ -161,6 +171,7 @@ function init() {
   setupSecurity();
 
   renderLandingPage();
+  initSmartNotesUI();
   
   if (typeof initThemeToggle === 'function') {
     initThemeToggle();
@@ -268,6 +279,50 @@ function saveBashProgress() {
   const subjectConfig = CONFIG.subjects[state.activeSubject];
   if (!subjectConfig.storageKeyBash) return;
   localStorage.setItem(subjectConfig.storageKeyBash, JSON.stringify(state.bashProgress[state.activeSubject] || {}));
+}
+
+// Smart Notes persistence
+function loadSmartNotes() {
+  try {
+    const saved = localStorage.getItem('prep_smart_notes');
+    if (saved) {
+      state.smartNotes = JSON.parse(saved) || [];
+    }
+  } catch (e) {
+    // TODO(security): Log only non-sensitive error context
+    state.smartNotes = [];
+  }
+}
+
+function saveSmartNotes() {
+  try {
+    localStorage.setItem('prep_smart_notes', JSON.stringify(state.smartNotes));
+  } catch (e) {
+    // localStorage may be full — silently fail
+  }
+}
+
+// Starred MCQs persistence
+function loadStarredMcqs() {
+  try {
+    const saved = localStorage.getItem('prep_starred_mcqs');
+    if (saved) {
+      const parsed = JSON.parse(saved);
+      if (parsed.iot) state.starredMcqs.iot = parsed.iot;
+      if (parsed.cn) state.starredMcqs.cn = parsed.cn;
+      if (parsed.linux) state.starredMcqs.linux = parsed.linux;
+    }
+  } catch (e) {
+    // TODO(security): Log only non-sensitive error context
+  }
+}
+
+function saveStarredMcqs() {
+  try {
+    localStorage.setItem('prep_starred_mcqs', JSON.stringify(state.starredMcqs));
+  } catch (e) {
+    // localStorage may be full — silently fail
+  }
 }
 
 function resetPracticeProgress() {
@@ -379,6 +434,15 @@ function setupEventListeners() {
     } else if (e.key === ' ' || e.key.toLowerCase() === 'm') {
       if (!isMcqSection() && !isBashSection()) {
         toggleTopicMastery(state.activeSection, state.activeTopicIndex);
+        e.preventDefault();
+      }
+    } else if (e.key.toLowerCase() === 'n') {
+      toggleSmartNotesPanel();
+      e.preventDefault();
+    } else if (e.key === 'Escape') {
+      const panel = document.getElementById('smart-notes-panel');
+      if (panel && panel.classList.contains('open')) {
+        toggleSmartNotesPanel();
         e.preventDefault();
       }
     }
@@ -1482,18 +1546,28 @@ function renderPracticeUnit(unitIndex) {
           <span class="quiz-stat-value">${accuracy}%</span>
         </div>
       </div>
-      <div class="quiz-controls" style="margin-top: 1rem;">
-        <button class="quiz-reset-btn" id="quiz-reset-progress-btn" style="width: 100%; font-size: 0.8rem;">
+      <div class="quiz-controls" style="margin-top: 1rem; display: flex; gap: 0.5rem;">
+        <button class="starred-filter-btn ${state.showStarredOnly ? 'active' : ''}" id="starred-filter-btn">
+          ★ Starred Only
+        </button>
+        <button class="quiz-reset-btn" id="quiz-reset-progress-btn" style="flex: 1; font-size: 0.8rem;">
           Reset Progress
         </button>
       </div>
     </div>
   `;
 
-  const questionsHtml = (unitObj.questions || []).map((q, idx) => {
+  // Filter for starred-only mode
+  const unitQuestions = unitObj.questions || [];
+  const displayQuestions = state.showStarredOnly
+    ? unitQuestions.filter(q => (state.starredMcqs[state.activeSubject] || []).includes(q.id))
+    : unitQuestions;
+
+  const questionsHtml = displayQuestions.map((q, idx) => {
     const qNum = idx + 1;
     const savedAns = state.practiceAnswers[state.activeSubject][q.id];
     const isAnswered = savedAns !== undefined;
+    const isStarred = (state.starredMcqs[state.activeSubject] || []).includes(q.id);
     let unitExplanation = '';
 
     const optionsListHtml = Object.keys(q.options).map(optLetter => {
@@ -1533,7 +1607,10 @@ function renderPracticeUnit(unitIndex) {
 
     return `
       <div class="mcq-card" data-question-id="${q.id}" data-correct-answer="${q.correct}">
-        <div class="mcq-question"><strong>Q${qNum}.</strong> ${q.question}</div>
+        <div class="mcq-card-header">
+          <div class="mcq-question"><strong>Q${qNum}.</strong> ${q.question}</div>
+          <button class="mcq-star-btn ${isStarred ? 'starred' : ''}" data-qid="${q.id}" title="Star this question">${isStarred ? '★' : '☆'}</button>
+        </div>
         <div class="mcq-options${answeredClass}" data-correct="${q.correct}">
           ${optionsListHtml}
         </div>
@@ -1585,6 +1662,40 @@ function renderPracticeUnit(unitIndex) {
       }
     });
   }
+
+  // Starred filter toggle
+  const starredFilterBtn = document.getElementById('starred-filter-btn');
+  if (starredFilterBtn) {
+    starredFilterBtn.addEventListener('click', () => {
+      state.showStarredOnly = !state.showStarredOnly;
+      renderPracticeUnit(unitIndex);
+    });
+  }
+
+  // Star button click handlers
+  elements.contentArea.querySelectorAll('.mcq-star-btn').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      const qId = parseInt(btn.getAttribute('data-qid'));
+      if (isNaN(qId)) return;
+      const starredList = state.starredMcqs[state.activeSubject] || [];
+      const idx = starredList.indexOf(qId);
+      if (idx > -1) {
+        starredList.splice(idx, 1);
+        btn.classList.remove('starred');
+        btn.textContent = '\u2606';
+      } else {
+        starredList.push(qId);
+        btn.classList.add('starred');
+        btn.textContent = '\u2605';
+        btn.classList.add('star-animate');
+        setTimeout(() => btn.classList.remove('star-animate'), 350);
+      }
+      state.starredMcqs[state.activeSubject] = starredList;
+      saveStarredMcqs();
+      renderStarredInNotesPanel();
+    });
+  });
 
   // Re-run KaTeX auto-render
   if (typeof renderMathInElement === 'function') {
@@ -1789,5 +1900,602 @@ function initThemeToggle() {
     } else {
       themeIconPath.setAttribute('d', 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'); // Moon icon
     }
+  });
+}
+
+// ============================================================
+//  SMART NOTES ENGINE
+// ============================================================
+function initSmartNotesUI() {
+  // --- Create FAB ---
+  const fab = document.createElement('button');
+  fab.className = 'smart-notes-fab';
+  fab.id = 'smart-notes-fab';
+  fab.setAttribute('aria-label', 'Toggle Smart Notes');
+  fab.title = 'Smart Notes (N)';
+
+  // SVG icon for notepad
+  const fabSvg = new DOMParser().parseFromString(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><line x1="10" y1="9" x2="8" y2="9"/></svg>',
+    'image/svg+xml'
+  );
+  fab.appendChild(fab.ownerDocument.importNode(fabSvg.documentElement, true));
+
+  const countBadge = document.createElement('span');
+  countBadge.className = 'notes-count';
+  countBadge.id = 'notes-count-badge';
+  fab.appendChild(countBadge);
+
+  fab.addEventListener('click', toggleSmartNotesPanel);
+  document.body.appendChild(fab);
+
+  // --- Create Panel ---
+  const panel = document.createElement('div');
+  panel.className = 'smart-notes-panel';
+  panel.id = 'smart-notes-panel';
+
+  // Header
+  const header = document.createElement('div');
+  header.className = 'smart-notes-header';
+
+  const headerLeft = document.createElement('div');
+  headerLeft.className = 'smart-notes-header-left';
+  const headerIcon = new DOMParser().parseFromString(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="color: var(--active-accent);"><path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"/><polyline points="14 2 14 8 20 8"/></svg>',
+    'image/svg+xml'
+  );
+  headerLeft.appendChild(headerLeft.ownerDocument.importNode(headerIcon.documentElement, true));
+  const headerTitle = document.createElement('h3');
+  headerTitle.textContent = 'Smart Notes';
+  headerLeft.appendChild(headerTitle);
+
+  const headerActions = document.createElement('div');
+  headerActions.className = 'smart-notes-header-actions';
+
+  const copyBtn = document.createElement('button');
+  copyBtn.id = 'copy-notes-btn';
+  copyBtn.textContent = '\uD83D\uDCCB Copy All';
+  copyBtn.addEventListener('click', copyNotesToClipboard);
+  headerActions.appendChild(copyBtn);
+
+  const closeBtn = document.createElement('button');
+  closeBtn.className = 'smart-notes-close-btn';
+  const closeSvg = new DOMParser().parseFromString(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+    'image/svg+xml'
+  );
+  closeBtn.appendChild(closeBtn.ownerDocument.importNode(closeSvg.documentElement, true));
+  closeBtn.addEventListener('click', toggleSmartNotesPanel);
+  headerActions.appendChild(closeBtn);
+
+  header.appendChild(headerLeft);
+  header.appendChild(headerActions);
+  panel.appendChild(header);
+
+  // Filters
+  const filters = document.createElement('div');
+  filters.className = 'smart-notes-filters';
+  filters.id = 'smart-notes-filters';
+  const filterOptions = [
+    { key: 'all', label: 'All' },
+    { key: 'iot', label: 'ES & IoT' },
+    { key: 'cn', label: 'CN' },
+    { key: 'linux', label: 'Linux' }
+  ];
+  filterOptions.forEach(opt => {
+    const pill = document.createElement('button');
+    pill.className = 'smart-notes-filter-pill' + (opt.key === 'all' ? ' active' : '');
+    pill.setAttribute('data-filter', opt.key);
+    pill.textContent = opt.label;
+    pill.addEventListener('click', () => {
+      state.notesFilterSubject = opt.key;
+      filters.querySelectorAll('.smart-notes-filter-pill').forEach(p => p.classList.remove('active'));
+      pill.classList.add('active');
+      renderNotesList();
+    });
+    filters.appendChild(pill);
+  });
+  panel.appendChild(filters);
+
+  // Notes list body
+  const body = document.createElement('div');
+  body.className = 'smart-notes-body';
+  body.id = 'smart-notes-body';
+  panel.appendChild(body);
+
+  // Starred MCQs section
+  const starredToggle = document.createElement('button');
+  starredToggle.className = 'starred-section-toggle';
+  starredToggle.id = 'starred-section-toggle';
+  const starredToggleText = document.createElement('span');
+  starredToggleText.textContent = '\u2605 Starred Questions';
+  starredToggle.appendChild(starredToggleText);
+  const starredCountBadge = document.createElement('span');
+  starredCountBadge.className = 'starred-count';
+  starredCountBadge.id = 'starred-count-badge';
+  starredToggle.appendChild(starredCountBadge);
+  panel.appendChild(starredToggle);
+
+  const starredContent = document.createElement('div');
+  starredContent.className = 'starred-section-content';
+  starredContent.id = 'starred-section-content';
+
+  const starredList = document.createElement('div');
+  starredList.className = 'starred-section-list';
+  starredList.id = 'starred-section-list';
+  starredContent.appendChild(starredList);
+
+  // Copy starred button
+  const copyStarredRow = document.createElement('div');
+  copyStarredRow.style.cssText = 'padding: 0 1.25rem 1rem; display: flex;';
+  const copyStarredBtn = document.createElement('button');
+  copyStarredBtn.id = 'copy-starred-btn';
+  copyStarredBtn.style.cssText = 'flex: 1;';
+  copyStarredBtn.className = 'starred-filter-btn';
+  copyStarredBtn.textContent = '\uD83D\uDCCB Copy Starred for AI';
+  copyStarredBtn.addEventListener('click', copyStarredToClipboard);
+  copyStarredRow.appendChild(copyStarredBtn);
+  starredContent.appendChild(copyStarredRow);
+  panel.appendChild(starredContent);
+
+  starredToggle.addEventListener('click', () => {
+    starredContent.classList.toggle('expanded');
+  });
+
+  // Footer
+  const footer = document.createElement('div');
+  footer.className = 'smart-notes-footer';
+
+  const inputRow = document.createElement('div');
+  inputRow.className = 'smart-notes-input-row';
+
+  const textarea = document.createElement('textarea');
+  textarea.className = 'smart-notes-textarea';
+  textarea.id = 'smart-notes-textarea';
+  textarea.placeholder = 'Write a note...';
+  textarea.rows = 1;
+  inputRow.appendChild(textarea);
+
+  const addBtn = document.createElement('button');
+  addBtn.className = 'smart-notes-add-btn';
+  addBtn.textContent = 'Add';
+  addBtn.addEventListener('click', () => {
+    const text = textarea.value.trim();
+    if (!text) return;
+    addNote({
+      sourceType: 'manual',
+      selectedText: '',
+      userAnnotation: text
+    });
+    textarea.value = '';
+  });
+  inputRow.appendChild(addBtn);
+  footer.appendChild(inputRow);
+  panel.appendChild(footer);
+
+  document.body.appendChild(panel);
+
+  // --- Create Selection Tooltip ---
+  const tooltip = document.createElement('div');
+  tooltip.className = 'selection-tooltip';
+  tooltip.id = 'selection-tooltip';
+  tooltip.textContent = '\uD83D\uDCCC Save to Notes';
+  document.body.appendChild(tooltip);
+
+  // Setup selection listener
+  setupSelectionTooltip();
+
+  // Initial render
+  updateNotesCount();
+  renderNotesList();
+  renderStarredInNotesPanel();
+}
+
+function toggleSmartNotesPanel() {
+  const panel = document.getElementById('smart-notes-panel');
+  const fab = document.getElementById('smart-notes-fab');
+  if (!panel || !fab) return;
+  
+  const isOpen = panel.classList.toggle('open');
+  fab.classList.toggle('panel-open', isOpen);
+
+  if (isOpen) {
+    renderNotesList();
+    renderStarredInNotesPanel();
+  }
+}
+
+function addNote(noteData) {
+  const note = {
+    id: 'note_' + Date.now() + '_' + Math.random().toString(36).slice(2, 7),
+    subject: state.activeSubject,
+    section: state.activeSection,
+    sectionName: CONFIG.subjects[state.activeSubject]?.sectionNames?.[state.activeSection] || state.activeSection,
+    topicTitle: '',
+    topicIndex: state.activeTopicIndex,
+    timestamp: Date.now(),
+    sourceType: noteData.sourceType || 'manual',
+    selectedText: noteData.selectedText || '',
+    userAnnotation: noteData.userAnnotation || ''
+  };
+
+  // Get topic title if on a study page
+  if (!isMcqSection() && !isBashSection()) {
+    const subjectData = CONFIG.subjects[state.activeSubject]?.data;
+    const topics = subjectData?.[state.activeSection];
+    if (topics && topics[state.activeTopicIndex]) {
+      note.topicTitle = topics[state.activeTopicIndex].title;
+    }
+  }
+
+  state.smartNotes.unshift(note);
+  saveSmartNotes();
+  updateNotesCount();
+  renderNotesList();
+
+  // Bump animation on badge
+  const badge = document.getElementById('notes-count-badge');
+  if (badge) {
+    badge.classList.add('bump');
+    setTimeout(() => badge.classList.remove('bump'), 300);
+  }
+}
+
+function deleteNote(noteId) {
+  state.smartNotes = state.smartNotes.filter(n => n.id !== noteId);
+  saveSmartNotes();
+  updateNotesCount();
+  renderNotesList();
+}
+
+function renderNotesList() {
+  const body = document.getElementById('smart-notes-body');
+  if (!body) return;
+
+  // Clear previous content safely
+  body.replaceChildren();
+
+  const filtered = state.notesFilterSubject === 'all'
+    ? state.smartNotes
+    : state.smartNotes.filter(n => n.subject === state.notesFilterSubject);
+
+  if (filtered.length === 0) {
+    const empty = document.createElement('div');
+    empty.className = 'smart-notes-empty';
+    const icon = document.createElement('div');
+    icon.className = 'smart-notes-empty-icon';
+    icon.textContent = '\uD83D\uDCDD';
+    empty.appendChild(icon);
+    const msg = document.createElement('p');
+    msg.textContent = state.smartNotes.length === 0
+      ? 'No notes yet. Select text on a page or type a note below.'
+      : 'No notes for this subject filter.';
+    empty.appendChild(msg);
+    body.appendChild(empty);
+    return;
+  }
+
+  filtered.forEach(note => {
+    const card = document.createElement('div');
+    card.className = 'smart-note-card';
+
+    // Source badge row
+    const sourceRow = document.createElement('div');
+    sourceRow.className = 'smart-note-source';
+
+    const badge = document.createElement('span');
+    badge.className = 'smart-note-source-badge source-' + note.subject;
+    badge.textContent = CONFIG.subjects[note.subject]?.label || note.subject;
+    sourceRow.appendChild(badge);
+
+    const timestamp = document.createElement('span');
+    timestamp.className = 'smart-note-timestamp';
+    timestamp.textContent = formatTimeAgo(note.timestamp);
+    sourceRow.appendChild(timestamp);
+    card.appendChild(sourceRow);
+
+    // Context line
+    if (note.topicTitle || note.sectionName) {
+      const context = document.createElement('div');
+      context.className = 'smart-note-context';
+      context.textContent = [note.sectionName, note.topicTitle].filter(Boolean).join(' \u2192 ');
+      card.appendChild(context);
+    }
+
+    // Selected text (if selection note)
+    if (note.selectedText) {
+      const selDiv = document.createElement('div');
+      selDiv.className = 'smart-note-content selection-text';
+      selDiv.textContent = note.selectedText;
+      card.appendChild(selDiv);
+    }
+
+    // Annotation / manual note
+    if (note.userAnnotation) {
+      const annoDiv = document.createElement('div');
+      annoDiv.className = note.selectedText ? 'smart-note-annotation' : 'smart-note-content';
+      annoDiv.textContent = note.userAnnotation;
+      card.appendChild(annoDiv);
+    }
+
+    // Delete button
+    const delBtn = document.createElement('button');
+    delBtn.className = 'smart-note-delete';
+    delBtn.title = 'Delete note';
+    const delSvg = new DOMParser().parseFromString(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>',
+      'image/svg+xml'
+    );
+    delBtn.appendChild(delBtn.ownerDocument.importNode(delSvg.documentElement, true));
+    delBtn.addEventListener('click', () => deleteNote(note.id));
+    card.appendChild(delBtn);
+
+    body.appendChild(card);
+  });
+}
+
+function updateNotesCount() {
+  const badge = document.getElementById('notes-count-badge');
+  if (!badge) return;
+  const count = state.smartNotes.length;
+  badge.textContent = count > 0 ? String(count) : '';
+  badge.setAttribute('data-count', String(count));
+}
+
+function formatTimeAgo(timestamp) {
+  const diff = Date.now() - timestamp;
+  const mins = Math.floor(diff / 60000);
+  if (mins < 1) return 'Just now';
+  if (mins < 60) return mins + 'm ago';
+  const hours = Math.floor(mins / 60);
+  if (hours < 24) return hours + 'h ago';
+  const days = Math.floor(hours / 24);
+  if (days < 7) return days + 'd ago';
+  return new Date(timestamp).toLocaleDateString();
+}
+
+function formatNotesForExport() {
+  if (state.smartNotes.length === 0) return 'No notes saved yet.';
+
+  let output = '\uD83D\uDCDA STUDY NOTES \u2014 prep\n';
+  output += '\u2550'.repeat(30) + '\n\n';
+
+  state.smartNotes.forEach(note => {
+    const subjectLabel = CONFIG.subjects[note.subject]?.label || note.subject;
+    const context = [subjectLabel, note.sectionName, note.topicTitle].filter(Boolean).join(' \u2192 ');
+    const timeAgo = formatTimeAgo(note.timestamp);
+
+    output += '[' + context + '] (' + timeAgo + ')\n';
+
+    if (note.selectedText) {
+      output += '\uD83D\uDCCC "' + note.selectedText + '"\n';
+    }
+    if (note.userAnnotation) {
+      const prefix = note.selectedText ? '\uD83D\uDCAD ' : '\u270D\uFE0F ';
+      output += prefix + note.userAnnotation + '\n';
+    }
+    output += '\n';
+  });
+
+  return output.trim();
+}
+
+function copyNotesToClipboard() {
+  const text = formatNotesForExport();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-notes-btn');
+    if (btn) {
+      const original = btn.textContent;
+      btn.textContent = '\u2713 Copied!';
+      btn.classList.add('copied');
+      setTimeout(() => {
+        btn.textContent = original;
+        btn.classList.remove('copied');
+      }, 2000);
+    }
+  }).catch(() => {
+    // Fallback: select from a temporary element
+  });
+}
+
+// ============================================================
+//  TEXT SELECTION → SAVE TO NOTES TOOLTIP
+// ============================================================
+function setupSelectionTooltip() {
+  const tooltip = document.getElementById('selection-tooltip');
+  if (!tooltip) return;
+
+  let selectedText = '';
+
+  document.addEventListener('mouseup', (e) => {
+    // Only on reading content area (theory pages)
+    const contentArea = document.getElementById('reading-content-area');
+    if (!contentArea || !contentArea.contains(e.target)) {
+      hideSelectionTooltip();
+      return;
+    }
+
+    // Don't show in MCQ/Bash modes
+    if (isMcqSection() || isBashSection()) {
+      hideSelectionTooltip();
+      return;
+    }
+
+    // Don't show if clicking on the tooltip itself
+    if (tooltip.contains(e.target)) return;
+
+    const selection = window.getSelection();
+    const text = selection ? selection.toString().trim() : '';
+
+    if (text.length > 3) {
+      selectedText = text;
+      const range = selection.getRangeAt(0);
+      const rect = range.getBoundingClientRect();
+      const scrollTop = window.pageYOffset || document.documentElement.scrollTop;
+      const scrollLeft = window.pageXOffset || document.documentElement.scrollLeft;
+
+      tooltip.style.top = (rect.bottom + scrollTop + 8) + 'px';
+      tooltip.style.left = (rect.left + scrollLeft + (rect.width / 2) - 60) + 'px';
+      tooltip.classList.add('visible');
+    } else {
+      hideSelectionTooltip();
+    }
+  });
+
+  tooltip.addEventListener('click', () => {
+    if (!selectedText) return;
+
+    addNote({
+      sourceType: 'selection',
+      selectedText: selectedText,
+      userAnnotation: ''
+    });
+
+    hideSelectionTooltip();
+    window.getSelection().removeAllRanges();
+
+    // Open panel briefly if not open
+    const panel = document.getElementById('smart-notes-panel');
+    if (panel && !panel.classList.contains('open')) {
+      toggleSmartNotesPanel();
+    }
+  });
+
+  // Hide tooltip on scroll or click elsewhere
+  document.addEventListener('mousedown', (e) => {
+    if (!tooltip.contains(e.target)) {
+      hideSelectionTooltip();
+    }
+  });
+}
+
+function hideSelectionTooltip() {
+  const tooltip = document.getElementById('selection-tooltip');
+  if (tooltip) {
+    tooltip.classList.remove('visible');
+  }
+}
+
+// ============================================================
+//  STARRED MCQs IN NOTES PANEL
+// ============================================================
+function renderStarredInNotesPanel() {
+  const list = document.getElementById('starred-section-list');
+  const countBadge = document.getElementById('starred-count-badge');
+  if (!list) return;
+
+  // Collect all starred questions across subjects
+  const allStarred = [];
+  Object.keys(state.starredMcqs).forEach(subject => {
+    const qIds = state.starredMcqs[subject] || [];
+    const mcqBank = CONFIG.subjects[subject]?.mcqs || [];
+    const allQuestions = mcqBank.flatMap(u => u.questions || []);
+
+    qIds.forEach(qId => {
+      const q = allQuestions.find(question => question.id === qId);
+      if (q) {
+        allStarred.push({ ...q, subject });
+      }
+    });
+  });
+
+  if (countBadge) {
+    countBadge.textContent = allStarred.length > 0 ? String(allStarred.length) : '';
+  }
+
+  list.replaceChildren();
+
+  if (allStarred.length === 0) {
+    const empty = document.createElement('p');
+    empty.style.cssText = 'font-size: 0.85rem; color: var(--text-secondary); padding: 0.5rem 0;';
+    empty.textContent = 'No starred questions yet. Star questions in MCQ practice to see them here.';
+    list.appendChild(empty);
+    return;
+  }
+
+  allStarred.forEach(q => {
+    const item = document.createElement('div');
+    item.className = 'starred-mcq-item';
+
+    const headerRow = document.createElement('div');
+    headerRow.className = 'starred-mcq-item-header';
+
+    const badge = document.createElement('span');
+    badge.className = 'starred-mcq-subject-badge';
+    badge.textContent = CONFIG.subjects[q.subject]?.label || q.subject;
+    headerRow.appendChild(badge);
+    item.appendChild(headerRow);
+
+    const qText = document.createElement('div');
+    qText.className = 'starred-mcq-question-text';
+    qText.textContent = q.question;
+    item.appendChild(qText);
+
+    if (q.correct && q.options) {
+      const ansDiv = document.createElement('div');
+      ansDiv.className = 'starred-mcq-answer';
+      const parsed = parseOption(q.options[q.correct] || '');
+      ansDiv.textContent = '\u2713 ' + q.correct.toUpperCase() + ') ' + parsed.text;
+      item.appendChild(ansDiv);
+    }
+
+    list.appendChild(item);
+  });
+}
+
+function formatStarredForExport() {
+  const allStarred = [];
+  Object.keys(state.starredMcqs).forEach(subject => {
+    const qIds = state.starredMcqs[subject] || [];
+    const mcqBank = CONFIG.subjects[subject]?.mcqs || [];
+    const allQuestions = mcqBank.flatMap(u => u.questions || []);
+
+    qIds.forEach(qId => {
+      const q = allQuestions.find(question => question.id === qId);
+      if (q) {
+        allStarred.push({ ...q, subject });
+      }
+    });
+  });
+
+  if (allStarred.length === 0) return 'No starred questions.';
+
+  let output = '\u2605 STARRED QUESTIONS \u2014 prep\n';
+  output += '\u2550'.repeat(30) + '\n\n';
+
+  allStarred.forEach((q, i) => {
+    const subjectLabel = CONFIG.subjects[q.subject]?.label || q.subject;
+    output += '\u2605 Q' + (i + 1) + '. [' + subjectLabel + '] ' + q.question + '\n';
+
+    if (q.options) {
+      Object.keys(q.options).forEach(optLetter => {
+        const parsed = parseOption(q.options[optLetter]);
+        const marker = optLetter === q.correct ? ' \u2190 Correct' : '';
+        output += '  ' + optLetter.toUpperCase() + ') ' + parsed.text + marker + '\n';
+      });
+    }
+
+    const savedAns = state.practiceAnswers[q.subject]?.[q.id];
+    if (savedAns !== undefined) {
+      const isCorrect = savedAns === q.correct;
+      output += '  [Your answer: ' + savedAns.toUpperCase() + ' \u2014 ' + (isCorrect ? 'Correct' : 'Incorrect') + ']\n';
+    }
+    output += '\n';
+  });
+
+  return output.trim();
+}
+
+function copyStarredToClipboard() {
+  const text = formatStarredForExport();
+  navigator.clipboard.writeText(text).then(() => {
+    const btn = document.getElementById('copy-starred-btn');
+    if (btn) {
+      const original = btn.textContent;
+      btn.textContent = '\u2713 Copied!';
+      setTimeout(() => { btn.textContent = original; }, 2000);
+    }
+  }).catch(() => {
+    // Fallback silently
   });
 }
