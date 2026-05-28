@@ -1958,6 +1958,18 @@ function initSmartNotesUI() {
   copyBtn.addEventListener('click', copyNotesToClipboard);
   headerActions.appendChild(copyBtn);
 
+  const filterBtn = document.createElement('button');
+  filterBtn.id = 'toggle-filters-btn';
+  filterBtn.textContent = '\uD83D\uDD0D Filter';
+  filterBtn.addEventListener('click', () => {
+    const filtersContainer = document.getElementById('smart-notes-filters');
+    if (filtersContainer) {
+      const isShowing = filtersContainer.classList.toggle('show');
+      filterBtn.classList.toggle('active', isShowing);
+    }
+  });
+  headerActions.appendChild(filterBtn);
+
   const closeBtn = document.createElement('button');
   closeBtn.className = 'smart-notes-close-btn';
   const closeSvg = new DOMParser().parseFromString(
@@ -2098,6 +2110,7 @@ function toggleSmartNotesPanel() {
   
   const isOpen = panel.classList.toggle('open');
   fab.classList.toggle('panel-open', isOpen);
+  document.body.classList.toggle('notes-open', isOpen);
 
   if (isOpen) {
     renderNotesList();

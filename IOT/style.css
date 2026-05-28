@@ -2566,7 +2566,7 @@ body.dark-theme .landing-subject-card:hover {
   justify-content: center;
   box-shadow: 0 4px 16px rgba(44, 42, 41, 0.18), 0 1px 4px rgba(44, 42, 41, 0.1);
   z-index: 500;
-  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease;
+  transition: transform 0.25s cubic-bezier(0.34, 1.56, 0.64, 1), box-shadow 0.25s ease, opacity 0.25s ease;
 }
 
 .smart-notes-fab:hover {
@@ -2575,7 +2575,9 @@ body.dark-theme .landing-subject-card:hover {
 }
 
 .smart-notes-fab.panel-open {
-  transform: scale(0.9) rotate(45deg);
+  opacity: 0;
+  pointer-events: none;
+  transform: scale(0.5);
 }
 
 .smart-notes-fab .notes-count {
@@ -2709,12 +2711,23 @@ body.dark-theme .landing-subject-card:hover {
 
 /* Filters */
 .smart-notes-filters {
-  padding: 0.75rem 1.5rem;
-  border-bottom: 1px solid var(--border-color);
+  padding: 0 1.5rem;
+  border-bottom: 1px solid transparent;
   display: flex;
   gap: 0.4rem;
   flex-shrink: 0;
   flex-wrap: wrap;
+  overflow: hidden;
+  max-height: 0;
+  opacity: 0;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.smart-notes-filters.show {
+  padding: 0.75rem 1.5rem;
+  border-bottom-color: var(--border-color);
+  max-height: 100px;
+  opacity: 1;
 }
 
 .smart-notes-filter-pill {
@@ -2804,6 +2817,7 @@ body.dark-theme .landing-subject-card:hover {
   gap: 0.4rem;
   margin-bottom: 0.5rem;
   flex-wrap: wrap;
+  padding-right: 1.5rem;
 }
 
 .smart-note-source-badge {
@@ -3312,6 +3326,29 @@ body.dark-theme .starred-filter-btn.active {
   background-color: #2D2420;
   border-color: #B58A3D;
   color: #E3B261;
+}
+
+/* Active State for Header Actions Buttons (e.g. Filter) */
+.smart-notes-header-actions button.active {
+  background-color: #FAF8EE;
+  border-color: #E3B261;
+  color: #B58A3D;
+}
+
+body.dark-theme .smart-notes-header-actions button.active {
+  background-color: #2D2420;
+  border-color: #B58A3D;
+  color: #E3B261;
+}
+
+/* Layout Shifting on Desktop */
+@media (min-width: 901px) {
+  main.content-pane {
+    transition: margin-right 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+  }
+  body.notes-open main.content-pane {
+    margin-right: 380px;
+  }
 }
 
 /* ============================================================
