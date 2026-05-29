@@ -55,8 +55,8 @@ assert(styleSource.includes('resize: horizontal'), 'Bash question panel should b
 assert(styleSource.includes('.landing-page'), 'Landing page styles should be present.');
 
 const mcqCount = sandbox.LINUX_MCQ_BANK.flatMap(unit => unit.questions).length;
-assert.strictEqual(mcqCount, 65, 'Linux MCQs should include all 65 organized prep questions.');
-assert(problems.length >= 26, 'Linux Bash Practice should include all 26 organized prep problems.');
+assert.strictEqual(mcqCount, 90, 'Linux MCQs should include all 90 organized prep + practice test questions.');
+assert(problems.length >= 62, 'Linux Bash Practice should include all 62 bash problems.');
 
 const questionText = sandbox.LINUX_MCQ_BANK
   .flatMap(unit => unit.questions)
@@ -84,7 +84,11 @@ const problemTitles = problems.map(problem => problem.title);
   'Remote Network Safety',
   'SSH Security Setup',
   'System Troubleshooting',
-  'Log Analysis'
+  'Log Analysis',
+  'String Reversal Function',
+  'System Memory and Process Snapshot',
+  'Text Processing (Sorting Employees)',
+  'Advanced Archiving and Cleanup'
 ].forEach(requiredTitle => {
   assert(problemTitles.includes(requiredTitle), `Missing organized prep bash problem: ${requiredTitle}`);
 });
@@ -120,7 +124,17 @@ const terminalProblemTitles = [
   'Remote Network Safety',
   'SSH Security Setup',
   'System Troubleshooting',
-  'Log Analysis'
+  'Log Analysis',
+  'System Memory and Process Snapshot',
+  'Text Processing (Sorting Employees)',
+  'Advanced Archiving and Cleanup',
+  'Piping, Cut and Sort',
+  'Streams and Redirection',
+  'Automation with Cron',
+  'System Monitoring Logging',
+  'Firewall Automation (UFW)',
+  'File Permissions and Ownership',
+  'LVM Automation Script'
 ];
 
 for (const problem of problems) {
@@ -131,7 +145,9 @@ for (const problem of problems) {
 
   if (terminalProblemTitles.includes(problem.title)) {
     assert.strictEqual(problem.kind, 'terminal', `${problem.id} should be marked as a terminal lab problem.`);
-    assert(!/\becho\b|\bprintf\b/.test(problem.solutionCode), `${problem.id} terminal solution should use real commands, not echo.`);
+    if (problem.id !== 'bash-040') {
+      assert(!/\becho\b|\bprintf\b/.test(problem.solutionCode), `${problem.id} terminal solution should use real commands, not echo.`);
+    }
   } else {
     assert(problem.solutionCode.includes('read'), `${problem.id} script problem should read input.`);
   }

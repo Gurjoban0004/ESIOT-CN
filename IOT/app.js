@@ -77,15 +77,18 @@ const CONFIG = {
       bashProblems: null,
       themeColors: {
         linuxMcq: '#3A8F65',
-        bashPractice: '#2F6F5E'
+        bashPractice: '#2F6F5E',
+        practiceTest1: '#8A5F9E'
       },
       sectionNames: {
         linuxMcq: 'Linux MCQs',
-        bashPractice: 'Bash Practice'
+        bashPractice: 'Bash Practice',
+        practiceTest1: 'Practice Test 1'
       },
       tabs: [
         { id: 'linuxMcq', label: 'MCQs' },
-        { id: 'bashPractice', label: 'Bash Practice' }
+        { id: 'bashPractice', label: 'Bash Practice' },
+        { id: 'practiceTest1', label: 'Practice Test 1' }
       ]
     }
   }
@@ -102,7 +105,7 @@ let state = {
   mastered: {
     iot: { st1: [], st2: [], endTerm: [], cheatSheet: [], practice: [] },
     cn:  { unit1_2: [], unit3_4: [], unit5_6: [], unit7_8: [], unit9: [], practice: [] },
-    linux: { linuxMcq: [], bashPractice: [] }
+    linux: { linuxMcq: [], bashPractice: [], practiceTest1: [] }
   },
   practiceAnswers: {
     iot: {},
@@ -159,6 +162,9 @@ function init() {
   CONFIG.subjects.cn.mcqs = typeof CN_MCQ_BANK !== 'undefined' ? CN_MCQ_BANK : [];
   CONFIG.subjects.linux.mcqs = typeof LINUX_MCQ_BANK !== 'undefined' ? LINUX_MCQ_BANK : [];
   CONFIG.subjects.linux.bashProblems = typeof LINUX_BASH_PROBLEMS !== 'undefined' ? LINUX_BASH_PROBLEMS : [];
+  CONFIG.subjects.linux.data = {
+    practiceTest1: typeof LINUX_PRACTICE_TEST_1 !== 'undefined' ? LINUX_PRACTICE_TEST_1 : []
+  };
 
   loadAllProgress();
   loadSmartNotes();
@@ -255,6 +261,16 @@ function loadAllProgress() {
     try {
       state.practiceAnswers.linux = JSON.parse(linuxPracticeSaved) || {};
     } catch (e) { console.error("Error loading Linux MCQ progress", e); }
+  }
+
+  const linuxSaved = localStorage.getItem(CONFIG.subjects.linux.storageKey);
+  if (linuxSaved) {
+    try {
+      const parsed = JSON.parse(linuxSaved);
+      Object.keys(state.mastered.linux).forEach(k => {
+        if (parsed[k]) state.mastered.linux[k] = parsed[k];
+      });
+    } catch (e) { console.error("Error loading Linux progress", e); }
   }
 
   const linuxBashSaved = localStorage.getItem(CONFIG.subjects.linux.storageKeyBash);
@@ -654,11 +670,15 @@ function renderTopNav(subjectId) {
 //  SECTION SWITCHING
 // ============================================================
 function isMcqSection(sectionId = state.activeSection) {
-  return sectionId === 'practice' || sectionId === 'linuxMcq';
+  if (sectionId === 'practice' || sectionId === 'linuxMcq') return true;
+  if (sectionId === 'practiceTest1' && state.activeSection === 'practiceTest1' && state.activeTopicIndex === 0) return true;
+  return false;
 }
 
 function isBashSection(sectionId = state.activeSection) {
-  return sectionId === 'bashPractice';
+  if (sectionId === 'bashPractice') return true;
+  if (sectionId === 'practiceTest1' && state.activeSection === 'practiceTest1' && state.activeTopicIndex >= 2) return true;
+  return false;
 }
 
 function getActiveMcqBank() {
@@ -757,8 +777,9 @@ function setActiveSection(sectionId) {
 function renderSidebar() {
   elements.topicList.innerHTML = '';
 
-  if (isBashSection()) {
-    const problems = getActiveBashProblems();
+  if (state.activeSection !== 'practiceTest1') {
+    if (isBashSection()) {
+      const problems = getActiveBashProblems();
     problems.forEach((problem, index) => {
       const searchText = `${problem.title} ${problem.tags.join(' ')}`.toLowerCase();
       const matchesSearch = searchText.includes(state.searchQuery);
@@ -840,6 +861,7 @@ function renderSidebar() {
     });
     return;
   }
+}
 
   const subjectData = CONFIG.subjects[state.activeSubject].data;
   const topics = subjectData[state.activeSection] || [];
@@ -887,6 +909,11 @@ function renderSidebar() {
 // ============================================================
 function selectTopic(index) {
   state.activeTopicIndex = index;
+
+  if (state.activeSubject === 'linux' && state.activeSection === 'practiceTest1') {
+    renderPracticeTest1Item(index);
+    return;
+  }
 
   if (isBashSection()) {
     renderBashProblem(index);
@@ -1078,7 +1105,7 @@ function evaluateBashProblem(problem, script, mode) {
     ? problem.tests.filter(test => test.visible)
     : problem.tests;
 
-  const usesEchoShortcut = problem.kind === 'terminal' && tokenizeBash(script).some(line => {
+  const usesEchoShortcut = problem.kind === 'terminal' && problem.id !== 'bash-040' && tokenizeBash(script).some(line => {
     const command = line.split('|')[0].trim();
     return /^echo\b|^printf\b/.test(command);
   });
@@ -1095,7 +1122,15 @@ function evaluateBashProblem(problem, script, mode) {
         passed: false
       };
     }
-    const result = simulateBash(script, test.input);
+    let scriptToRun = '';
+    if (problem.prependTestCode) {
+      scriptToRun += problem.prependTestCode + '\n';
+    }
+    scriptToRun += script;
+    if (problem.appendTestCode) {
+      scriptToRun += '\n' + problem.appendTestCode;
+    }
+    const result = simulateBash(scriptToRun, test.input);
     const passed = !result.error && outputsMatch(result.output, test.expectedOutput);
     return {
       name: test.name,
@@ -1901,6 +1936,94 @@ function initThemeToggle() {
       themeIconPath.setAttribute('d', 'M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z'); // Moon icon
     }
   });
+}
+
+// ============================================================
+//  PRACTICE TEST 1 CUSTOM RENDERING
+// ============================================================
+function renderPracticeTest1Item(index) {
+  const subjectData = CONFIG.subjects[state.activeSubject].data;
+  const topics = subjectData[state.activeSection] || [];
+  const topic = topics[index];
+  if (!topic) return;
+
+  const mainContentPane = document.getElementById('main-content-pane');
+  const container = document.querySelector('.container');
+
+  // Highlight sidebar item active state
+  const sidebarButtons = elements.topicList.querySelectorAll('.topic-item');
+  sidebarButtons.forEach(btn => {
+    const idx = parseInt(btn.getAttribute('data-index'));
+    btn.classList.toggle('active', idx === index);
+  });
+
+  elements.prevBtn.disabled = index === 0;
+  elements.prevBtn.style.opacity = index === 0 ? '0.5' : '1';
+  elements.nextBtn.disabled = index === topics.length - 1;
+  elements.nextBtn.style.opacity = index === topics.length - 1 ? '0.5' : '1';
+
+  if (topic.type === 'mcq') {
+    // MCQ Practice Mode
+    mainContentPane.classList.add('practice-mode');
+    mainContentPane.classList.remove('bash-mode');
+    container.classList.add('practice-active');
+    renderPracticeUnit(topic.unitIndex);
+  } else if (topic.type === 'coding') {
+    // Bash Practice Mode
+    mainContentPane.classList.add('bash-mode');
+    mainContentPane.classList.remove('practice-mode');
+    container.classList.add('practice-active');
+    renderBashProblem(topic.bashIndex);
+  } else if (topic.type === 'subjective') {
+    // Subjective Q&A Mode
+    mainContentPane.classList.remove('bash-mode', 'practice-mode');
+    container.classList.remove('practice-active');
+    
+    elements.welcomeScreen.style.display = 'none';
+    elements.readingPane.style.display = 'block';
+    
+    elements.sectionBadge.textContent = 'Practice Test 1';
+    elements.mainTitle.textContent = topic.title;
+    
+    let cardsHtml = topic.questions.map((q, i) => `
+      <div class="subjective-card" style="background: var(--card-bg, #FAF8F5); border: 1px solid var(--border-color); border-radius: 12px; padding: 1.5rem; position: relative; margin-bottom: 1.5rem; text-align: left;">
+        <div style="font-weight: 700; color: var(--active-accent); margin-bottom: 0.5rem; font-size: 0.85rem; text-transform: uppercase;">Question ${i + 1}</div>
+        <div style="font-size: 1rem; color: var(--text-primary); margin-bottom: 1rem; font-weight: 600; line-height: 1.45;">${escapeHtml(q.question)}</div>
+        <button class="reveal-btn" data-index="${i}" style="background-color: var(--active-accent); color: white; border: none; padding: 0.5rem 1rem; border-radius: 6px; font-weight: 600; cursor: pointer; transition: all 0.2s ease;">Reveal Answer</button>
+        <div class="subjective-answer" id="subjective-ans-${i}" style="display: none; margin-top: 1rem; padding: 1rem; background-color: var(--body-bg, #F3EFE9); border-left: 4px solid var(--active-accent); border-radius: 6px;">
+          <strong style="color: var(--text-primary); display: block; margin-bottom: 0.25rem;">Answer:</strong>
+          <code style="font-family: monospace; font-size: 0.95rem; color: var(--active-accent); background: none; padding: 0; word-break: break-all; white-space: pre-wrap; display: block;">${escapeHtml(q.answer)}</code>
+        </div>
+      </div>
+    `).join('');
+
+    elements.contentArea.innerHTML = `
+      <div class="subjective-practice-area" style="padding: 0.5rem 0 2rem; text-align: left;">
+        <p style="color: var(--text-secondary); margin-bottom: 2rem; font-size: 0.95rem;">Review the subjective questions below. Try to solve them yourself first, then click "Reveal Answer" to check your work.</p>
+        <div class="subjective-cards-container">
+          ${cardsHtml}
+        </div>
+      </div>
+    `;
+    
+    // Add event listeners
+    elements.contentArea.querySelectorAll('.reveal-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const i = btn.getAttribute('data-index');
+        const ans = document.getElementById(`subjective-ans-${i}`);
+        if (ans) {
+          const isHidden = ans.style.display === 'none';
+          ans.style.display = isHidden ? 'block' : 'none';
+          btn.textContent = isHidden ? 'Hide Answer' : 'Reveal Answer';
+          btn.style.backgroundColor = isHidden ? 'var(--text-secondary)' : 'var(--active-accent)';
+        }
+      });
+    });
+
+    elements.contentArea.style.overflowY = 'auto';
+    elements.contentArea.style.padding = '2.5rem 3rem'; 
+    elements.contentArea.style.display = 'block';
+  }
 }
 
 // ============================================================

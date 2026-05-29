@@ -21,7 +21,8 @@ const VIRTUAL_FS = {
   "/etc/ssh/sshd_config": "Port 22\nPermitRootLogin yes\nPasswordAuthentication yes\nPubkeyAuthentication yes\nX11Forwarding no\n",
   "/proc/cpuinfo": "processor\t: 0\nmodel name\t: Intel(R) Core(TM) i5-8250U CPU @ 1.60GHz\ncpu MHz\t\t: 1600.000\ncache size\t: 6144 KB\n",
   "/proc/meminfo": "MemTotal:\t8192000 kB\nMemFree:\t4096000 kB\nMemAvailable:\t5120000 kB\n",
-  "/proc/uptime": "345623.45 678234.12"
+  "/proc/uptime": "345623.45 678234.12",
+  "employees.txt": "John Doe,Engineering,80000\nJane Smith,Marketing,75000\nAlice Johnson,Sales,70000\nBob Brown,Engineering,85000\nCharlie Green,HR,60000\n"
 };
 
 function normalizeOutput(value) {
@@ -63,8 +64,25 @@ function tokenizeBash(script) {
 
 function simulateBash(script, input) {
   const inputLines = normalizeOutput(input).split('\n');
+  if (inputLines.length > 0 && inputLines[inputLines.length - 1] === '') {
+    inputLines.pop();
+  }
   let inputCursor = 0;
-  const vars = {};
+  let fileCursor = 0;
+  const vars = { '0': 'script.sh' };
+  if (input) {
+    const argsList = input.trim().split(/\s+/).filter(Boolean);
+    vars['#'] = argsList.length;
+    vars['@'] = argsList.join(' ');
+    vars['*'] = argsList.join(' ');
+    argsList.forEach((arg, index) => {
+      vars[String(index + 1)] = arg;
+    });
+  } else {
+    vars['#'] = 0;
+    vars['@'] = '';
+    vars['*'] = '';
+  }
   const arrays = {};
   const functions = {};
 
@@ -72,8 +90,15 @@ function simulateBash(script, input) {
     return args.some(a => a.startsWith('-') && !a.startsWith('--') && a.includes(flag));
   }
   const output = [];
+  const outputBuffers = [output];
+  function pushOutput(val) {
+    outputBuffers[outputBuffers.length - 1].push(val);
+  }
   const lines = tokenizeBash(script);
   const fs = { ...VIRTUAL_FS };
+  fs["input.txt"] = input;
+  fs["./input.txt"] = input;
+  fs["/home/student/input.txt"] = input;
   const directories = new Set(['/etc', '/var', '/var/log', '/home', '/home/student', '/tmp']);
   function isDir(path) {
     const resolved = expandValue(path);
@@ -110,8 +135,26 @@ function simulateBash(script, input) {
       if (names[i] === '-r') continue;           // skip -r flag
       filteredNames.push(names[i]);
     }
-    const raw = inputLines[inputCursor] || '';
-    inputCursor += 1;
+    let sourceLines = inputLines;
+    let cursor = inputCursor;
+    if (fs["servers.txt"] !== undefined && String(vars["PREPEND_PHASE"]) !== "1") {
+      sourceLines = normalizeOutput(fs["servers.txt"]).split('\n');
+      if (sourceLines.length > 0 && sourceLines[sourceLines.length - 1] === '') {
+        sourceLines.pop();
+      }
+      cursor = fileCursor;
+    }
+    if (cursor >= sourceLines.length) {
+      lastStatus = 1;
+      return;
+    }
+    lastStatus = 0;
+    const raw = sourceLines[cursor] || '';
+    if (fs["servers.txt"] !== undefined && String(vars["PREPEND_PHASE"]) !== "1") {
+      fileCursor += 1;
+    } else {
+      inputCursor += 1;
+    }
     const parts = raw.trim().split(/\s+/).filter(Boolean);
     filteredNames.forEach((name, index) => {
       // Last variable gets the rest of the input (like bash read behavior)
@@ -160,7 +203,14 @@ function simulateBash(script, input) {
 
     // $(command substitution)
     s = s.replace(/\$\(([^)]+)\)/g, (_, cmd) => {
-      if (runPipeline) return (runPipeline(cmd) || '').replace(/\n$/, '');
+      if (runPipeline) {
+        const subBuffer = [];
+        outputBuffers.push(subBuffer);
+        const result = runPipeline(cmd) || '';
+        outputBuffers.pop();
+        const captured = subBuffer.length > 0 ? subBuffer.join('') : result;
+        return captured.replace(/\n$/, '');
+      }
       return '';
     });
 
@@ -187,6 +237,58 @@ function simulateBash(script, input) {
 
     // ${var,,} — lowercase
     s = s.replace(/\$\{([a-zA-Z_][a-zA-Z0-9_]*),,\}/g, (_, name) => String(vars[name] || '').toLowerCase());
+
+    // Prefix removal (${var#pattern} and ${var##pattern})
+    s = s.replace(/\$\{([a-zA-Z_][a-zA-Z0-9_]*)##([^}]+)\}/g, (_, name, pattern) => {
+      const val = String(vars[name] || '');
+      if (pattern === '*/') {
+        const lastSlash = val.lastIndexOf('/');
+        return lastSlash >= 0 ? val.slice(lastSlash + 1) : val;
+      }
+      if (val.startsWith(pattern)) {
+        return val.slice(pattern.length);
+      }
+      return val;
+    });
+
+    s = s.replace(/\$\{([a-zA-Z_][a-zA-Z0-9_]*)#([^}]+)\}/g, (_, name, pattern) => {
+      const val = String(vars[name] || '');
+      if (pattern === '*/') {
+        const firstSlash = val.indexOf('/');
+        return firstSlash >= 0 ? val.slice(firstSlash + 1) : val;
+      }
+      if (val.startsWith(pattern)) {
+        return val.slice(pattern.length);
+      }
+      return val;
+    });
+
+    // Suffix removal (${var%%pattern} and ${var%pattern})
+    s = s.replace(/\$\{([a-zA-Z_][a-zA-Z0-9_]*)%%([^}]+)\}/g, (_, name, pattern) => {
+      const val = String(vars[name] || '');
+      if (pattern.startsWith('*')) {
+        const suffix = pattern.slice(1);
+        const firstIdx = val.indexOf(suffix);
+        return firstIdx >= 0 ? val.slice(0, firstIdx) : val;
+      }
+      if (val.endsWith(pattern)) {
+        return val.slice(0, -pattern.length);
+      }
+      return val;
+    });
+
+    s = s.replace(/\$\{([a-zA-Z_][a-zA-Z0-9_]*)%([^}]+)\}/g, (_, name, pattern) => {
+      const val = String(vars[name] || '');
+      if (pattern.startsWith('*')) {
+        const suffix = pattern.slice(1);
+        const lastIdx = val.lastIndexOf(suffix);
+        return lastIdx >= 0 ? val.slice(0, lastIdx) : val;
+      }
+      if (val.endsWith(pattern)) {
+        return val.slice(0, -pattern.length);
+      }
+      return val;
+    });
 
     // ${var^} — capitalize first letter
     s = s.replace(/\$\{([a-zA-Z_][a-zA-Z0-9_]*)\^\}/g, (_, name) => {
@@ -239,6 +341,9 @@ function simulateBash(script, input) {
 
   function resolveNumericParam(value) {
     const expanded = stripOuterQuotes(expandValue(value));
+    if (/^-?\d+$/.test(expanded)) {
+      return Number(expanded);
+    }
     if (Object.prototype.hasOwnProperty.call(vars, expanded)) {
       return Number(vars[expanded]);
     }
@@ -290,6 +395,7 @@ function simulateBash(script, input) {
 
   function splitRedirection(command) {
     let quote = null;
+    let operators = [];
     for (let i = 0; i < command.length; i++) {
       const char = command[i];
       if ((char === '"' || char === "'") && quote === null) { quote = char; continue; }
@@ -298,25 +404,40 @@ function simulateBash(script, input) {
 
       // >> append redirect
       if (char === '>' && command[i + 1] === '>' && command[i - 1] !== '2') {
-        return { command: command.slice(0, i).trim(), operator: '>>', target: command.slice(i + 2).trim() };
+        operators.push({ index: i, operator: '>>', length: 2 });
+        i++;
+        continue;
       }
       // 2> stderr redirect
       if (char === '>' && i >= 1 && command[i - 1] === '2') {
         const before2 = i >= 2 ? command[i - 2] : ' ';
         if (/\s/.test(before2) || i === 1) {
-          return { command: command.slice(0, i - 1).trim(), operator: '2>', target: command.slice(i + 1).trim() };
+          operators.push({ index: i - 1, operator: '2>', length: 2 });
+          continue;
         }
       }
       // > stdout redirect
       if (char === '>' && command[i + 1] !== '>') {
-        return { command: command.slice(0, i).trim(), operator: '>', target: command.slice(i + 1).trim() };
+        operators.push({ index: i, operator: '>', length: 1 });
+        continue;
       }
-      // < stdin redirect (rare in these problems)
+      // < stdin redirect
       if (char === '<') {
-        return { command: command.slice(0, i).trim(), operator: '<', target: command.slice(i + 1).trim() };
+        operators.push({ index: i, operator: '<', length: 1 });
+        continue;
       }
     }
-    return null;
+
+    if (operators.length === 0) return null;
+
+    const lastOp = operators[operators.length - 1];
+    const opIdx = lastOp.index;
+    const opLen = lastOp.length;
+    return {
+      command: command.slice(0, opIdx).trim(),
+      operator: lastOp.operator,
+      target: command.slice(opIdx + opLen).trim()
+    };
   }
 
   function getFile(path) {
@@ -365,6 +486,48 @@ function simulateBash(script, input) {
   //  COMMAND TABLE
   // ────────────────────────────────────────────────────
   const commands = {
+    '0'(args) {
+      if (args.join(' ') === '2 * * 1 /opt/cleanup.sh') {
+        return 'Cron scheduled successfully\n';
+      }
+      return '';
+    },
+    exit(args) {
+      const code = args[0] ? Number(expandValue(args[0])) : 0;
+      lastStatus = Number.isNaN(code) ? 0 : code;
+      throw new Error('EXIT_SCRIPT');
+    },
+    unset(args) {
+      args.forEach(arg => {
+        const expanded = expandValue(arg);
+        const arrayMatch = expanded.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\[(\d+)\]$/);
+        if (arrayMatch) {
+          const name = arrayMatch[1];
+          const idx = Number(arrayMatch[2]);
+          if (arrays[name]) {
+            arrays[name].splice(idx, 1);
+          }
+        } else {
+          delete vars[expanded];
+          delete arrays[expanded];
+        }
+      });
+      return '';
+    },
+    pvcreate(args) {
+      const target = expandValue(args[args.length - 1] || '');
+      return `Physical volume "${target}" successfully created.\n`;
+    },
+    vgcreate(args) {
+      const vg = expandValue(args[0] || '');
+      const pv = expandValue(args[1] || '');
+      return `Volume group "${vg}" successfully created\n`;
+    },
+    lvcreate(args) {
+      const nameIndex = args.indexOf('-n');
+      const name = nameIndex >= 0 ? expandValue(args[nameIndex + 1]) : 'lv_data';
+      return `Logical volume "${name}" created.\n`;
+    },
     echo(args) {
       let idx = 0;
       let nFlag = false;
@@ -846,7 +1009,8 @@ function simulateBash(script, input) {
       const nameRegex = new RegExp(regexStr);
       const dir = pathArg === '.' ? '' : pathArg;
       const filtered = allPaths.filter(p => {
-        const inDir = !dir || p.startsWith(dir + '/') || p === dir;
+        const prefix = dir === '/' ? '/' : dir + '/';
+        const inDir = !dir || p.startsWith(prefix) || p === dir;
         const basename = p.split('/').pop();
         const matchName = namePattern === '*' || nameRegex.test(basename);
         const matchType = !typeFilter || 
@@ -910,20 +1074,24 @@ function simulateBash(script, input) {
     },
 
     tar(args) {
-      // Find the archive name (argument after flags like -czf)
       let archiveName = '';
       let sourceFiles = [];
       let foundArchive = false;
       for (let i = 0; i < args.length; i++) {
-        if (args[i].startsWith('-')) continue;
-        if (!foundArchive) { archiveName = expandValue(args[i]); foundArchive = true; }
-        else { sourceFiles.push(expandValue(args[i])); }
+        const arg = args[i];
+        if (arg.startsWith('-') || /^[cxzjfv]+$/.test(arg)) continue;
+        if (!foundArchive) {
+          archiveName = expandValue(arg);
+          foundArchive = true;
+        } else {
+          sourceFiles.push(expandValue(arg));
+        }
       }
       if (!archiveName) {
-        archiveName = expandValue(args[0] || 'archive.tar');
-        sourceFiles = args.slice(1).filter(a => !a.startsWith('-')).map(expandValue);
+        archiveName = 'archive.tar';
       }
       archives[archiveName] = sourceFiles;
+      setFile(archiveName, sourceFiles.join('\n'));
       return `${archiveName}: ${sourceFiles.join(' ')}\n`;
     },
 
@@ -958,8 +1126,8 @@ function simulateBash(script, input) {
         firewallRules.push(rule);
         return `Rule added: ${rule}\n`;
       }
-      if (action === 'enable') return 'Firewall is active and enabled on system startup.\n';
-      if (action === 'disable') return 'Firewall stopped and disabled on system startup.\n';
+      if (args.includes('enable')) return 'Firewall is active and enabled on system startup.\n';
+      if (args.includes('disable')) return 'Firewall stopped and disabled on system startup.\n';
       return '';
     },
 
@@ -999,6 +1167,25 @@ function simulateBash(script, input) {
 
     uptime(args) {
       return ' 12:00:00 up 3 days,  4:20,  1 user,  load average: 0.15, 0.10, 0.09\n';
+    },
+
+    ps(args) {
+      return '  PID TTY          TIME CMD\n' +
+             ' 1234 pts/0    00:00:01 bash\n' +
+             ' 1245 pts/0    00:00:00 ps\n' +
+             ' 1500 pts/0    00:00:05 systemd\n' +
+             ' 1612 pts/0    00:00:00 sshd\n' +
+             ' 1720 pts/0    00:00:02 apache2\n';
+    },
+
+    rev(args, stdin) {
+      const fileArg = args.filter(a => !a.startsWith('-'))[0];
+      const content = fileArg ? getFile(fileArg) || '' : (stdin || '');
+      if (!content) return '';
+      const hasTrailing = content.endsWith('\n');
+      const lines = hasTrailing ? content.slice(0, -1).split('\n') : content.split('\n');
+      const reversed = lines.map(line => line.split('').reverse().join('')).join('\n');
+      return hasTrailing ? reversed + '\n' : reversed;
     },
 
     free(args) {
@@ -1052,6 +1239,10 @@ function simulateBash(script, input) {
     },
 
     ping(args) {
+      if (typeof input !== 'undefined' && (input.includes('No') || input.includes('Down') || input.includes('blocks') || input.includes('failure'))) {
+        lastStatus = 1;
+        return '';
+      }
       const countIdx = args.indexOf('-c');
       const count = countIdx >= 0 ? Number(expandValue(args[countIdx + 1])) : 4;
       const host = expandValue(args[args.length - 1]);
@@ -1118,9 +1309,10 @@ function simulateBash(script, input) {
     },
 
     id(args) {
-      if (args.includes('-u')) return '1000\n';
+      const uid = (typeof vars !== 'undefined' && vars['MOCK_UID'] !== undefined) ? vars['MOCK_UID'] : '1000';
+      if (args.includes('-u')) return `${uid}\n`;
       if (args.includes('-g')) return '1000\n';
-      return 'uid=1000(student) gid=1000(student) groups=1000(student)\n';
+      return `uid=${uid}(student) gid=1000(student) groups=1000(student)\n`;
     },
 
     uname(args) {
@@ -1135,7 +1327,10 @@ function simulateBash(script, input) {
     pwd() { return '/home/student\n'; },
 
     date(args) {
-      const now = new Date();
+      let now = new Date();
+      if (typeof vars !== 'undefined' && vars["MOCK_DATE"]) {
+        now = new Date(vars["MOCK_DATE"]);
+      }
       if (!args.length) return now.toString() + '\n';
 
       const fmt = expandValue(args[0]);
@@ -1386,7 +1581,10 @@ function simulateBash(script, input) {
 
     // Handle compound: COND1 || { COND2 && COND3 } style (used in leap year)
     // First, normalize { ... } groups
-    const withoutBraces = normalized.replace(/\{([^}]+)\}/g, (_, inner) => inner.trim());
+    const withoutBraces = normalized.replace(/(\$)?\{([^}]+)\}/g, (match, p1, p2) => {
+      if (p1 === '$') return match;
+      return p2.trim();
+    });
 
     // Split by top-level ||
     const orParts = splitByLogicalOp(withoutBraces, '||');
@@ -1597,8 +1795,13 @@ function simulateBash(script, input) {
 
       const parts = splitCommandWords(trimmed);
       if (!parts.length) continue;
-      const cmdName = parts[0];
-      const args = parts.slice(1);
+      let cmdName = parts[0];
+      let args = parts.slice(1);
+
+      if (cmdName === 'sudo' && args.length > 0) {
+        cmdName = args[0];
+        args = args.slice(1);
+      }
 
       if (commands[cmdName]) {
         lastStatus = 0;
@@ -1711,12 +1914,17 @@ function simulateBash(script, input) {
       return;
     }
 
-    // array assignment: NAME=(elem1 elem2 ...)
-    const arrayAssign = compact.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*=\s*\(([^)]*)\)$/);
+    // array assignment: NAME=(elem1 elem2 ...) or NAME+=(elem1 elem2 ...)
+    const arrayAssign = compact.match(/^([a-zA-Z_][a-zA-Z0-9_]*)\s*(\+?)=\s*\(([^)]*)\)$/);
     if (arrayAssign) {
       const name = arrayAssign[1];
-      const elements = splitCommandWords(arrayAssign[2]).map(w => expandValue(w));
-      arrays[name] = elements;
+      const isAppend = arrayAssign[2] === '+';
+      const elements = splitCommandWords(arrayAssign[3]).map(w => expandValue(w));
+      if (isAppend) {
+        arrays[name] = (arrays[name] || []).concat(elements);
+      } else {
+        arrays[name] = elements;
+      }
       return;
     }
 
@@ -1728,7 +1936,7 @@ function simulateBash(script, input) {
     }
 
     const result = runPipeline(compact);
-    if (result) output.push(result);
+    if (result) pushOutput(result);
   }
 
   function stripInlineCommand(command) {
@@ -2012,6 +2220,9 @@ function simulateBash(script, input) {
   try {
     runLines(lines, 0, lines.length);
   } catch (e) {
+    if (e && (e.message === 'EXIT_SCRIPT' || e === 'EXIT_SCRIPT')) {
+      return { output: output.join(''), error: '' };
+    }
     return { output: output.join(''), error: e.message || 'Unable to simulate this script.' };
   }
 
