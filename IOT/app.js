@@ -861,6 +861,8 @@ function renderSidebar() {
     });
     return;
   }
+  }  // end: if (state.activeSection !== 'practiceTest1')
+
   // --- PT1 Section: use compact sidebarLabel + type icon ---
   if (state.activeSubject === 'linux' && state.activeSection === 'practiceTest1') {
     const pt1Topics = CONFIG.subjects['linux'].data['practiceTest1'] || [];
