@@ -409,6 +409,41 @@ aside.sidebar {
   color: var(--active-accent);
 }
 
+/* --- Compact Topic Items (PT1 Sidebar) --- */
+.topic-item--compact {
+  padding: 0.45rem 0.65rem;
+  font-size: 0.82rem;
+  gap: 0.45rem;
+}
+
+/* PT1 type badge icon */
+.pt1-type-badge {
+  font-size: 0.72rem;
+  width: 18px;
+  height: 18px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-weight: 700;
+}
+
+.pt1-type-mcq { background-color: #EEF0FB; color: #5B6ED9; }
+.pt1-type-subjective { background-color: #FDF3E7; color: #B07830; }
+.pt1-type-coding { background-color: #EDF7F2; color: #3A8F65; }
+
+/* PT1 sidebar group divider */
+.sidebar-group-label {
+  font-size: 0.68rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: var(--text-secondary);
+  padding: 0.6rem 0.65rem 0.2rem;
+  opacity: 0.65;
+}
+
 /* --- Main Content Panel --- */
 main.content-pane {
   flex: 1;

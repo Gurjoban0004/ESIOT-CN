@@ -83,12 +83,12 @@ const CONFIG = {
       sectionNames: {
         linuxMcq: 'Linux MCQs',
         bashPractice: 'Bash Practice',
-        practiceTest1: 'Practice Test 1'
+        practiceTest1: 'PT1'
       },
       tabs: [
         { id: 'linuxMcq', label: 'MCQs' },
-        { id: 'bashPractice', label: 'Bash Practice' },
-        { id: 'practiceTest1', label: 'Practice Test 1' }
+        { id: 'bashPractice', label: 'Bash' },
+        { id: 'practiceTest1', label: 'PT1' }
       ]
     }
   }
@@ -861,7 +861,55 @@ function renderSidebar() {
     });
     return;
   }
-}
+  // --- PT1 Section: use compact sidebarLabel + type icon ---
+  if (state.activeSubject === 'linux' && state.activeSection === 'practiceTest1') {
+    const pt1Topics = CONFIG.subjects['linux'].data['practiceTest1'] || [];
+    const typeIcon = { mcq: '◉', subjective: '✎', coding: '⌨' };
+    const typeGroup = { mcq: 'MCQ', subjective: 'Theory', coding: null };
+    let lastGroup = null;
+    pt1Topics.forEach((topic, index) => {
+      const displayLabel = topic.sidebarLabel || topic.title;
+      const labelLower = displayLabel.toLowerCase();
+      const matchesSearch = labelLower.includes(state.searchQuery);
+      if (!matchesSearch) return;
+
+      // Group divider for coding section
+      const group = typeGroup[topic.type];
+      if (topic.type === 'coding' && lastGroup !== 'coding') {
+        const divider = document.createElement('div');
+        divider.className = 'sidebar-group-label';
+        divider.textContent = 'Coding';
+        elements.topicList.appendChild(divider);
+      }
+      if (group !== null && group !== lastGroup) {
+        lastGroup = group;
+      } else if (topic.type === 'coding') {
+        lastGroup = 'coding';
+      }
+
+      const isActive = index === state.activeTopicIndex;
+      const button = document.createElement('button');
+      button.className = `topic-item topic-item--compact ${isActive ? 'active' : ''}`;
+      button.setAttribute('data-index', index);
+
+      const badge = document.createElement('span');
+      badge.className = `pt1-type-badge pt1-type-${topic.type}`;
+      badge.textContent = typeIcon[topic.type] || '·';
+      button.appendChild(badge);
+
+      const textSpan = document.createElement('span');
+      textSpan.className = 'topic-title-text';
+      textSpan.textContent = displayLabel;
+      button.appendChild(textSpan);
+
+      button.addEventListener('click', () => {
+        selectTopic(index);
+        closeMobileSidebar();
+      });
+      elements.topicList.appendChild(button);
+    });
+    return;
+  }
 
   const subjectData = CONFIG.subjects[state.activeSubject].data;
   const topics = subjectData[state.activeSection] || [];
@@ -1373,6 +1421,33 @@ function renderBashProblem(index) {
     };
     saveBashProgress();
     if (window.updateBashHighlighting) window.updateBashHighlighting();
+  });
+
+  // Auto-closing bracket/quote pairs
+  const AUTO_CLOSE_PAIRS = {
+    '(': ')',
+    '[': ']',
+    '{': '}',
+    '"': '"',
+    "'": "'",
+    '`': '`'
+  };
+  editor.addEventListener('keydown', (e) => {
+    const open = e.key;
+    if (!AUTO_CLOSE_PAIRS.hasOwnProperty(open)) return;
+    const close = AUTO_CLOSE_PAIRS[open];
+    const start = editor.selectionStart;
+    const end = editor.selectionEnd;
+    const selected = editor.value.slice(start, end);
+    e.preventDefault();
+    const before = editor.value.slice(0, start);
+    const after = editor.value.slice(end);
+    editor.value = before + open + selected + close + after;
+    // Place cursor between the pair (or after selection)
+    const newCursor = start + 1 + selected.length;
+    editor.setSelectionRange(newCursor, newCursor);
+    // Trigger input event so state/highlighting updates
+    editor.dispatchEvent(new Event('input'));
   });
   
   // Initial highlight
@@ -1982,7 +2057,7 @@ function renderPracticeTest1Item(index) {
     elements.welcomeScreen.style.display = 'none';
     elements.readingPane.style.display = 'block';
     
-    elements.sectionBadge.textContent = 'Practice Test 1';
+    elements.sectionBadge.textContent = 'PT1';
     elements.mainTitle.textContent = topic.title;
     
     let cardsHtml = topic.questions.map((q, i) => `

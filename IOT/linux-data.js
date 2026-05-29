@@ -935,7 +935,7 @@ const LINUX_MCQ_BANK = [
     ]
   },
   {
-    unitName: "Practice Test 1 MCQs",
+    unitName: "PT1 MCQs",
     examGroup: "practiceTest1",
     questions: [
       {
@@ -2035,7 +2035,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-039",
     title: "String Reversal Function",
     difficulty: "Medium",
-    tags: ["Practice Test 1", "functions", "strings"],
+    tags: ["PT1", "functions", "strings"],
     source: "more.json",
     kind: "script",
     prompt: "Write a shell script using a function named reverse_string() that accepts a string and displays the reversed string. The script should read the input from the file `input.txt` and call the function with its contents.",
@@ -2053,7 +2053,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-040",
     title: "System Memory and Process Snapshot",
     difficulty: "Medium",
-    tags: ["Practice Test 1", "free", "ps", "redirection"],
+    tags: ["PT1", "free", "ps", "redirection"],
     source: "more.json",
     kind: "terminal",
     prompt: "Capture a snapshot of system memory and process count:\n1. Use the `free` command to check memory and save output to `memory.txt`.\n2. Use the `ps` command to list all running processes and save to `processes.txt`.\n3. Count total number of processes (lines) in `processes.txt`.\n4. Append text 'Process Check Complete' to `final_status.txt`.",
@@ -2072,7 +2072,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-041",
     title: "Text Processing (Sorting Employees)",
     difficulty: "Medium",
-    tags: ["Practice Test 1", "cut", "sort", "head"],
+    tags: ["PT1", "cut", "sort", "head"],
     source: "more.json",
     kind: "terminal",
     prompt: "Given `employees.txt` (Format: Name, Department, Salary):\n1. Extract only the first column (Names) from the file using `cut` (delimiter comma).\n2. Sort these names in reverse alphabetical order.\n3. Save sorted names into `sorted_staff.txt`.\n4. Display the first 2 names from the sorted file.",
@@ -2091,7 +2091,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-042",
     title: "Advanced Archiving and Cleanup",
     difficulty: "Medium",
-    tags: ["Practice Test 1", "mkdir", "tar", "rm"],
+    tags: ["PT1", "mkdir", "tar", "rm"],
     source: "more.json",
     kind: "terminal",
     prompt: "Prepare a backup of configuration:\n1. Create a directory named `deploy_cfg`.\n2. Create three files inside it: `v1.conf`, `v2.conf`, and `readme.txt`.\n3. Create compressed tar archive `config_backup.tar.gz` of the `deploy_cfg` directory.\n4. List the contents of current directory to verify the archive exists.\n5. Remove the `deploy_cfg` directory.",
@@ -2110,7 +2110,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-043",
     title: "File Existence Test",
     difficulty: "Easy",
-    tags: ["Practice Test 1", "files", "conditionals"],
+    tags: ["PT1", "files", "conditionals"],
     source: "more-1.json",
     kind: "script",
     prompt: "Write a script that checks if a file named config.txt exists in the current directory. If it does, display its contents using cat; otherwise, print 'File not found'.",
@@ -2129,7 +2129,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-044",
     title: "Number Comparison (Root Check)",
     difficulty: "Easy",
-    tags: ["Practice Test 1", "id", "conditionals"],
+    tags: ["PT1", "id", "conditionals"],
     source: "more-1.json",
     kind: "script",
     prompt: "Write a script that checks if the user running the script is the root user (UID 0). If not, echo 'Please run as root' and exit the script.",
@@ -2148,7 +2148,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-045",
     title: "Case Statement for Service Management",
     difficulty: "Easy",
-    tags: ["Practice Test 1", "case", "service"],
+    tags: ["PT1", "case", "service"],
     source: "more-1.json",
     kind: "script",
     prompt: "Write a script that takes a single positional parameter (start, stop, or restart). Use a case command to handle start, stop, restart, and any other parameter.",
@@ -2168,7 +2168,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-046",
     title: "For Loop & User Creation",
     difficulty: "Easy",
-    tags: ["Practice Test 1", "for-loop", "users"],
+    tags: ["PT1", "for-loop", "users"],
     source: "more-1.json",
     kind: "script",
     prompt: "Write a script using a for loop to iterate through a list of names (alice, bob, charlie) and echo adduser commands.",
@@ -2186,7 +2186,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-047",
     title: "While Loop File Reading",
     difficulty: "Medium",
-    tags: ["Practice Test 1", "while-loop", "read-file"],
+    tags: ["PT1", "while-loop", "read-file"],
     source: "more-1.json",
     kind: "script",
     prompt: "Read servers.txt line by line and prefix each line with 'Server: '.",
@@ -2207,7 +2207,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-048",
     title: "Positional Parameters and Arithmetic",
     difficulty: "Easy",
-    tags: ["Practice Test 1", "positional-parameters", "arithmetic"],
+    tags: ["PT1", "positional-parameters", "arithmetic"],
     source: "more-1.json",
     kind: "script",
     prompt: "Take two numbers as positional parameters and print their sum in the format 'The sum is: <sum>'.",
@@ -2227,7 +2227,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-049",
     title: "Functions Taking Parameters",
     difficulty: "Easy",
-    tags: ["Practice Test 1", "functions", "tar"],
+    tags: ["PT1", "functions", "tar"],
     source: "more-1.json",
     kind: "script",
     prompt: "Create a function named create_backup that accepts a target directory, runs tar to create 'backup.tar.gz' and displays a message.",
@@ -2245,7 +2245,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-050",
     title: "Function Returning a String",
     difficulty: "Easy",
-    tags: ["Practice Test 1", "functions", "date"],
+    tags: ["PT1", "functions", "date"],
     source: "more-1.json",
     kind: "script",
     prompt: "Write a function get_system_date() that displays the current date (YYYY-MM-DD), and output 'Today's date is <date>'.",
@@ -2264,7 +2264,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-051",
     title: "Advanced String Manipulation",
     difficulty: "Easy",
-    tags: ["Practice Test 1", "strings", "slicing"],
+    tags: ["PT1", "strings", "slicing"],
     source: "more-1.json",
     kind: "script",
     prompt: "Extract the filename 'index.html' from the path '/var/www/html/index.html' using parameter expansion.",
@@ -2283,7 +2283,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-052",
     title: "Suffix Removal",
     difficulty: "Easy",
-    tags: ["Practice Test 1", "strings", "suffix"],
+    tags: ["PT1", "strings", "suffix"],
     source: "more-1.json",
     kind: "script",
     prompt: "Remove the .txt extension from FILENAME='report.txt' using parameter expansion.",
@@ -2302,7 +2302,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-053",
     title: "Simple Arrays & Adding Elements",
     difficulty: "Easy",
-    tags: ["Practice Test 1", "arrays"],
+    tags: ["PT1", "arrays"],
     source: "more-1.json",
     kind: "script",
     prompt: "Create array services with 'ssh' and 'apache2'. Append 'mysql' to it and print all elements.",
@@ -2321,7 +2321,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-054",
     title: "Array Element Deletion",
     difficulty: "Easy",
-    tags: ["Practice Test 1", "arrays", "unset"],
+    tags: ["PT1", "arrays", "unset"],
     source: "more-1.json",
     kind: "script",
     prompt: "Initialize array ips with three addresses. Delete the second element and print the remaining.",
@@ -2340,7 +2340,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-055",
     title: "Piping, Cut and Sort",
     difficulty: "Medium",
-    tags: ["Practice Test 1", "cut", "sort", "redirection"],
+    tags: ["PT1", "cut", "sort", "redirection"],
     source: "more-1.json",
     kind: "terminal",
     prompt: "Extract usernames (first column) from passwd_copy.txt (colon-delimited), sort alphabetically, and save to users_list.txt.",
@@ -2360,7 +2360,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-056",
     title: "Streams and Redirection",
     difficulty: "Medium",
-    tags: ["Practice Test 1", "find", "redirection"],
+    tags: ["PT1", "find", "redirection"],
     source: "more-1.json",
     kind: "terminal",
     prompt: "Find all instances of secret.txt under the root directory and save stdout to found.txt while suppressing permission errors.",
@@ -2380,7 +2380,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-057",
     title: "Automation with Cron",
     difficulty: "Medium",
-    tags: ["Practice Test 1", "cron"],
+    tags: ["PT1", "cron"],
     source: "more-1.json",
     kind: "terminal",
     prompt: "Write a single crontab entry that runs /opt/cleanup.sh every Monday at 2:00 AM.",
@@ -2398,7 +2398,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-058",
     title: "System Monitoring Logging",
     difficulty: "Medium",
-    tags: ["Practice Test 1", "df", "free", "logging"],
+    tags: ["PT1", "df", "free", "logging"],
     source: "more-1.json",
     kind: "terminal",
     prompt: "Collect disk space usage (human readable) and memory stats (in MB) and append both to system_health.log.",
@@ -2417,7 +2417,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-059",
     title: "Firewall Automation (UFW)",
     difficulty: "Medium",
-    tags: ["Practice Test 1", "ufw", "firewall"],
+    tags: ["PT1", "ufw", "firewall"],
     source: "more-1.json",
     kind: "terminal",
     prompt: "Configure UFW defaults (deny incoming, allow outgoing), allow SSH traffic, and forcefully enable the firewall.",
@@ -2436,7 +2436,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-060",
     title: "Process Monitoring and Exit Status",
     difficulty: "Medium",
-    tags: ["Practice Test 1", "ping", "conditionals", "status"],
+    tags: ["PT1", "ping", "conditionals", "status"],
     source: "more-1.json",
     kind: "script",
     prompt: "Ping 8.8.8.8 with 2 packets, suppress output/errors, and print 'Network is Up' on success or 'Network is Down' on failure.",
@@ -2457,7 +2457,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-061",
     title: "File Permissions and Ownership",
     difficulty: "Medium",
-    tags: ["Practice Test 1", "mkdir", "chmod", "chown"],
+    tags: ["PT1", "mkdir", "chmod", "chown"],
     source: "more-1.json",
     kind: "terminal",
     prompt: "Create directory app_data, set its ownership to www-data:www-data, and set its permissions to rwx------ (700).",
@@ -2476,7 +2476,7 @@ const LINUX_BASH_PROBLEMS = [
     id: "bash-062",
     title: "LVM Automation Script",
     difficulty: "Medium",
-    tags: ["Practice Test 1", "lvm"],
+    tags: ["PT1", "lvm"],
     source: "more-1.json",
     kind: "terminal",
     prompt: "Initialize a physical volume on /dev/sdc, create volume group vg_backup on it, and create logical volume lv_archives using 100% free space.",
@@ -2495,12 +2495,14 @@ const LINUX_BASH_PROBLEMS = [
 const LINUX_PRACTICE_TEST_1 = [
   {
     type: "mcq",
-    title: "Part A: MCQ Quiz (25 questions)",
+    title: "Part A — MCQ Quiz (25 questions)",
+    sidebarLabel: "A · MCQ Quiz",
     unitIndex: 3
   },
   {
     type: "subjective",
-    title: "Part B: Subjective Questions",
+    title: "Part B — Subjective Questions",
+    sidebarLabel: "B · Theory Q&A",
     questions: [
       {
         question: "What is the specific systemctl command used to forcefully stop a malfunctioning service named apparmor and then immediately verify its new status?",
@@ -2526,122 +2528,146 @@ const LINUX_PRACTICE_TEST_1 = [
   },
   {
     type: "coding",
-    title: "Part C1: String Reversal Function",
+    title: "Part C1 — String Reversal Function",
+    sidebarLabel: "C1",
     bashIndex: 38
   },
   {
     type: "coding",
-    title: "Part C2: System Memory and Process Snapshot",
+    title: "Part C2 — System Memory and Process Snapshot",
+    sidebarLabel: "C2",
     bashIndex: 39
   },
   {
     type: "coding",
-    title: "Part C3: Text Processing (Sorting Employees)",
+    title: "Part C3 — Text Processing (Sorting Employees)",
+    sidebarLabel: "C3",
     bashIndex: 40
   },
   {
     type: "coding",
-    title: "Part C4: Advanced Archiving and Cleanup",
+    title: "Part C4 — Advanced Archiving and Cleanup",
+    sidebarLabel: "C4",
     bashIndex: 41
   },
   {
     type: "coding",
-    title: "Part C5: File Existence Test",
+    title: "Part C5 — File Existence Test",
+    sidebarLabel: "C5",
     bashIndex: 42
   },
   {
     type: "coding",
-    title: "Part C6: Number Comparison (Root Check)",
+    title: "Part C6 — Number Comparison (Root Check)",
+    sidebarLabel: "C6",
     bashIndex: 43
   },
   {
     type: "coding",
-    title: "Part C7: Case Statement for Service Management",
+    title: "Part C7 — Case Statement for Service Management",
+    sidebarLabel: "C7",
     bashIndex: 44
   },
   {
     type: "coding",
-    title: "Part C8: For Loop & User Creation",
+    title: "Part C8 — For Loop & User Creation",
+    sidebarLabel: "C8",
     bashIndex: 45
   },
   {
     type: "coding",
-    title: "Part C9: While Loop File Reading",
+    title: "Part C9 — While Loop File Reading",
+    sidebarLabel: "C9",
     bashIndex: 46
   },
   {
     type: "coding",
-    title: "Part C10: Positional Parameters and Arithmetic",
+    title: "Part C10 — Positional Parameters and Arithmetic",
+    sidebarLabel: "C10",
     bashIndex: 47
   },
   {
     type: "coding",
-    title: "Part C11: Functions Taking Parameters",
+    title: "Part C11 — Functions Taking Parameters",
+    sidebarLabel: "C11",
     bashIndex: 48
   },
   {
     type: "coding",
-    title: "Part C12: Function Returning a String",
+    title: "Part C12 — Function Returning a String",
+    sidebarLabel: "C12",
     bashIndex: 49
   },
   {
     type: "coding",
-    title: "Part C13: Advanced String Manipulation",
+    title: "Part C13 — Advanced String Manipulation",
+    sidebarLabel: "C13",
     bashIndex: 50
   },
   {
     type: "coding",
-    title: "Part C14: Suffix Removal",
+    title: "Part C14 — Suffix Removal",
+    sidebarLabel: "C14",
     bashIndex: 51
   },
   {
     type: "coding",
-    title: "Part C15: Simple Arrays & Adding Elements",
+    title: "Part C15 — Simple Arrays & Adding Elements",
+    sidebarLabel: "C15",
     bashIndex: 52
   },
   {
     type: "coding",
-    title: "Part C16: Array Element Deletion",
+    title: "Part C16 — Array Element Deletion",
+    sidebarLabel: "C16",
     bashIndex: 53
   },
   {
     type: "coding",
-    title: "Part C17: Piping, Cut and Sort",
+    title: "Part C17 — Piping, Cut and Sort",
+    sidebarLabel: "C17",
     bashIndex: 54
   },
   {
     type: "coding",
-    title: "Part C18: Streams and Redirection",
+    title: "Part C18 — Streams and Redirection",
+    sidebarLabel: "C18",
     bashIndex: 55
   },
   {
     type: "coding",
-    title: "Part C19: Automation with Cron",
+    title: "Part C19 — Automation with Cron",
+    sidebarLabel: "C19",
     bashIndex: 56
   },
   {
     type: "coding",
-    title: "Part C20: System Monitoring Logging",
+    title: "Part C20 — System Monitoring Logging",
+    sidebarLabel: "C20",
     bashIndex: 57
   },
   {
     type: "coding",
-    title: "Part C21: Firewall Automation (UFW)",
+    title: "Part C21 — Firewall Automation (UFW)",
+    sidebarLabel: "C21",
     bashIndex: 58
   },
   {
     type: "coding",
-    title: "Part C22: Process Monitoring and Exit Status",
+    title: "Part C22 — Process Monitoring and Exit Status",
+    sidebarLabel: "C22",
     bashIndex: 59
   },
   {
     type: "coding",
-    title: "Part C23: File Permissions and Ownership",
+    title: "Part C23 — File Permissions and Ownership",
+    sidebarLabel: "C23",
     bashIndex: 60
   },
   {
     type: "coding",
-    title: "Part C24: LVM Automation Script",
+    title: "Part C24 — LVM Automation Script",
+    sidebarLabel: "C24",
     bashIndex: 61
   }
 ];
