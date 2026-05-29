@@ -777,121 +777,132 @@ function setActiveSection(sectionId) {
 function renderSidebar() {
   elements.topicList.innerHTML = '';
 
+  // Helper: extract subtitle from title like "Part C1 — Some Description"
+  function extractSubtitle(title) {
+    const sep = title.indexOf(' \u2014 ');
+    return sep !== -1 ? title.slice(sep + 3) : title;
+  }
+
   if (state.activeSection !== 'practiceTest1') {
+
+    // ── Bash Practice: number badge + title ─────────────────────────────
     if (isBashSection()) {
       const problems = getActiveBashProblems();
-    problems.forEach((problem, index) => {
-      const searchText = `${problem.title} ${problem.tags.join(' ')}`.toLowerCase();
-      const matchesSearch = searchText.includes(state.searchQuery);
-      if (!matchesSearch) return;
+      problems.forEach((problem, index) => {
+        const searchText = `${problem.title} ${problem.tags.join(' ')}`.toLowerCase();
+        if (!searchText.includes(state.searchQuery)) return;
 
-      const progress = state.bashProgress[state.activeSubject][problem.id] || {};
-      const isSolved = progress.solved === true;
-      const isActive = index === state.activeTopicIndex;
+        const progress = state.bashProgress[state.activeSubject][problem.id] || {};
+        const isSolved = progress.solved === true;
+        const isActive = index === state.activeTopicIndex;
 
-      const button = document.createElement('button');
-      button.className = `topic-item ${isActive ? 'active' : ''} ${isSolved ? 'mastered' : ''}`;
-      button.setAttribute('data-index', index);
+        const button = document.createElement('button');
+        button.className = `topic-item topic-item--rich ${isActive ? 'active' : ''} ${isSolved ? 'mastered' : ''}`;
+        button.setAttribute('data-index', index);
 
-      const checkbox = document.createElement('div');
-      checkbox.className = 'checkbox-circle';
-      if (isSolved) {
-        checkbox.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-      }
-      button.appendChild(checkbox);
+        // Number badge (replaces checkbox — changes colour on solve/active)
+        const badge = document.createElement('span');
+        badge.className = 'topic-num-badge';
+        badge.textContent = index + 1;
+        button.appendChild(badge);
 
-      const textSpan = document.createElement('span');
-      textSpan.className = 'topic-title-text';
-      textSpan.textContent = problem.title;
-      button.appendChild(textSpan);
+        // Text block
+        const inner = document.createElement('div');
+        inner.className = 'topic-item-inner';
 
-      button.addEventListener('click', () => {
-        selectTopic(index);
-        closeMobileSidebar();
+        const titleSpan = document.createElement('span');
+        titleSpan.className = 'topic-title-text';
+        titleSpan.textContent = problem.title;
+        inner.appendChild(titleSpan);
+
+        // Subtitle: first tag gives context
+        if (problem.tags && problem.tags.length > 0) {
+          const sub = document.createElement('span');
+          sub.className = 'topic-subtitle';
+          sub.textContent = problem.tags.slice(0, 3).join(' · ');
+          inner.appendChild(sub);
+        }
+
+        button.appendChild(inner);
+        button.addEventListener('click', () => { selectTopic(index); closeMobileSidebar(); });
+        elements.topicList.appendChild(button);
       });
+      return;
+    }
 
-      elements.topicList.appendChild(button);
-    });
-    return;
-  }
+    // ── MCQ Sections: keep existing checkbox style but add question count subtitle ──
+    if (isMcqSection()) {
+      const mcqBank = getActiveMcqBank();
+      mcqBank.forEach((unitObj, index) => {
+        const titleLower = unitObj.unitName.toLowerCase();
+        if (!titleLower.includes(state.searchQuery)) return;
 
-  if (isMcqSection()) {
-    const mcqBank = getActiveMcqBank();
-    mcqBank.forEach((unitObj, index) => {
-      const titleLower = unitObj.unitName.toLowerCase();
-      const matchesSearch = titleLower.includes(state.searchQuery);
-      if (!matchesSearch) return;
+        const isActive = index === state.activeTopicIndex;
+        const unitQuestions = unitObj.questions || [];
+        const answeredCount = unitQuestions.filter(q =>
+          state.practiceAnswers[state.activeSubject][q.id] !== undefined
+        ).length;
+        const isCompleted = answeredCount === unitQuestions.length && unitQuestions.length > 0;
 
-      const isActive = index === state.activeTopicIndex;
+        const button = document.createElement('button');
+        button.className = `topic-item topic-item--rich ${isActive ? 'active' : ''} ${isCompleted ? 'mastered' : ''}`;
+        button.setAttribute('data-index', index);
 
-      const button = document.createElement('button');
-      button.className = `topic-item ${isActive ? 'active' : ''}`;
-      button.setAttribute('data-index', index);
+        // Checkbox circle (kept for MCQ since mastery is answer-based)
+        const checkbox = document.createElement('div');
+        checkbox.className = 'checkbox-circle';
+        checkbox.style.marginTop = '0.1rem';
+        if (isCompleted) {
+          checkbox.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
+        } else if (answeredCount > 0) {
+          checkbox.style.borderColor = 'var(--active-accent)';
+          checkbox.innerHTML = `<span style="font-size: 8px; font-weight: 700; color: var(--active-accent);">${answeredCount}</span>`;
+        }
+        button.appendChild(checkbox);
 
-      const checkbox = document.createElement('div');
-      checkbox.className = 'checkbox-circle';
+        const inner = document.createElement('div');
+        inner.className = 'topic-item-inner';
 
-      const unitQuestions = unitObj.questions || [];
-      const answeredCount = unitQuestions.filter(q => {
-        return state.practiceAnswers[state.activeSubject][q.id] !== undefined;
-      }).length;
+        const titleSpan = document.createElement('span');
+        titleSpan.className = 'topic-title-text';
+        titleSpan.textContent = unitObj.unitName;
+        inner.appendChild(titleSpan);
 
-      const isCompleted = answeredCount === unitQuestions.length && unitQuestions.length > 0;
-      if (isCompleted) {
-        button.classList.add('mastered');
-        checkbox.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-      } else if (answeredCount > 0) {
-        checkbox.style.borderColor = 'var(--active-accent)';
-        checkbox.innerHTML = `<span style="font-size: 8px; font-weight: 700; color: var(--active-accent);">${answeredCount}</span>`;
-      }
+        const sub = document.createElement('span');
+        sub.className = 'topic-subtitle';
+        sub.textContent = `${answeredCount} / ${unitQuestions.length} answered`;
+        inner.appendChild(sub);
 
-      button.appendChild(checkbox);
-
-      const textSpan = document.createElement('span');
-      textSpan.className = 'topic-title-text';
-      textSpan.textContent = unitObj.unitName;
-      button.appendChild(textSpan);
-
-      button.addEventListener('click', () => {
-        selectTopic(index);
-        closeMobileSidebar();
+        button.appendChild(inner);
+        button.addEventListener('click', () => { selectTopic(index); closeMobileSidebar(); });
+        elements.topicList.appendChild(button);
       });
+      return;
+    }
 
-      elements.topicList.appendChild(button);
-    });
-    return;
-  }
   }  // end: if (state.activeSection !== 'practiceTest1')
 
-  // --- PT1 Section: use compact sidebarLabel + type icon ---
+  // ── PT1 Section: type badge + label + subtitle ───────────────────────
   if (state.activeSubject === 'linux' && state.activeSection === 'practiceTest1') {
     const pt1Topics = CONFIG.subjects['linux'].data['practiceTest1'] || [];
     const typeIcon = { mcq: '◉', subjective: '✎', coding: '⌨' };
-    const typeGroup = { mcq: 'MCQ', subjective: 'Theory', coding: null };
-    let lastGroup = null;
+    let lastType = null;
     pt1Topics.forEach((topic, index) => {
       const displayLabel = topic.sidebarLabel || topic.title;
-      const labelLower = displayLabel.toLowerCase();
-      const matchesSearch = labelLower.includes(state.searchQuery);
-      if (!matchesSearch) return;
+      if (!displayLabel.toLowerCase().includes(state.searchQuery)) return;
 
-      // Group divider for coding section
-      const group = typeGroup[topic.type];
-      if (topic.type === 'coding' && lastGroup !== 'coding') {
+      // "Coding" group divider
+      if (topic.type === 'coding' && lastType !== 'coding') {
         const divider = document.createElement('div');
         divider.className = 'sidebar-group-label';
-        divider.textContent = 'Coding';
+        divider.textContent = 'Coding Drills';
         elements.topicList.appendChild(divider);
       }
-      if (group !== null && group !== lastGroup) {
-        lastGroup = group;
-      } else if (topic.type === 'coding') {
-        lastGroup = 'coding';
-      }
+      lastType = topic.type;
 
       const isActive = index === state.activeTopicIndex;
       const button = document.createElement('button');
-      button.className = `topic-item topic-item--compact ${isActive ? 'active' : ''}`;
+      button.className = `topic-item topic-item--rich ${isActive ? 'active' : ''}`;
       button.setAttribute('data-index', index);
 
       const badge = document.createElement('span');
@@ -899,60 +910,84 @@ function renderSidebar() {
       badge.textContent = typeIcon[topic.type] || '·';
       button.appendChild(badge);
 
-      const textSpan = document.createElement('span');
-      textSpan.className = 'topic-title-text';
-      textSpan.textContent = displayLabel;
-      button.appendChild(textSpan);
+      const inner = document.createElement('div');
+      inner.className = 'topic-item-inner';
 
-      button.addEventListener('click', () => {
-        selectTopic(index);
-        closeMobileSidebar();
-      });
+      const titleSpan = document.createElement('span');
+      titleSpan.className = 'topic-title-text';
+      titleSpan.textContent = displayLabel;
+      inner.appendChild(titleSpan);
+
+      // Subtitle: extract the description part after " — "
+      if (topic.type === 'coding' || topic.type === 'subjective') {
+        const desc = extractSubtitle(topic.title);
+        if (desc && desc !== displayLabel) {
+          const sub = document.createElement('span');
+          sub.className = 'topic-subtitle';
+          sub.textContent = desc;
+          inner.appendChild(sub);
+        }
+      } else if (topic.type === 'mcq') {
+        const sub = document.createElement('span');
+        sub.className = 'topic-subtitle';
+        sub.textContent = '25 multiple-choice questions';
+        inner.appendChild(sub);
+      }
+
+      button.appendChild(inner);
+      button.addEventListener('click', () => { selectTopic(index); closeMobileSidebar(); });
       elements.topicList.appendChild(button);
     });
     return;
   }
 
+  // ── Generic Reading Topics (IoT / CN): number badge + title + section hint ──
   const subjectData = CONFIG.subjects[state.activeSubject].data;
   const topics = subjectData[state.activeSection] || [];
 
   topics.forEach((topic, index) => {
     const titleLower = topic.title.toLowerCase();
-    const matchesSearch = titleLower.includes(state.searchQuery);
-    if (!matchesSearch) return;
+    if (!titleLower.includes(state.searchQuery)) return;
 
     const isMastered = state.mastered[state.activeSubject][state.activeSection].includes(index);
     const isActive = index === state.activeTopicIndex;
 
     const button = document.createElement('button');
-    button.className = `topic-item ${isActive ? 'active' : ''} ${isMastered ? 'mastered' : ''}`;
+    button.className = `topic-item topic-item--rich ${isActive ? 'active' : ''} ${isMastered ? 'mastered' : ''}`;
     button.setAttribute('data-index', index);
 
-    // Checkbox indicator
-    const checkbox = document.createElement('div');
-    checkbox.className = 'checkbox-circle';
-    if (isMastered) {
-      checkbox.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>';
-    }
-    checkbox.addEventListener('click', (e) => {
+    // Number badge
+    const badge = document.createElement('span');
+    badge.className = 'topic-num-badge';
+    badge.textContent = index + 1;
+    badge.addEventListener('click', (e) => {
       e.stopPropagation();
       toggleTopicMastery(state.activeSection, index);
     });
-    button.appendChild(checkbox);
+    button.appendChild(badge);
 
-    const textSpan = document.createElement('span');
-    textSpan.className = 'topic-title-text';
-    textSpan.textContent = topic.title;
-    button.appendChild(textSpan);
+    const inner = document.createElement('div');
+    inner.className = 'topic-item-inner';
 
-    button.addEventListener('click', () => {
-      selectTopic(index);
-      closeMobileSidebar();
-    });
+    const titleSpan = document.createElement('span');
+    titleSpan.className = 'topic-title-text';
+    titleSpan.textContent = topic.title;
+    inner.appendChild(titleSpan);
 
+    // Subtitle: topic type hint if available, otherwise first line of html (skip)
+    if (topic.subtitle) {
+      const sub = document.createElement('span');
+      sub.className = 'topic-subtitle';
+      sub.textContent = topic.subtitle;
+      inner.appendChild(sub);
+    }
+
+    button.appendChild(inner);
+    button.addEventListener('click', () => { selectTopic(index); closeMobileSidebar(); });
     elements.topicList.appendChild(button);
   });
 }
+
 
 // ============================================================
 //  TOPIC SELECTION

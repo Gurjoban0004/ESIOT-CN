@@ -409,11 +409,46 @@ aside.sidebar {
   color: var(--active-accent);
 }
 
-/* --- Compact Topic Items (PT1 Sidebar) --- */
-.topic-item--compact {
-  padding: 0.45rem 0.65rem;
+/* --- Two-line Rich Sidebar Items --- */
+
+/* Wrap the badge + text block in a vertical column */
+.topic-item--rich {
+  align-items: flex-start;
+  padding: 0.5rem 0.65rem;
+  gap: 0.5rem;
+}
+
+.topic-item--rich .topic-item-inner {
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+  flex: 1;
+  min-width: 0;  /* allows text-overflow to work */
+}
+
+.topic-item--rich .topic-title-text {
   font-size: 0.82rem;
-  gap: 0.45rem;
+  font-weight: 600;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+/* Subtitle — muted description line */
+.topic-subtitle {
+  font-size: 0.73rem;
+  color: var(--text-secondary);
+  font-weight: 400;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  opacity: 0.8;
+  line-height: 1.3;
+}
+
+.topic-item--rich.active .topic-subtitle {
+  opacity: 1;
+  color: var(--active-accent);
 }
 
 /* PT1 type badge icon */
@@ -427,11 +462,42 @@ aside.sidebar {
   justify-content: center;
   flex-shrink: 0;
   font-weight: 700;
+  margin-top: 0.1rem; /* align with first text line */
 }
 
 .pt1-type-mcq { background-color: #EEF0FB; color: #5B6ED9; }
 .pt1-type-subjective { background-color: #FDF3E7; color: #B07830; }
 .pt1-type-coding { background-color: #EDF7F2; color: #3A8F65; }
+
+/* Generic number badge (for Bash Practice / Reading topics) */
+.topic-num-badge {
+  font-size: 0.65rem;
+  min-width: 20px;
+  height: 20px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  font-weight: 700;
+  background-color: var(--body-bg, #F3EFE9);
+  color: var(--text-secondary);
+  border: 1px solid var(--border-color);
+  margin-top: 0.05rem;
+  padding: 0 3px;
+}
+
+.topic-item--rich.active .topic-num-badge {
+  background-color: var(--active-accent);
+  color: #fff;
+  border-color: var(--active-accent);
+}
+
+.topic-item--rich.mastered .topic-num-badge {
+  background-color: var(--success-color);
+  color: #fff;
+  border-color: var(--success-color);
+}
 
 /* PT1 sidebar group divider */
 .sidebar-group-label {
@@ -443,6 +509,7 @@ aside.sidebar {
   padding: 0.6rem 0.65rem 0.2rem;
   opacity: 0.65;
 }
+
 
 /* --- Main Content Panel --- */
 main.content-pane {
