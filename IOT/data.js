@@ -2027,30 +2027,50 @@ const CN_MCQ_BANK = [
       {
         "unit": "unit3_4",
         "id": 126,
-        "question": "A network has a bandwidth of 10 Mbps. How much time is required to transmit a file of 2 Megabytes (MB) across this network? *   - a) 0.2 seconds *   - b) **1.6 seconds ✓** *(Calculation: File size = $2 \\text{ MB} = 2 \\times 10^6 \\text{ bytes}$. In bits, this is $2 \\times 10^6 \\times 8 = 16 \\times 10^6 \\text{ bits}$. Transmission time ($T_t$) = Data size / Bandwidth. $T_t = 16 \\times 10^6 \\text{ bits} / 10 \\times 10^6 \\text{ bps} = 1.6 \\text{ seconds}$.)* *   - c) 16 seconds *   - d) 2.0 seconds",
-        "options": {},
-        "correct": null
+        "question": "A network has a bandwidth of 10 Mbps. How much time is required to transmit a file of 2 Megabytes (MB) across this network?",
+        "options": {
+          "a": "0.2 seconds",
+          "b": "**1.6 seconds ✓** *(Calculation: File size = $2 \\text{ MB} = 2 \\times 10^6 \\text{ bytes}$. In bits, this is $2 \\times 10^6 \\times 8 = 16 \\times 10^6 \\text{ bits}$. Transmission time ($T_t$) = Data size / Bandwidth. $T_t = 16 \\times 10^6 \\text{ bits} / 10 \\times 10^6 \\text{ bps} = 1.6 \\text{ seconds}$.)*\n",
+          "c": "16 seconds",
+          "d": "2.0 seconds"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit3_4",
         "id": 127,
-        "question": "Two stations are connected via a fiber optic cable that is 3,000 km long. If the speed of light in the fiber is $2 \\times 10^8 \\text{ m/s}$, what is the one-way propagation delay? *   - a) 10 ms *   - b) **15 ms ✓** *(Calculation: Distance ($d$) = $3,000 \\text{ km} = 3 \\times 10^6 \\text{ meters}$. Velocity ($v$) = $2 \\times 10^8 \\text{ m/s}$. Propagation delay ($T_p$) = $d / v = (3 \\times 10^6) / (2 \\times 10^8) = 1.5 \\times 10^{-2} \\text{ seconds} = 15 \\text{ ms}$.)* *   - c) 20 ms *   - d) 30 ms",
-        "options": {},
-        "correct": null
+        "question": "Two stations are connected via a fiber optic cable that is 3,000 km long. If the speed of light in the fiber is $2 \times 10^8 \text{ m/s}$, what is the one-way propagation delay?",
+        "options": {
+          "a": "10 ms",
+          "b": "**15 ms ✓** *(Calculation: Distance ($d$) = $3,000 \\text{ km} = 3 \\times 10^6 \\text{ meters}$. Velocity ($v$) = $2 \\times 10^8 \\text{ m/s}$. Propagation delay ($T_p$) = $d / v = (3 \\times 10^6) / (2 \\times 10^8) = 1.5 \\times 10^{-2} \\text{ seconds} = 15 \\text{ ms}$.)*\n",
+          "c": "20 ms",
+          "d": "30 ms"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit3_4",
         "id": 147,
-        "question": "A link has a bandwidth of 1 Gbps and a Round-Trip Time (RTT) of 20 ms. What is the Bandwidth-Delay Product (BDP) in bits? *   - a) $2 \\times 10^5 \\text{ bits}$ *   - b) **$2 \\times 10^7 \\text{ bits}$ ✓** *(Calculation: The BDP is the maximum amount of data that can be in transit in the network at any given time. Bandwidth = $1 \\text{ Gbps} = 10^9 \\text{ bits/second}$. RTT = $20 \\text{ ms} = 0.02 \\text{ seconds}$. BDP = Bandwidth $\\times$ RTT = $10^9 \\times 0.02 = 20 \\times 10^6 \\text{ bits} = 2 \\times 10^7 \\text{ bits}$.)* *   - c) $2 \\times 10^8 \\text{ bits}$ *   - d) $2 \\times 10^6 \\text{ bits}$",
-        "options": {},
-        "correct": null
+        "question": "A link has a bandwidth of 1 Gbps and a Round-Trip Time (RTT) of 20 ms. What is the Bandwidth-Delay Product (BDP) in bits?",
+        "options": {
+          "a": "$2 \\times 10^5 \\text{ bits}$",
+          "b": "**$2 \\times 10^7 \\text{ bits}$ ✓** *(Calculation: The BDP is the maximum amount of data that can be in transit in the network at any given time. Bandwidth = $1 \\text{ Gbps} = 10^9 \\text{ bits/second}$. RTT = $20 \\text{ ms} = 0.02 \\text{ seconds}$. BDP = Bandwidth $\\times$ RTT = $10^9 \\times 0.02 = 20 \\times 10^6 \\text{ bits} = 2 \\times 10^7 \\text{ bits}$.)*\n",
+          "c": "$2 \\times 10^8 \\text{ bits}$",
+          "d": "$2 \\times 10^6 \\text{ bits}$"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit3_4",
         "id": 156,
-        "question": "A signal is transmitting using QAM (Quadrature Amplitude Modulation) where each signal element represents 4 bits. If the baud rate is 1,500 baud, what is the bit rate of the channel? *   - a) 1,500 bps *   - b) 3,000 bps *   - c) **6,000 bps ✓** *(Calculation: The bit rate is the number of bits transmitted per second, while baud rate is the number of signal units per second. $\\text{Bit Rate} = \\text{Baud Rate} \\times \\text{Bits per signal unit}$. $\\text{Bit Rate} = 1,500 \\times 4 = 6,000 \\text{ bps}$.)* *   - d) 375 bps",
-        "options": {},
-        "correct": null
+        "question": "A signal is transmitting using QAM (Quadrature Amplitude Modulation) where each signal element represents 4 bits. If the baud rate is 1,500 baud, what is the bit rate of the channel?",
+        "options": {
+          "a": "1,500 bps",
+          "b": "3,000 bps",
+          "c": "**6,000 bps ✓** *(Calculation: The bit rate is the number of bits transmitted per second, while baud rate is the number of signal units per second. $\\text{Bit Rate} = \\text{Baud Rate} \\times \\text{Bits per signal unit}$. $\\text{Bit Rate} = 1,500 \\times 4 = 6,000 \\text{ bps}$.)*\n",
+          "d": "375 bps"
+          },
+        "correct": "c"
       }
     ]
   },
@@ -2303,9 +2323,14 @@ const CN_MCQ_BANK = [
       {
         "unit": "unit5_6",
         "id": 148,
-        "question": "A CSMA/CD network has a cable length of 1 km, a signal speed of $2 \\times 10^8 \\text{ m/s}$, and uses a fixed frame size of 1,000 bits. What is the maximum allowable bandwidth for collision detection to function correctly? *   - a) 10 Mbps *   - b) 50 Mbps *   - c) **100 Mbps ✓** *(Calculation: $T_p = \\text{Distance} / \\text{Speed} = 1,000 / (2 \\times 10^8) = 5 \\times 10^{-6} \\text{ s} = 5 \\text{ \\mu s}$. For CSMA/CD, $T_t \\ge 2 \\times T_p$. $T_t = 2 \\times 5 \\text{ \\mu s} = 10 \\text{ \\mu s}$. $T_t = \\text{Frame size} / \\text{Bandwidth} \\implies \\text{Bandwidth} = \\text{Frame size} / T_t = 1,000 \\text{ bits} / 10^{-5} \\text{ s} = 10^8 \\text{ bps} = 100 \\text{ Mbps}$.)* *   - d) 1 Gbps",
-        "options": {},
-        "correct": null
+        "question": "A CSMA/CD network has a cable length of 1 km, a signal speed of $2 \times 10^8 \text{ m/s}$, and uses a fixed frame size of 1,000 bits. What is the maximum allowable bandwidth for collision detection to function correctly?",
+        "options": {
+          "a": "10 Mbps",
+          "b": "50 Mbps",
+          "c": "**100 Mbps ✓** *(Calculation: $T_p = \\text{Distance} / \\text{Speed} = 1,000 / (2 \\times 10^8) = 5 \\times 10^{-6} \\text{ s} = 5 \\text{ \\mu s}$. For CSMA/CD, $T_t \\ge 2 \\times T_p$. $T_t = 2 \\times 5 \\text{ \\mu s} = 10 \\text{ \\mu s}$. $T_t = \\text{Frame size} / \\text{Bandwidth} \\implies \\text{Bandwidth} = \\text{Frame size} / T_t = 1,000 \\text{ bits} / 10^{-5} \\text{ s} = 10^8 \\text{ bps} = 100 \\text{ Mbps}$.)*\n",
+          "d": "1 Gbps"
+          },
+        "correct": "c"
       }
     ]
   },
@@ -2613,65 +2638,110 @@ const CN_MCQ_BANK = [
       {
         "unit": "unit7_8",
         "id": 128,
-        "question": "In a Pure ALOHA network, stations generate frames such that the offered load ($G$) is precisely 0.5 frames per frame transmission time. What is the approximate maximum efficiency/throughput of the channel? *   - a) 36.8% *   - b) **18.4% ✓** *(Calculation: The throughput formula for Pure ALOHA is $S = G \\times e^{-2G}$. Maximum throughput occurs at $G = 0.5$. Substituting $G$: $S = 0.5 \\times e^{-2(0.5)} = 0.5 \\times e^{-1} \\approx 0.5 \\times 0.3678 = 0.1839$, which is roughly $18.4\\%$.)* *   - c) 50.0% *   - d) 25.0%",
-        "options": {},
-        "correct": null
+        "question": "In a Pure ALOHA network, stations generate frames such that the offered load ($G$) is precisely 0.5 frames per frame transmission time. What is the approximate maximum efficiency/throughput of the channel?",
+        "options": {
+          "a": "36.8%",
+          "b": "**18.4% ✓** *(Calculation: The throughput formula for Pure ALOHA is $S = G \\times e^{-2G}$. Maximum throughput occurs at $G = 0.5$. Substituting $G$: $S = 0.5 \\times e^{-2(0.5)} = 0.5 \\times e^{-1} \\approx 0.5 \\times 0.3678 = 0.1839$, which is roughly $18.4\\%$.)*\n",
+          "c": "50.0%",
+          "d": "25.0%"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit7_8",
         "id": 129,
-        "question": "For a Slotted ALOHA channel, what is the maximum possible throughput percentage if the offered load is optimized at 1 frame per slot? *   - a) 18.4% *   - b) 25.0% *   - c) **36.8% ✓** *(Calculation: The throughput formula for Slotted ALOHA is $S = G \\times e^{-G}$. Maximum efficiency occurs when $G = 1$. Substituting $G = 1$: $S = 1 \\times e^{-1} \\approx 0.3678$, which is roughly $36.8\\%$.)* *   - d) 75.0%",
-        "options": {},
-        "correct": null
+        "question": "For a Slotted ALOHA channel, what is the maximum possible throughput percentage if the offered load is optimized at 1 frame per slot?",
+        "options": {
+          "a": "18.4%",
+          "b": "25.0%",
+          "c": "**36.8% ✓** *(Calculation: The throughput formula for Slotted ALOHA is $S = G \\times e^{-G}$. Maximum efficiency occurs when $G = 1$. Substituting $G = 1$: $S = 1 \\times e^{-1} \\approx 0.3678$, which is roughly $36.8\\%$.)*\n",
+          "d": "75.0%"
+          },
+        "correct": "c"
       },
       {
         "unit": "unit7_8",
         "id": 130,
-        "question": "A sender wishes to transmit the data `1101` using a Generator Polynomial $x^2 + 1$ (binary `101`). What is the final transmitted codeword? *   - a) `110111` *   - b) **`110101` ✓** *(Calculation: 1) The polynomial `101` has 3 bits, so append 2 zeros to the data: `110100`. 2) Perform modulo-2 division: `110` XOR `101` = `011`. Bring down `1` -> `111`. `111` XOR `101` = `010`. Bring down `0` -> `100`. `100` XOR `101` = `001`. The remainder is `01`. 3) Add remainder to the original data: `1101` + `01` = `110101`.)* *   - c) `110110` *   - d) `110100`",
-        "options": {},
-        "correct": null
+        "question": "A sender wishes to transmit the data `1101` using a Generator Polynomial $x^2 + 1$ (binary `101`). What is the final transmitted codeword?",
+        "options": {
+          "a": "`110111`",
+          "b": "**`110101` ✓** *(Calculation: 1) The polynomial `101` has 3 bits, so append 2 zeros to the data: `110100`. 2) Perform modulo-2 division: `110` XOR `101` = `011`. Bring down `1` -> `111`. `111` XOR `101` = `010`. Bring down `0` -> `100`. `100` XOR `101` = `001`. The remainder is `01`. 3) Add remainder to the original data: `1101` + `01` = `110101`.)*\n",
+          "c": "`110110`",
+          "d": "`110100`"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit7_8",
         "id": 131,
-        "question": "A sender wants to send two 4-bit data blocks: `1010` and `0101`. Using 4-bit 1's complement arithmetic, what will be the Checksum attached to the data? *   - a) `1111` *   - b) **`0000` ✓** *(Calculation: 1) Sum the data blocks: $1010 + 0101 = 1111$. 2) The Checksum is the 1's complement of the sum. The 1's complement of `1111` is `0000`.)* *   - c) `0110` *   - d) `1001`",
-        "options": {},
-        "correct": null
+        "question": "A sender wants to send two 4-bit data blocks: `1010` and `0101`. Using 4-bit 1's complement arithmetic, what will be the Checksum attached to the data?",
+        "options": {
+          "a": "`1111`",
+          "b": "**`0000` ✓** *(Calculation: 1) Sum the data blocks: $1010 + 0101 = 1111$. 2) The Checksum is the 1's complement of the sum. The 1's complement of `1111` is `0000`.)*\n",
+          "c": "`0110`",
+          "d": "`1001`"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit7_8",
         "id": 132,
-        "question": "To guarantee the correction of up to 4 bit errors in a transmitted block, what is the minimum required Hamming distance ($d_{min}$) of the block code? *   - a) 5 *   - b) 8 *   - c) **9 ✓** *(Calculation: To correct $d$ errors, the minimum Hamming distance must satisfy $d_{min} \\ge 2d + 1$. Here, $d = 4$. Therefore, $d_{min} \\ge 2(4) + 1 = 8 + 1 = 9$.)* *   - d) 10",
-        "options": {},
-        "correct": null
+        "question": "To guarantee the correction of up to 4 bit errors in a transmitted block, what is the minimum required Hamming distance ($d_{min}$) of the block code?",
+        "options": {
+          "a": "5",
+          "b": "8",
+          "c": "**9 ✓** *(Calculation: To correct $d$ errors, the minimum Hamming distance must satisfy $d_{min} \\ge 2d + 1$. Here, $d = 4$. Therefore, $d_{min} \\ge 2(4) + 1 = 8 + 1 = 9$.)*\n",
+          "d": "10"
+          },
+        "correct": "c"
       },
       {
         "unit": "unit7_8",
         "id": 133,
-        "question": "If the original dataword size is 12 bits, what is the minimum number of redundant parity bits ($r$) required to create a valid Hamming Code? *   - a) 3 *   - b) 4 *   - c) **5 ✓** *(Calculation: The formula to find redundant bits is $2^r \\ge m + r + 1$, where $m$ is the number of data bits ($m=12$). Try $r=4$: $2^4 \\ge 12 + 4 + 1 \\implies 16 \\ge 17$ (False). Try $r=5$: $2^5 \\ge 12 + 5 + 1 \\implies 32 \\ge 18$ (True). Therefore, $r = 5$.)* *   - d) 6",
-        "options": {},
-        "correct": null
+        "question": "If the original dataword size is 12 bits, what is the minimum number of redundant parity bits ($r$) required to create a valid Hamming Code?",
+        "options": {
+          "a": "3",
+          "b": "4",
+          "c": "**5 ✓** *(Calculation: The formula to find redundant bits is $2^r \\ge m + r + 1$, where $m$ is the number of data bits ($m=12$). Try $r=4$: $2^4 \\ge 12 + 4 + 1 \\implies 16 \\ge 17$ (False). Try $r=5$: $2^5 \\ge 12 + 5 + 1 \\implies 32 \\ge 18$ (True). Therefore, $r = 5$.)*\n",
+          "d": "6"
+          },
+        "correct": "c"
       },
       {
         "unit": "unit7_8",
         "id": 149,
-        "question": "In a Pure ALOHA network, it takes 4 ms to transmit a single frame. What is the vulnerable time during which collisions can occur for any given frame? *   - a) 2 ms *   - b) 4 ms *   - c) **8 ms ✓** *(Calculation: In Pure ALOHA, the vulnerable time ($V_t$) is exactly twice the frame transmission time ($T_t$). $V_t = 2 \\times T_t = 2 \\times 4 \\text{ ms} = 8 \\text{ ms}$. Any frame sent in this 8 ms window will cause a collision.)* *   - d) 16 ms",
-        "options": {},
-        "correct": null
+        "question": "In a Pure ALOHA network, it takes 4 ms to transmit a single frame. What is the vulnerable time during which collisions can occur for any given frame?",
+        "options": {
+          "a": "2 ms",
+          "b": "4 ms",
+          "c": "**8 ms ✓** *(Calculation: In Pure ALOHA, the vulnerable time ($V_t$) is exactly twice the frame transmission time ($T_t$). $V_t = 2 \\times T_t = 2 \\times 4 \\text{ ms} = 8 \\text{ ms}$. Any frame sent in this 8 ms window will cause a collision.)*\n",
+          "d": "16 ms"
+          },
+        "correct": "c"
       },
       {
         "unit": "unit7_8",
         "id": 150,
-        "question": "In a Slotted ALOHA network where the slot time equals the frame transmission time of 4 ms, what is the vulnerable time? *   - a) 2 ms *   - b) **4 ms ✓** *(Calculation: By dividing time into slots and forcing stations to only transmit at the beginning of a slot, Slotted ALOHA halves the vulnerability window. The vulnerable time ($V_t$) is equal to exactly one frame transmission time ($T_t$). $V_t = T_t = 4 \\text{ ms}$.)* *   - c) 8 ms *   - d) 12 ms",
-        "options": {},
-        "correct": null
+        "question": "In a Slotted ALOHA network where the slot time equals the frame transmission time of 4 ms, what is the vulnerable time?",
+        "options": {
+          "a": "2 ms",
+          "b": "**4 ms ✓** *(Calculation: By dividing time into slots and forcing stations to only transmit at the beginning of a slot, Slotted ALOHA halves the vulnerability window. The vulnerable time ($V_t$) is equal to exactly one frame transmission time ($T_t$). $V_t = T_t = 4 \\text{ ms}$.)*\n",
+          "c": "8 ms",
+          "d": "12 ms"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit7_8",
         "id": 155,
-        "question": "A Data Link Layer framing protocol uses bit stuffing with the flag `01111110`. If the original payload data is `0111111101`, how many `0` bits will be artificially stuffed into the payload before transmission? *   - a) 0 *   - b) **1 ✓** *(Calculation: The rule of bit stuffing is to insert a `0` immediately after any sequence of five consecutive `1`s in the data, to ensure the flag sequence never appears accidentally. The data is `0 11111 1101`. After the first five `1`s, we stuff a zero: `0 11111` **`0`** `1101`. Only one `0` is added.)* *   - c) 2 *   - d) 3",
-        "options": {},
-        "correct": null
+        "question": "A Data Link Layer framing protocol uses bit stuffing with the flag `01111110`. If the original payload data is `0111111101`, how many `0` bits will be artificially stuffed into the payload before transmission?",
+        "options": {
+          "a": "0",
+          "b": "**1 ✓** *(Calculation: The rule of bit stuffing is to insert a `0` immediately after any sequence of five consecutive `1`s in the data, to ensure the flag sequence never appears accidentally. The data is `0 11111 1101`. After the first five `1`s, we stuff a zero: `0 11111` **`0`** `1101`. Only one `0` is added.)*\n",
+          "c": "2",
+          "d": "3"
+          },
+        "correct": "b"
       }
     ]
   },
@@ -3012,149 +3082,254 @@ const CN_MCQ_BANK = [
       {
         "unit": "unit9",
         "id": 134,
-        "question": "A channel has a bit rate of 1 Mbps and a propagation delay of 2 ms. If the frame size is 1000 bytes, what is the link utilization (efficiency) of the Stop-and-Wait protocol? *   - a) 33.3% *   - b) 50.0% *   - c) **66.6% ✓** *(Calculation: Transmission time ($T_t$) = $(1000 \\times 8) \\text{ bits} / 10^6 \\text{ bps} = 8 \\text{ ms}$. Propagation delay ($T_p$) = $2 \\text{ ms}$. Parameter $a = T_p / T_t = 2 / 8 = 0.25$. Efficiency = $1 / (1 + 2a) = 1 / (1 + 2(0.25)) = 1 / 1.5 = 0.666$ or $66.6\\%$.)* *   - d) 80.0%",
-        "options": {},
-        "correct": null
+        "question": "A channel has a bit rate of 1 Mbps and a propagation delay of 2 ms. If the frame size is 1000 bytes, what is the link utilization (efficiency) of the Stop-and-Wait protocol?",
+        "options": {
+          "a": "33.3%",
+          "b": "50.0%",
+          "c": "**66.6% ✓** *(Calculation: Transmission time ($T_t$) = $(1000 \\times 8) \\text{ bits} / 10^6 \\text{ bps} = 8 \\text{ ms}$. Propagation delay ($T_p$) = $2 \\text{ ms}$. Parameter $a = T_p / T_t = 2 / 8 = 0.25$. Efficiency = $1 / (1 + 2a) = 1 / (1 + 2(0.25)) = 1 / 1.5 = 0.666$ or $66.6\\%$.)*\n",
+          "d": "80.0%"
+          },
+        "correct": "c"
       },
       {
         "unit": "unit9",
         "id": 135,
-        "question": "In a Go-Back-N protocol, the sequence numbers are represented using 5 bits. What is the maximum permissible sender window size? *   - a) 16 *   - b) **31 ✓** *(Calculation: In Go-Back-N, if $m$ bits are used for sequence numbering, the maximum sender window size is $2^m - 1$. Here, $m = 5$. Maximum window size = $2^5 - 1 = 32 - 1 = 31$.)* *   - c) 32 *   - d) 63",
-        "options": {},
-        "correct": null
+        "question": "In a Go-Back-N protocol, the sequence numbers are represented using 5 bits. What is the maximum permissible sender window size?",
+        "options": {
+          "a": "16",
+          "b": "**31 ✓** *(Calculation: In Go-Back-N, if $m$ bits are used for sequence numbering, the maximum sender window size is $2^m - 1$. Here, $m = 5$. Maximum window size = $2^5 - 1 = 32 - 1 = 31$.)*\n",
+          "c": "32",
+          "d": "63"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit9",
         "id": 136,
-        "question": "If a Selective Repeat ARQ protocol uses 5 bits for its sequence numbers, what is the maximum allowed sender and receiver window size? *   - a) 8 *   - b) **16 ✓** *(Calculation: For Selective Repeat, the maximum window size for both sender and receiver is $2^{m-1}$, where $m$ is the number of bits in the sequence number. Here, $m = 5$. Maximum window size = $2^{5-1} = 2^4 = 16$.)* *   - c) 31 *   - d) 32",
-        "options": {},
-        "correct": null
+        "question": "If a Selective Repeat ARQ protocol uses 5 bits for its sequence numbers, what is the maximum allowed sender and receiver window size?",
+        "options": {
+          "a": "8",
+          "b": "**16 ✓** *(Calculation: For Selective Repeat, the maximum window size for both sender and receiver is $2^{m-1}$, where $m$ is the number of bits in the sequence number. Here, $m = 5$. Maximum window size = $2^{5-1} = 2^4 = 16$.)*\n",
+          "c": "31",
+          "d": "32"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit9",
         "id": 137,
-        "question": "If a Selective Repeat protocol is implemented with a sender window size of 20, what is the minimum number of bits required for the sequence number field? *   - a) 4 bits *   - b) 5 bits *   - c) **6 bits ✓** *(Calculation: For Selective Repeat, the total available sequence numbers must be at least twice the window size ($W$). $2^m \\ge 2W \\implies 2^m \\ge 2 \\times 20 \\implies 2^m \\ge 40$. The smallest integer $m$ where $2^m \\ge 40$ is 6 ($2^6 = 64$).)* *   - d) 7 bits",
-        "options": {},
-        "correct": null
+        "question": "If a Selective Repeat protocol is implemented with a sender window size of 20, what is the minimum number of bits required for the sequence number field?",
+        "options": {
+          "a": "4 bits",
+          "b": "5 bits",
+          "c": "**6 bits ✓** *(Calculation: For Selective Repeat, the total available sequence numbers must be at least twice the window size ($W$). $2^m \\ge 2W \\implies 2^m \\ge 2 \\times 20 \\implies 2^m \\ge 40$. The smallest integer $m$ where $2^m \\ge 40$ is 6 ($2^6 = 64$).)*\n",
+          "d": "7 bits"
+          },
+        "correct": "c"
       },
       {
         "unit": "unit9",
         "id": 138,
-        "question": "An organization is given the IP block 192.168.1.0/26. How many usable host IPs are available in each subnet? *   - a) 64 *   - b) **62 ✓** *(Calculation: The /26 mask indicates $32 - 26 = 6$ bits are reserved for host addresses. The total number of IP addresses per subnet is $2^6 = 64$. Since the first address is the Network ID and the last address is the Broadcast ID, the usable hosts = $2^6 - 2 = 64 - 2 = 62$.)* *   - c) 30 *   - d) 126",
-        "options": {},
-        "correct": null
+        "question": "An organization is given the IP block 192.168.1.0/26. How many usable host IPs are available in each subnet?",
+        "options": {
+          "a": "64",
+          "b": "**62 ✓** *(Calculation: The /26 mask indicates $32 - 26 = 6$ bits are reserved for host addresses. The total number of IP addresses per subnet is $2^6 = 64$. Since the first address is the Network ID and the last address is the Broadcast ID, the usable hosts = $2^6 - 2 = 64 - 2 = 62$.)*\n",
+          "c": "30",
+          "d": "126"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit9",
         "id": 139,
-        "question": "A computer is assigned the IP address `10.15.20.85` with a subnet mask of `/28`. What is the Network ID (Subnet Address) for this machine? *   - a) 10.15.20.64 *   - b) **10.15.20.80 ✓** *(Calculation: The mask /28 leaves 4 bits for hosts. The block size is $2^4 = 16$. We need to find the multiple of 16 that is just below or equal to the last octet (85). The multiples of 16 are 0, 16, 32, 48, 64, 80, 96. The closest lower multiple is 80. Therefore, the network address is `10.15.20.80`.)* *   - c) 10.15.20.85 *   - d) 10.15.20.96",
-        "options": {},
-        "correct": null
+        "question": "A computer is assigned the IP address `10.15.20.85` with a subnet mask of `/28`. What is the Network ID (Subnet Address) for this machine?",
+        "options": {
+          "a": "10.15.20.64",
+          "b": "**10.15.20.80 ✓** *(Calculation: The mask /28 leaves 4 bits for hosts. The block size is $2^4 = 16$. We need to find the multiple of 16 that is just below or equal to the last octet (85). The multiples of 16 are 0, 16, 32, 48, 64, 80, 96. The closest lower multiple is 80. Therefore, the network address is `10.15.20.80`.)*\n",
+          "c": "10.15.20.85",
+          "d": "10.15.20.96"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit9",
         "id": 140,
-        "question": "Using the IP address `10.15.20.85/28`, what is the Broadcast Address for this specific subnet? *   - a) 10.15.20.96 *   - b) **10.15.20.95 ✓** *(Calculation: From the previous calculation, the Network ID is `10.15.20.80` and the block size is 16. The next subnet starts at $80 + 16 = 96$. The broadcast address of the current subnet is one less than the next subnet's network ID, which is $96 - 1 = 95$. Therefore, the broadcast address is `10.15.20.95`.)* *   - c) 10.15.20.255 *   - d) 10.15.20.80",
-        "options": {},
-        "correct": null
+        "question": "Using the IP address `10.15.20.85/28`, what is the Broadcast Address for this specific subnet?",
+        "options": {
+          "a": "10.15.20.96",
+          "b": "**10.15.20.95 ✓** *(Calculation: From the previous calculation, the Network ID is `10.15.20.80` and the block size is 16. The next subnet starts at $80 + 16 = 96$. The broadcast address of the current subnet is one less than the next subnet's network ID, which is $96 - 1 = 95$. Therefore, the broadcast address is `10.15.20.95`.)*\n",
+          "c": "10.15.20.255",
+          "d": "10.15.20.80"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit9",
         "id": 141,
-        "question": "A Class B network is subnetted using a `/21` mask. How many subnets does this create? *   - a) 8 *   - b) 16 *   - c) **32 ✓** *(Calculation: The default subnet mask for a Class B address is /16. If the new mask is /21, the number of bits borrowed for the subnet ID is $21 - 16 = 5$ bits. The total number of possible subnets is $2^5 = 32$.)* *   - d) 64",
-        "options": {},
-        "correct": null
+        "question": "A Class B network is subnetted using a `/21` mask. How many subnets does this create?",
+        "options": {
+          "a": "8",
+          "b": "16",
+          "c": "**32 ✓** *(Calculation: The default subnet mask for a Class B address is /16. If the new mask is /21, the number of bits borrowed for the subnet ID is $21 - 16 = 5$ bits. The total number of possible subnets is $2^5 = 32$.)*\n",
+          "d": "64"
+          },
+        "correct": "c"
       },
       {
         "unit": "unit9",
         "id": 142,
-        "question": "If an intercepted IPv4 packet has an IHL (Internet Header Length) field value of `9` (in decimal), what is the size of the IPv4 header in bytes? *   - a) 9 bytes *   - b) 20 bytes *   - c) **36 bytes ✓** *(Calculation: The IHL field indicates the length of the header in 4-byte (32-bit) words. To find the size in bytes, multiply the IHL value by 4. Header length = $9 \\times 4 = 36$ bytes. This implies there are 16 bytes of IP Options.)* *   - d) 40 bytes",
-        "options": {},
-        "correct": null
+        "question": "If an intercepted IPv4 packet has an IHL (Internet Header Length) field value of `9` (in decimal), what is the size of the IPv4 header in bytes?",
+        "options": {
+          "a": "9 bytes",
+          "b": "20 bytes",
+          "c": "**36 bytes ✓** *(Calculation: The IHL field indicates the length of the header in 4-byte (32-bit) words. To find the size in bytes, multiply the IHL value by 4. Header length = $9 \\times 4 = 36$ bytes. This implies there are 16 bytes of IP Options.)*\n",
+          "d": "40 bytes"
+          },
+        "correct": "c"
       },
       {
         "unit": "unit9",
         "id": 143,
-        "question": "An IPv4 datagram with a total length of 3020 bytes (including a 20-byte standard header) is sent over a link with an MTU of 1500 bytes. What is the fragmentation offset of the 3rd fragment? *   - a) 1480 *   - b) **370 ✓** *(Calculation: Total payload = $3020 - 20 = 3000$ bytes. MTU = 1500 bytes, so max payload per fragment = $1500 - 20 = 1480$ bytes (which is divisible by 8). Fragment 1 carries bytes 0-1479 (Offset 0). Fragment 2 carries bytes 1480-2959. Fragment 3 starts at byte 2960. The offset value is the starting byte divided by 8: $2960 / 8 = 370$.)* *   - c) 2960 *   - d) 185",
-        "options": {},
-        "correct": null
+        "question": "An IPv4 datagram with a total length of 3020 bytes (including a 20-byte standard header) is sent over a link with an MTU of 1500 bytes. What is the fragmentation offset of the 3rd fragment?",
+        "options": {
+          "a": "1480",
+          "b": "**370 ✓** *(Calculation: Total payload = $3020 - 20 = 3000$ bytes. MTU = 1500 bytes, so max payload per fragment = $1500 - 20 = 1480$ bytes (which is divisible by 8). Fragment 1 carries bytes 0-1479 (Offset 0). Fragment 2 carries bytes 1480-2959. Fragment 3 starts at byte 2960. The offset value is the starting byte divided by 8: $2960 / 8 = 370$.)*\n",
+          "c": "2960",
+          "d": "185"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit9",
         "id": 144,
-        "question": "A TCP sender transmits a segment carrying 1500 bytes of data. If the sequence number of the segment is 4000, what will be the acknowledgment number sent back by the receiver? *   - a) 4000 *   - b) 1500 *   - c) **5500 ✓** *(Calculation: The sequence number indicates the byte number of the first byte of data. The segment contains 1500 bytes, so it covers bytes 4000 through $4000 + 1500 - 1 = 5499$. The receiver acknowledges the next expected byte, which is $5499 + 1 = 5500$.)* *   - d) 5501",
-        "options": {},
-        "correct": null
+        "question": "A TCP sender transmits a segment carrying 1500 bytes of data. If the sequence number of the segment is 4000, what will be the acknowledgment number sent back by the receiver?",
+        "options": {
+          "a": "4000",
+          "b": "1500",
+          "c": "**5500 ✓** *(Calculation: The sequence number indicates the byte number of the first byte of data. The segment contains 1500 bytes, so it covers bytes 4000 through $4000 + 1500 - 1 = 5499$. The receiver acknowledges the next expected byte, which is $5499 + 1 = 5500$.)*\n",
+          "d": "5501"
+          },
+        "correct": "c"
       },
       {
         "unit": "unit9",
         "id": 145,
-        "question": "A TCP connection is in the Slow Start phase. If the initial Congestion Window (cwnd) is 1 MSS, what will be the cwnd size after 4 successful Round Trip Times (RTTs)? *   - a) 4 MSS *   - b) 8 MSS *   - c) **16 MSS ✓** *(Calculation: In Slow Start, the cwnd doubles after every successful RTT. Initially, cwnd = 1. After 1 RTT, cwnd = 2. After 2 RTTs, cwnd = 4. After 3 RTTs, cwnd = 8. After 4 RTTs, cwnd = $16 \\text{ MSS}$ (which is $2^4$).)* *   - d) 32 MSS",
-        "options": {},
-        "correct": null
+        "question": "A TCP connection is in the Slow Start phase. If the initial Congestion Window (cwnd) is 1 MSS, what will be the cwnd size after 4 successful Round Trip Times (RTTs)?",
+        "options": {
+          "a": "4 MSS",
+          "b": "8 MSS",
+          "c": "**16 MSS ✓** *(Calculation: In Slow Start, the cwnd doubles after every successful RTT. Initially, cwnd = 1. After 1 RTT, cwnd = 2. After 2 RTTs, cwnd = 4. After 3 RTTs, cwnd = 8. After 4 RTTs, cwnd = $16 \\text{ MSS}$ (which is $2^4$).)*\n",
+          "d": "32 MSS"
+          },
+        "correct": "c"
       },
       {
         "unit": "unit9",
         "id": 146,
-        "question": "In a Distance Vector routing table, router A has a cost of 3 to reach router B. Router A receives a routing vector from B indicating B can reach router C with a cost of 5. What is A's updated calculated cost to reach C via B? *   - a) 5 *   - b) **8 ✓** *(Calculation: The cost for A to reach C via B is the sum of the cost for A to reach B, plus the cost for B to reach C. Cost(A -> C) = Cost(A -> B) + Cost(B -> C) = $3 + 5 = 8$. A will update its table to 8 if this is lower than its current cost to C.)* *   - c) 15 *   - d) 2",
-        "options": {},
-        "correct": null
+        "question": "In a Distance Vector routing table, router A has a cost of 3 to reach router B. Router A receives a routing vector from B indicating B can reach router C with a cost of 5. What is A's updated calculated cost to reach C via B?",
+        "options": {
+          "a": "5",
+          "b": "**8 ✓** *(Calculation: The cost for A to reach C via B is the sum of the cost for A to reach B, plus the cost for B to reach C. Cost(A -> C) = Cost(A -> B) + Cost(B -> C) = $3 + 5 = 8$. A will update its table to 8 if this is lower than its current cost to C.)*\n",
+          "c": "15",
+          "d": "2"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit9",
         "id": 151,
-        "question": "In the RSA algorithm, a user chooses two prime numbers $p = 11$ and $q = 13$. What is the value of the public modulus $n$? *   - a) 24 *   - b) 120 *   - c) **143 ✓** *(Calculation: In RSA, the public modulus $n$ is calculated simply by multiplying the two prime numbers. $n = p \\times q = 11 \\times 13 = 143$.)* *   - d) 169",
-        "options": {},
-        "correct": null
+        "question": "In the RSA algorithm, a user chooses two prime numbers $p = 11$ and $q = 13$. What is the value of the public modulus $n$?",
+        "options": {
+          "a": "24",
+          "b": "120",
+          "c": "**143 ✓** *(Calculation: In RSA, the public modulus $n$ is calculated simply by multiplying the two prime numbers. $n = p \\times q = 11 \\times 13 = 143$.)*\n",
+          "d": "169"
+          },
+        "correct": "c"
       },
       {
         "unit": "unit9",
         "id": 152,
-        "question": "Given $p = 11$ and $q = 13$ in the RSA algorithm, what is the value of Euler's totient function, $\\phi(n)$? *   - a) 143 *   - b) **120 ✓** *(Calculation: Euler's totient function for the product of two distinct primes is $\\phi(n) = (p - 1) \\times (q - 1)$. Substituting the values: $\\phi(n) = (11 - 1) \\times (13 - 1) = 10 \\times 12 = 120$.)* *   - c) 24 *   - d) 144",
-        "options": {},
-        "correct": null
+        "question": "Given $p = 11$ and $q = 13$ in the RSA algorithm, what is the value of Euler's totient function, $\phi(n)$?",
+        "options": {
+          "a": "143",
+          "b": "**120 ✓** *(Calculation: Euler's totient function for the product of two distinct primes is $\\phi(n) = (p - 1) \\times (q - 1)$. Substituting the values: $\\phi(n) = (11 - 1) \\times (13 - 1) = 10 \\times 12 = 120$.)*\n",
+          "c": "24",
+          "d": "144"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit9",
         "id": 153,
-        "question": "A TCP connection has a current congestion window (cwnd) of 10 MSS and a slow start threshold (ssthresh) of 10 MSS. If all segments in the current window are acknowledged successfully, what will the new cwnd be? *   - a) 20 MSS *   - b) **11 MSS ✓** *(Calculation: When $\\text{cwnd} \\ge \\text{ssthresh}$, the TCP sender transitions from Slow Start to the Congestion Avoidance phase. In this phase, cwnd increases linearly (Additive Increase) by 1 MSS per successful RTT, rather than doubling. Therefore, $\\text{cwnd} = 10 + 1 = 11 \\text{ MSS}$.)* *   - c) 10 MSS *   - d) 5 MSS",
-        "options": {},
-        "correct": null
+        "question": "A TCP connection has a current congestion window (cwnd) of 10 MSS and a slow start threshold (ssthresh) of 10 MSS. If all segments in the current window are acknowledged successfully, what will the new cwnd be?",
+        "options": {
+          "a": "20 MSS",
+          "b": "**11 MSS ✓** *(Calculation: When $\\text{cwnd} \\ge \\text{ssthresh}$, the TCP sender transitions from Slow Start to the Congestion Avoidance phase. In this phase, cwnd increases linearly (Additive Increase) by 1 MSS per successful RTT, rather than doubling. Therefore, $\\text{cwnd} = 10 + 1 = 11 \\text{ MSS}$.)*\n",
+          "c": "10 MSS",
+          "d": "5 MSS"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit9",
         "id": 154,
-        "question": "A Go-Back-N protocol uses a window size of 4 frames. The frame transmission time is 2 ms, and the propagation delay is 5 ms. What is the link utilization? *   - a) 100% *   - b) **33.3% ✓** *(Calculation: Parameter $a = T_p / T_t = 5 / 2 = 2.5$. The efficiency equation for pipelining is $U = \\text{Window Size} / (1 + 2a)$, provided Window Size $< (1+2a)$. Let's calculate the denominator: $1 + 2(2.5) = 6$. So, utilization $U = 4 / 6 = 2 / 3 = 0.666 \\dots$ wait, the correct calculation should be: $U = W / (1+2a) = 4 / 6 = 66.6\\%$. If the option is not there, let's fix the question: if W = 2, $U = 2 / 6 = 33.3\\%$. Assuming Window Size = 2. $U = 2 / 6 = 33.3\\%$.)* *   - c) 66.6% *   - d) 50.0%",
-        "options": {},
-        "correct": null
+        "question": "A Go-Back-N protocol uses a window size of 4 frames. The frame transmission time is 2 ms, and the propagation delay is 5 ms. What is the link utilization?",
+        "options": {
+          "a": "100%",
+          "b": "33.3%",
+          "c": "**66.6% ✓** *(Calculation: Parameter $a = T_p / T_t = 5 / 2 = 2.5$. The efficiency equation for pipelining is $U = \\text{Window Size} / (1 + 2a)$, since Window Size ($W = 4$) $< (1+2a = 6)$. Therefore, utilization $U = 4 / 6 = 66.6\\%$.)*\n",
+          "d": "50.0%"
+          },
+        "correct": "c"
       },
       {
         "unit": "unit9",
         "id": 157,
-        "question": "What is the decimal equivalent of the `/22` CIDR subnet mask? *   - a) 255.255.255.0 *   - b) 255.255.240.0 *   - c) **255.255.252.0 ✓** *(Calculation: A `/22` mask has 22 consecutive `1` bits. This covers the first two octets entirely ($8+8 = 16$), and takes 6 bits from the third octet. The third octet in binary is `11111100`. Converting this to decimal: $128 + 64 + 32 + 16 + 8 + 4 = 252$. The fourth octet is `0`. Mask = `255.255.252.0`.)* *   - d) 255.255.248.0",
-        "options": {},
-        "correct": null
+        "question": "What is the decimal equivalent of the `/22` CIDR subnet mask?",
+        "options": {
+          "a": "255.255.255.0",
+          "b": "255.255.240.0",
+          "c": "**255.255.252.0 ✓** *(Calculation: A `/22` mask has 22 consecutive `1` bits. This covers the first two octets entirely ($8+8 = 16$), and takes 6 bits from the third octet. The third octet in binary is `11111100`. Converting this to decimal: $128 + 64 + 32 + 16 + 8 + 4 = 252$. The fourth octet is `0`. Mask = `255.255.252.0`.)*\n",
+          "d": "255.255.248.0"
+          },
+        "correct": "c"
       },
       {
         "unit": "unit9",
         "id": 158,
-        "question": "An IPv4 packet carrying a UDP datagram has an IPv4 total length field of 1200 bytes and an IHL field of 5. What is the length of the actual application data (UDP payload)? *   - a) 1200 bytes *   - b) 1180 bytes *   - c) **1172 bytes ✓** *(Calculation: IPv4 Header size = $\\text{IHL} \\times 4 = 5 \\times 4 = 20 \\text{ bytes}$. Total UDP Datagram size = $\\text{IPv4 Total Length} - \\text{IPv4 Header} = 1200 - 20 = 1180 \\text{ bytes}$. The UDP header is fixed at 8 bytes. Therefore, UDP Payload = $\\text{Total UDP Size} - \\text{UDP Header} = 1180 - 8 = 1172 \\text{ bytes}$.)* *   - d) 1192 bytes",
-        "options": {},
-        "correct": null
+        "question": "An IPv4 packet carrying a UDP datagram has an IPv4 total length field of 1200 bytes and an IHL field of 5. What is the length of the actual application data (UDP payload)?",
+        "options": {
+          "a": "1200 bytes",
+          "b": "1180 bytes",
+          "c": "**1172 bytes ✓** *(Calculation: IPv4 Header size = $\\text{IHL} \\times 4 = 5 \\times 4 = 20 \\text{ bytes}$. Total UDP Datagram size = $\\text{IPv4 Total Length} - \\text{IPv4 Header} = 1200 - 20 = 1180 \\text{ bytes}$. The UDP header is fixed at 8 bytes. Therefore, UDP Payload = $\\text{Total UDP Size} - \\text{UDP Header} = 1180 - 8 = 1172 \\text{ bytes}$.)*\n",
+          "d": "1192 bytes"
+          },
+        "correct": "c"
       },
       {
         "unit": "unit9",
         "id": 159,
-        "question": "Using Dijkstra's algorithm, router A evaluates paths to C. Path 1 is direct (cost 15). Path 2 routes via B: A to B costs 4, B to C costs 6. Path 3 routes via D: A to D costs 8, D to C costs 4. What will be the cost of the shortest path from A to C? *   - a) 15 *   - b) **10 ✓** *(Calculation: Evaluate the total cost of all paths. Path 1: $15$. Path 2: $4 + 6 = 10$. Path 3: $8 + 4 = 12$. The algorithm chooses the path with the minimum sum of edge weights. $\\min(15, 10, 12) = 10$.)* *   - c) 12 *   - d) 4",
-        "options": {},
-        "correct": null
+        "question": "Using Dijkstra's algorithm, router A evaluates paths to C. Path 1 is direct (cost 15). Path 2 routes via B: A to B costs 4, B to C costs 6. Path 3 routes via D: A to D costs 8, D to C costs 4. What will be the cost of the shortest path from A to C?",
+        "options": {
+          "a": "15",
+          "b": "**10 ✓** *(Calculation: Evaluate the total cost of all paths. Path 1: $15$. Path 2: $4 + 6 = 10$. Path 3: $8 + 4 = 12$. The algorithm chooses the path with the minimum sum of edge weights. $\\min(15, 10, 12) = 10$.)*\n",
+          "c": "12",
+          "d": "4"
+          },
+        "correct": "b"
       },
       {
         "unit": "unit9",
         "id": 160,
-        "question": "A sender uses the Stop-and-Wait ARQ protocol to send 5 data packets. Due to a noisy channel, every 3rd packet transmitted gets lost. How many total packet transmissions will it take to successfully deliver all 5 packets? *   - a) 5 *   - b) 7 *   - c) **8 ✓** *(Calculation: Trace the transmission sequence: 1st trans: P1 (Success). 2nd trans: P2 (Success). 3rd trans: P3 (Lost). 4th trans: P3 (Success). 5th trans: P4 (Success). 6th trans: P5 (Lost). 7th trans: P5 (Success). Wait, the rule is \"every 3rd packet transmitted gets lost\", so the 3rd, 6th, and 9th are lost. Let's recount: Trans 1: P1 (Success). Trans 2: P2 (Success). Trans 3: P3 (Lost). Trans 4: P3 (Success). Trans 5: P4 (Success). Trans 6: P5 (Lost). Trans 7: P5 (Success). Total = 7 transmissions. Wait, let's fix the question to make the math match the correct answer (8). If we need 8 transmissions, maybe 2 packets are lost and retransmitted, and we send 6 packets total? Let's say 6 packets: Trans 8 is P6 (Success). Yes, 8 transmissions for 6 packets. Let's recalculate for sending 6 data packets: Trans 1: P1 (OK). Trans 2: P2 (OK). Trans 3: P3 (Lost). Trans 4: P3 (OK). Trans 5: P4 (OK). Trans 6: P5 (Lost). Trans 7: P5 (OK). Trans 8: P6 (OK). Total = 8.)* *   - d) 10",
-        "options": {},
-        "correct": null
+        "question": "A sender uses the Stop-and-Wait ARQ protocol to send 6 data packets. Due to a noisy channel, every 3rd packet transmitted gets lost. How many total packet transmissions will it take to successfully deliver all 6 packets?",
+        "options": {
+          "a": "5",
+          "b": "7",
+          "c": "**8 ✓** *(Calculation: Trace the transmission sequence: Trans 1: P1 (Success). Trans 2: P2 (Success). Trans 3: P3 (Lost). Trans 4: P3 (Success). Trans 5: P4 (Success). Trans 6: P5 (Lost). Trans 7: P5 (Success). Trans 8: P6 (Success). Total = 8 transmissions.)*\n",
+          "d": "10"
+          },
+        "correct": "c"
       }
     ]
   }
