@@ -466,6 +466,15 @@ function setupEventListeners() {
 
   // MCQ interactive click handler (Quiz mode: Click-to-reveal)
   elements.contentArea.addEventListener('click', (e) => {
+    const solveBtn = e.target.closest('.mcq-solve-btn');
+    if (solveBtn) {
+      const qId = parseInt(solveBtn.getAttribute('data-qid'));
+      if (typeof openSolver === 'function') {
+        openSolver(qId);
+      }
+      return;
+    }
+
     const option = e.target.closest('.mcq-option');
     if (!option) return;
 
@@ -1652,6 +1661,7 @@ function updateQuizDashboardStats() {
 }
 
 function renderPracticeUnit(unitIndex) {
+  if (typeof closeSolver === 'function') closeSolver();
   const mcqBank = getActiveMcqBank();
   const unitObj = mcqBank[unitIndex];
   if (!unitObj) return;
@@ -1756,7 +1766,15 @@ function renderPracticeUnit(unitIndex) {
       <div class="mcq-card" data-question-id="${q.id}" data-correct-answer="${q.correct}">
         <div class="mcq-card-header">
           <div class="mcq-question"><strong>Q${qNum}.</strong> ${q.question}</div>
-          <button class="mcq-star-btn ${isStarred ? 'starred' : ''}" data-qid="${q.id}" title="Star this question">${isStarred ? '★' : '☆'}</button>
+          <div class="mcq-actions" style="display: flex; gap: 0.5rem; align-items: center; flex-shrink: 0;">
+            ${typeof SOLVER_MAPPING !== 'undefined' && SOLVER_MAPPING[q.id] ? `
+            <button class="mcq-solve-btn" data-qid="${q.id}" title="Open Interactive Step-by-Step Solver" style="background: none; border: 1px solid var(--border-color); border-radius: 4px; padding: 0.25rem 0.5rem; font-size: 0.75rem; font-weight: 700; color: var(--active-accent); cursor: pointer; display: flex; align-items: center; gap: 0.25rem; transition: background-color 0.2s;">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z"></path></svg>
+              Solve
+            </button>
+            ` : ''}
+            <button class="mcq-star-btn ${isStarred ? 'starred' : ''}" data-qid="${q.id}" title="Star this question">${isStarred ? '★' : '☆'}</button>
+          </div>
         </div>
         <div class="mcq-options${answeredClass}" data-correct="${q.correct}">
           ${optionsListHtml}
