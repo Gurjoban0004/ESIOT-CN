@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pastel Botanical Dashboard</title>
+  <link rel="stylesheet" href="flower-demo.css">
+</head>
+<body>
+
+  <!-- Background Layer: Watercolor gradient blobs -->
+  <div class="parallax-layer layer-back">
+    <div class="watercolor watercolor-left"></div>
+    <div class="watercolor watercolor-right"></div>
+  </div>
+
+  <!-- Middle Layer: Botanical SVG decorations -->
+  <div class="parallax-layer layer-middle">
+    
+    <!-- Left Botanical Stem: Eucalyptus Leaves -->
+    <div class="botanical-wrapper left-wrap">
+      <svg class="botanical botanical-left" viewBox="0 0 400 700" xmlns="http://www.w3.org/2000/svg">
+        <path d="M100 700 C140 500 120 350 180 120" class="stem" />
+        <ellipse cx="170" cy="180" rx="25" ry="12" class="leaf" transform="rotate(-30 170 180)" />
+        <ellipse cx="190" cy="250" rx="28" ry="14" class="leaf" transform="rotate(25 190 250)" />
+        <ellipse cx="145" cy="340" rx="24" ry="12" class="leaf" transform="rotate(-40 145 340)" />
+      </svg>
+    </div>
+    
+    <!-- Right Botanical Stem: Peony Blooms -->
+    <div class="botanical-wrapper right-wrap">
+      <svg class="botanical botanical-right" viewBox="0 0 400 700" xmlns="http://www.w3.org/2000/svg">
+        <path d="M250 700 C220 520 260 300 180 100" class="stem" />
+        <circle cx="180" cy="100" r="35" class="peony" />
+        <circle cx="165" cy="90" r="20" class="peony-inner" />
+        <circle cx="195" cy="110" r="18" class="peony-inner" />
+      </svg>
+    </div>
+
+  </div>
+
+  <!-- Animated floating fireflies -->
+  <div class="fireflies">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Floating petals -->
+  <div class="petals">
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+    <span></span>
+  </div>
+
+  <!-- Header -->
+  <header>
+    <div class="brand">🌸 Prep.io</div>
+    <button id="themeToggle">Toggle Theme</button>
+  </header>
+
+  <!-- Main Grid Layout -->
+  <div class="layout">
+    
+    <!-- Sidebar -->
+    <aside class="sidebar">
+      <h3>Linux Prep</h3>
+      <ul>
+        <li class="active">Part A · MCQ</li>
+        <li>Part B · Theory</li>
+        <li>Part C · Bash</li>
+        <li>Part D · Shell Scripts</li>
+      </ul>
+    </aside>
+
+    <!-- Content Pane -->
+    <main>
+      <div class="card">
+        <h1>Pastel Botanical UI</h1>
+        <p>
+          Combining watercolor backgrounds,
+          floating petals,
+          pressed flowers,
+          glassmorphism cards,
+          animated fireflies,
+          and botanical illustrations.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Design Notes</h2>
+        <p>
+          This card demonstrates the final visual style.
+          The decorative elements stay behind content and never interfere with interaction.
+        </p>
+      </div>
+
+      <div class="card">
+        <h2>Another Section</h2>
+        <p>
+          Use this area to test scrolling, spacing, typography and responsiveness.
+        </p>
+      </div>
+    </main>
+
+  </div>
+
+  <!-- Interactive JavaScript -->
+  <script>
+    // Theme toggle logic (body.dark variable changes)
+    const btn = document.getElementById("themeToggle");
+    btn.addEventListener("click", () => {
+      document.body.classList.toggle("dark");
+    });
+
+    // Layered Parallax Movement (translates wrapper blocks to keep sways active)
+    document.addEventListener("mousemove", (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 20;
+      const y = (e.clientY / window.innerHeight - 0.5) * 20;
+      
+      const wrapLeft = document.querySelector(".left-wrap");
+      const wrapRight = document.querySelector(".right-wrap");
+      
+      if (wrapLeft) {
+        wrapLeft.style.transform = `translate(${x}px, ${y}px)`;
+      }
+      
+      if (wrapRight) {
+        wrapRight.style.transform = `translate(${-x}px, ${-y}px)`;
+      }
+    });
+  </script>
+
+</body>
+</html>
