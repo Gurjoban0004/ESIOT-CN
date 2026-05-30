@@ -3,137 +3,234 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Pastel Botanical Dashboard</title>
+  <title>Bottom Corner Botanicals — Design Prototype</title>
   <link rel="stylesheet" href="flower-demo.css">
 </head>
 <body>
 
-  <!-- Background Layer: Watercolor gradient blobs -->
-  <div class="parallax-layer layer-back">
-    <div class="watercolor watercolor-left"></div>
-    <div class="watercolor watercolor-right"></div>
+  <!-- ═══════════════════════════════════════════════════════════
+       BOTTOM LEFT CORNER — Wild Rose Branch
+       Realistic multi-petal flowers, thorned stem, veined leaves
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="corner-botanical left">
+    <svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg">
+      <!-- Main curved stem rising from bottom-left -->
+      <path d="M -10 310 C 20 280, 40 240, 55 200 C 65 170, 60 140, 75 100 C 85 72, 100 55, 120 38"
+            fill="none" stroke="var(--stem)" stroke-width="3.5" stroke-linecap="round" />
+      <!-- Secondary branch -->
+      <path d="M 55 200 C 80 195, 110 210, 135 195"
+            fill="none" stroke="var(--stem)" stroke-width="2.5" stroke-linecap="round" />
+      <!-- Tertiary twig -->
+      <path d="M 75 100 C 45 90, 30 70, 22 50"
+            fill="none" stroke="var(--stem-thin)" stroke-width="2" stroke-linecap="round" />
+
+      <!-- ── LEAVES ── Realistic elongated shapes with central veins -->
+      <!-- Leaf 1 — large, lower -->
+      <g opacity="0.85">
+        <path d="M 30 255 C 15 235, 5 215, 20 200 C 32 210, 38 230, 42 248 Z" fill="var(--leaf-1)" />
+        <path d="M 30 255 C 44 240, 50 220, 52 205 C 45 215, 40 230, 38 248 Z" fill="var(--leaf-2)" />
+        <path d="M 30 255 L 36 225" fill="none" stroke="var(--stem-thin)" stroke-width="0.8" opacity="0.5" />
+      </g>
+      <!-- Leaf 2 — mid stem, opposite side -->
+      <g opacity="0.9">
+        <path d="M 62 170 C 80 155, 95 150, 100 160 C 90 165, 75 168, 65 175 Z" fill="var(--leaf-2)" />
+        <path d="M 62 170 C 50 155, 42 140, 45 130 C 52 140, 56 155, 60 168 Z" fill="var(--leaf-1)" />
+        <path d="M 62 170 L 72 152" fill="none" stroke="var(--stem-thin)" stroke-width="0.7" opacity="0.4" />
+      </g>
+      <!-- Leaf 3 — near top branch -->
+      <g opacity="0.8">
+        <path d="M 85 88 C 95 70, 105 62, 112 68 C 105 75, 95 80, 88 90 Z" fill="var(--leaf-3)" />
+        <path d="M 85 88 C 72 75, 65 60, 68 52 C 75 60, 80 75, 84 86 Z" fill="var(--leaf-1)" />
+      </g>
+      <!-- Small leaf on secondary branch -->
+      <g opacity="0.7">
+        <path d="M 110 205 C 120 192, 132 188, 138 195 C 130 198, 120 202, 112 208 Z" fill="var(--leaf-2)" />
+      </g>
+
+      <!-- ── WILD ROSE — Main bloom at top of stem ── -->
+      <!-- Back petals (darker, behind) -->
+      <g opacity="0.9">
+        <ellipse cx="120" cy="38" rx="18" ry="12" fill="var(--petal-deep)" transform="rotate(-20 120 38)" />
+        <ellipse cx="120" cy="38" rx="17" ry="11" fill="var(--petal-deep)" transform="rotate(50 120 38)" />
+        <ellipse cx="120" cy="38" rx="16" ry="10" fill="var(--petal-deep)" transform="rotate(120 120 38)" />
+      </g>
+      <!-- Front petals (lighter, overlapping) -->
+      <g>
+        <ellipse cx="120" cy="36" rx="16" ry="11" fill="var(--petal-rose)" transform="rotate(-40 120 36)" />
+        <ellipse cx="120" cy="36" rx="15" ry="10" fill="var(--petal-rose)" transform="rotate(30 120 36)" />
+        <ellipse cx="120" cy="36" rx="14" ry="10" fill="var(--petal-blush)" transform="rotate(95 120 36)" />
+        <ellipse cx="120" cy="36" rx="15" ry="9" fill="var(--petal-blush)" transform="rotate(160 120 36)" />
+        <ellipse cx="120" cy="36" rx="13" ry="9" fill="var(--petal-blush)" transform="rotate(-80 120 36)" />
+      </g>
+      <!-- Flower center — stamens -->
+      <circle cx="120" cy="36" r="5" fill="var(--petal-center)" />
+      <circle cx="118" cy="34" r="1.2" fill="#D4A24A" />
+      <circle cx="122" cy="34" r="1" fill="#D4A24A" />
+      <circle cx="120" cy="38" r="1.1" fill="#D4A24A" />
+
+      <!-- ── SMALL BUD on secondary branch ── -->
+      <g>
+        <ellipse cx="137" cy="192" rx="7" ry="5" fill="var(--petal-blush)" transform="rotate(-15 137 192)" />
+        <ellipse cx="137" cy="192" rx="6" ry="4.5" fill="var(--petal-rose)" transform="rotate(25 137 192)" />
+        <path d="M 134 196 C 136 200, 138 200, 140 196" fill="var(--bud-sage)" />
+      </g>
+
+      <!-- ── TINY BUD on tertiary twig ── -->
+      <g opacity="0.85">
+        <ellipse cx="22" cy="48" rx="5" ry="3.5" fill="var(--petal-blush)" transform="rotate(10 22 48)" />
+        <path d="M 19 51 C 21 54, 23 54, 25 51" fill="var(--bud-sage)" />
+      </g>
+    </svg>
   </div>
 
-  <!-- Middle Layer: Botanical SVG decorations -->
-  <div class="parallax-layer layer-middle">
-    
-    <!-- Left Botanical Stem: Eucalyptus Leaves -->
-    <div class="botanical-wrapper left-wrap">
-      <svg class="botanical botanical-left" viewBox="0 0 400 700" xmlns="http://www.w3.org/2000/svg">
-        <path d="M100 700 C140 500 120 350 180 120" class="stem" />
-        <ellipse cx="170" cy="180" rx="25" ry="12" class="leaf" transform="rotate(-30 170 180)" />
-        <ellipse cx="190" cy="250" rx="28" ry="14" class="leaf" transform="rotate(25 190 250)" />
-        <ellipse cx="145" cy="340" rx="24" ry="12" class="leaf" transform="rotate(-40 145 340)" />
-      </svg>
-    </div>
-    
-    <!-- Right Botanical Stem: Peony Blooms -->
-    <div class="botanical-wrapper right-wrap">
-      <svg class="botanical botanical-right" viewBox="0 0 400 700" xmlns="http://www.w3.org/2000/svg">
-        <path d="M250 700 C220 520 260 300 180 100" class="stem" />
-        <circle cx="180" cy="100" r="35" class="peony" />
-        <circle cx="165" cy="90" r="20" class="peony-inner" />
-        <circle cx="195" cy="110" r="18" class="peony-inner" />
-      </svg>
-    </div>
+  <!-- ═══════════════════════════════════════════════════════════
+       BOTTOM RIGHT CORNER — Sage & Berry Branch
+       Rounded sage leaves, tiny berries, delicate fronds
+       ═══════════════════════════════════════════════════════════ -->
+  <div class="corner-botanical right">
+    <svg viewBox="0 0 320 300" xmlns="http://www.w3.org/2000/svg">
+      <!-- Main stem from bottom-right -->
+      <path d="M 330 310 C 300 275, 280 240, 265 200 C 255 170, 260 135, 245 95 C 235 65, 215 48, 195 35"
+            fill="none" stroke="var(--stem)" stroke-width="3.5" stroke-linecap="round" />
+      <!-- Secondary branch sweeping left -->
+      <path d="M 265 200 C 240 195, 210 208, 185 198"
+            fill="none" stroke="var(--stem)" stroke-width="2.5" stroke-linecap="round" />
+      <!-- Tertiary twig upward -->
+      <path d="M 245 95 C 270 82, 285 65, 290 45"
+            fill="none" stroke="var(--stem-thin)" stroke-width="2" stroke-linecap="round" />
 
+      <!-- ── SAGE LEAVES — rounded, soft shapes ── -->
+      <!-- Leaf cluster 1 — lower -->
+      <g opacity="0.85">
+        <ellipse cx="290" cy="250" rx="22" ry="11" fill="var(--leaf-1)" transform="rotate(35 290 250)" />
+        <ellipse cx="285" cy="248" rx="18" ry="9" fill="var(--leaf-2)" transform="rotate(40 285 248)" />
+        <path d="M 290 250 L 278 238" fill="none" stroke="var(--stem-thin)" stroke-width="0.7" opacity="0.4" />
+      </g>
+      <!-- Leaf cluster 2 — mid, opposite side -->
+      <g opacity="0.9">
+        <ellipse cx="252" cy="165" rx="20" ry="10" fill="var(--leaf-2)" transform="rotate(-25 252 165)" />
+        <ellipse cx="257" cy="162" rx="16" ry="8" fill="var(--leaf-3)" transform="rotate(-20 257 162)" />
+        <path d="M 252 165 L 265 153" fill="none" stroke="var(--stem-thin)" stroke-width="0.7" opacity="0.4" />
+      </g>
+      <!-- Leaf cluster 3 — upper -->
+      <g opacity="0.8">
+        <ellipse cx="232" cy="82" rx="16" ry="8" fill="var(--leaf-1)" transform="rotate(20 232 82)" />
+        <ellipse cx="228" cy="80" rx="12" ry="6.5" fill="var(--leaf-2)" transform="rotate(25 228 80)" />
+      </g>
+      <!-- Small leaf on secondary branch -->
+      <g opacity="0.75">
+        <ellipse cx="200" cy="200" rx="14" ry="7" fill="var(--leaf-3)" transform="rotate(-30 200 200)" />
+      </g>
+
+      <!-- ── BERRY CLUSTER at secondary branch tip ── -->
+      <g>
+        <circle cx="183" cy="196" r="4.5" fill="var(--petal-deep)" />
+        <circle cx="188" cy="200" r="4" fill="var(--petal-rose)" />
+        <circle cx="180" cy="202" r="3.8" fill="var(--petal-deep)" />
+        <circle cx="185" cy="205" r="3.5" fill="var(--petal-rose)" />
+        <!-- Berry highlights -->
+        <circle cx="181" cy="194" r="1" fill="var(--petal-blush)" opacity="0.6" />
+        <circle cx="187" cy="198" r="0.8" fill="var(--petal-blush)" opacity="0.5" />
+      </g>
+
+      <!-- ── FLOWER — Soft bloom at top of stem ── -->
+      <!-- Back petals -->
+      <g opacity="0.85">
+        <ellipse cx="195" cy="33" rx="15" ry="10" fill="var(--petal-deep)" transform="rotate(15 195 33)" />
+        <ellipse cx="195" cy="33" rx="14" ry="9" fill="var(--petal-deep)" transform="rotate(80 195 33)" />
+        <ellipse cx="195" cy="33" rx="13" ry="9" fill="var(--petal-deep)" transform="rotate(145 195 33)" />
+      </g>
+      <!-- Front petals -->
+      <g>
+        <ellipse cx="195" cy="32" rx="13" ry="9" fill="var(--petal-rose)" transform="rotate(-30 195 32)" />
+        <ellipse cx="195" cy="32" rx="12" ry="8.5" fill="var(--petal-blush)" transform="rotate(40 195 32)" />
+        <ellipse cx="195" cy="32" rx="12" ry="8" fill="var(--petal-blush)" transform="rotate(110 195 32)" />
+        <ellipse cx="195" cy="32" rx="11" ry="8" fill="var(--petal-blush)" transform="rotate(-70 195 32)" />
+      </g>
+      <!-- Center -->
+      <circle cx="195" cy="32" r="4.5" fill="var(--petal-center)" />
+      <circle cx="193" cy="30.5" r="1" fill="#D4A24A" />
+      <circle cx="197" cy="30.5" r="0.8" fill="#D4A24A" />
+
+      <!-- ── TINY BUDS on tertiary twig ── -->
+      <g opacity="0.8">
+        <ellipse cx="290" cy="44" rx="5" ry="3.5" fill="var(--petal-blush)" transform="rotate(-10 290 44)" />
+        <ellipse cx="288" cy="44" rx="4" ry="3" fill="var(--petal-rose)" transform="rotate(-15 288 44)" />
+        <path d="M 287 47 C 289 50, 291 50, 293 47" fill="var(--bud-sage)" />
+      </g>
+    </svg>
   </div>
 
-  <!-- Animated floating fireflies -->
-  <div class="fireflies">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-
-  <!-- Floating petals -->
-  <div class="petals">
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-    <span></span>
-  </div>
-
-  <!-- Header -->
+  <!-- ══════════════════════════════════════════════════════════
+       MOCK APP LAYOUT — Matches Prep.io structure
+       ══════════════════════════════════════════════════════════ -->
   <header>
-    <div class="brand">🌸 Prep.io</div>
-    <button id="themeToggle">Toggle Theme</button>
+    <div class="brand">Prep.io</div>
+    <button class="theme-toggle" id="theme-toggle-btn">Toggle Dark Mode</button>
   </header>
 
-  <!-- Main Grid Layout -->
-  <div class="layout">
-    
-    <!-- Sidebar -->
+  <div class="container">
     <aside class="sidebar">
-      <h3>Linux Prep</h3>
-      <ul>
-        <li class="active">Part A · MCQ</li>
-        <li>Part B · Theory</li>
-        <li>Part C · Bash</li>
-        <li>Part D · Shell Scripts</li>
+      <div class="sidebar-title">Linux Prep</div>
+      <ul class="sidebar-menu">
+        <li class="sidebar-item active">Part A · MCQ Quiz</li>
+        <li class="sidebar-item">Part B · Theory Q&A</li>
+        <li class="sidebar-item">Part C1 · Introduction</li>
+        <li class="sidebar-item">Part C2 · File Operations</li>
       </ul>
     </aside>
 
-    <!-- Content Pane -->
-    <main>
+    <main class="content">
       <div class="card">
-        <h1>Pastel Botanical UI</h1>
+        <h1>Bottom-Corner Botanical Accents</h1>
         <p>
-          Combining watercolor backgrounds,
-          floating petals,
-          pressed flowers,
-          glassmorphism cards,
-          animated fireflies,
-          and botanical illustrations.
+          This prototype shows hand-drawn wild rose and sage-berry SVG arrangements 
+          fixed exclusively to the bottom-left and bottom-right viewport corners.
+        </p>
+        <p>
+          The colors are pulled directly from the Prep.io palette — warm terracotta 
+          petals, dusty sage leaves, golden stamen centers — so they feel native to 
+          the existing design rather than pasted on.
         </p>
       </div>
 
       <div class="card">
-        <h2>Design Notes</h2>
+        <h2>Design Principles</h2>
         <p>
-          This card demonstrates the final visual style.
-          The decorative elements stay behind content and never interfere with interaction.
+          <strong>Bottom corners only.</strong> No top decorations, no side elements, 
+          no floating petals. Just two carefully composed botanical illustrations 
+          anchored to the bottom edge.
+        </p>
+        <p>
+          <strong>Zero obstruction.</strong> The SVGs are layered behind all content 
+          with <code>pointer-events: none</code> and <code>z-index: 0</code>.
+        </p>
+        <p>
+          <strong>Barely-there sway.</strong> A ~0.8 degree rotation cycle that feels 
+          like a gentle breeze, not a carnival ride.
         </p>
       </div>
 
       <div class="card">
-        <h2>Another Section</h2>
+        <h2>What You See</h2>
         <p>
-          Use this area to test scrolling, spacing, typography and responsiveness.
+          <strong>Bottom-left:</strong> A wild rose branch with a full multi-petal bloom, 
+          a half-open bud, veined leaves at natural angles, and a tiny closed bud on a twig.
+        </p>
+        <p>
+          <strong>Bottom-right:</strong> A sage-berry branch with rounded leaf clusters, 
+          a soft bloom, a berry cluster with highlights, and small buds on a twig.
+        </p>
+        <p>
+          Toggle dark mode to see how the botanicals shift to deeper forest tones.
         </p>
       </div>
     </main>
-
   </div>
 
-  <!-- Interactive JavaScript -->
   <script>
-    // Theme toggle logic (body.dark variable changes)
-    const btn = document.getElementById("themeToggle");
-    btn.addEventListener("click", () => {
-      document.body.classList.toggle("dark");
-    });
-
-    // Layered Parallax Movement (translates wrapper blocks to keep sways active)
-    document.addEventListener("mousemove", (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 20;
-      const y = (e.clientY / window.innerHeight - 0.5) * 20;
-      
-      const wrapLeft = document.querySelector(".left-wrap");
-      const wrapRight = document.querySelector(".right-wrap");
-      
-      if (wrapLeft) {
-        wrapLeft.style.transform = `translate(${x}px, ${y}px)`;
-      }
-      
-      if (wrapRight) {
-        wrapRight.style.transform = `translate(${-x}px, ${-y}px)`;
-      }
+    document.getElementById('theme-toggle-btn').addEventListener('click', () => {
+      document.body.classList.toggle('dark-theme');
     });
   </script>
 
