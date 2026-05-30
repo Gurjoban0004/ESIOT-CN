@@ -3465,6 +3465,7 @@ body.dark-theme .landing-subject-card:hover {
 .starred-mcq-item-header {
   display: flex;
   align-items: center;
+  justify-content: space-between;
   gap: 0.4rem;
   margin-bottom: 0.35rem;
 }
@@ -3771,4 +3772,51 @@ body.dark-theme .smart-notes-header-actions button.active {
     width: 46px;
     height: 46px;
   }
+}
+
+/* Individual Unstar Starred Item Button */
+.unstar-item-btn {
+  background: none !important;
+  border: none !important;
+  color: var(--text-secondary) !important;
+  padding: 2px !important;
+  cursor: pointer !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  border-radius: 4px !important;
+  opacity: 0.6 !important;
+  transition: all 0.2s ease !important;
+}
+
+.unstar-item-btn:hover {
+  opacity: 1 !important;
+  background-color: rgba(224, 122, 95, 0.1) !important;
+  color: #E07A5F !important;
+}
+
+body.dark-theme .unstar-item-btn:hover {
+  background-color: rgba(224, 122, 95, 0.2) !important;
+  color: #FFB3A4 !important;
+}
+
+/* Armed clear buttons confirmation state */
+.smart-notes-header-actions button.armed,
+.starred-filter-btn.starred-clear-btn.armed {
+  background-color: #FDF1ED !important;
+  border-color: #E07A5F !important;
+  color: #8C3E2B !important;
+  animation: pulseArmed 1s infinite alternate !important;
+}
+
+body.dark-theme .smart-notes-header-actions button.armed,
+body.dark-theme .starred-filter-btn.starred-clear-btn.armed {
+  background-color: #3D221C !important;
+  border-color: #6E382F !important;
+  color: #FFB3A4 !important;
+}
+
+@keyframes pulseArmed {
+  0% { transform: scale(1); }
+  100% { transform: scale(1.02); }
 }

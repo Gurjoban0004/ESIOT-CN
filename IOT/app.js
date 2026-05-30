@@ -2189,13 +2189,25 @@ function initSmartNotesUI() {
 
   const copyBtn = document.createElement('button');
   copyBtn.id = 'copy-notes-btn';
-  copyBtn.textContent = '\uD83D\uDCCB Copy All';
+  const copySvg = new DOMParser().parseFromString(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+    'image/svg+xml'
+  );
+  copyBtn.appendChild(copyBtn.ownerDocument.importNode(copySvg.documentElement, true));
+  const copyBtnText = document.createTextNode(' Copy All');
+  copyBtn.appendChild(copyBtnText);
   copyBtn.addEventListener('click', copyNotesToClipboard);
   headerActions.appendChild(copyBtn);
 
   const filterBtn = document.createElement('button');
   filterBtn.id = 'toggle-filters-btn';
-  filterBtn.textContent = '\uD83D\uDD0D Filter';
+  const filterSvg = new DOMParser().parseFromString(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"/></svg>',
+    'image/svg+xml'
+  );
+  filterBtn.appendChild(filterBtn.ownerDocument.importNode(filterSvg.documentElement, true));
+  const filterBtnText = document.createTextNode(' Filter');
+  filterBtn.appendChild(filterBtnText);
   filterBtn.addEventListener('click', () => {
     const filtersContainer = document.getElementById('smart-notes-filters');
     if (filtersContainer) {
@@ -2204,6 +2216,43 @@ function initSmartNotesUI() {
     }
   });
   headerActions.appendChild(filterBtn);
+
+  // Clear All Notes button
+  const clearBtn = document.createElement('button');
+  clearBtn.id = 'clear-notes-btn';
+  clearBtn.className = 'smart-notes-clear-btn';
+  const clearSvg = new DOMParser().parseFromString(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>',
+    'image/svg+xml'
+  );
+  clearBtn.appendChild(clearBtn.ownerDocument.importNode(clearSvg.documentElement, true));
+  const clearBtnText = document.createTextNode(' Clear All');
+  clearBtn.appendChild(clearBtnText);
+
+  let clearConfirmTimeout = null;
+  clearBtn.addEventListener('click', () => {
+    if (clearBtn.classList.contains('armed')) {
+      state.smartNotes = [];
+      localStorage.setItem('prep_smart_notes', JSON.stringify(state.smartNotes));
+      updateNotesCount();
+      renderNotesList();
+      clearBtn.classList.remove('armed');
+      clearBtn.lastChild.textContent = ' Clear All';
+      if (clearConfirmTimeout) {
+        clearTimeout(clearConfirmTimeout);
+        clearConfirmTimeout = null;
+      }
+    } else {
+      clearBtn.classList.add('armed');
+      clearBtn.lastChild.textContent = ' Confirm?';
+      clearConfirmTimeout = setTimeout(() => {
+        clearBtn.classList.remove('armed');
+        clearBtn.lastChild.textContent = ' Clear All';
+        clearConfirmTimeout = null;
+      }, 3000);
+    }
+  });
+  headerActions.appendChild(clearBtn);
 
   const closeBtn = document.createElement('button');
   closeBtn.className = 'smart-notes-close-btn';
@@ -2255,7 +2304,16 @@ function initSmartNotesUI() {
   starredToggle.className = 'starred-section-toggle';
   starredToggle.id = 'starred-section-toggle';
   const starredToggleText = document.createElement('span');
-  starredToggleText.textContent = '\u2605 Starred Questions';
+  starredToggleText.style.display = 'inline-flex';
+  starredToggleText.style.alignItems = 'center';
+  starredToggleText.style.gap = '6px';
+  const starredSectionSvg = new DOMParser().parseFromString(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="currentColor" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="color: #E3B261; vertical-align: middle;"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>',
+    'image/svg+xml'
+  );
+  starredToggleText.appendChild(starredToggleText.ownerDocument.importNode(starredSectionSvg.documentElement, true));
+  const starredTextNode = document.createTextNode(' Starred Questions');
+  starredToggleText.appendChild(starredTextNode);
   starredToggle.appendChild(starredToggleText);
   const starredCountBadge = document.createElement('span');
   starredCountBadge.className = 'starred-count';
@@ -2272,16 +2330,67 @@ function initSmartNotesUI() {
   starredList.id = 'starred-section-list';
   starredContent.appendChild(starredList);
 
-  // Copy starred button
+  // Copy & Clear starred buttons row
   const copyStarredRow = document.createElement('div');
-  copyStarredRow.style.cssText = 'padding: 0 1.25rem 1rem; display: flex;';
+  copyStarredRow.style.cssText = 'padding: 0 1.25rem 1rem; display: flex; gap: 0.5rem;';
+  
   const copyStarredBtn = document.createElement('button');
   copyStarredBtn.id = 'copy-starred-btn';
-  copyStarredBtn.style.cssText = 'flex: 1;';
+  copyStarredBtn.style.cssText = 'flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px;';
   copyStarredBtn.className = 'starred-filter-btn';
-  copyStarredBtn.textContent = '\uD83D\uDCCB Copy Starred for AI';
+  const copyStarredSvg = new DOMParser().parseFromString(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/></svg>',
+    'image/svg+xml'
+  );
+  copyStarredBtn.appendChild(copyStarredBtn.ownerDocument.importNode(copyStarredSvg.documentElement, true));
+  const copyStarredBtnText = document.createTextNode(' Copy for AI');
+  copyStarredBtn.appendChild(copyStarredBtnText);
   copyStarredBtn.addEventListener('click', copyStarredToClipboard);
   copyStarredRow.appendChild(copyStarredBtn);
+
+  // Clear Starred button
+  const clearStarredBtn = document.createElement('button');
+  clearStarredBtn.id = 'clear-starred-btn';
+  clearStarredBtn.style.cssText = 'flex: 1; display: flex; align-items: center; justify-content: center; gap: 4px;';
+  clearStarredBtn.className = 'starred-filter-btn starred-clear-btn';
+  const unstarAllSvg = new DOMParser().parseFromString(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/><path d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z"/></svg>',
+    'image/svg+xml'
+  );
+  clearStarredBtn.appendChild(clearStarredBtn.ownerDocument.importNode(unstarAllSvg.documentElement, true));
+  const clearStarredBtnText = document.createTextNode(' Unstar All');
+  clearStarredBtn.appendChild(clearStarredBtnText);
+
+  let clearStarredConfirmTimeout = null;
+  clearStarredBtn.addEventListener('click', () => {
+    if (clearStarredBtn.classList.contains('armed')) {
+      state.starredMcqs = { iot: [], cn: [], linux: [] };
+      localStorage.setItem('prep_starred_mcqs', JSON.stringify(state.starredMcqs));
+      renderStarredInNotesPanel();
+      
+      if (state.activeSection === 'practice' || state.activeSection === 'linuxMcq') {
+        const activeUnitObj = CONFIG.subjects[state.activeSubject]?.mcqs?.[state.activePracticeUnitIdx];
+        if (activeUnitObj) {
+          renderPracticeUnit(activeUnitObj);
+        }
+      }
+      clearStarredBtn.classList.remove('armed');
+      clearStarredBtn.lastChild.textContent = ' Unstar All';
+      if (clearStarredConfirmTimeout) {
+        clearTimeout(clearStarredConfirmTimeout);
+        clearStarredConfirmTimeout = null;
+      }
+    } else {
+      clearStarredBtn.classList.add('armed');
+      clearStarredBtn.lastChild.textContent = ' Confirm?';
+      clearStarredConfirmTimeout = setTimeout(() => {
+        clearStarredBtn.classList.remove('armed');
+        clearStarredBtn.lastChild.textContent = ' Unstar All';
+        clearStarredConfirmTimeout = null;
+      }, 3000);
+    }
+  });
+  copyStarredRow.appendChild(clearStarredBtn);
   starredContent.appendChild(copyStarredRow);
   panel.appendChild(starredContent);
 
@@ -2326,7 +2435,14 @@ function initSmartNotesUI() {
   const tooltip = document.createElement('div');
   tooltip.className = 'selection-tooltip';
   tooltip.id = 'selection-tooltip';
-  tooltip.textContent = '\uD83D\uDCCC Save to Notes';
+  
+  const pinSvg = new DOMParser().parseFromString(
+    '<svg xmlns="http://www.w3.org/2000/svg" width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" style="margin-right: 4px; vertical-align: middle;"><line x1="18" y1="8" x2="22" y2="12"/><line x1="12" y1="2" x2="22" y2="12"/><path d="M12 2L2 12h5l5 5v5l10-10H17l-5-5z"/></svg>',
+    'image/svg+xml'
+  );
+  tooltip.appendChild(tooltip.ownerDocument.importNode(pinSvg.documentElement, true));
+  const tooltipText = document.createTextNode(' Save to Notes');
+  tooltip.appendChild(tooltipText);
   document.body.appendChild(tooltip);
 
   // Setup selection listener
@@ -2672,6 +2788,28 @@ function renderStarredInNotesPanel() {
     badge.className = 'starred-mcq-subject-badge';
     badge.textContent = CONFIG.subjects[q.subject]?.label || q.subject;
     headerRow.appendChild(badge);
+
+    const unstarItemBtn = document.createElement('button');
+    unstarItemBtn.className = 'unstar-item-btn';
+    unstarItemBtn.title = 'Remove Star';
+    const trashSvg = new DOMParser().parseFromString(
+      '<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>',
+      'image/svg+xml'
+    );
+    unstarItemBtn.appendChild(unstarItemBtn.ownerDocument.importNode(trashSvg.documentElement, true));
+    unstarItemBtn.addEventListener('click', () => {
+      const starredList = state.starredMcqs[q.subject] || [];
+      state.starredMcqs[q.subject] = starredList.filter(id => id !== q.id);
+      localStorage.setItem('prep_starred_mcqs', JSON.stringify(state.starredMcqs));
+      renderStarredInNotesPanel();
+      
+      const activeStarBtn = document.querySelector(`.mcq-star-btn[data-qid="${q.id}"]`);
+      if (activeStarBtn) {
+        activeStarBtn.classList.remove('starred');
+        activeStarBtn.textContent = '☆';
+      }
+    });
+    headerRow.appendChild(unstarItemBtn);
     item.appendChild(headerRow);
 
     const qText = document.createElement('div');
