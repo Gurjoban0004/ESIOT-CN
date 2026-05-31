@@ -181,7 +181,11 @@ const STUDY_DATA = {
   ]
 };
 
-const CN_STUDY_DATA = {
+const CN_STUDY_DATA_OLD = {
+  "st1": [],
+  "st2": [],
+  "endTerm": [],
+  "cheatSheet": [],
   "unit1_2": [
     {
       "title": "Topic 1.1 — Uses & Importance of Networks",

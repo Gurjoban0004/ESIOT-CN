@@ -1841,37 +1841,31 @@ main.content-pane.practice-mode #reading-content-area {
 }
 
 /* --- Top Nav Active states for Computer Networks & Practice --- */
-nav.top-nav button.active[data-section="unit1_2"] {
+body.subject-cn nav.top-nav button.active[data-section="st1"] {
   background-color: #EDF1FD;
   color: #5F7AE0;
   font-weight: 600;
 }
 
-nav.top-nav button.active[data-section="unit3_4"] {
+body.subject-cn nav.top-nav button.active[data-section="st2"] {
   background-color: #F0F4F8;
   color: #7A9FBF;
   font-weight: 600;
 }
 
-nav.top-nav button.active[data-section="unit5_6"] {
+body.subject-cn nav.top-nav button.active[data-section="endTerm"] {
   background-color: #EDF6F3;
   color: #5F9E8A;
   font-weight: 600;
 }
 
-nav.top-nav button.active[data-section="unit7_8"] {
+body.subject-cn nav.top-nav button.active[data-section="cheatSheet"] {
   background-color: #F5EDF6;
   color: #8A5F9E;
   font-weight: 600;
 }
 
-nav.top-nav button.active[data-section="unit9"] {
-  background-color: #FDF5F5;
-  color: #9E5F5F;
-  font-weight: 600;
-}
-
-nav.top-nav button.active[data-section="practice"] {
+body.subject-cn nav.top-nav button.active[data-section="practice"] {
   background-color: #FDF1ED;
   color: #8C4735;
   font-weight: 600;
@@ -2359,37 +2353,31 @@ nav.top-nav button.active[data-section="bashPractice"] {
   border-color: #D3D7E0;
 }
 
-.mobile-section-nav button.active[data-section="unit1_2"] {
+body.subject-cn .mobile-section-nav button.active[data-section="st1"] {
   background-color: #EDF1FD;
   color: #5F7AE0;
   border-color: #D9E1FC;
 }
 
-.mobile-section-nav button.active[data-section="unit3_4"] {
+body.subject-cn .mobile-section-nav button.active[data-section="st2"] {
   background-color: #F0F4F8;
   color: #7A9FBF;
   border-color: #D6E2ED;
 }
 
-.mobile-section-nav button.active[data-section="unit5_6"] {
+body.subject-cn .mobile-section-nav button.active[data-section="endTerm"] {
   background-color: #EDF6F3;
   color: #5F9E8A;
   border-color: #D5EBE4;
 }
 
-.mobile-section-nav button.active[data-section="unit7_8"] {
+body.subject-cn .mobile-section-nav button.active[data-section="cheatSheet"] {
   background-color: #F5EDF6;
   color: #8A5F9E;
   border-color: #ECD9F0;
 }
 
-.mobile-section-nav button.active[data-section="unit9"] {
-  background-color: #FDF5F5;
-  color: #9E5F5F;
-  border-color: #F9D9D9;
-}
-
-.mobile-section-nav button.active[data-section="practice"] {
+body.subject-cn .mobile-section-nav button.active[data-section="practice"] {
   background-color: #FDF1ED;
   color: #8C4735;
   border-color: #F3D9D2;
@@ -2658,22 +2646,40 @@ body.dark-theme nav.top-nav button:hover {
   background-color: #292320 !important;
   color: var(--text-primary) !important;
 }
-body.dark-theme nav.top-nav button.active[data-section="st1"] {
+body.dark-theme.subject-iot nav.top-nav button.active[data-section="st1"] {
   background-color: #4A2820 !important;
   color: #FF9B85 !important;
 }
-body.dark-theme nav.top-nav button.active[data-section="st2"] {
+body.dark-theme.subject-iot nav.top-nav button.active[data-section="st2"] {
   background-color: #223D32 !important;
   color: #9CE0C1 !important;
 }
-body.dark-theme nav.top-nav button.active[data-section="endTerm"] {
+body.dark-theme.subject-iot nav.top-nav button.active[data-section="endTerm"] {
   background-color: #3D2D18 !important;
   color: #E6BC73 !important;
 }
-body.dark-theme nav.top-nav button.active[data-section="cheatSheet"] {
+body.dark-theme.subject-iot nav.top-nav button.active[data-section="cheatSheet"] {
   background-color: #202334 !important;
   color: #9C9FB9 !important;
 }
+
+body.dark-theme.subject-cn nav.top-nav button.active[data-section="st1"] {
+  background-color: #1E253A !important;
+  color: #8CA0E8 !important;
+}
+body.dark-theme.subject-cn nav.top-nav button.active[data-section="st2"] {
+  background-color: #1D2A38 !important;
+  color: #9FBCD5 !important;
+}
+body.dark-theme.subject-cn nav.top-nav button.active[data-section="endTerm"] {
+  background-color: #1D322B !important;
+  color: #8CD1B9 !important;
+}
+body.dark-theme.subject-cn nav.top-nav button.active[data-section="cheatSheet"] {
+  background-color: #2C2034 !important;
+  color: #C39CD4 !important;
+}
+
 body.dark-theme nav.top-nav button.active[data-section="practice"],
 body.dark-theme nav.top-nav button.active[data-section="linuxMcq"],
 body.dark-theme nav.top-nav button.active[data-section="bashPractice"] {
@@ -4003,3 +4009,289 @@ body.dark-theme .solver-result {
   from { transform: translateX(100%); }
   to { transform: translateX(0); }
 }
+
+/* ============================================================
+   COMPUTER NETWORKS NOTES COMPONENT STYLES
+   ============================================================ */
+
+/* Grids and Layouts */
+.g2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 1.2rem;
+}
+.ga {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  gap: 1rem;
+}
+
+/* Lists formatting */
+.reading-area ul.nl {
+  list-style: none;
+  padding-left: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.reading-area ul.nl li {
+  position: relative;
+  padding-left: 1.25rem;
+  font-size: 0.9rem;
+  line-height: 1.6;
+  margin-bottom: 0.25rem;
+  color: var(--text-secondary);
+}
+.reading-area ul.nl li::before {
+  content: '›';
+  position: absolute;
+  left: 0;
+  top: -2px;
+  color: #5F7AE0;
+  font-weight: bold;
+  font-size: 1.2rem;
+}
+body.subject-iot .reading-area ul.nl li::before {
+  color: var(--accent-st1);
+}
+.reading-area ul.nl li b,
+.reading-area ul.nl li strong {
+  color: var(--text-primary);
+}
+
+/* Custom Callout Boxes */
+.hb {
+  border-radius: 8px;
+  padding: 0.65rem 0.9rem;
+  margin: 0.6rem 0;
+  font-size: 0.88rem;
+  border-left: 4px solid;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+.hb b, .hb strong {
+  color: var(--text-primary);
+}
+/* Light theme callouts */
+.hb.bl { background: #EDF1FD; border-color: #5F7AE0; }
+.hb.cy { background: #EDF9FC; border-color: #7A9FBF; }
+.hb.gn { background: #EDF6F3; border-color: #5F9E8A; }
+.hb.yw { background: #FAF8EE; border-color: #B58A3D; }
+.hb.rd { background: #FDF1ED; border-color: #E07A5F; }
+
+/* Dark theme callouts */
+body.dark-theme .hb.bl { background: #1E253A; border-color: #8CA0E8; }
+body.dark-theme .hb.cy { background: #1D2A38; border-color: #9FBCD5; }
+body.dark-theme .hb.gn { background: #1D322B; border-color: #8CD1B9; }
+body.dark-theme .hb.yw { background: #332D1C; border-color: #E6BC73; }
+body.dark-theme .hb.rd { background: #3C2420; border-color: #FF9B85; }
+
+/* Math Formulas */
+.fm {
+  font-family: var(--font-mono);
+  background: #1A1817;
+  border: 1px solid #332D2A;
+  border-radius: 8px;
+  padding: 0.6rem 0.9rem;
+  font-size: 0.9rem;
+  color: #E29B7A;
+  margin: 0.6rem 0;
+  display: block;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+body.dark-theme .fm {
+  background: #110E0D;
+  border-color: #2D2522;
+  color: #E29B7A;
+}
+
+/* Formula Cards */
+.fc {
+  background: #FFFDFB;
+  border: 1px solid var(--border-color);
+  border-radius: 12px;
+  padding: 1.1rem;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.02);
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+.fc:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+}
+.fn {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  color: #7A9FBF; /* default for CN cheat sheet */
+}
+.feq {
+  font-family: var(--font-mono);
+  font-size: 1.05rem;
+  color: var(--text-primary);
+  font-weight: 600;
+  margin: 0.25rem 0;
+  white-space: pre-wrap;
+  word-break: break-all;
+}
+.fnote {
+  font-size: 0.78rem;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+body.dark-theme .fc {
+  background: #201C1A;
+  border-color: #38302C;
+  box-shadow: none;
+}
+body.dark-theme .feq {
+  color: #EAE3DC;
+}
+
+/* Customized Cheat Sheet Tables */
+.tw {
+  overflow-x: auto;
+  border-radius: 8px;
+  border: 1px solid var(--border-color);
+  margin: 0.6rem 0;
+  background: #FFFDFB;
+}
+body.dark-theme .tw {
+  background: #201C1A;
+}
+.tw table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.86rem;
+  margin: 0;
+}
+.tw th {
+  background-color: #EDF1FD;
+  padding: 0.6rem 0.8rem;
+  font-weight: 600;
+  font-size: 0.76rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: #5F7AE0;
+  border-bottom: 1px solid var(--border-color);
+}
+body.dark-theme .tw th {
+  background-color: #1E253A;
+  color: #8CA0E8;
+}
+.tw td {
+  padding: 0.6rem 0.8rem;
+  border-bottom: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  vertical-align: top;
+}
+.tw tr:last-child td {
+  border-bottom: none;
+}
+.tw tr:nth-child(even) td {
+  background-color: transparent;
+}
+.tw tr:hover td {
+  background-color: rgba(95, 122, 224, 0.04);
+}
+body.dark-theme .tw tr:hover td {
+  background-color: rgba(140, 160, 232, 0.04);
+}
+
+/* Badge Chips */
+.chip {
+  display: inline-block;
+  font-size: 0.7rem;
+  padding: 0.15rem 0.5rem;
+  border-radius: 999px;
+  font-weight: 600;
+  margin: 0.08rem;
+}
+/* Light theme chips */
+.cb { background: #EDF1FD; color: #5F7AE0; }
+.cp { background: #F5EDF6; color: #8A5F9E; }
+.cc { background: #EDF9FC; color: #7A9FBF; }
+.cg { background: #EDF6F3; color: #5F9E8A; }
+.cy2 { background: #FAF8EE; color: #B58A3D; }
+.cr { background: #FDF1ED; color: #E07A5F; }
+
+/* Dark theme chips */
+body.dark-theme .cb { background: #1E253A; color: #8CA0E8; }
+body.dark-theme .cp { background: #2C2034; color: #C39CD4; }
+body.dark-theme .cc { background: #1D2A38; color: #9FBCD5; }
+body.dark-theme .cg { background: #1D322B; color: #8CD1B9; }
+body.dark-theme .cy2 { background: #332D1C; color: #E6BC73; }
+body.dark-theme .cr { background: #3C2420; color: #FF9B85; }
+
+/* OSI / TCP-IP Layer Diagrams */
+.osi {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+.ol {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.55rem 0.8rem;
+  border-radius: 8px;
+  font-size: 0.84rem;
+}
+.on2 {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.72rem;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+.oname {
+  font-weight: 600;
+  min-width: 110px;
+  color: var(--text-primary);
+}
+.opdu {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  min-width: 70px;
+}
+.ofunc {
+  font-size: 0.75rem;
+  color: var(--text-secondary);
+  flex: 1;
+}
+
+/* OSI Layers - Light Theme Color Overrides */
+body:not(.dark-theme) .ol {
+  background: #FFFDFB !important;
+  border: 1px solid var(--border-color) !important;
+}
+
+/* OSI model (7 layers) */
+body:not(.dark-theme) .osi:first-of-type .ol:nth-child(1) .on2 { background-color: #EF4444 !important; color: #fff !important; }
+body:not(.dark-theme) .osi:first-of-type .ol:nth-child(2) .on2 { background-color: #F59E0B !important; color: #fff !important; }
+body:not(.dark-theme) .osi:first-of-type .ol:nth-child(3) .on2 { background-color: #F59E0B !important; color: #fff !important; }
+body:not(.dark-theme) .osi:first-of-type .ol:nth-child(4) .on2 { background-color: #10B981 !important; color: #fff !important; }
+body:not(.dark-theme) .osi:first-of-type .ol:nth-child(5) .on2 { background-color: #06B6D4 !important; color: #fff !important; }
+body:not(.dark-theme) .osi:first-of-type .ol:nth-child(6) .on2 { background-color: #8B5CF6 !important; color: #fff !important; }
+body:not(.dark-theme) .osi:first-of-type .ol:nth-child(7) .on2 { background-color: #6366F1 !important; color: #fff !important; }
+
+/* TCP/IP model (4 layers) */
+body:not(.dark-theme) .osi:last-of-type .ol:nth-child(1) .on2 { background-color: #EF4444 !important; color: #fff !important; }
+body:not(.dark-theme) .osi:last-of-type .ol:nth-child(2) .on2 { background-color: #10B981 !important; color: #fff !important; }
+body:not(.dark-theme) .osi:last-of-type .ol:nth-child(3) .on2 { background-color: #06B6D4 !important; color: #fff !important; }
+body:not(.dark-theme) .osi:last-of-type .ol:nth-child(4) .on2 { background-color: #6366F1 !important; color: #fff !important; }
+
+@media (max-width: 900px) {
+  .g2 {
+    grid-template-columns: 1fr;
+  }
+}
+

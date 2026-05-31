@@ -42,27 +42,24 @@ const CONFIG = {
       data: null, // populated on init → CN_STUDY_DATA
       mcqs: null, // populated on init → CN_MCQ_BANK
       themeColors: {
-        unit1_2: '#5F7AE0',   // Cornflower Blue
-        unit3_4: '#7A9FBF',   // Steel Blue
-        unit5_6: '#5F9E8A',   // Teal
-        unit7_8: '#8A5F9E',   // Purple
-        unit9: '#9E5F5F',     // Dusty Rose
+        st1: '#5F7AE0',       // Cornflower Blue
+        st2: '#7A9FBF',       // Steel Blue
+        endTerm: '#5F9E8A',   // Teal
+        cheatSheet: '#8A5F9E', // Purple
         practice: '#8C4735'   // Terracotta
       },
       sectionNames: {
-        unit1_2: 'Units 1-2 — Foundations & Topologies',
-        unit3_4: 'Units 3-4 — OSI & Physical Layer',
-        unit5_6: 'Units 5-6 — Devices & Ethernet',
-        unit7_8: 'Units 7-8 — Error Detection & MAC',
-        unit9: 'Unit 9 — ARQ Protocols & Summary',
+        st1: 'ST-1 (Units 1-2)',
+        st2: 'ST-2 (Units 3-4)',
+        endTerm: 'End Term (Units 5-6)',
+        cheatSheet: 'Formula Cheat Sheet',
         practice: 'Topic-Wise Practice Quiz'
       },
       tabs: [
-        { id: 'unit1_2', label: 'U1-2' },
-        { id: 'unit3_4', label: 'U3-4' },
-        { id: 'unit5_6', label: 'U5-6' },
-        { id: 'unit7_8', label: 'U7-8' },
-        { id: 'unit9', label: 'U9' },
+        { id: 'st1', label: 'ST-1' },
+        { id: 'st2', label: 'ST-2' },
+        { id: 'endTerm', label: 'End Term' },
+        { id: 'cheatSheet', label: 'Cheat Sheet' },
         { id: 'practice', label: 'MCQs' }
       ]
     },
@@ -104,7 +101,7 @@ let state = {
   searchQuery: '',
   mastered: {
     iot: { st1: [], st2: [], endTerm: [], cheatSheet: [], practice: [] },
-    cn:  { unit1_2: [], unit3_4: [], unit5_6: [], unit7_8: [], unit9: [], practice: [] },
+    cn:  { st1: [], st2: [], endTerm: [], cheatSheet: [], practice: [] },
     linux: { linuxMcq: [], bashPractice: [], practiceTest1: [] }
   },
   practiceAnswers: {
@@ -612,6 +609,8 @@ notes --focus st2</pre>
 // ============================================================
 function setActiveSubject(subjectId) {
   document.body.classList.remove('landing-mode');
+  document.body.classList.remove('subject-iot', 'subject-cn', 'subject-linux');
+  document.body.classList.add('subject-' + subjectId);
   state.activeSubject = subjectId;
   const subjectConfig = CONFIG.subjects[subjectId];
 
