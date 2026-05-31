@@ -1840,28 +1840,45 @@ main.content-pane.practice-mode #reading-content-area {
   }
 }
 
-/* --- Top Nav Active states for Computer Networks & Practice --- */
-body.subject-cn nav.top-nav button.active[data-section="st1"] {
+body.subject-cn nav.top-nav button.active[data-section="unit1_2"] {
   background-color: #EDF1FD;
   color: #5F7AE0;
   font-weight: 600;
 }
 
-body.subject-cn nav.top-nav button.active[data-section="st2"] {
+body.subject-cn nav.top-nav button.active[data-section="unit3_4"] {
   background-color: #F0F4F8;
   color: #7A9FBF;
   font-weight: 600;
 }
 
-body.subject-cn nav.top-nav button.active[data-section="endTerm"] {
+body.subject-cn nav.top-nav button.active[data-section="unit5_6"] {
   background-color: #EDF6F3;
   color: #5F9E8A;
   font-weight: 600;
 }
 
-body.subject-cn nav.top-nav button.active[data-section="cheatSheet"] {
+body.subject-cn nav.top-nav button.active[data-section="unit7_8"] {
   background-color: #F5EDF6;
   color: #8A5F9E;
+  font-weight: 600;
+}
+
+body.subject-cn nav.top-nav button.active[data-section="unit9"] {
+  background-color: #FAF0F0;
+  color: #9E5F5F;
+  font-weight: 600;
+}
+
+body.subject-cn nav.top-nav button.active[data-section="notes"] {
+  background-color: #FAF5ED;
+  color: #B58A3D;
+  font-weight: 600;
+}
+
+body.subject-cn nav.top-nav button.active[data-section="cheatSheet"] {
+  background-color: #ECEEF2;
+  color: #3D405B;
   font-weight: 600;
 }
 
@@ -2353,28 +2370,46 @@ nav.top-nav button.active[data-section="bashPractice"] {
   border-color: #D3D7E0;
 }
 
-body.subject-cn .mobile-section-nav button.active[data-section="st1"] {
+body.subject-cn .mobile-section-nav button.active[data-section="unit1_2"] {
   background-color: #EDF1FD;
   color: #5F7AE0;
   border-color: #D9E1FC;
 }
 
-body.subject-cn .mobile-section-nav button.active[data-section="st2"] {
+body.subject-cn .mobile-section-nav button.active[data-section="unit3_4"] {
   background-color: #F0F4F8;
   color: #7A9FBF;
   border-color: #D6E2ED;
 }
 
-body.subject-cn .mobile-section-nav button.active[data-section="endTerm"] {
+body.subject-cn .mobile-section-nav button.active[data-section="unit5_6"] {
   background-color: #EDF6F3;
   color: #5F9E8A;
   border-color: #D5EBE4;
 }
 
-body.subject-cn .mobile-section-nav button.active[data-section="cheatSheet"] {
+body.subject-cn .mobile-section-nav button.active[data-section="unit7_8"] {
   background-color: #F5EDF6;
   color: #8A5F9E;
   border-color: #ECD9F0;
+}
+
+body.subject-cn .mobile-section-nav button.active[data-section="unit9"] {
+  background-color: #FAF0F0;
+  color: #9E5F5F;
+  border-color: #F5D6D6;
+}
+
+body.subject-cn .mobile-section-nav button.active[data-section="notes"] {
+  background-color: #FAF5ED;
+  color: #B58A3D;
+  border-color: #F3E6D5;
+}
+
+body.subject-cn .mobile-section-nav button.active[data-section="cheatSheet"] {
+  background-color: #ECEEF2;
+  color: #3D405B;
+  border-color: #D3D7E0;
 }
 
 body.subject-cn .mobile-section-nav button.active[data-section="practice"] {
@@ -2663,21 +2698,33 @@ body.dark-theme.subject-iot nav.top-nav button.active[data-section="cheatSheet"]
   color: #9C9FB9 !important;
 }
 
-body.dark-theme.subject-cn nav.top-nav button.active[data-section="st1"] {
+body.dark-theme.subject-cn nav.top-nav button.active[data-section="unit1_2"] {
   background-color: #1E253A !important;
   color: #8CA0E8 !important;
 }
-body.dark-theme.subject-cn nav.top-nav button.active[data-section="st2"] {
+body.dark-theme.subject-cn nav.top-nav button.active[data-section="unit3_4"] {
   background-color: #1D2A38 !important;
   color: #9FBCD5 !important;
 }
-body.dark-theme.subject-cn nav.top-nav button.active[data-section="endTerm"] {
+body.dark-theme.subject-cn nav.top-nav button.active[data-section="unit5_6"] {
   background-color: #1D322B !important;
   color: #8CD1B9 !important;
 }
-body.dark-theme.subject-cn nav.top-nav button.active[data-section="cheatSheet"] {
+body.dark-theme.subject-cn nav.top-nav button.active[data-section="unit7_8"] {
   background-color: #2C2034 !important;
   color: #C39CD4 !important;
+}
+body.dark-theme.subject-cn nav.top-nav button.active[data-section="unit9"] {
+  background-color: #302020 !important;
+  color: #E29999 !important;
+}
+body.dark-theme.subject-cn nav.top-nav button.active[data-section="notes"] {
+  background-color: #322A1D !important;
+  color: #D1B58C !important;
+}
+body.dark-theme.subject-cn nav.top-nav button.active[data-section="cheatSheet"] {
+  background-color: #202334 !important;
+  color: #9C9FB9 !important;
 }
 
 body.dark-theme nav.top-nav button.active[data-section="practice"],
