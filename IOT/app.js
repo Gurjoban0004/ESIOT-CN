@@ -82,16 +82,22 @@ const CONFIG = {
       mcqs: null,
       bashProblems: null,
       themeColors: {
+        notes: '#3A8F65',
+        cheatSheet: '#2F6F5E',
         linuxMcq: '#3A8F65',
         bashPractice: '#2F6F5E',
         practiceTest1: '#8A5F9E'
       },
       sectionNames: {
+        notes: 'Linux Notes',
+        cheatSheet: 'Linux Cheat Sheet',
         linuxMcq: 'Linux MCQs',
         bashPractice: 'Bash Practice',
         practiceTest1: 'PT1'
       },
       tabs: [
+        { id: 'notes', label: 'Notes' },
+        { id: 'cheatSheet', label: 'Cheat Sheet' },
         { id: 'linuxMcq', label: 'MCQs' },
         { id: 'bashPractice', label: 'Bash' },
         { id: 'practiceTest1', label: 'PT1' }
@@ -111,7 +117,7 @@ let state = {
   mastered: {
     iot: { st1: [], st2: [], endTerm: [], cheatSheet: [], practice: [] },
     cn:  { unit1_2: [], unit3_4: [], unit5_6: [], unit7_8: [], unit9: [], notes: [], cheatSheet: [], practice: [] },
-    linux: { linuxMcq: [], bashPractice: [], practiceTest1: [] }
+    linux: { notes: [], cheatSheet: [], linuxMcq: [], bashPractice: [], practiceTest1: [] }
   },
   practiceAnswers: {
     iot: {},
@@ -169,6 +175,8 @@ function init() {
   CONFIG.subjects.linux.mcqs = typeof LINUX_MCQ_BANK !== 'undefined' ? LINUX_MCQ_BANK : [];
   CONFIG.subjects.linux.bashProblems = typeof LINUX_BASH_PROBLEMS !== 'undefined' ? LINUX_BASH_PROBLEMS : [];
   CONFIG.subjects.linux.data = {
+    notes: typeof LINUX_NOTES !== 'undefined' ? LINUX_NOTES : [],
+    cheatSheet: typeof LINUX_CHEATSHEET !== 'undefined' ? LINUX_CHEATSHEET : [],
     practiceTest1: typeof LINUX_PRACTICE_TEST_1 !== 'undefined' ? LINUX_PRACTICE_TEST_1 : []
   };
 

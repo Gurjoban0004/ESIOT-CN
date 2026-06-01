@@ -1888,6 +1888,9 @@ body.subject-cn nav.top-nav button.active[data-section="practice"] {
   font-weight: 600;
 }
 
+body.subject-linux nav.top-nav button.active[data-section="notes"],
+body.subject-linux nav.top-nav button.active[data-section="cheatSheet"],
+body.subject-linux nav.top-nav button.active[data-section="practiceTest1"],
 nav.top-nav button.active[data-section="linuxMcq"],
 nav.top-nav button.active[data-section="bashPractice"] {
   background-color: #EAF5EF;
@@ -2418,6 +2421,9 @@ body.subject-cn .mobile-section-nav button.active[data-section="practice"] {
   border-color: #F3D9D2;
 }
 
+body.subject-linux .mobile-section-nav button.active[data-section="notes"],
+body.subject-linux .mobile-section-nav button.active[data-section="cheatSheet"],
+body.subject-linux .mobile-section-nav button.active[data-section="practiceTest1"],
 .mobile-section-nav button.active[data-section="linuxMcq"],
 .mobile-section-nav button.active[data-section="bashPractice"] {
   background-color: #EAF5EF;
@@ -2727,9 +2733,16 @@ body.dark-theme.subject-cn nav.top-nav button.active[data-section="cheatSheet"] 
   color: #9C9FB9 !important;
 }
 
-body.dark-theme nav.top-nav button.active[data-section="practice"],
-body.dark-theme nav.top-nav button.active[data-section="linuxMcq"],
-body.dark-theme nav.top-nav button.active[data-section="bashPractice"] {
+body.dark-theme.subject-linux nav.top-nav button.active[data-section="notes"],
+body.dark-theme.subject-linux nav.top-nav button.active[data-section="cheatSheet"],
+body.dark-theme.subject-linux nav.top-nav button.active[data-section="linuxMcq"],
+body.dark-theme.subject-linux nav.top-nav button.active[data-section="bashPractice"],
+body.dark-theme.subject-linux nav.top-nav button.active[data-section="practiceTest1"] {
+  background-color: #1D322B !important;
+  color: #8CD1B9 !important;
+}
+
+body.dark-theme nav.top-nav button.active[data-section="practice"] {
   background-color: #402824 !important;
   color: #E99D87 !important;
 }
