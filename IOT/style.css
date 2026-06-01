@@ -1891,6 +1891,7 @@ body.subject-cn nav.top-nav button.active[data-section="practice"] {
 body.subject-linux nav.top-nav button.active[data-section="notes"],
 body.subject-linux nav.top-nav button.active[data-section="cheatSheet"],
 body.subject-linux nav.top-nav button.active[data-section="practiceTest1"],
+body.subject-linux nav.top-nav button.active[data-section="linuxPlayground"],
 nav.top-nav button.active[data-section="linuxMcq"],
 nav.top-nav button.active[data-section="bashPractice"] {
   background-color: #EAF5EF;
@@ -2737,6 +2738,7 @@ body.dark-theme.subject-linux nav.top-nav button.active[data-section="notes"],
 body.dark-theme.subject-linux nav.top-nav button.active[data-section="cheatSheet"],
 body.dark-theme.subject-linux nav.top-nav button.active[data-section="linuxMcq"],
 body.dark-theme.subject-linux nav.top-nav button.active[data-section="bashPractice"],
+body.dark-theme.subject-linux nav.top-nav button.active[data-section="linuxPlayground"],
 body.dark-theme.subject-linux nav.top-nav button.active[data-section="practiceTest1"] {
   background-color: #1D322B !important;
   color: #8CD1B9 !important;
@@ -4358,6 +4360,10 @@ body:not(.dark-theme) .osi:last-of-type .ol:nth-child(4) .on2 { background-color
 /* ============================================================
    PLAYGROUND WORKSPACE STYLES
    ============================================================ */
+main.content-pane.playground-mode #reading-pane {
+  display: none !important;
+}
+
 .playground-workspace {
   display: flex;
   height: 100%;

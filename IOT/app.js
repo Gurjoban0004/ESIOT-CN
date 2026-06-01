@@ -86,7 +86,7 @@ const CONFIG = {
         cheatSheet: '#2F6F5E',
         linuxMcq: '#3A8F65',
         bashPractice: '#2F6F5E',
-        linuxPlayground: '#1C3A27',
+        linuxPlayground: '#358F66',
         practiceTest1: '#8A5F9E'
       },
       sectionNames: {
