@@ -86,6 +86,7 @@ const CONFIG = {
         cheatSheet: '#2F6F5E',
         linuxMcq: '#3A8F65',
         bashPractice: '#2F6F5E',
+        linuxPlayground: '#1C3A27',
         practiceTest1: '#8A5F9E'
       },
       sectionNames: {
@@ -93,6 +94,7 @@ const CONFIG = {
         cheatSheet: 'Linux Cheat Sheet',
         linuxMcq: 'Linux MCQs',
         bashPractice: 'Bash Practice',
+        linuxPlayground: 'Terminal Playground',
         practiceTest1: 'PT1'
       },
       tabs: [
@@ -100,6 +102,7 @@ const CONFIG = {
         { id: 'cheatSheet', label: 'Cheat Sheet' },
         { id: 'linuxMcq', label: 'MCQs' },
         { id: 'bashPractice', label: 'Bash' },
+        { id: 'linuxPlayground', label: 'Playground' },
         { id: 'practiceTest1', label: 'PT1' }
       ]
     }
@@ -117,7 +120,7 @@ let state = {
   mastered: {
     iot: { st1: [], st2: [], endTerm: [], cheatSheet: [], practice: [] },
     cn:  { unit1_2: [], unit3_4: [], unit5_6: [], unit7_8: [], unit9: [], notes: [], cheatSheet: [], practice: [] },
-    linux: { notes: [], cheatSheet: [], linuxMcq: [], bashPractice: [], practiceTest1: [] }
+    linux: { notes: [], cheatSheet: [], linuxMcq: [], bashPractice: [], linuxPlayground: [], practiceTest1: [] }
   },
   practiceAnswers: {
     iot: {},
@@ -134,7 +137,28 @@ let state = {
     linux: []
   },
   notesFilterSubject: 'all',
-  showStarredOnly: false
+  showStarredOnly: false,
+  playgroundShell: {
+    cwd: '/home/student',
+    vars: { '0': 'bash' },
+    fs: null,
+    directories: null,
+    arrays: {},
+    functions: {},
+    archives: {},
+    users: [],
+    groups: [],
+    services: {},
+    firewallRules: [],
+    lastStatus: 0,
+    terminalHistory: [],
+    historyIndex: -1,
+    lvm: {
+      pvs: [],
+      vgs: {},
+      lvs: {}
+    }
+  }
 };
 
 // ============================================================
@@ -561,6 +585,10 @@ function renderLandingPage() {
   document.title = 'prep';
   elements.welcomeScreen.style.display = 'flex';
   elements.readingPane.style.display = 'none';
+  const pgContainer = document.getElementById('playground-workspace-container');
+  if (pgContainer) {
+    pgContainer.style.display = 'none';
+  }
   elements.topNavBar.innerHTML = '';
   if (elements.mobileSectionNav) elements.mobileSectionNav.innerHTML = '';
   elements.topicList.innerHTML = '';
@@ -706,6 +734,10 @@ function isBashSection(sectionId = state.activeSection) {
   return false;
 }
 
+function isPlaygroundSection(sectionId = state.activeSection) {
+  return sectionId === 'linuxPlayground';
+}
+
 function getActiveMcqBank() {
   return CONFIG.subjects[state.activeSubject].mcqs || [];
 }
@@ -720,19 +752,29 @@ function setActiveSection(sectionId) {
   state.searchQuery = '';
   elements.searchInput.value = '';
 
-  // Handle Bash/Practice section layout
+  if (isPlaygroundSection(sectionId)) {
+    elements.searchInput.placeholder = "Search files...";
+  } else {
+    elements.searchInput.placeholder = "Search topics...";
+  }
+
+  // Handle Bash/Practice/Playground section layout
   const mainContentPane = document.getElementById('main-content-pane');
   const container = document.querySelector('.container');
-  if (isBashSection(sectionId)) {
-    mainContentPane.classList.add('bash-mode');
+  if (isPlaygroundSection(sectionId)) {
+    mainContentPane.classList.add('bash-mode', 'playground-mode');
     mainContentPane.classList.remove('practice-mode');
+    container.classList.add('practice-active');
+  } else if (isBashSection(sectionId)) {
+    mainContentPane.classList.add('bash-mode');
+    mainContentPane.classList.remove('practice-mode', 'playground-mode');
     container.classList.add('practice-active');
   } else if (isMcqSection(sectionId)) {
     mainContentPane.classList.add('practice-mode');
-    mainContentPane.classList.remove('bash-mode');
+    mainContentPane.classList.remove('bash-mode', 'playground-mode');
     container.classList.add('practice-active');
   } else {
-    mainContentPane.classList.remove('bash-mode', 'practice-mode');
+    mainContentPane.classList.remove('bash-mode', 'practice-mode', 'playground-mode');
     container.classList.remove('practice-active');
   }
 
@@ -764,6 +806,11 @@ function setActiveSection(sectionId) {
 
   updateProgressBar();
   renderSidebar();
+
+  if (isPlaygroundSection()) {
+    selectTopic(0);
+    return;
+  }
 
   if (isMcqSection()) {
     const mcqBank = getActiveMcqBank();
@@ -800,6 +847,11 @@ function setActiveSection(sectionId) {
 //  SIDEBAR RENDERING
 // ============================================================
 function renderSidebar() {
+  if (isPlaygroundSection()) {
+    renderPlaygroundSidebar();
+    return;
+  }
+
   elements.topicList.innerHTML = '';
 
   // Helper: extract subtitle from title like "Part C1 — Some Description"
@@ -1019,6 +1071,16 @@ function renderSidebar() {
 // ============================================================
 function selectTopic(index) {
   state.activeTopicIndex = index;
+
+  const pgContainer = document.getElementById('playground-workspace-container');
+  if (pgContainer) {
+    pgContainer.style.display = isPlaygroundSection() ? 'flex' : 'none';
+  }
+
+  if (isPlaygroundSection()) {
+    renderPlayground();
+    return;
+  }
 
   if (state.activeSubject === 'linux' && state.activeSection === 'practiceTest1') {
     renderPracticeTest1Item(index);
@@ -2918,4 +2980,778 @@ function copyStarredToClipboard() {
   }).catch(() => {
     // Fallback silently
   });
+}
+
+// ============================================================
+//  LINUX PLAYGROUND (LAB) WORKSPACE & SHELL INTEGRATION
+// ============================================================
+
+function initPlaygroundShell(forceReset = false) {
+  if (forceReset || !state.playgroundShell.fs) {
+    state.playgroundShell.fs = { ...VIRTUAL_FS };
+    state.playgroundShell.directories = new Set(['/etc', '/var', '/var/log', '/home', '/home/student', '/tmp']);
+    state.playgroundShell.cwd = '/home/student';
+    state.playgroundShell.vars = { 
+      '0': 'bash', 
+      'USER': 'student', 
+      'HOME': '/home/student', 
+      'PATH': '/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin' 
+    };
+    state.playgroundShell.arrays = {};
+    state.playgroundShell.functions = {};
+    state.playgroundShell.archives = {};
+    state.playgroundShell.users = ['student', 'root'];
+    state.playgroundShell.groups = ['student', 'root', 'sudo'];
+    state.playgroundShell.services = {
+      'ssh': { active: true, subState: 'running' },
+      'ufw': { active: true, subState: 'running' },
+      'cron': { active: true, subState: 'running' }
+    };
+    state.playgroundShell.firewallRules = [];
+    state.playgroundShell.lastStatus = 0;
+    state.playgroundShell.terminalHistory = [];
+    state.playgroundShell.historyIndex = -1;
+    state.playgroundShell.lvm = {
+      pvs: [],
+      vgs: {},
+      lvs: {}
+    };
+  }
+}
+
+function buildFSTree(fs, directories) {
+  const root = { name: '/', type: 'dir', children: {}, path: '/' };
+  
+  // Add directories
+  if (directories) {
+    for (const dirPath of directories) {
+      if (dirPath === '/' || !dirPath) continue;
+      const parts = dirPath.split('/').filter(Boolean);
+      let current = root;
+      let currentPath = '';
+      for (const part of parts) {
+        currentPath += '/' + part;
+        if (!current.children[part]) {
+          current.children[part] = { name: part, type: 'dir', children: {}, path: currentPath };
+        }
+        current = current.children[part];
+      }
+    }
+  }
+
+  // Add files
+  if (fs) {
+    for (const filePath of Object.keys(fs)) {
+      const parts = filePath.split('/').filter(Boolean);
+      if (parts.length === 0) continue;
+      let current = root;
+      let currentPath = '';
+      for (let i = 0; i < parts.length - 1; i++) {
+        const part = parts[i];
+        currentPath += '/' + part;
+        if (!current.children[part]) {
+          current.children[part] = { name: part, type: 'dir', children: {}, path: currentPath };
+        }
+        current = current.children[part];
+      }
+      const fileName = parts[parts.length - 1];
+      current.children[fileName] = { name: fileName, type: 'file', path: filePath };
+    }
+  }
+
+  return root;
+}
+
+function renderPlaygroundSidebar() {
+  initPlaygroundShell(); // Ensure state.playgroundShell is initialized
+  
+  elements.topicList.innerHTML = '';
+  elements.topicList.className = 'topic-list playground-sidebar';
+
+  // Default collapsed folders
+  if (!window.collapsedPlaygroundDirs) {
+    window.collapsedPlaygroundDirs = new Set(['/etc', '/var', '/var/log', '/tmp']);
+  }
+
+  // 1. Control buttons
+  const ctrlDiv = document.createElement('div');
+  ctrlDiv.className = 'playground-sidebar-controls';
+
+  const clearBtn = document.createElement('button');
+  clearBtn.className = 'playground-side-btn clear-term-btn';
+  clearBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14M12 5l7 7-7 7"/></svg> Clear Term';
+  clearBtn.addEventListener('click', () => {
+    const logContainer = document.getElementById('terminal-log-container');
+    if (logContainer) logContainer.innerHTML = '';
+    state.playgroundShell.terminalHistory = [];
+    state.playgroundShell.historyIndex = -1;
+  });
+
+  const resetBtn = document.createElement('button');
+  resetBtn.className = 'playground-side-btn reset-fs-btn';
+  resetBtn.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21.5 2v6h-6M21.34 15.57a10 10 0 1 1-.57-8.38l5.67-5.67"/></svg> Reset Lab';
+  resetBtn.addEventListener('click', () => {
+    if (confirm('Are you sure you want to reset the lab? This will wipe the in-memory files and variables.')) {
+      initPlaygroundShell(true);
+      window.collapsedPlaygroundDirs = new Set(['/etc', '/var', '/var/log', '/tmp']);
+      renderPlaygroundSidebar();
+      updateDiskMonitor();
+      // Print notification in terminal if visible
+      appendTerminalOutput('System initialized. In-memory virtual filesystem reset to defaults.\n', 'sys-info');
+    }
+  });
+
+  ctrlDiv.appendChild(clearBtn);
+  ctrlDiv.appendChild(resetBtn);
+  elements.topicList.appendChild(ctrlDiv);
+
+  // 2. Section Header
+  const header = document.createElement('div');
+  header.className = 'sidebar-group-label';
+  header.textContent = 'Filesystem Tree';
+  elements.topicList.appendChild(header);
+
+  // 3. Tree container
+  const treeContainer = document.createElement('div');
+  treeContainer.className = 'fs-tree-container';
+  elements.topicList.appendChild(treeContainer);
+
+  const tree = buildFSTree(state.playgroundShell.fs, state.playgroundShell.directories);
+
+  // If there's a search query, filter the tree node
+  function matchesSearch(node, query) {
+    if (!query) return true;
+    if (node.name.toLowerCase().includes(query)) return true;
+    if (node.children) {
+      return Object.values(node.children).some(child => matchesSearch(child, query));
+    }
+    return false;
+  }
+
+  // Render tree node helper
+  function renderNode(node, container, depth = 0) {
+    if (node.path !== '/' && !matchesSearch(node, state.searchQuery.toLowerCase())) {
+      return;
+    }
+
+    const childrenKeys = Object.keys(node.children || {}).sort();
+    if (node.path !== '/') {
+      const item = document.createElement('div');
+      item.className = `fs-tree-item fs-type-${node.type}`;
+      item.style.paddingLeft = `${depth * 12 + 8}px`;
+
+      // Icon
+      const icon = document.createElement('span');
+      icon.className = 'fs-tree-icon';
+      if (node.type === 'dir') {
+        const isCollapsed = window.collapsedPlaygroundDirs.has(node.path);
+        icon.innerHTML = isCollapsed
+          ? '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>'
+          : '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="6 9 12 15 18 9"></polyline></svg>';
+      } else {
+        icon.innerHTML = '<svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline></svg>';
+      }
+      item.appendChild(icon);
+
+      // Label
+      const label = document.createElement('span');
+      label.className = 'fs-tree-label';
+      label.textContent = node.name;
+      item.appendChild(label);
+
+      // Current working directory highlight
+      if (state.playgroundShell.cwd === node.path) {
+        item.classList.add('fs-cwd');
+        const cwdBadge = document.createElement('span');
+        cwdBadge.className = 'fs-cwd-badge';
+        cwdBadge.textContent = 'cwd';
+        item.appendChild(cwdBadge);
+      }
+
+      if (node.type === 'dir') {
+        item.addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (window.collapsedPlaygroundDirs.has(node.path)) {
+            window.collapsedPlaygroundDirs.delete(node.path);
+          } else {
+            window.collapsedPlaygroundDirs.add(node.path);
+          }
+          renderPlaygroundSidebar();
+        });
+      } else {
+        item.addEventListener('click', (e) => {
+          e.stopPropagation();
+          // Copy to terminal or editor input
+          const cliInput = document.getElementById('cli-terminal-input');
+          if (cliInput) {
+            const currentVal = cliInput.value;
+            cliInput.value = currentVal.endsWith(' ') || currentVal === '' ? currentVal + node.path : currentVal + ' ' + node.path;
+            cliInput.focus();
+          }
+        });
+      }
+      container.appendChild(item);
+    }
+
+    // Render children recursively
+    const isCollapsed = window.collapsedPlaygroundDirs.has(node.path);
+    if (node.type === 'dir' && (node.path === '/' || !isCollapsed)) {
+      for (const key of childrenKeys) {
+        renderNode(node.children[key], container, node.path === '/' ? depth : depth + 1);
+      }
+    }
+  }
+
+  renderNode(tree, treeContainer, 0);
+}
+
+function renderPlayground() {
+  initPlaygroundShell(); // ensure state is ready
+
+  // Hide other panes
+  elements.welcomeScreen.style.display = 'none';
+  elements.readingPane.style.display = 'none';
+
+  let container = document.getElementById('playground-workspace-container');
+  if (!container) {
+    container = document.createElement('div');
+    container.id = 'playground-workspace-container';
+    container.className = 'playground-workspace';
+    
+    // Build HTML content inside
+    container.innerHTML = `
+      <!-- Left Side: Terminal / Editor -->
+      <div class="playground-left-panel">
+        <div class="panel-tabs">
+          <button class="panel-tab-btn active" id="btn-tab-terminal" data-tab="terminal">Terminal (CLI)</button>
+          <button class="panel-tab-btn" id="btn-tab-editor" data-tab="editor">Script Editor</button>
+        </div>
+        
+        <div class="panel-tab-content active" id="playground-terminal-tab">
+          <div class="terminal-log-container" id="terminal-log-container">
+            <div class="terminal-log-line sys-info">Welcome to prep Linux Terminal Playground!
+Type commands in the input line below. Filesystem alterations and shell variables persist in-memory.
+Type 'help' to see simulated commands, or check the reference guide on the right.</div>
+          </div>
+          <div class="terminal-input-row">
+            <span class="terminal-prompt" id="terminal-prompt-text">student@ubuntu:~$</span>
+            <input type="text" id="cli-terminal-input" autocomplete="off" spellcheck="false" placeholder="Type a command (e.g., ls, ufw, pvcreate)...">
+          </div>
+        </div>
+        
+        <div class="panel-tab-content" id="playground-editor-tab" style="display: none;">
+          <div class="editor-instructions">
+            Write a Bash script below. Standard inputs are simulated, and execution updates the persistent filesystem and variables.
+          </div>
+          <textarea id="script-editor-textarea" spellcheck="false" placeholder="#!/bin/bash&#10;# Write your script here&#10;for i in {1..5}; do&#10;  touch file_$i.txt&#10;done&#10;ls -l"></textarea>
+          <div class="editor-controls">
+            <button id="run-script-btn" class="primary-btn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+              Run Script
+            </button>
+            <button id="clear-editor-btn" class="secondary-btn">Clear</button>
+          </div>
+          <div class="editor-output-header">Script Output:</div>
+          <div class="editor-output-log" id="editor-output-log"></div>
+        </div>
+      </div>
+
+      <!-- Right Side: Disk Monitor / Quick Reference -->
+      <div class="playground-right-panel">
+        <div class="panel-tabs">
+          <button class="panel-tab-btn active" id="btn-tab-disk-monitor" data-tab="disk-monitor">Disk & LVM Monitor</button>
+          <button class="panel-tab-btn" id="btn-tab-quick-ref" data-tab="quick-ref">Quick Reference</button>
+        </div>
+        
+        <div class="panel-tab-content active" id="playground-disk-monitor-tab">
+          <div class="disk-monitor-summary">
+            Visualizer for block devices and Logical Volume Manager (LVM) structures.
+          </div>
+          <div id="disk-monitor-container" class="disk-monitor-container">
+            <!-- Dynamic disk columns and VG blocks -->
+          </div>
+        </div>
+        
+        <div class="panel-tab-content" id="playground-quick-ref-tab" style="display: none;">
+          <div class="quick-ref-scroll">
+            <h3 style="margin-top:0; border-left:none; padding-left:0; font-size:1.1rem; color:var(--text-primary);">Common Bash Commands</h3>
+            <table class="quick-ref-table">
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>ls -l</code></td><td>List directory contents in long format</td></tr>
+                <tr><td><code>cd &lt;dir&gt;</code></td><td>Change current working directory</td></tr>
+                <tr><td><code>mkdir -p &lt;dir&gt;</code></td><td>Create nested directories</td></tr>
+                <tr><td><code>touch &lt;file&gt;</code></td><td>Create an empty file</td></tr>
+                <tr><td><code>cat &lt;file&gt;</code></td><td>Display file contents</td></tr>
+                <tr><td><code>echo "text" &gt; &lt;file&gt;</code></td><td>Write or redirect text to a file</td></tr>
+                <tr><td><code>grep "pattern" &lt;file&gt;</code></td><td>Search for a pattern in a file</td></tr>
+                <tr><td><code>find . -name "*.txt"</code></td><td>Find files by name pattern</td></tr>
+              </tbody>
+            </table>
+            
+            <h3 style="margin-top:1.2rem; border-left:none; padding-left:0; font-size:1.1rem; color:var(--text-primary);">LVM Commands</h3>
+            <table class="quick-ref-table">
+              <thead>
+                <tr>
+                  <th>Command</th>
+                  <th>Description</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr><td><code>pvcreate /dev/sda1</code></td><td>Initialize a physical volume</td></tr>
+                <tr><td><code>vgcreate vg_data /dev/sda1</code></td><td>Create a volume group using PV</td></tr>
+                <tr><td><code>lvcreate -L 10G -n lv_doc vg_data</code></td><td>Create logical volume in VG</td></tr>
+                <tr><td><code>lvextend -L +5G /dev/vg_data/lv_doc</code></td><td>Extend logical volume size</td></tr>
+                <tr><td><code>pvdisplay</code> / <code>vgdisplay</code> / <code>lvdisplay</code></td><td>Display LVM details</td></tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    `;
+
+    document.getElementById('main-content-pane').appendChild(container);
+    setupPlaygroundListeners();
+  } else {
+    container.style.display = 'flex';
+  }
+
+  updatePromptText();
+  updateDiskMonitor();
+}
+
+function setupPlaygroundListeners() {
+  // Tab Switchers
+  const leftTabs = document.querySelectorAll('.playground-left-panel .panel-tab-btn');
+  leftTabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      leftTabs.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const target = btn.getAttribute('data-tab');
+      if (target === 'terminal') {
+        document.getElementById('playground-terminal-tab').style.display = 'flex';
+        document.getElementById('playground-editor-tab').style.display = 'none';
+        document.getElementById('cli-terminal-input').focus();
+      } else {
+        document.getElementById('playground-terminal-tab').style.display = 'none';
+        document.getElementById('playground-editor-tab').style.display = 'flex';
+        document.getElementById('script-editor-textarea').focus();
+      }
+    });
+  });
+
+  const rightTabs = document.querySelectorAll('.playground-right-panel .panel-tab-btn');
+  rightTabs.forEach(btn => {
+    btn.addEventListener('click', () => {
+      rightTabs.forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      const target = btn.getAttribute('data-tab');
+      if (target === 'disk-monitor') {
+        document.getElementById('playground-disk-monitor-tab').style.display = 'block';
+        document.getElementById('playground-quick-ref-tab').style.display = 'none';
+      } else {
+        document.getElementById('playground-disk-monitor-tab').style.display = 'none';
+        document.getElementById('playground-quick-ref-tab').style.display = 'block';
+      }
+    });
+  });
+
+  // Terminal Input Event Listener
+  const cliInput = document.getElementById('cli-terminal-input');
+  cliInput.addEventListener('keydown', handleTerminalKeydown);
+
+  // Script Editor Run Button
+  const runScriptBtn = document.getElementById('run-script-btn');
+  runScriptBtn.addEventListener('click', executeScriptEditorCode);
+
+  // Script Editor Clear Button
+  const clearEditorBtn = document.getElementById('clear-editor-btn');
+  clearEditorBtn.addEventListener('click', () => {
+    document.getElementById('script-editor-textarea').value = '';
+    document.getElementById('editor-output-log').textContent = '';
+  });
+}
+
+function handleTerminalKeydown(e) {
+  const cliInput = document.getElementById('cli-terminal-input');
+  if (!cliInput) return;
+
+  const history = state.playgroundShell.terminalHistory;
+  
+  if (e.key === 'Enter') {
+    const cmd = cliInput.value.trim();
+    if (!cmd) return;
+
+    // Append command to log
+    appendTerminalLine(cmd, 'command-input');
+    
+    // Save to history
+    history.push(cmd);
+    state.playgroundShell.historyIndex = history.length;
+
+    // Clear input
+    cliInput.value = '';
+
+    // Execute
+    executePlaygroundCommand(cmd);
+  } 
+  else if (e.key === 'ArrowUp') {
+    e.preventDefault();
+    if (history.length > 0 && state.playgroundShell.historyIndex > 0) {
+      state.playgroundShell.historyIndex--;
+      cliInput.value = history[state.playgroundShell.historyIndex];
+    }
+  } 
+  else if (e.key === 'ArrowDown') {
+    e.preventDefault();
+    if (state.playgroundShell.historyIndex < history.length - 1) {
+      state.playgroundShell.historyIndex++;
+      cliInput.value = history[state.playgroundShell.historyIndex];
+    } else {
+      state.playgroundShell.historyIndex = history.length;
+      cliInput.value = '';
+    }
+  } 
+  else if (e.key === 'Tab') {
+    e.preventDefault();
+    handleTabCompletion(cliInput);
+  }
+}
+
+function handleTabCompletion(inputEl) {
+  const value = inputEl.value;
+  const parts = value.split(/\s+/);
+  const lastPart = parts[parts.length - 1];
+
+  if (!lastPart) {
+    return;
+  }
+
+  const candidates = [];
+  const currentDir = state.playgroundShell.cwd;
+  const files = Object.keys(state.playgroundShell.fs || {});
+  const dirs = Array.from(state.playgroundShell.directories || []);
+
+  const prefix = lastPart;
+  const isAbs = prefix.startsWith('/');
+  
+  const toSearch = [...files, ...dirs];
+  for (const item of toSearch) {
+    let matchCandidate = '';
+    if (isAbs) {
+      if (item.startsWith(prefix)) {
+        matchCandidate = item;
+      }
+    } else {
+      const relPath = item.startsWith(currentDir + '/') ? item.slice(currentDir.length + 1) : '';
+      if (relPath && relPath.startsWith(prefix)) {
+        matchCandidate = relPath;
+      }
+    }
+
+    if (matchCandidate && !candidates.includes(matchCandidate)) {
+      candidates.push(matchCandidate);
+    }
+  }
+
+  if (parts.length === 1) {
+    const commands = [
+      'ls', 'cd', 'pwd', 'mkdir', 'rm', 'touch', 'cat', 'echo', 'grep', 'find', 'clear', 'help',
+      'pvcreate', 'vgcreate', 'lvcreate', 'lvextend', 'pvdisplay', 'vgdisplay', 'lvdisplay', 'ufw', 'netplan'
+    ];
+    for (const cmd of commands) {
+      if (cmd.startsWith(lastPart) && !candidates.includes(cmd)) {
+        candidates.push(cmd);
+      }
+    }
+  }
+
+  if (candidates.length === 1) {
+    parts[parts.length - 1] = candidates[0];
+    inputEl.value = parts.join(' ');
+  } else if (candidates.length > 1) {
+    appendTerminalOutput('\n' + candidates.sort().join('   ') + '\n', 'tab-completion-list');
+    updatePromptText();
+  }
+}
+
+function executePlaygroundCommand(cmd) {
+  const logContainer = document.getElementById('terminal-log-container');
+  if (!logContainer) return;
+
+  if (cmd.trim().toLowerCase() === 'clear') {
+    logContainer.innerHTML = '';
+    return;
+  }
+
+  if (cmd.trim().toLowerCase() === 'help') {
+    const helpText = `Supported commands:
+  - Navigation: cd, pwd, ls
+  - File operations: touch, mkdir, rm, cat, echo, cp, mv, grep, find, tar
+  - Disk & LVM: pvcreate, vgcreate, lvcreate, lvextend, pvdisplay, vgdisplay, lvdisplay
+  - Network & Sec: ufw, netplan
+  - Other: help, clear, exit
+Standard loops (for, while) and condition variables work too!`;
+    appendTerminalOutput(helpText, 'command-stdout');
+    updatePromptText();
+    return;
+  }
+
+  const result = simulateBash(cmd, "", state.playgroundShell);
+
+  if (result.output) {
+    appendTerminalOutput(result.output, 'command-stdout');
+  }
+  if (result.error) {
+    appendTerminalOutput(result.error + '\n', 'command-stderr');
+  }
+
+  updatePromptText();
+  renderPlaygroundSidebar();
+  updateDiskMonitor();
+}
+
+function appendTerminalLine(text, className) {
+  const logContainer = document.getElementById('terminal-log-container');
+  if (!logContainer) return;
+
+  const lineEl = document.createElement('div');
+  lineEl.className = 'terminal-log-line ' + className;
+
+  if (className === 'command-input') {
+    const promptSpan = document.createElement('span');
+    promptSpan.className = 'terminal-prompt';
+    promptSpan.textContent = getPromptString();
+    lineEl.appendChild(promptSpan);
+
+    const cmdSpan = document.createElement('span');
+    cmdSpan.className = 'terminal-cmd-text';
+    cmdSpan.textContent = ' ' + text;
+    lineEl.appendChild(cmdSpan);
+  } else {
+    lineEl.textContent = text;
+  }
+
+  logContainer.appendChild(lineEl);
+  logContainer.scrollTop = logContainer.scrollHeight;
+}
+
+function appendTerminalOutput(text, className) {
+  const logContainer = document.getElementById('terminal-log-container');
+  if (!logContainer) return;
+
+  const preEl = document.createElement('pre');
+  preEl.className = 'terminal-log-pre ' + className;
+  preEl.textContent = text;
+
+  logContainer.appendChild(preEl);
+  logContainer.scrollTop = logContainer.scrollHeight;
+}
+
+function getPromptString() {
+  const cwd = state.playgroundShell.cwd;
+  let displayCwd = cwd;
+  if (cwd === '/home/student') {
+    displayCwd = '~';
+  } else if (cwd.startsWith('/home/student/')) {
+    displayCwd = '~' + cwd.slice(13);
+  }
+  return `student@ubuntu:${displayCwd}$`;
+}
+
+function updatePromptText() {
+  const promptEl = document.getElementById('terminal-prompt-text');
+  if (promptEl) {
+    promptEl.textContent = getPromptString() + ' ';
+  }
+}
+
+function executeScriptEditorCode() {
+  const scriptArea = document.getElementById('script-editor-textarea');
+  const outputLog = document.getElementById('editor-output-log');
+  if (!scriptArea || !outputLog) return;
+
+  const code = scriptArea.value.trim();
+  if (!code) {
+    outputLog.textContent = 'No code to run.';
+    return;
+  }
+
+  outputLog.textContent = 'Running script...';
+
+  const result = simulateBash(code, "", state.playgroundShell);
+
+  let outText = '';
+  if (result.output) {
+    outText += result.output;
+  }
+  if (result.error) {
+    outText += (outText ? '\nError: ' : 'Error: ') + result.error;
+  }
+
+  outputLog.textContent = outText || 'Script completed with no output.';
+
+  renderPlaygroundSidebar();
+  updateDiskMonitor();
+}
+
+function updateDiskMonitor() {
+  const container = document.getElementById('disk-monitor-container');
+  if (!container) return;
+
+  container.innerHTML = '';
+
+  const lvm = state.playgroundShell.lvm;
+  const pvs = lvm.pvs || [];
+  const vgs = lvm.vgs || {};
+  const lvs = lvm.lvs || {};
+
+  // 1. Block Devices Section
+  const blockTitle = document.createElement('h4');
+  blockTitle.className = 'disk-section-title';
+  blockTitle.textContent = 'Block Devices & Physical Volumes (PVs)';
+  container.appendChild(blockTitle);
+
+  const disksGrid = document.createElement('div');
+  disksGrid.className = 'disks-grid';
+
+  const defaultDisks = [
+    { name: 'sda', path: '/dev/sda', size: '20.00 GiB', partitions: ['/dev/sda1', '/dev/sda2'] },
+    { name: 'sdb', path: '/dev/sdb', size: '20.00 GiB', partitions: ['/dev/sdb1'] }
+  ];
+
+  defaultDisks.forEach(disk => {
+    const diskCard = document.createElement('div');
+    diskCard.className = 'disk-card';
+    
+    // Header
+    const diskHeader = document.createElement('div');
+    diskHeader.className = 'disk-card-header';
+    diskHeader.innerHTML = `
+      <strong>${disk.name}</strong>
+      <span>${disk.size}</span>
+    `;
+    diskCard.appendChild(diskHeader);
+
+    // Is the entire disk a PV?
+    const isDiskPV = pvs.includes(disk.path);
+    if (isDiskPV) {
+      const pvLabel = document.createElement('div');
+      pvLabel.className = 'pv-badge';
+      const vgName = Object.keys(vgs).find(vgKey => vgs[vgKey].pvs.includes(disk.path)) || 'Unallocated';
+      pvLabel.textContent = `PV: ${disk.path} (VG: ${vgName})`;
+      diskCard.appendChild(pvLabel);
+    } else {
+      const partsContainer = document.createElement('div');
+      partsContainer.className = 'partitions-container';
+
+      disk.partitions.forEach(part => {
+        const partEl = document.createElement('div');
+        const isPartPV = pvs.includes(part);
+        partEl.className = `part-item ${isPartPV ? 'is-pv' : ''}`;
+        
+        const vgName = isPartPV ? (Object.keys(vgs).find(vgKey => vgs[vgKey].pvs.includes(part)) || 'Unallocated') : '';
+        partEl.innerHTML = `
+          <strong>${part.split('/').pop()}</strong>
+          ${isPartPV ? `<span class="vg-tag">${vgName}</span>` : '<span class="free-tag">Raw Partition</span>'}
+        `;
+        partsContainer.appendChild(partEl);
+      });
+      diskCard.appendChild(partsContainer);
+    }
+
+    disksGrid.appendChild(diskCard);
+  });
+
+  const handledPaths = ['/dev/sda', '/dev/sdb', '/dev/sda1', '/dev/sda2', '/dev/sdb1'];
+  const extraPVs = pvs.filter(pv => !handledPaths.includes(pv));
+  if (extraPVs.length > 0) {
+    const extraDiskCard = document.createElement('div');
+    extraDiskCard.className = 'disk-card extra-disks';
+    extraDiskCard.innerHTML = `<div class="disk-card-header"><strong>Other PVs</strong></div>`;
+    const partsContainer = document.createElement('div');
+    partsContainer.className = 'partitions-container';
+    extraPVs.forEach(pv => {
+      const partEl = document.createElement('div');
+      partEl.className = 'part-item is-pv';
+      const vgName = Object.keys(vgs).find(vgKey => vgs[vgKey].pvs.includes(pv)) || 'Unallocated';
+      partEl.innerHTML = `
+        <strong>${pv}</strong>
+        <span class="vg-tag">${vgName}</span>
+      `;
+      partsContainer.appendChild(partEl);
+    });
+    extraDiskCard.appendChild(partsContainer);
+    disksGrid.appendChild(extraDiskCard);
+  }
+
+  container.appendChild(disksGrid);
+
+  // 2. Volume Groups Section
+  const vgTitle = document.createElement('h4');
+  vgTitle.className = 'disk-section-title';
+  vgTitle.textContent = 'Volume Groups (VGs) & Logical Volumes (LVs)';
+  container.appendChild(vgTitle);
+
+  const vgsContainer = document.createElement('div');
+  vgsContainer.className = 'vgs-container';
+
+  const vgKeys = Object.keys(vgs);
+  if (vgKeys.length === 0) {
+    const noVg = document.createElement('div');
+    noVg.className = 'no-lvm-message';
+    noVg.textContent = 'No Volume Groups created yet. Create one with: vgcreate <vg_name> <pv_path>';
+    vgsContainer.appendChild(noVg);
+  } else {
+    vgKeys.forEach(vgName => {
+      const vgObj = vgs[vgName];
+      const vgCard = document.createElement('div');
+      vgCard.className = 'vg-card';
+
+      const vgHeader = document.createElement('div');
+      vgHeader.className = 'vg-card-header';
+      vgHeader.innerHTML = `
+        <strong>${vgName}</strong>
+        <span>Size: ${vgObj.size}</span>
+      `;
+      vgCard.appendChild(vgHeader);
+
+      const vgPvs = document.createElement('div');
+      vgPvs.className = 'vg-pvs-list';
+      vgPvs.textContent = `Member PVs: ${vgObj.pvs.join(', ')}`;
+      vgCard.appendChild(vgPvs);
+
+      const lvsInVg = Object.keys(lvs).filter(lvName => lvs[lvName].vg === vgName);
+      const lvsContainer = document.createElement('div');
+      lvsContainer.className = 'lvs-container';
+
+      if (lvsInVg.length === 0) {
+        lvsContainer.innerHTML = `<span class="no-lvs-txt">No Logical Volumes. Create one with: lvcreate -L <size> -n <lv_name> ${vgName}</span>`;
+      } else {
+        lvsInVg.forEach(lvName => {
+          const lvObj = lvs[lvName];
+          const lvEl = document.createElement('div');
+          lvEl.className = 'lv-item';
+          lvEl.innerHTML = `
+            <div class="lv-icon">
+              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><rect x="3" y="3" width="18" height="18" rx="2"></rect><path d="M9 3v18M15 3v18M3 9h18M3 15h18"></path></svg>
+            </div>
+            <div class="lv-info">
+              <strong>${lvName}</strong>
+              <span>${lvObj.size} (${lvObj.path})</span>
+            </div>
+          `;
+          lvsContainer.appendChild(lvEl);
+        });
+      }
+      vgCard.appendChild(lvsContainer);
+      vgsContainer.appendChild(vgCard);
+    });
+  }
+  container.appendChild(vgsContainer);
 }

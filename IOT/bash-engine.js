@@ -25,6 +25,33 @@ const VIRTUAL_FS = {
   "employees.txt": "John Doe,Engineering,80000\nJane Smith,Marketing,75000\nAlice Johnson,Sales,70000\nBob Brown,Engineering,85000\nCharlie Green,HR,60000\n"
 };
 
+function resolvePath(cwd, targetPath) {
+  if (!targetPath) return cwd;
+  targetPath = targetPath.trim();
+  if (targetPath.startsWith('/')) {
+    return normalizePath(targetPath);
+  }
+  if (targetPath === '~') return '/home/student';
+  if (targetPath.startsWith('~/')) {
+    return normalizePath('/home/student/' + targetPath.slice(2));
+  }
+  return normalizePath(cwd + '/' + targetPath);
+}
+
+function normalizePath(p) {
+  const segments = p.split('/').filter(Boolean);
+  const resolved = [];
+  for (const segment of segments) {
+    if (segment === '.') continue;
+    if (segment === '..') {
+      resolved.pop();
+    } else {
+      resolved.push(segment);
+    }
+  }
+  return '/' + resolved.join('/');
+}
+
 function normalizeOutput(value) {
   return String(value || '')
     .replace(/\r\n/g, '\n')
@@ -62,15 +89,23 @@ function tokenizeBash(script) {
   return result;
 }
 
-function simulateBash(script, input) {
+function simulateBash(script, input, stateOverride = null) {
   const inputLines = normalizeOutput(input).split('\n');
   if (inputLines.length > 0 && inputLines[inputLines.length - 1] === '') {
     inputLines.pop();
   }
-  let inputCursor = 0;
-  let fileCursor = 0;
-  const vars = { '0': 'script.sh' };
-  if (input) {
+  
+  const fs = stateOverride ? stateOverride.fs : { ...VIRTUAL_FS };
+  if (!stateOverride) {
+    fs["input.txt"] = input;
+    fs["./input.txt"] = input;
+    fs["/home/student/input.txt"] = input;
+  }
+  
+  const directories = stateOverride ? stateOverride.directories : new Set(['/etc', '/var', '/var/log', '/home', '/home/student', '/tmp']);
+  const vars = stateOverride ? stateOverride.vars : { '0': 'script.sh' };
+  
+  if (!stateOverride && input) {
     const argsList = input.trim().split(/\s+/).filter(Boolean);
     vars['#'] = argsList.length;
     vars['@'] = argsList.join(' ');
@@ -78,13 +113,17 @@ function simulateBash(script, input) {
     argsList.forEach((arg, index) => {
       vars[String(index + 1)] = arg;
     });
-  } else {
+  } else if (!stateOverride) {
     vars['#'] = 0;
     vars['@'] = '';
     vars['*'] = '';
   }
-  const arrays = {};
-  const functions = {};
+  
+  const arrays = stateOverride ? stateOverride.arrays : {};
+  const functions = stateOverride ? stateOverride.functions : {};
+  let cwd = stateOverride ? stateOverride.cwd || '/home/student' : '/home/student';
+  let inputCursor = stateOverride ? stateOverride.inputCursor || 0 : 0;
+  let fileCursor = stateOverride ? stateOverride.fileCursor || 0 : 0;
 
   function hasFlag(args, flag) {
     return args.some(a => a.startsWith('-') && !a.startsWith('--') && a.includes(flag));
@@ -95,13 +134,10 @@ function simulateBash(script, input) {
     outputBuffers[outputBuffers.length - 1].push(val);
   }
   const lines = tokenizeBash(script);
-  const fs = { ...VIRTUAL_FS };
-  fs["input.txt"] = input;
-  fs["./input.txt"] = input;
-  fs["/home/student/input.txt"] = input;
-  const directories = new Set(['/etc', '/var', '/var/log', '/home', '/home/student', '/tmp']);
+
   function isDir(path) {
-    const resolved = expandValue(path);
+    const expanded = expandValue(path);
+    const resolved = resolvePath(cwd, expanded);
     if (directories.has(resolved)) return true;
     const prefix = resolved.endsWith('/') ? resolved : resolved + '/';
     for (const f of Object.keys(fs)) {
@@ -112,12 +148,12 @@ function simulateBash(script, input) {
     }
     return false;
   }
-  const archives = {};
-  const users = [];
-  const groups = [];
-  const services = {};
-  const firewallRules = [];
-  let lastStatus = 0;
+  const archives = stateOverride ? stateOverride.archives || {} : {};
+  const users = stateOverride ? stateOverride.users : [];
+  const groups = stateOverride ? stateOverride.groups : [];
+  const services = stateOverride ? stateOverride.services : {};
+  const firewallRules = stateOverride ? stateOverride.firewallRules : [];
+  let lastStatus = stateOverride ? stateOverride.lastStatus || 0 : 0;
 
   function stripOuterQuotes(value) {
     const s = String(value || '');
@@ -137,8 +173,10 @@ function simulateBash(script, input) {
     }
     let sourceLines = inputLines;
     let cursor = inputCursor;
-    if (fs["servers.txt"] !== undefined && String(vars["PREPEND_PHASE"]) !== "1") {
-      sourceLines = normalizeOutput(fs["servers.txt"]).split('\n');
+    const resolvedServersPath = resolvePath(cwd, "servers.txt");
+    const hasServersFile = (fs["servers.txt"] !== undefined || fs[resolvedServersPath] !== undefined) && String(vars["PREPEND_PHASE"]) !== "1";
+    if (hasServersFile) {
+      sourceLines = normalizeOutput(fs[resolvedServersPath] !== undefined ? fs[resolvedServersPath] : fs["servers.txt"]).split('\n');
       if (sourceLines.length > 0 && sourceLines[sourceLines.length - 1] === '') {
         sourceLines.pop();
       }
@@ -150,7 +188,7 @@ function simulateBash(script, input) {
     }
     lastStatus = 0;
     const raw = sourceLines[cursor] || '';
-    if (fs["servers.txt"] !== undefined && String(vars["PREPEND_PHASE"]) !== "1") {
+    if (hasServersFile) {
       fileCursor += 1;
     } else {
       inputCursor += 1;
@@ -441,27 +479,33 @@ function simulateBash(script, input) {
   }
 
   function getFile(path) {
-    const resolved = expandValue(path);
-    return Object.prototype.hasOwnProperty.call(fs, resolved) ? fs[resolved] : null;
+    const expanded = expandValue(path);
+    const resolved = resolvePath(cwd, expanded);
+    if (Object.prototype.hasOwnProperty.call(fs, resolved)) return fs[resolved];
+    if (Object.prototype.hasOwnProperty.call(fs, expanded)) return fs[expanded];
+    return null;
   }
 
   function setFile(path, content) {
-    fs[expandValue(path)] = content;
+    const expanded = expandValue(path);
+    const resolved = resolvePath(cwd, expanded);
+    fs[resolved] = content;
   }
 
   function appendFile(path, content) {
-    const resolved = expandValue(path);
+    const expanded = expandValue(path);
+    const resolved = resolvePath(cwd, expanded);
     fs[resolved] = (fs[resolved] || '') + content;
   }
 
   function listDirectory(target = '') {
-    const dir = target ? expandValue(target).replace(/\/$/, '') : '';
+    const expanded = target ? expandValue(target) : '';
+    const resolved = resolvePath(cwd, expanded).replace(/\/$/, '');
     const paths = Object.keys(fs);
-    if (!dir || dir === '.') return paths.sort();
-
+    
     // Glob support (e.g. /var/log/*.log)
-    if (dir.includes('*')) {
-      const regexStr = '^' + dir
+    if (resolved.includes('*')) {
+      const regexStr = '^' + resolved
         .split('*')
         .map(part => part.replace(/[.+?^${}()|[\]\\]/g, '\\$&'))
         .join('.*') + '$';
@@ -469,12 +513,40 @@ function simulateBash(script, input) {
       return paths.filter(path => pattern.test(path)).sort();
     }
 
-    const prefix = `${dir}/`;
-    return paths
-      .filter(path => path.startsWith(prefix))
-      .map(path => path.slice(prefix.length).split('/')[0])
-      .filter((value, index, arr) => value && arr.indexOf(value) === index)
-      .sort();
+    if (resolved === '/' || resolved === '') {
+      const topLevel = new Set();
+      paths.forEach(p => {
+        const parts = p.split('/').filter(Boolean);
+        if (p.startsWith('/')) {
+          if (parts.length > 0) topLevel.add(parts[0]);
+        } else {
+          topLevel.add(parts[0]);
+        }
+      });
+      directories.forEach(d => {
+        const parts = d.split('/').filter(Boolean);
+        if (parts.length > 0) topLevel.add(parts[0]);
+      });
+      return Array.from(topLevel).sort();
+    }
+
+    const prefix = `${resolved}/`;
+    const subItems = new Set();
+    paths.forEach(p => {
+      if (p.startsWith(prefix) && p !== prefix) {
+        const relative = p.slice(prefix.length);
+        const firstSegment = relative.split('/')[0];
+        subItems.add(firstSegment);
+      }
+    });
+    directories.forEach(d => {
+      if (d.startsWith(prefix) && d !== prefix) {
+        const relative = d.slice(prefix.length);
+        const firstSegment = relative.split('/')[0];
+        subItems.add(firstSegment);
+      }
+    });
+    return Array.from(subItems).sort();
   }
 
   function ensureTrailingNewline(value) {
@@ -516,16 +588,39 @@ function simulateBash(script, input) {
     },
     pvcreate(args) {
       const target = expandValue(args[args.length - 1] || '');
+      if (stateOverride && stateOverride.lvm) {
+        if (!stateOverride.lvm.pvs.includes(target)) {
+          stateOverride.lvm.pvs.push(target);
+        }
+      }
       return `Physical volume "${target}" successfully created.\n`;
     },
     vgcreate(args) {
       const vg = expandValue(args[0] || '');
       const pv = expandValue(args[1] || '');
+      if (stateOverride && stateOverride.lvm) {
+        if (!stateOverride.lvm.pvs.includes(pv)) {
+          lastStatus = 1;
+          return `Device ${pv} not found (or not initialized with pvcreate).\n`;
+        }
+        stateOverride.lvm.vgs[vg] = { pvs: [pv], size: '40.00g', free: '40.00g' };
+      }
       return `Volume group "${vg}" successfully created\n`;
     },
     lvcreate(args) {
       const nameIndex = args.indexOf('-n');
       const name = nameIndex >= 0 ? expandValue(args[nameIndex + 1]) : 'lv_data';
+      const sizeIndex = args.indexOf('-L');
+      const size = sizeIndex >= 0 ? expandValue(sizeIndex + 1) : '10G';
+      const vg = expandValue(args[args.length - 1]);
+      if (stateOverride && stateOverride.lvm) {
+        if (!stateOverride.lvm.vgs[vg]) {
+          lastStatus = 1;
+          return `Volume group "${vg}" not found.\n`;
+        }
+        stateOverride.lvm.lvs[name] = { vg: vg, size: size, path: `/dev/${vg}/${name}` };
+        fs[`/dev/${vg}/${name}`] = `Logical Volume block device. Size: ${size}\n`;
+      }
       return `Logical volume "${name}" created.\n`;
     },
     echo(args) {
@@ -1028,13 +1123,23 @@ function simulateBash(script, input) {
     },
 
     mkdir(args) {
-      args.filter(a => a !== '-p').map(expandValue).forEach(path => directories.add(path));
+      args.filter(a => a !== '-p').map(expandValue).forEach(path => {
+        const resolved = resolvePath(cwd, path);
+        directories.add(resolved);
+        directories.add(path);
+      });
       return '';
     },
 
     rm(args) {
       const visibleArgs = args.filter(a => !a.startsWith('-'));
-      visibleArgs.map(expandValue).forEach(path => { delete fs[path]; });
+      visibleArgs.map(expandValue).forEach(path => {
+        const resolved = resolvePath(cwd, path);
+        delete fs[resolved];
+        delete fs[path];
+        directories.delete(resolved);
+        directories.delete(path);
+      });
       return '';
     },
 
@@ -1099,7 +1204,64 @@ function simulateBash(script, input) {
       const sizeIndex = args.indexOf('-L');
       const size = sizeIndex >= 0 ? expandValue(args[sizeIndex + 1]) : '';
       const target = expandValue(args[args.length - 1]);
+      const name = target.split('/').pop();
+      if (stateOverride && stateOverride.lvm && stateOverride.lvm.lvs[name]) {
+        stateOverride.lvm.lvs[name].size = size.startsWith('+') ? 'Extended by ' + size.slice(1) : size;
+      }
       return `Size of logical volume ${target} changed by ${size}.\n`;
+    },
+
+    pvdisplay(args) {
+      if (stateOverride && stateOverride.lvm) {
+        if (stateOverride.lvm.pvs.length === 0) return 'No physical volumes found.\n';
+        return stateOverride.lvm.pvs.map(pv => 
+          `--- Physical volume ---\nPV Name               ${pv}\nVG Name               ${Object.keys(stateOverride.lvm.vgs).find(vg => stateOverride.lvm.vgs[vg].pvs.includes(pv)) || ''}\nPV Size               20.00 GiB\nAllocatable           yes\n`
+        ).join('\n');
+      }
+      return '--- Physical volume ---\nPV Name               /dev/sda1\nVG Name               vg0\nPV Size               20.00 GiB\n';
+    },
+
+    vgdisplay(args) {
+      if (stateOverride && stateOverride.lvm) {
+        const vgs = Object.keys(stateOverride.lvm.vgs);
+        if (vgs.length === 0) return 'No volume groups found.\n';
+        return vgs.map(vg => 
+          `--- Volume group ---\nVG Name               ${vg}\nSystem ID             \nFormat                lvm2\nCur LV                ${Object.values(stateOverride.lvm.lvs).filter(lv => lv.vg === vg).length}\nCur PV                ${stateOverride.lvm.vgs[vg].pvs.length}\nVG Size               40.00 GiB\n`
+        ).join('\n');
+      }
+      return '--- Volume group ---\nVG Name               vg0\nVG Size               40.00 GiB\n';
+    },
+
+    lvdisplay(args) {
+      if (stateOverride && stateOverride.lvm) {
+        const lvs = Object.keys(stateOverride.lvm.lvs);
+        if (lvs.length === 0) return 'No logical volumes found.\n';
+        return lvs.map(lvName => {
+          const lv = stateOverride.lvm.lvs[lvName];
+          return `--- Logical volume ---\nLV Path                ${lv.path}\nLV Name                ${lvName}\nVG Name                ${lv.vg}\nLV Status              available\nLV Size                ${lv.size}\n`;
+        }).join('\n');
+      }
+      return '--- Logical volume ---\nLV Name                lv_data\nVG Name                vg0\nLV Size                10.00 GiB\n';
+    },
+
+    cd(args) {
+      const target = expandValue(args[0] || '~');
+      const resolved = resolvePath(cwd, target);
+      if (resolved === '/' || directories.has(resolved) || isDir(resolved)) {
+        cwd = resolved;
+        if (stateOverride) {
+          stateOverride.cwd = cwd;
+        }
+        lastStatus = 0;
+        return '';
+      } else {
+        lastStatus = 1;
+        return `bash: cd: ${target}: No such file or directory\n`;
+      }
+    },
+
+    pwd() {
+      return cwd + '\n';
     },
 
     resize2fs(args) {
@@ -1550,9 +1712,19 @@ function simulateBash(script, input) {
         case '-e':
         case '-r':
         case '-w':
-        case '-x': return Object.prototype.hasOwnProperty.call(fs, target);
-        case '-s': return Object.prototype.hasOwnProperty.call(fs, target) && String(fs[target]).length > 0;
-        case '-L': return Object.prototype.hasOwnProperty.call(fs, target);
+        case '-x': {
+          const resolved = resolvePath(cwd, target);
+          return Object.prototype.hasOwnProperty.call(fs, resolved) || Object.prototype.hasOwnProperty.call(fs, target);
+        }
+        case '-s': {
+          const resolved = resolvePath(cwd, target);
+          const exists = Object.prototype.hasOwnProperty.call(fs, resolved) ? resolved : (Object.prototype.hasOwnProperty.call(fs, target) ? target : null);
+          return exists !== null && String(fs[exists]).length > 0;
+        }
+        case '-L': {
+          const resolved = resolvePath(cwd, target);
+          return Object.prototype.hasOwnProperty.call(fs, resolved) || Object.prototype.hasOwnProperty.call(fs, target);
+        }
       }
     }
 
@@ -2220,11 +2392,23 @@ function simulateBash(script, input) {
   try {
     runLines(lines, 0, lines.length);
   } catch (e) {
+    if (stateOverride) {
+      stateOverride.lastStatus = lastStatus;
+      stateOverride.cwd = cwd;
+      stateOverride.fileCursor = fileCursor;
+      stateOverride.inputCursor = inputCursor;
+    }
     if (e && (e.message === 'EXIT_SCRIPT' || e === 'EXIT_SCRIPT')) {
       return { output: output.join(''), error: '' };
     }
     return { output: output.join(''), error: e.message || 'Unable to simulate this script.' };
   }
 
+  if (stateOverride) {
+    stateOverride.lastStatus = lastStatus;
+    stateOverride.cwd = cwd;
+    stateOverride.fileCursor = fileCursor;
+    stateOverride.inputCursor = inputCursor;
+  }
   return { output: output.join(''), error: '' };
 }

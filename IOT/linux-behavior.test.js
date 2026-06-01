@@ -291,4 +291,42 @@ for (const [problemId, script] of Object.entries(canonicalStudentScripts)) {
   );
 }
 
+// ── Playground State & Shell Simulator Checks ──
+const playState = {
+  cwd: '/home/student',
+  vars: { '0': 'bash' },
+  fs: { ...sandbox.VIRTUAL_FS },
+  directories: new Set(['/etc', '/var', '/var/log', '/home', '/home/student', '/tmp']),
+  arrays: {},
+  functions: {},
+  archives: {},
+  users: ['student'],
+  groups: ['student'],
+  services: {},
+  firewallRules: [],
+  lastStatus: 0,
+  lvm: { pvs: [], vgs: {}, lvs: {} }
+};
+
+// 1. Verify stateful cd directory changes update prompt / cwd
+sandbox.simulateBash('cd /tmp', '', playState);
+assert.strictEqual(playState.cwd, '/tmp', 'Cwd state should update to /tmp after cd');
+
+// 2. Verify stateful file creation persists
+sandbox.simulateBash('echo "hello playground" > play.txt', '', playState);
+assert.strictEqual(playState.fs['/tmp/play.txt'], 'hello playground\n', 'File should be created in the resolved path /tmp/play.txt');
+
+// 3. Verify stateful mkdir updates directories Set
+sandbox.simulateBash('mkdir -p newfolder/subfolder', '', playState);
+assert(playState.directories.has('/tmp/newfolder/subfolder'), 'Directories Set should contain /tmp/newfolder/subfolder');
+
+// 4. Verify stateful LVM pvcreate and vgcreate
+sandbox.simulateBash('pvcreate /dev/sda1', '', playState);
+assert(playState.lvm.pvs.includes('/dev/sda1'), 'PV list should contain /dev/sda1');
+
+sandbox.simulateBash('vgcreate vg_test /dev/sda1', '', playState);
+assert(playState.lvm.vgs['vg_test'], 'vg_test Volume Group should be created');
+assert(playState.lvm.vgs['vg_test'].pvs.includes('/dev/sda1'), 'vg_test should map to PV /dev/sda1');
+
 console.log('linux behavior checks passed');
+
