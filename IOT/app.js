@@ -1052,7 +1052,7 @@ function selectTopic(index) {
 
   // Restore scroll behavior for reading
   elements.contentArea.style.overflowY = 'auto';
-  elements.contentArea.style.padding = '2.5rem 3rem'; 
+  elements.contentArea.style.padding = '3rem 4.5rem'; 
   elements.contentArea.style.display = 'block';
   // Re-run KaTeX auto-render on the content area
   if (typeof renderMathInElement === 'function') {
@@ -2167,7 +2167,7 @@ function renderPracticeTest1Item(index) {
     });
 
     elements.contentArea.style.overflowY = 'auto';
-    elements.contentArea.style.padding = '2.5rem 3rem'; 
+    elements.contentArea.style.padding = '3rem 4.5rem'; 
     elements.contentArea.style.display = 'block';
   }
 }
