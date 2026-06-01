@@ -752,6 +752,11 @@ function setActiveSection(sectionId) {
   state.searchQuery = '';
   elements.searchInput.value = '';
 
+  const pgContainer = document.getElementById('playground-workspace-container');
+  if (pgContainer) {
+    pgContainer.style.display = isPlaygroundSection(sectionId) ? 'flex' : 'none';
+  }
+
   if (isPlaygroundSection(sectionId)) {
     elements.searchInput.placeholder = "Search files...";
   } else {
