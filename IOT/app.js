@@ -3210,6 +3210,212 @@ function renderPlaygroundSidebar() {
   renderNode(tree, treeContainer, 0);
 }
 
+const PLAYGROUND_CHALLENGES = [
+  {
+    id: 'lvm-setup',
+    title: 'Challenge 1: Storage Provisioning (LVM)',
+    description: 'Create logical volumes to prepare for a storage server:<br>1. Initialize physical volume <code>/dev/sda1</code>.<br>2. Create a Volume Group named <code>vg_data</code> using <code>/dev/sda1</code>.<br>3. Create a Logical Volume named <code>lv_docs</code> of size <code>10G</code> inside <code>vg_data</code>.',
+    hint: 'Commands:<br><code>pvcreate /dev/sda1</code><br><code>vgcreate vg_data /dev/sda1</code><br><code>lvcreate -L 10G -n lv_docs vg_data</code>',
+    verify: (shellState) => {
+      const lvm = shellState.lvm || {};
+      const pvs = lvm.pvs || [];
+      const vgs = lvm.vgs || {};
+      const lvs = lvm.lvs || {};
+
+      if (!pvs.includes('/dev/sda1')) {
+        return { success: false, error: 'Physical volume /dev/sda1 not found.' };
+      }
+      if (!vgs['vg_data']) {
+        return { success: false, error: 'Volume Group "vg_data" not found.' };
+      }
+      if (!vgs['vg_data'].pvs.includes('/dev/sda1')) {
+        return { success: false, error: 'Volume Group "vg_data" does not use physical volume /dev/sda1.' };
+      }
+      if (!lvs['lv_docs']) {
+        return { success: false, error: 'Logical Volume "lv_docs" not found.' };
+      }
+      if (lvs['lv_docs'].vg !== 'vg_data') {
+        return { success: false, error: 'Logical Volume "lv_docs" does not belong to volume group "vg_data".' };
+      }
+      return { success: true };
+    }
+  },
+  {
+    id: 'user-management',
+    title: 'Challenge 2: User & Group Setup',
+    description: 'Configure a new user account with correct permissions:<br>1. Create a new group named <code>devs</code>.<br>2. Add a new user named <code>alice</code> to the system with primary group <code>devs</code>.',
+    hint: 'Commands:<br><code>groupadd devs</code><br><code>useradd -g devs alice</code>',
+    verify: (shellState) => {
+      const groups = shellState.groups || [];
+      const users = shellState.users || [];
+
+      const hasGroup = groups.some(g => g === 'devs' || (g && g.name === 'devs'));
+      if (!hasGroup) {
+        return { success: false, error: 'Group "devs" not found.' };
+      }
+
+      const hasUser = users.some(u => {
+        if (typeof u === 'string') {
+          return u === 'alice';
+        }
+        return u && u.name === 'alice' && (u.group === 'devs' || u.groups?.includes('devs'));
+      });
+      if (!hasUser) {
+        return { success: false, error: 'User "alice" not found, or not associated with group "devs".' };
+      }
+      return { success: true };
+    }
+  },
+  {
+    id: 'security-firewall',
+    title: 'Challenge 3: Security & Firewalling',
+    description: 'Secure the server by enabling UFW and opening port 80:<br>1. Enable the UFW firewall.<br>2. Add a firewall rule to allow incoming HTTP traffic on port <code>80</code>.',
+    hint: 'Commands:<br><code>ufw enable</code><br><code>ufw allow 80</code>',
+    verify: (shellState) => {
+      const rules = shellState.firewallRules || [];
+      const hasPort80 = rules.some(r => r === '80' || r.includes('80') || r === 'http' || r.toLowerCase().includes('http'));
+      if (!hasPort80) {
+        return { success: false, error: 'Firewall rule for port 80 (HTTP) not found. Run "ufw allow 80".' };
+      }
+      return { success: true };
+    }
+  },
+  {
+    id: 'file-structure',
+    title: 'Challenge 4: Web Directory Structure',
+    description: 'Set up the initial directory layout for a local web server:<br>1. Create a directory <code>/home/student/web</code>.<br>2. Inside <code>/home/student/web</code>, create a folder named <code>assets</code>.<br>3. Create a file <code>/home/student/web/index.html</code> containing the text <code>Hello Linux</code>.',
+    hint: 'Commands:<br><code>mkdir -p web/assets</code><br><code>echo "Hello Linux" > web/index.html</code>',
+    verify: (shellState) => {
+      const dirs = shellState.directories;
+      const fs = shellState.fs || {};
+
+      const webDir = '/home/student/web';
+      const assetsDir = '/home/student/web/assets';
+      const indexFile = '/home/student/web/index.html';
+
+      if (!dirs || !dirs.has(webDir)) {
+        return { success: false, error: 'Directory "/home/student/web" not found.' };
+      }
+      if (!dirs || !dirs.has(assetsDir)) {
+        return { success: false, error: 'Directory "/home/student/web/assets" not found.' };
+      }
+      
+      const fileContent = fs['web/index.html'] !== undefined ? fs['web/index.html'] : fs[indexFile];
+      if (fileContent === undefined) {
+        return { success: false, error: 'File "/home/student/web/index.html" not found.' };
+      }
+      if (!fileContent.includes('Hello Linux')) {
+        return { success: false, error: 'File "/home/student/web/index.html" does not contain the text "Hello Linux".' };
+      }
+      return { success: true };
+    }
+  }
+];
+
+function renderPlaygroundChallenges() {
+  const container = document.getElementById('playground-challenges-tab');
+  if (!container) return;
+
+  // Initialize solvedChallenges if missing
+  if (!state.playgroundShell.solvedChallenges) {
+    state.playgroundShell.solvedChallenges = {};
+  }
+
+  container.innerHTML = `
+    <div class="challenges-header">
+      <h3 style="margin:0; font-size:1.1rem; color:var(--text-primary);">Lab Challenges</h3>
+      <p style="margin:0.25rem 0 0 0; font-size:0.8rem; color:var(--text-secondary);">Complete the tasks in the CLI terminal and click Verify to check your work.</p>
+    </div>
+    <div class="challenges-list" id="challenges-list-container"></div>
+  `;
+
+  const listContainer = document.getElementById('challenges-list-container');
+  PLAYGROUND_CHALLENGES.forEach(challenge => {
+    const isSolved = !!state.playgroundShell.solvedChallenges[challenge.id];
+    
+    const card = document.createElement('div');
+    card.className = `challenge-card ${isSolved ? 'solved' : ''}`;
+    card.id = `challenge-card-${challenge.id}`;
+
+    card.innerHTML = `
+      <div class="challenge-card-header">
+        <span class="challenge-title">${challenge.title}</span>
+        <span class="challenge-status-badge ${isSolved ? 'solved' : 'pending'}">
+          ${isSolved ? 'Solved' : 'Pending'}
+        </span>
+      </div>
+      <div class="challenge-description">${challenge.description}</div>
+      <div class="challenge-actions">
+        <button class="challenge-verify-btn primary-btn" data-id="${challenge.id}" ${isSolved ? 'disabled' : ''}>
+          ${isSolved ? 'Verified' : 'Verify Challenge'}
+        </button>
+        <button class="challenge-hint-btn secondary-btn" data-id="${challenge.id}">
+          Show Hint
+        </button>
+      </div>
+      <div class="challenge-hint-box" id="hint-box-${challenge.id}" style="display: none;">
+        ${challenge.hint}
+      </div>
+      <div class="challenge-feedback-box" id="feedback-box-${challenge.id}" style="display: none;"></div>
+    `;
+
+    listContainer.appendChild(card);
+  });
+
+  // Attach event listeners to buttons
+  const verifyBtns = container.querySelectorAll('.challenge-verify-btn');
+  verifyBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const challengeId = btn.getAttribute('data-id');
+      const challenge = PLAYGROUND_CHALLENGES.find(c => c.id === challengeId);
+      if (!challenge) return;
+
+      const result = challenge.verify(state.playgroundShell);
+      const feedbackBox = document.getElementById(`feedback-box-${challengeId}`);
+      
+      if (result.success) {
+        state.playgroundShell.solvedChallenges[challengeId] = true;
+        feedbackBox.style.display = 'block';
+        feedbackBox.className = 'challenge-feedback-box success-feedback';
+        feedbackBox.textContent = '🎉 Success! Challenge completed successfully.';
+        
+        btn.disabled = true;
+        btn.textContent = 'Verified';
+        
+        const badge = container.querySelector(`#challenge-card-${challengeId} .challenge-status-badge`);
+        if (badge) {
+          badge.className = 'challenge-status-badge solved';
+          badge.textContent = 'Solved';
+        }
+        
+        const card = document.getElementById(`challenge-card-${challengeId}`);
+        if (card) {
+          card.classList.add('solved');
+        }
+      } else {
+        feedbackBox.style.display = 'block';
+        feedbackBox.className = 'challenge-feedback-box error-feedback';
+        feedbackBox.textContent = `❌ Verification failed: ${result.error}`;
+      }
+    });
+  });
+
+  const hintBtns = container.querySelectorAll('.challenge-hint-btn');
+  hintBtns.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const challengeId = btn.getAttribute('data-id');
+      const hintBox = document.getElementById(`hint-box-${challengeId}`);
+      if (hintBox.style.display === 'none') {
+        hintBox.style.display = 'block';
+        btn.textContent = 'Hide Hint';
+      } else {
+        hintBox.style.display = 'none';
+        btn.textContent = 'Show Hint';
+      }
+    });
+  });
+}
+
 function renderPlayground() {
   initPlaygroundShell(); // ensure state is ready
 
@@ -3238,10 +3444,6 @@ function renderPlayground() {
 Type commands in the input line below. Filesystem alterations and shell variables persist in-memory.
 Type 'help' to see simulated commands, or check the reference guide on the right.</div>
           </div>
-          <div class="terminal-input-row">
-            <span class="terminal-prompt" id="terminal-prompt-text">student@ubuntu:~$</span>
-            <input type="text" id="cli-terminal-input" autocomplete="off" spellcheck="false" placeholder="Type a command (e.g., ls, ufw, pvcreate)...">
-          </div>
         </div>
         
         <div class="panel-tab-content" id="playground-editor-tab" style="display: none;">
@@ -3261,14 +3463,19 @@ Type 'help' to see simulated commands, or check the reference guide on the right
         </div>
       </div>
 
-      <!-- Right Side: Disk Monitor / Quick Reference -->
+      <!-- Right Side: Challenges / Disk Monitor / Quick Reference -->
       <div class="playground-right-panel">
         <div class="panel-tabs">
-          <button class="panel-tab-btn active" id="btn-tab-disk-monitor" data-tab="disk-monitor">Disk & LVM Monitor</button>
+          <button class="panel-tab-btn active" id="btn-tab-challenges" data-tab="challenges">Lab Challenges</button>
+          <button class="panel-tab-btn" id="btn-tab-disk-monitor" data-tab="disk-monitor">Disk Visualizer</button>
           <button class="panel-tab-btn" id="btn-tab-quick-ref" data-tab="quick-ref">Quick Reference</button>
         </div>
         
-        <div class="panel-tab-content active" id="playground-disk-monitor-tab">
+        <div class="panel-tab-content active" id="playground-challenges-tab" style="display: flex; flex-direction: column; height: 100%; overflow: hidden;">
+          <!-- Dynamic Lab Challenges -->
+        </div>
+
+        <div class="panel-tab-content" id="playground-disk-monitor-tab" style="display: none;">
           <div class="disk-monitor-summary">
             Visualizer for block devices and Logical Volume Manager (LVM) structures.
           </div>
@@ -3326,7 +3533,16 @@ Type 'help' to see simulated commands, or check the reference guide on the right
     container.style.display = 'flex';
   }
 
-  updatePromptText();
+  // Ensure active row exists in terminal container
+  const logContainer = document.getElementById('terminal-log-container');
+  if (logContainer && !document.getElementById('terminal-active-row')) {
+    appendActivePromptRow();
+  } else {
+    const inputEl = document.getElementById('cli-terminal-input');
+    if (inputEl) inputEl.focus();
+  }
+
+  renderPlaygroundChallenges();
   updateDiskMonitor();
 }
 
@@ -3341,7 +3557,8 @@ function setupPlaygroundListeners() {
       if (target === 'terminal') {
         document.getElementById('playground-terminal-tab').style.display = 'flex';
         document.getElementById('playground-editor-tab').style.display = 'none';
-        document.getElementById('cli-terminal-input').focus();
+        const inputEl = document.getElementById('cli-terminal-input');
+        if (inputEl) inputEl.focus();
       } else {
         document.getElementById('playground-terminal-tab').style.display = 'none';
         document.getElementById('playground-editor-tab').style.display = 'flex';
@@ -3356,30 +3573,53 @@ function setupPlaygroundListeners() {
       rightTabs.forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
       const target = btn.getAttribute('data-tab');
-      if (target === 'disk-monitor') {
-        document.getElementById('playground-disk-monitor-tab').style.display = 'block';
-        document.getElementById('playground-quick-ref-tab').style.display = 'none';
+      
+      const tabChallenges = document.getElementById('playground-challenges-tab');
+      const tabDiskMonitor = document.getElementById('playground-disk-monitor-tab');
+      const tabQuickRef = document.getElementById('playground-quick-ref-tab');
+      
+      if (target === 'challenges') {
+        if (tabChallenges) tabChallenges.style.display = 'flex';
+        if (tabDiskMonitor) tabDiskMonitor.style.display = 'none';
+        if (tabQuickRef) tabQuickRef.style.display = 'none';
+        renderPlaygroundChallenges();
+      } else if (target === 'disk-monitor') {
+        if (tabChallenges) tabChallenges.style.display = 'none';
+        if (tabDiskMonitor) tabDiskMonitor.style.display = 'block';
+        if (tabQuickRef) tabQuickRef.style.display = 'none';
+        updateDiskMonitor();
       } else {
-        document.getElementById('playground-disk-monitor-tab').style.display = 'none';
-        document.getElementById('playground-quick-ref-tab').style.display = 'block';
+        if (tabChallenges) tabChallenges.style.display = 'none';
+        if (tabDiskMonitor) tabDiskMonitor.style.display = 'none';
+        if (tabQuickRef) tabQuickRef.style.display = 'block';
       }
     });
   });
 
-  // Terminal Input Event Listener
-  const cliInput = document.getElementById('cli-terminal-input');
-  cliInput.addEventListener('keydown', handleTerminalKeydown);
+  // Log container click handler to focus terminal input
+  const logContainer = document.getElementById('terminal-log-container');
+  if (logContainer) {
+    logContainer.addEventListener('click', () => {
+      if (window.getSelection().toString()) return;
+      const inputEl = document.getElementById('cli-terminal-input');
+      if (inputEl) inputEl.focus();
+    });
+  }
 
   // Script Editor Run Button
   const runScriptBtn = document.getElementById('run-script-btn');
-  runScriptBtn.addEventListener('click', executeScriptEditorCode);
+  if (runScriptBtn) {
+    runScriptBtn.addEventListener('click', executeScriptEditorCode);
+  }
 
   // Script Editor Clear Button
   const clearEditorBtn = document.getElementById('clear-editor-btn');
-  clearEditorBtn.addEventListener('click', () => {
-    document.getElementById('script-editor-textarea').value = '';
-    document.getElementById('editor-output-log').textContent = '';
-  });
+  if (clearEditorBtn) {
+    clearEditorBtn.addEventListener('click', () => {
+      document.getElementById('script-editor-textarea').value = '';
+      document.getElementById('editor-output-log').textContent = '';
+    });
+  }
 }
 
 function handleTerminalKeydown(e) {
@@ -3390,20 +3630,37 @@ function handleTerminalKeydown(e) {
   
   if (e.key === 'Enter') {
     const cmd = cliInput.value.trim();
-    if (!cmd) return;
-
-    // Append command to log
-    appendTerminalLine(cmd, 'command-input');
     
-    // Save to history
-    history.push(cmd);
-    state.playgroundShell.historyIndex = history.length;
+    // Replace the active row with a static line representing the prompt + what was typed
+    const activeRow = document.getElementById('terminal-active-row');
+    if (activeRow) {
+      const lineEl = document.createElement('div');
+      lineEl.className = 'terminal-log-line command-input';
+      
+      const promptSpan = document.createElement('span');
+      promptSpan.className = 'terminal-prompt';
+      promptSpan.textContent = getPromptString() + ' ';
+      lineEl.appendChild(promptSpan);
 
-    // Clear input
-    cliInput.value = '';
+      const cmdSpan = document.createElement('span');
+      cmdSpan.className = 'terminal-cmd-text';
+      cmdSpan.textContent = cliInput.value;
+      lineEl.appendChild(cmdSpan);
 
-    // Execute
-    executePlaygroundCommand(cmd);
+      activeRow.parentNode.replaceChild(lineEl, activeRow);
+    }
+
+    if (cmd) {
+      // Save to history
+      history.push(cmd);
+      state.playgroundShell.historyIndex = history.length;
+
+      // Execute
+      executePlaygroundCommand(cmd);
+    } else {
+      // Just append a fresh prompt row
+      appendActivePromptRow();
+    }
   } 
   else if (e.key === 'ArrowUp') {
     e.preventDefault();
@@ -3481,7 +3738,6 @@ function handleTabCompletion(inputEl) {
     inputEl.value = parts.join(' ');
   } else if (candidates.length > 1) {
     appendTerminalOutput('\n' + candidates.sort().join('   ') + '\n', 'tab-completion-list');
-    updatePromptText();
   }
 }
 
@@ -3491,6 +3747,7 @@ function executePlaygroundCommand(cmd) {
 
   if (cmd.trim().toLowerCase() === 'clear') {
     logContainer.innerHTML = '';
+    appendActivePromptRow();
     return;
   }
 
@@ -3503,7 +3760,7 @@ function executePlaygroundCommand(cmd) {
   - Other: help, clear, exit
 Standard loops (for, while) and condition variables work too!`;
     appendTerminalOutput(helpText, 'command-stdout');
-    updatePromptText();
+    appendActivePromptRow();
     return;
   }
 
@@ -3516,9 +3773,47 @@ Standard loops (for, while) and condition variables work too!`;
     appendTerminalOutput(result.error + '\n', 'command-stderr');
   }
 
-  updatePromptText();
+  appendActivePromptRow();
   renderPlaygroundSidebar();
   updateDiskMonitor();
+}
+
+function appendActivePromptRow() {
+  const logContainer = document.getElementById('terminal-log-container');
+  if (!logContainer) return;
+
+  const existing = document.getElementById('terminal-active-row');
+  if (existing) {
+    existing.remove();
+  }
+
+  const activeRow = document.createElement('div');
+  activeRow.className = 'terminal-input-row-inline';
+  activeRow.id = 'terminal-active-row';
+
+  const promptSpan = document.createElement('span');
+  promptSpan.className = 'terminal-prompt';
+  promptSpan.id = 'terminal-prompt-text';
+  promptSpan.textContent = getPromptString() + ' ';
+  activeRow.appendChild(promptSpan);
+
+  const inputEl = document.createElement('input');
+  inputEl.type = 'text';
+  inputEl.id = 'cli-terminal-input';
+  inputEl.autocomplete = 'off';
+  inputEl.spellcheck = false;
+  
+  activeRow.appendChild(inputEl);
+  logContainer.appendChild(activeRow);
+
+  // Add event listener to the new input
+  inputEl.addEventListener('keydown', handleTerminalKeydown);
+
+  // Focus
+  inputEl.focus();
+
+  // Scroll container to bottom
+  logContainer.scrollTop = logContainer.scrollHeight;
 }
 
 function appendTerminalLine(text, className) {
@@ -3531,18 +3826,23 @@ function appendTerminalLine(text, className) {
   if (className === 'command-input') {
     const promptSpan = document.createElement('span');
     promptSpan.className = 'terminal-prompt';
-    promptSpan.textContent = getPromptString();
+    promptSpan.textContent = getPromptString() + ' ';
     lineEl.appendChild(promptSpan);
 
     const cmdSpan = document.createElement('span');
     cmdSpan.className = 'terminal-cmd-text';
-    cmdSpan.textContent = ' ' + text;
+    cmdSpan.textContent = text;
     lineEl.appendChild(cmdSpan);
   } else {
     lineEl.textContent = text;
   }
 
-  logContainer.appendChild(lineEl);
+  const activeRow = document.getElementById('terminal-active-row');
+  if (activeRow) {
+    logContainer.insertBefore(lineEl, activeRow);
+  } else {
+    logContainer.appendChild(lineEl);
+  }
   logContainer.scrollTop = logContainer.scrollHeight;
 }
 
@@ -3554,7 +3854,12 @@ function appendTerminalOutput(text, className) {
   preEl.className = 'terminal-log-pre ' + className;
   preEl.textContent = text;
 
-  logContainer.appendChild(preEl);
+  const activeRow = document.getElementById('terminal-active-row');
+  if (activeRow) {
+    logContainer.insertBefore(preEl, activeRow);
+  } else {
+    logContainer.appendChild(preEl);
+  }
   logContainer.scrollTop = logContainer.scrollHeight;
 }
 
